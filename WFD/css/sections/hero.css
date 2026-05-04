@@ -1,0 +1,282 @@
+/* css/sections/hero.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   hero.css — Hero section
+   Full-viewport video hero with dual-headline entrance.
+   Techniques: #10 (video bg), #11 (dual headline), word reveal,
+   scroll pulse, clone-hover CTAs.
+   All values via brand.css variables only.
+   Scoped to .section-hero only.
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── HERO WRAPPER ─────────────────────────────────────────── */
+
+.section-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Top pad clears fixed nav */
+  padding-top: calc(var(--space-2xl) + var(--space-lg));
+  padding-inline: var(--section-pad-x);
+  /* Bottom pad leaves room for the absolute bottom labels */
+  padding-bottom: var(--space-2xl);
+  overflow: hidden;
+  background-color: var(--color-bg-inverse);
+  background-image: linear-gradient(
+    160deg,
+    var(--color-bg-inverse) 0%,
+    var(--color-bg-alt) 50%,
+    var(--color-bg-inverse) 100%
+  );
+}
+
+
+/* ── VIDEO BACKGROUND ─────────────────────────────────────── */
+
+.hero__video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Cinematic gradient overlay — dark at bottom for text legibility, open at top for fire */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 23, 19, 0.35) 0%,
+    rgba(26, 23, 19, 0.15) 35%,
+    rgba(26, 23, 19, 0.45) 65%,
+    rgba(26, 23, 19, 0.82) 100%
+  );
+}
+
+
+/* ── HERO CONTENT ─────────────────────────────────────────── */
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-width);
+  width: 100%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+
+/* ── KICKER ───────────────────────────────────────────────── */
+
+.hero__kicker {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xs);
+  /* Fade in after CTAs — controlled by JS */
+  opacity: 0;
+  transition: opacity var(--duration-mid) var(--ease-out-expo);
+  transition-delay: 0.15s;
+}
+
+.hero__kicker.is-visible {
+  opacity: 1;
+}
+
+
+/* ── DUAL HEADLINE (Technique #11) ───────────────────────── */
+
+.hero__headline-wrap {
+  position: relative;
+  display: block;
+}
+
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: var(--type-display-xl);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+  margin: 0;
+}
+
+/* Primary — word-reveal lives here */
+.hero__headline--primary {
+  position: relative;
+  z-index: 2;
+}
+
+/* Echo — behind primary, fades up as shadow/depth layer */
+.hero__headline--echo {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  opacity: 0;
+  color: var(--color-text-inverse);
+  pointer-events: none;
+  /* Transition defined on base so it animates on echo-visible add */
+  transition: opacity var(--duration-slow) var(--ease-out-expo);
+  transition-delay: 0.5s;
+}
+
+.hero__headline--echo.echo-visible {
+  opacity: 0.07;
+}
+
+
+/* ── SUBHEAD ──────────────────────────────────────────────── */
+
+/*
+ * NOT a .scroll-reveal element — hero JS controls this directly.
+ * Transition defined on base state (not .is-visible) so the
+ * transition-delay fires correctly.
+ */
+.hero__subhead {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-inverse);
+  max-width: 560px;
+  opacity: 0;
+  transform: translateY(var(--space-md));
+  /* Base transition — delay ensures sequencing after headline */
+  transition:
+    opacity  var(--duration-slow) var(--ease-out-expo) 0.95s,
+    transform var(--duration-slow) var(--ease-out-expo) 0.95s;
+}
+
+.hero__subhead.is-visible {
+  opacity: 0.88;
+  transform: translateY(0);
+}
+
+
+/* ── HERO CTAs ────────────────────────────────────────────── */
+
+/*
+ * NOT a .scroll-reveal element — hero JS controls directly.
+ * Delay: 1.15s — fires after subhead clears.
+ */
+.hero__ctas {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(var(--space-md));
+  transition:
+    opacity  var(--duration-slow) var(--ease-out-expo) 1.15s,
+    transform var(--duration-slow) var(--ease-out-expo) 1.15s;
+}
+
+.hero__ctas.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero__cta-secondary {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-inverse);
+}
+
+.hero__cta-secondary .link__inner {
+  height: 1.3em;
+}
+
+
+/* ── HERO BOTTOM LABELS ───────────────────────────────────── */
+
+/*
+ * Absolutely positioned at the bottom of the hero.
+ * left/right constrain the width — margin-inline: auto
+ * has no effect on absolute elements so it's omitted.
+ * On screens wider than max-width, labels align to the
+ * section-pad-x gutter, which is acceptable.
+ */
+.hero__bottom {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: var(--section-pad-x);
+  right: var(--section-pad-x);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(245, 242, 236, 0.12);
+  /* Fade in last */
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out-expo);
+  transition-delay: 1.4s;
+}
+
+.hero__bottom.is-visible {
+  opacity: 1;
+}
+
+.hero__bottom-left {
+  color: var(--color-text-secondary);
+}
+
+.hero__scroll-hint {
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Pulse animation on scroll arrow */
+@keyframes scroll-pulse {
+  0%, 100% { transform: translateY(0);  opacity: 0.5; }
+  50%       { transform: translateY(5px); opacity: 1;   }
+}
+
+.hero__scroll-arrow {
+  display: inline-block;
+  animation: scroll-pulse 2s var(--ease-in-out) infinite;
+  /* Don't start pulse until the label has faded in — matches 1.4s bottom label delay */
+  animation-delay: 1.4s;
+}
+
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  .hero__content {
+    gap: var(--space-lg);
+  }
+
+  .hero__subhead {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__subhead {
+    max-width: 680px;
+  }
+}

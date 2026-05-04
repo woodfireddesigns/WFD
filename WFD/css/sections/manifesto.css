@@ -1,0 +1,108 @@
+/* css/sections/manifesto.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   manifesto.css — Full-bleed philosophy statement
+   Inspired by Tattoo Digital's "ALL GAS, NO BRAKE" section.
+   WFD equivalent: "We Don't Do Pretty. We Do Power."
+   Uses display-uppercase utility + word-reveal per line.
+   All values via brand.css variables only.
+   Scoped to .section-manifesto only.
+   ───────────────────────────────────────────────────────────── */
+
+
+.section-manifesto {
+  background-color: var(--color-bg-inverse);
+  padding: var(--space-3xl) var(--section-pad-x);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.manifesto__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: relative;
+  width: 100%;
+}
+
+/* Huge decorative background mark — heat shimmer texture */
+.manifesto__inner::before {
+  content: '"';
+  font-family: var(--font-display);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  font-size: clamp(20rem, 40vw, 60rem);
+  line-height: 0.8;
+  color: var(--color-accent);
+  opacity: 0.04;
+  position: absolute;
+  top: -0.15em;
+  left: -0.08em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  letter-spacing: -0.1em;
+}
+
+/* Ensure all children sit above the decorative mark */
+.manifesto__inner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.manifesto__kicker {
+  color: var(--color-text-secondary);
+}
+
+/*
+ * Statement — two separate .word-reveal spans inside.
+ * Each span inherits color from its parent, so
+ * .manifesto__line--accent's color flows into the word spans.
+ */
+.manifesto__statement {
+  font-family: var(--font-display);
+  font-size: var(--type-display-xl);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+  margin: 0;
+}
+
+/* Line wrapper — word-reveal applies inside each */
+.manifesto__line {
+  display: block;
+  line-height: var(--leading-tight);
+}
+
+/* Second line — fire orange */
+.manifesto__line--accent {
+  color: var(--color-accent);
+}
+
+/* Subline below statement */
+.manifesto__sub {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 540px;
+  margin-top: var(--space-sm);
+}
+
+@media (min-width: 1024px) {
+  .manifesto__inner {
+    gap: var(--space-2xl);
+  }
+
+  .manifesto__sub {
+    max-width: 620px;
+  }
+}

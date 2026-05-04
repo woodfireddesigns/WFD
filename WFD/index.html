@@ -1,0 +1,786 @@
+<!-- index.html — Wood Fired Designs — woodfireddesigns.com -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wood Fired Designs — Brand & Web Design for Businesses That Mean Business. Logo, identity, packaging, and website design from Salisbury, MD.">
+  <meta property="og:title" content="Wood Fired Designs">
+  <meta property="og:description" content="Brand & Web Design for Businesses That Mean Business.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://woodfireddesigns.com">
+  <title>Wood Fired Designs — Brand & Web Design</title>
+
+  <!-- Google Fonts — Inter (body/label only) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="css/brand.css?v=2">
+  <link rel="stylesheet" href="css/base.css?v=3">
+
+  <!-- Components -->
+  <link rel="stylesheet" href="css/components/nav.css?v=3">
+  <link rel="stylesheet" href="css/components/buttons.css?v=2">
+  <link rel="stylesheet" href="css/components/forms.css?v=2">
+  <link rel="stylesheet" href="css/components/marquee.css?v=2">
+
+  <!-- Sections -->
+  <link rel="stylesheet" href="css/sections/hero.css?v=3">
+  <link rel="stylesheet" href="css/sections/marquee.css?v=2">
+  <link rel="stylesheet" href="css/sections/manifesto.css?v=2">
+  <link rel="stylesheet" href="css/sections/about.css?v=3">
+  <link rel="stylesheet" href="css/sections/services.css?v=3">
+  <link rel="stylesheet" href="css/sections/work.css?v=2">
+  <link rel="stylesheet" href="css/sections/proof.css?v=2">
+  <link rel="stylesheet" href="css/sections/process.css?v=2">
+  <link rel="stylesheet" href="css/sections/cta.css?v=3">
+  <link rel="stylesheet" href="css/sections/footer.css?v=2">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════ -->
+  <nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+
+      <!-- Logo -->
+      <a class="nav__logo" href="#" aria-label="Wood Fired Designs — Home">
+        Wood Fired Designs
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav__links" role="list">
+        <li>
+          <a class="nav__link" href="#work">
+            <span class="link__inner">
+              <span class="link__label">Work</span>
+              <span class="link__label link__label--clone" aria-hidden="true">Work</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__link" href="#services">
+            <span class="link__inner">
+              <span class="link__label">Services</span>
+              <span class="link__label link__label--clone" aria-hidden="true">Services</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__link" href="#about">
+            <span class="link__inner">
+              <span class="link__label">About</span>
+              <span class="link__label link__label--clone" aria-hidden="true">About</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="nav__link" href="#contact">
+            <span class="link__inner">
+              <span class="link__label">Contact</span>
+              <span class="link__label link__label--clone" aria-hidden="true">Contact</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Desktop CTA -->
+      <a class="nav__cta btn btn--outline" href="#contact">Start a Project →</a>
+
+      <!-- Hamburger toggle -->
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Full-screen nav overlay -->
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div class="nav-overlay__inner">
+      <ul class="nav-overlay__links" role="list">
+        <li class="overlay-link__item">
+          <a class="overlay-link" href="#work" data-overlay-link>
+            <span class="link__inner">
+              <span class="link__label">Work</span>
+              <span class="link__label link__label--clone" aria-hidden="true">Work</span>
+            </span>
+          </a>
+        </li>
+        <li class="overlay-link__item">
+          <a class="overlay-link" href="#services" data-overlay-link>
+            <span class="link__inner">
+              <span class="link__label">Services</span>
+              <span class="link__label link__label--clone" aria-hidden="true">Services</span>
+            </span>
+          </a>
+        </li>
+        <li class="overlay-link__item">
+          <a class="overlay-link" href="#about" data-overlay-link>
+            <span class="link__inner">
+              <span class="link__label">About</span>
+              <span class="link__label link__label--clone" aria-hidden="true">About</span>
+            </span>
+          </a>
+        </li>
+        <li class="overlay-link__item">
+          <a class="overlay-link" href="#contact" data-overlay-link>
+            <span class="link__inner">
+              <span class="link__label">Contact</span>
+              <span class="link__label link__label--clone" aria-hidden="true">Contact</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="nav-overlay__bottom">
+        <a class="nav-overlay__contact-link" href="mailto:michael@woodfireddesigns.com">michael@woodfireddesigns.com</a>
+        <a class="nav-overlay__contact-link" href="tel:+14435550000">(443) 555-0000</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 1 — HERO
+  ═══════════════════════════════════════════════ -->
+  <section class="section-hero theme-dark" id="hero" aria-label="Hero">
+
+    <!-- Video background -->
+    <div class="hero__video-wrap">
+      <video class="hero__video" autoplay muted loop playsinline preload="none"
+             poster="assets/video/hero-poster.webp"
+             id="hero-video">
+        <source src="assets/video/hero-desktop.mp4" type="video/mp4">
+      </video>
+      <div class="hero__overlay" aria-hidden="true"></div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="hero__content">
+
+      <!-- Kicker -->
+      <p class="hero__kicker label-text">/ Brand & Web Design — Salisbury, MD</p>
+
+      <!-- Dual headline -->
+      <div class="hero__headline-wrap" aria-label="Brands worth remembering.">
+        <h1 class="hero__headline hero__headline--primary word-reveal">
+          Brands worth remembering.
+        </h1>
+        <h1 class="hero__headline hero__headline--echo" aria-hidden="true">
+          Brands worth remembering.
+        </h1>
+      </div>
+
+      <!-- Subheadline — animated by hero JS, not scroll observer -->
+      <p class="hero__subhead">
+        We design brand identities and websites that make local businesses
+        look like the biggest player in the room.
+      </p>
+
+      <!-- CTAs — animated by hero JS, not scroll observer -->
+      <div class="hero__ctas">
+        <a class="btn btn--accent" href="#work">See Our Work →</a>
+        <a class="hero__cta-secondary nav__link" href="#contact">
+          <span class="link__inner">
+            <span class="link__label">Start a Project</span>
+            <span class="link__label link__label--clone" aria-hidden="true">Start a Project</span>
+          </span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Bottom labels -->
+    <div class="hero__bottom" aria-hidden="true">
+      <span class="hero__bottom-left label-text">/ Est. 2014 — Michael Deschenes</span>
+      <span class="hero__scroll-hint label-text">
+        Scroll <span class="hero__scroll-arrow">↓</span>
+      </span>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 2 — MARQUEE / SERVICE TICKER
+  ═══════════════════════════════════════════════ -->
+  <section class="section-marquee" aria-label="Services ticker" aria-hidden="true">
+    <div class="marquee__track-wrap">
+      <div class="marquee__track">
+        <span class="marquee__item">Brand Identity</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Website Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Packaging</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Product Photography</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Ecommerce</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Merch Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Logo Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Landing Pages</span>
+        <span class="marquee__sep">✦</span>
+        <!-- Repeat 1 -->
+        <span class="marquee__item">Brand Identity</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Website Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Packaging</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Product Photography</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Ecommerce</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Merch Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Logo Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Landing Pages</span>
+        <span class="marquee__sep">✦</span>
+        <!-- Repeat 2 -->
+        <span class="marquee__item">Brand Identity</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Website Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Packaging</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Product Photography</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Ecommerce</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Merch Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Logo Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Landing Pages</span>
+        <span class="marquee__sep">✦</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       MANIFESTO — Philosophy statement
+       Inspired by Tattoo Digital's full-bleed manifesto pattern.
+       WFD equivalent of "ALL GAS, NO BRAKE."
+  ═══════════════════════════════════════════════ -->
+  <section class="section-manifesto theme-dark" aria-label="Our philosophy">
+    <div class="manifesto__inner">
+      <p class="label-text manifesto__kicker">/ Philosophy</p>
+      <h2 class="manifesto__statement" aria-label="We don't do pretty. We do power.">
+        <span class="manifesto__line word-reveal">We don't do pretty.</span>
+        <span class="manifesto__line manifesto__line--accent word-reveal" data-reveal-offset="0.38">We do power.</span>
+      </h2>
+      <p class="manifesto__sub scroll-reveal">
+        Your brand isn't just another log on the fire.<br>
+        It's the one that starts it.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 3 — ABOUT / POSITIONING STATEMENT
+  ═══════════════════════════════════════════════ -->
+  <section class="section-about" id="about" aria-label="About Wood Fired Designs">
+    <div class="about__inner">
+
+      <!-- Left column -->
+      <div class="about__left scroll-reveal">
+        <p class="label-text about__kicker">/ About</p>
+        <div class="about__stats stagger-group">
+          <div class="about__stat">
+            <span class="stat-number about__stat-number" data-target="60">0</span>
+            <span class="about__stat-label label-text">Brands Built</span>
+          </div>
+          <div class="about__stat">
+            <span class="stat-number about__stat-number" data-target="7">0</span>
+            <span class="about__stat-label label-text">Industries</span>
+          </div>
+          <div class="about__stat about__stat--text">
+            <span class="about__stat-text">Salisbury → Nationwide</span>
+            <span class="about__stat-label label-text">Reach</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="about__right">
+        <h2 class="about__headline word-reveal">
+          Small businesses deserve world-class creative.
+        </h2>
+        <p class="about__body scroll-reveal">
+          Wood Fired Designs is a one-person studio with no patience
+          for generic templates and no interest in design that doesn't
+          earn its keep. We build brand identity, packaging, and websites
+          for founders and small business owners who need their visuals
+          to work as hard as they do — not just look good, but build
+          trust, drive leads, and make money. No fluff. No filler.
+          Just purpose-built design that lights a fire under your brand.
+        </p>
+        <a class="about__link nav__link scroll-reveal" href="#work">
+          <span class="link__inner">
+            <span class="link__label">See how we work →</span>
+            <span class="link__label link__label--clone" aria-hidden="true">See how we work →</span>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 4 — SERVICES
+  ═══════════════════════════════════════════════ -->
+  <section class="section-services theme-dark" id="services" aria-label="Services">
+    <div class="services__inner">
+
+      <!-- Top row -->
+      <div class="services__header">
+        <div class="services__header-left">
+          <p class="label-text services__kicker">/ Services</p>
+          <p class="services__subhead scroll-reveal">
+            We specialize in the moments that make buyers stop scrolling
+            and start trusting.
+          </p>
+        </div>
+        <div class="services__header-right">
+          <h2 class="services__headline word-reveal">
+            Punch Harder. Look Sharper.
+          </h2>
+        </div>
+      </div>
+
+      <!-- Service rows -->
+      <div class="services__list stagger-group" role="list">
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">01</span>
+          <span class="services__row-name">Brand Identity</span>
+          <span class="services__row-desc">Logo systems, brand guidelines, and visual language built to last.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">02</span>
+          <span class="services__row-name">Website Design</span>
+          <span class="services__row-desc">Custom HTML/CSS/JS sites and Framer builds. Fast, clean, deployable.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">03</span>
+          <span class="services__row-name">Packaging Design</span>
+          <span class="services__row-desc">Labels, boxes, bags — packaging that wins the shelf and the scroll.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">04</span>
+          <span class="services__row-name">Product Photography</span>
+          <span class="services__row-desc">AI-enhanced product shots that look better than a $5k studio session.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">05</span>
+          <span class="services__row-name">Merch & Apparel</span>
+          <span class="services__row-desc">Hat drops, tee runs, and branded merch that people actually wear.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">06</span>
+          <span class="services__row-name">Landing Pages</span>
+          <span class="services__row-desc">High-conversion single-page builds for campaigns, launches, and leads.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 5 — SELECTED WORK
+  ═══════════════════════════════════════════════ -->
+  <section class="section-work" id="work" aria-label="Selected Work">
+    <div class="work__inner">
+
+      <!-- Top row -->
+      <div class="work__header">
+        <div class="work__header-left">
+          <p class="label-text work__kicker">/ Selected Work</p>
+        </div>
+        <div class="work__header-right">
+          <h2 class="work__headline word-reveal">Work that earns its keep.</h2>
+        </div>
+      </div>
+
+      <!-- Work rows — confirmed real WFD projects -->
+      <div class="work__list stagger-group">
+
+        <div class="work-row scroll-reveal" tabindex="0" role="article" aria-label="Out of Bounds Pickleball — Brand Identity / Merch / Product Design, 2024">
+          <div class="work-row__meta">
+            <span class="work-row__number label-text">01</span>
+            <span class="work-row__title">Out of Bounds Pickleball</span>
+            <span class="work-row__category label-text">Brand Identity / Merch / Product Design</span>
+            <span class="work-row__year label-text">2024</span>
+          </div>
+          <div class="work-row__image-reveal" aria-hidden="true">
+            <div class="work-row__image-inner">
+              <!-- Replace with: <img src="assets/images/oob.webp" alt="Out of Bounds Pickleball brand work"> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="work-row scroll-reveal" tabindex="0" role="article" aria-label="Hard Charger Coffee — Brand Identity / Packaging / Merch, 2024">
+          <div class="work-row__meta">
+            <span class="work-row__number label-text">02</span>
+            <span class="work-row__title">Hard Charger Coffee</span>
+            <span class="work-row__category label-text">Brand Identity / Packaging / Merch</span>
+            <span class="work-row__year label-text">2024</span>
+          </div>
+          <div class="work-row__image-reveal" aria-hidden="true">
+            <div class="work-row__image-inner">
+              <!-- Replace with: <img src="assets/images/hard-charger.webp" alt="Hard Charger Coffee brand and packaging"> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="work-row scroll-reveal" tabindex="0" role="article" aria-label="Abe's — Brand Identity / Website / Merch / Packaging, 2023">
+          <div class="work-row__meta">
+            <span class="work-row__number label-text">03</span>
+            <span class="work-row__title">Abe's</span>
+            <span class="work-row__category label-text">Brand Identity / Website / Merch / Packaging</span>
+            <span class="work-row__year label-text">2023</span>
+          </div>
+          <div class="work-row__image-reveal" aria-hidden="true">
+            <div class="work-row__image-inner">
+              <!-- Replace with: <img src="assets/images/abes.webp" alt="Abe's brand identity and website"> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="work-row scroll-reveal" tabindex="0" role="article" aria-label="Sunrise Diner — Brand Identity / Web Design / Signage, 2023">
+          <div class="work-row__meta">
+            <span class="work-row__number label-text">04</span>
+            <span class="work-row__title">Sunrise Diner</span>
+            <span class="work-row__category label-text">Brand Identity / Web Design / Signage</span>
+            <span class="work-row__year label-text">2023</span>
+          </div>
+          <div class="work-row__image-reveal" aria-hidden="true">
+            <div class="work-row__image-inner">
+              <!-- Replace with: <img src="assets/images/sunrise-diner.webp" alt="Sunrise Diner brand and web design"> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="work-row scroll-reveal" tabindex="0" role="article" aria-label="Swig and Swine — Brand Identity / Print / Signage, 2023">
+          <div class="work-row__meta">
+            <span class="work-row__number label-text">05</span>
+            <span class="work-row__title">Swig and Swine</span>
+            <span class="work-row__category label-text">Brand Identity / Print / Signage</span>
+            <span class="work-row__year label-text">2023</span>
+          </div>
+          <div class="work-row__image-reveal" aria-hidden="true">
+            <div class="work-row__image-inner">
+              <!-- Replace with: <img src="assets/images/swig-and-swine.webp" alt="Swig and Swine brand work"> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="work-row scroll-reveal" tabindex="0" role="article" aria-label="Vieux Sports Saloon — Brand Identity / Print / Menu Design, 2022">
+          <div class="work-row__meta">
+            <span class="work-row__number label-text">06</span>
+            <span class="work-row__title">Vieux Sports Saloon</span>
+            <span class="work-row__category label-text">Brand Identity / Print / Menu Design</span>
+            <span class="work-row__year label-text">2022</span>
+          </div>
+          <div class="work-row__image-reveal" aria-hidden="true">
+            <div class="work-row__image-inner">
+              <!-- Replace with: <img src="assets/images/vieux.webp" alt="Vieux Sports Saloon brand and print work"> -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom CTA -->
+      <div class="work__bottom-cta">
+        <a class="work__view-all nav__link" href="#contact">
+          <span class="link__inner">
+            <span class="link__label">/ View all projects →</span>
+            <span class="link__label link__label--clone" aria-hidden="true">/ View all projects →</span>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 6 — SOCIAL PROOF / TESTIMONIALS
+  ═══════════════════════════════════════════════ -->
+  <section class="section-proof" id="proof" aria-label="Client testimonials">
+    <div class="proof__inner">
+
+      <!-- Kicker + pull quote -->
+      <div class="proof__header">
+        <p class="label-text proof__kicker">/ What Clients Say</p>
+        <blockquote class="proof__pull-quote word-reveal">
+          "Working with Michael is the rare experience of getting
+          agency quality without the agency attitude."
+        </blockquote>
+      </div>
+
+      <!-- Testimonial cards -->
+      <div class="proof__cards stagger-group">
+
+        <div class="proof__card">
+          <blockquote class="proof__card-quote">
+            "He took our brand from embarrassing to something we're
+            genuinely proud to put on everything."
+          </blockquote>
+          <cite class="proof__card-name label-text">— Jason R., Roofing Contractor, Delaware</cite>
+        </div>
+
+        <div class="proof__card">
+          <blockquote class="proof__card-quote">
+            "Fast, sharp, and the site actually gets us leads.
+            The ROI was obvious within the first month."
+          </blockquote>
+          <cite class="proof__card-name label-text">— Laura M., E-commerce Founder</cite>
+        </div>
+
+        <div class="proof__card">
+          <blockquote class="proof__card-quote">
+            "We've worked with bigger agencies. None of them
+            communicated or delivered like this."
+          </blockquote>
+          <cite class="proof__card-name label-text">— Chris B., Fitness Studio Owner</cite>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 7 — PROCESS
+  ═══════════════════════════════════════════════ -->
+  <section class="section-process theme-dark" id="process" aria-label="How it works">
+    <div class="process__inner">
+
+      <!-- Left column -->
+      <div class="process__left scroll-reveal">
+        <p class="label-text process__kicker">/ How It Works</p>
+        <p class="process__summary">
+          A tight process that keeps projects moving and clients
+          in the loop. No wasted meetings. No mystery.
+        </p>
+      </div>
+
+      <!-- Right column — steps -->
+      <div class="process__right stagger-group">
+
+        <div class="process__step">
+          <span class="process__step-num">01</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Discovery</h3>
+            <p class="process__step-body">
+              One focused call to understand your goals, customers,
+              and what winning looks like.
+            </p>
+          </div>
+        </div>
+
+        <div class="process__step">
+          <span class="process__step-num">02</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Design</h3>
+            <p class="process__step-body">
+              Concepts built around your brand positioning, not
+              generic templates. You'll see it before we build it.
+            </p>
+          </div>
+        </div>
+
+        <div class="process__step">
+          <span class="process__step-num">03</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Build</h3>
+            <p class="process__step-body">
+              Clean code. Production-quality. Delivered to your domain,
+              not to a staged link that expires.
+            </p>
+          </div>
+        </div>
+
+        <div class="process__step">
+          <span class="process__step-num">04</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Launch & Iterate</h3>
+            <p class="process__step-body">
+              Go live fast. Revise based on real results. We're not
+              disappearing after delivery.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 8 — CTA / CLOSE
+  ═══════════════════════════════════════════════ -->
+  <section class="section-cta" id="contact" aria-label="Start a project">
+    <div class="cta__inner">
+      <p class="label-text cta__kicker">/ Let's Build Something</p>
+      <h2 class="cta__headline word-reveal">
+        Your brand should be your best salesperson.
+      </h2>
+      <p class="cta__subhead scroll-reveal">
+        Most local businesses are leaving money on the table
+        because their visuals don't match their actual quality.
+        Let's fix that.
+      </p>
+      <div class="cta__actions scroll-reveal">
+        <a class="btn btn--accent btn--lg" href="mailto:michael@woodfireddesigns.com">Start a Project →</a>
+        <a class="cta__secondary-link nav__link" href="#work">
+          <span class="link__inner">
+            <span class="link__label">See the work first →</span>
+            <span class="link__label link__label--clone" aria-hidden="true">See the work first →</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 9 — FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer class="site-footer theme-dark" id="footer" role="contentinfo">
+    <div class="footer__inner">
+
+      <!-- Top row -->
+      <div class="footer__top">
+        <div class="footer__logotype">
+          <span class="footer__logo-text">Wood Fired Designs</span>
+          <p class="footer__tagline">No fluff. No filler. Purpose-built design that lights a fire under your brand.</p>
+        </div>
+      </div>
+
+      <!-- Middle row — columns -->
+      <div class="footer__columns">
+
+        <div class="footer__col">
+          <p class="footer__col-label label-text">Links</p>
+          <ul class="footer__col-links" role="list">
+            <li><a class="footer__link nav__link" href="#work">
+              <span class="link__inner">
+                <span class="link__label">Work</span>
+                <span class="link__label link__label--clone" aria-hidden="true">Work</span>
+              </span>
+            </a></li>
+            <li><a class="footer__link nav__link" href="#services">
+              <span class="link__inner">
+                <span class="link__label">Services</span>
+                <span class="link__label link__label--clone" aria-hidden="true">Services</span>
+              </span>
+            </a></li>
+            <li><a class="footer__link nav__link" href="#about">
+              <span class="link__inner">
+                <span class="link__label">About</span>
+                <span class="link__label link__label--clone" aria-hidden="true">About</span>
+              </span>
+            </a></li>
+            <li><a class="footer__link nav__link" href="#contact">
+              <span class="link__inner">
+                <span class="link__label">Start a Project</span>
+                <span class="link__label link__label--clone" aria-hidden="true">Start a Project</span>
+              </span>
+            </a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <p class="footer__col-label label-text">Contact</p>
+          <ul class="footer__col-links" role="list">
+            <li><a class="footer__link nav__link" href="mailto:michael@woodfireddesigns.com">
+              <span class="link__inner">
+                <span class="link__label">michael@woodfireddesigns.com</span>
+                <span class="link__label link__label--clone" aria-hidden="true">michael@woodfireddesigns.com</span>
+              </span>
+            </a></li>
+            <li><span class="footer__text">Salisbury, MD</span></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <p class="footer__col-label label-text">Social</p>
+          <ul class="footer__col-links" role="list">
+            <li><a class="footer__link nav__link" href="https://instagram.com/woodfireddesigns" target="_blank" rel="noopener noreferrer">
+              <span class="link__inner">
+                <span class="link__label">Instagram</span>
+                <span class="link__label link__label--clone" aria-hidden="true">Instagram</span>
+              </span>
+            </a></li>
+            <li><a class="footer__link nav__link" href="https://linkedin.com/in/michaeldeschenes" target="_blank" rel="noopener noreferrer">
+              <span class="link__inner">
+                <span class="link__label">LinkedIn</span>
+                <span class="link__label link__label--clone" aria-hidden="true">LinkedIn</span>
+              </span>
+            </a></li>
+            <li><a class="footer__link nav__link" href="https://contra.com/woodfireddesigns" target="_blank" rel="noopener noreferrer">
+              <span class="link__inner">
+                <span class="link__label">Contra</span>
+                <span class="link__label link__label--clone" aria-hidden="true">Contra</span>
+              </span>
+            </a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom row -->
+      <div class="footer__bottom">
+        <p class="footer__copyright label-text">© 2025 Wood Fired Designs. All rights reserved.</p>
+        <p class="footer__credit label-text">Designed & built by Michael Deschenes — Salisbury, MD</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- Custom cursor (desktop only — hidden via CSS on mobile) -->
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <div class="custom-cursor-dot" aria-hidden="true"></div>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <!-- Scripts -->
+  <script src="js/reveals.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/animations.js" defer></script>
+
+</body>
+</html>

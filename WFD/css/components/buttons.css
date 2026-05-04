@@ -1,0 +1,93 @@
+/* css/components/buttons.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   buttons.css — Button component styles
+   All values via brand.css variables only.
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── BASE BUTTON ──────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    background-color var(--duration-fast) var(--ease-out-expo),
+    color var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo),
+    transform var(--duration-fast) var(--ease-out-expo),
+    box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+
+/* ── OUTLINE BUTTON (nav CTA) ─────────────────────────────── */
+
+.btn--outline {
+  background-color: transparent;
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg);
+}
+
+
+/* ── ACCENT / FILLED BUTTON (primary CTA) ────────────────── */
+
+.btn--accent {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text-inverse);
+  /* Magnetic effect: transform transition for smooth snap-back */
+  transition:
+    background-color var(--duration-fast) var(--ease-out-expo),
+    color var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo),
+    transform var(--duration-fast) var(--ease-out-expo),
+    box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+
+.btn--accent:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+
+/* ── LARGE BUTTON (CTA section) ──────────────────────────── */
+
+.btn--lg {
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--type-body);
+}
+
+
+/* ── INVERSE OUTLINE (on dark backgrounds) ───────────────── */
+
+.btn--outline-inverse {
+  background-color: transparent;
+  border-color: var(--color-text-inverse);
+  color: var(--color-text-inverse);
+}
+
+.btn--outline-inverse:hover {
+  background-color: var(--color-text-inverse);
+  color: var(--color-bg-inverse);
+}

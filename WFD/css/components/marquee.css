@@ -1,0 +1,11 @@
+/* css/components/marquee.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   marquee.css — Shared marquee/ticker animation component
+   All values via brand.css variables only.
+   ───────────────────────────────────────────────────────────── */
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}

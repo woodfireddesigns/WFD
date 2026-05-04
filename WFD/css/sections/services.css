@@ -1,0 +1,180 @@
+/* css/sections/services.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   services.css — Services section
+   Dark background. 30/70 header split. Numbered service rows
+   with hover arrow and name color shift.
+   All values via brand.css variables only.
+   Scoped to .section-services only.
+   ───────────────────────────────────────────────────────────── */
+
+
+/*
+ * .theme-dark on this element overrides --color-bg → #1A1713.
+ * background-color: var(--color-bg) therefore resolves to dark.
+ * No redundant override needed.
+ */
+.section-services {
+  background-color: var(--color-bg);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.services__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+
+/* ── HEADER ───────────────────────────────────────────────── */
+
+.services__header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 1024px) {
+  .services__header {
+    grid-template-columns: 3fr 7fr;
+    gap: var(--col-gap);
+    align-items: end;
+    padding-bottom: var(--space-xl);
+  }
+}
+
+.services__header-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.services__kicker {
+  color: var(--color-text-secondary);
+}
+
+.services__subhead {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 380px;
+}
+
+.services__headline {
+  font-family: var(--font-display);
+  font-size: var(--type-display-md);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+}
+
+
+/* ── SERVICE LIST ─────────────────────────────────────────── */
+
+.services__list {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ── SERVICE ROW ──────────────────────────────────────────── */
+
+.services__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-sm) var(--space-md);
+  padding-block: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  border-left: 3px solid transparent;
+  position: relative;
+  transition:
+    background-color var(--duration-fast) var(--ease-in-out),
+    border-left-color var(--duration-fast) var(--ease-in-out),
+    padding-left var(--duration-fast) var(--ease-in-out);
+}
+
+@media (min-width: 768px) {
+  .services__row {
+    grid-template-columns: auto 1fr 1fr auto;
+    gap: var(--space-sm) var(--space-lg);
+    padding-block: var(--space-lg);
+  }
+}
+
+.services__row:last-child {
+  border-bottom: none;
+}
+
+.services__row:hover {
+  background-color: var(--color-bg-alt);
+  border-left-color: var(--color-accent);
+  padding-left: var(--space-xs);
+}
+
+/* Number */
+.services__row-num {
+  color: var(--color-text-secondary);
+  min-width: 2.5em;
+  flex-shrink: 0;
+}
+
+/* Name */
+.services__row-name {
+  font-family: var(--font-display);
+  font-size: var(--type-display-sm);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  transition:
+    color var(--duration-fast) var(--ease-in-out),
+    letter-spacing var(--duration-mid) var(--ease-out-expo);
+}
+
+.services__row:hover .services__row-name {
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Descriptor — hidden on mobile */
+.services__row-desc {
+  display: none;
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .services__row-desc {
+    display: block;
+  }
+}
+
+/* Arrow — slides in snappy on hover */
+.services__row-arrow {
+  font-size: var(--type-body-lg);
+  color: var(--color-accent);
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(calc(-1 * var(--space-md)));
+  transition:
+    opacity   var(--duration-fast) var(--ease-out-expo),
+    transform var(--duration-mid) var(--ease-out-expo);
+}
+
+.services__row:hover .services__row-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}

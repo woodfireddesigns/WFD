@@ -1,0 +1,287 @@
+/* css/components/nav.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   nav.css — Navigation component
+   Covers: site-nav bar, hamburger, full-screen overlay.
+   All values via brand.css variables only.
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── NAV BAR ──────────────────────────────────────────────── */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  padding: var(--space-md) var(--section-pad-x);
+  background-color: transparent;
+  transition: background-color var(--duration-mid) var(--ease-in-out),
+              backdrop-filter var(--duration-mid) var(--ease-in-out);
+}
+
+/* Scrolled state — gained via JS at 60px */
+.site-nav.nav--scrolled {
+  background-color: var(--color-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* When floating over the dark hero, flip text and hamburger to inverse */
+.site-nav.nav--on-dark .nav__logo,
+.site-nav.nav--on-dark .nav__link,
+.site-nav.nav--on-dark .nav__cta {
+  color: var(--color-text-inverse);
+}
+
+.site-nav.nav--on-dark .nav__cta {
+  border-color: var(--color-text-inverse);
+}
+
+.site-nav.nav--on-dark .nav__cta:hover {
+  background-color: var(--color-text-inverse);
+  color: var(--color-bg-inverse);
+}
+
+.site-nav.nav--on-dark .hamburger__line {
+  background-color: var(--color-text-inverse);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+
+/* ── LOGO ─────────────────────────────────────────────────── */
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+  font-style: normal;
+  font-weight: var(--weight-xblack);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: color var(--duration-fast) var(--ease-in-out);
+  white-space: nowrap;
+}
+
+.nav__logo:hover {
+  color: var(--color-accent);
+}
+
+
+/* ── DESKTOP NAV LINKS ────────────────────────────────────── */
+
+.nav__links {
+  display: none;
+  align-items: center;
+  gap: var(--space-lg);
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .nav__links {
+    display: flex;
+  }
+}
+
+.nav__link {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Override link__inner height for nav */
+.nav__link .link__inner {
+  height: 1.3em;
+}
+
+
+/* ── DESKTOP CTA BUTTON ───────────────────────────────────── */
+
+.nav__cta {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nav__cta {
+    display: inline-flex;
+  }
+}
+
+
+/* ── HAMBURGER ────────────────────────────────────────────── */
+
+.nav__hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: clamp(2rem, 4vw, 2.5rem);
+  height: clamp(2rem, 4vw, 2.5rem);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  position: relative;
+  z-index: calc(var(--z-overlay) + 10);
+  flex-shrink: 0;
+}
+
+.hamburger__line {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: var(--color-text-primary);
+  transform-origin: center;
+  transition:
+    transform var(--duration-mid) var(--ease-in-out),
+    opacity var(--duration-fast) var(--ease-in-out),
+    background-color var(--duration-fast) var(--ease-in-out);
+}
+
+/* Open state — animate to X */
+.nav--open .hamburger__line:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+  background-color: var(--color-text-inverse);
+}
+
+.nav--open .hamburger__line:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+  background-color: var(--color-text-inverse);
+}
+
+
+/* ── FULL-SCREEN NAV OVERLAY ──────────────────────────────── */
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background-color: var(--color-bg-inverse);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xl) var(--section-pad-x);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--duration-mid) var(--ease-in-out),
+    visibility var(--duration-mid) var(--ease-in-out);
+}
+
+/* Overlay open state (toggled by adding .nav--open to body) */
+.nav--open .nav-overlay {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-overlay__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+}
+
+/* Overlay nav links list */
+.nav-overlay__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: var(--space-xl);
+}
+
+.overlay-link__item {
+  overflow: hidden;
+  transform: translateY(60px);
+  opacity: 0;
+  transition:
+    transform var(--duration-slow) var(--ease-out-expo),
+    opacity var(--duration-slow) var(--ease-out-expo);
+}
+
+/* Stagger handled by JS adding inline transition-delay */
+.nav--open .overlay-link__item {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.overlay-link {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 9rem);
+  font-style: normal;
+  font-weight: var(--weight-xblack);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-tight);
+  color: var(--color-text-inverse);
+  text-decoration: none;
+}
+
+.overlay-link .link__inner {
+  height: 1.15em;
+}
+
+.overlay-link .link__label {
+  transition: transform var(--duration-mid) var(--ease-in-out),
+              color var(--duration-fast) var(--ease-in-out);
+}
+
+.overlay-link:hover .link__label {
+  transform: translateY(-100%);
+  color: var(--color-accent);
+}
+
+/* Overlay bottom: contact info */
+.nav-overlay__bottom {
+  margin-top: auto;
+  padding-top: var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.nav-overlay__contact-link {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-in-out);
+}
+
+.nav-overlay__contact-link:hover {
+  color: var(--color-text-inverse);
+}
+
+
+/* ── RESPONSIVE OVERRIDES ─────────────────────────────────── */
+
+/* On desktop, hamburger still available alongside inline links */
+@media (min-width: 1024px) {
+  .nav__hamburger {
+    display: flex; /* keep visible for overlay access */
+  }
+}

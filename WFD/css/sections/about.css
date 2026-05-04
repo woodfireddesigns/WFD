@@ -1,0 +1,164 @@
+/* css/sections/about.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   about.css — About / Positioning Statement section
+   30/70 two-column layout. Stat counters left. Word reveal right.
+   All values via brand.css variables only.
+   Scoped to .section-about only.
+   ───────────────────────────────────────────────────────────── */
+
+
+.section-about {
+  background-color: var(--color-bg);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.about__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 1024px) {
+  .about__inner {
+    grid-template-columns: 3fr 7fr;
+    gap: var(--col-gap);
+    align-items: start;
+  }
+}
+
+
+/* ── LEFT COLUMN ──────────────────────────────────────────── */
+
+.about__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.about__kicker {
+  color: var(--color-text-secondary);
+}
+
+
+/* ── STATS ────────────────────────────────────────────────── */
+
+.about__stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-block: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.about__stat:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+/* Animated number — counts from 0 to data-target via main.js */
+.about__stat-number {
+  font-family: var(--font-display);
+  font-size: var(--type-display-md);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+}
+
+/*
+ * "+" suffix via CSS pseudo — stays visible during count-up animation.
+ * 0+ → 1+ → ... → 60+. This is standard for stat counters.
+ * Does NOT apply to .about__stat--text variant (no .about__stat-number class).
+ */
+.about__stat:not(.about__stat--text) .about__stat-number::after {
+  content: '+';
+}
+
+.about__stat-label {
+  color: var(--color-text-secondary);
+}
+
+/* Third stat — text value instead of number */
+.about__stat--text {
+  border-bottom: none;
+}
+
+.about__stat-text {
+  font-family: var(--font-display);
+  font-size: var(--type-display-sm);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+}
+
+
+/* ── RIGHT COLUMN ─────────────────────────────────────────── */
+
+.about__right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 1024px) {
+  .about__right {
+    padding-top: var(--space-xl);
+  }
+}
+
+.about__headline {
+  font-family: var(--font-display);
+  font-size: var(--type-display-md);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+}
+
+.about__body {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 640px;
+}
+
+/* Inline text link with clone-hover */
+.about__link {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 2px;
+  transition:
+    color var(--duration-fast) var(--ease-in-out),
+    border-color var(--duration-fast) var(--ease-in-out);
+}
+
+.about__link:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.about__link .link__inner {
+  height: 1.3em;
+}

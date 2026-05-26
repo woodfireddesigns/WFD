@@ -1,0 +1,200 @@
+/* css/sections/gallery.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   gallery.css — Full-screen image slideshow
+   Three slides: Forge → Office → Job Site.
+   Auto-advances every 5s. Crossfade + subtle Ken Burns.
+   Progress bar, dot nav, arrow nav, keyboard support.
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── SECTION ──────────────────────────────────────────────── */
+
+.section-gallery {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--color-bg-inverse);
+  cursor: none; /* custom cursor handles it */
+}
+
+
+/* ── SLIDES ───────────────────────────────────────────────── */
+
+.gallery__slide {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1s var(--ease-in-out);
+  will-change: opacity;
+}
+
+.gallery__slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.gallery__slide.is-prev {
+  opacity: 0;
+  z-index: 0;
+}
+
+.gallery__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+
+/* ── PROGRESS BAR ─────────────────────────────────────────── */
+
+.gallery__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(245, 242, 236, 0.15);
+  z-index: 10;
+}
+
+.gallery__progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--color-accent);
+  transition: width linear;
+}
+
+.gallery__progress-bar.is-running {
+  width: 100%;
+}
+
+
+/* ── DOT NAVIGATION ───────────────────────────────────────── */
+
+.gallery__dots {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.gallery__dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(245, 242, 236, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background   var(--duration-mid) var(--ease-out-expo),
+    width        var(--duration-mid) var(--ease-out-expo),
+    transform    var(--duration-mid) var(--ease-out-expo);
+}
+
+.gallery__dot:hover {
+  background: rgba(245, 242, 236, 0.7);
+}
+
+.gallery__dot.is-active {
+  width: 24px;
+  background: var(--color-accent);
+}
+
+
+/* ── ARROW NAVIGATION ─────────────────────────────────────── */
+
+.gallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: clamp(44px, 5vw, 56px);
+  height: clamp(44px, 5vw, 56px);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(245, 242, 236, 0.2);
+  background: rgba(26, 23, 19, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-text-inverse);
+  font-size: var(--type-body-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity       var(--duration-mid) var(--ease-out-expo),
+    background    var(--duration-fast) var(--ease-out-expo),
+    border-color  var(--duration-fast) var(--ease-out-expo),
+    transform     var(--duration-fast) var(--ease-out-expo);
+}
+
+.section-gallery:hover .gallery__arrow {
+  opacity: 1;
+}
+
+.gallery__arrow:hover {
+  background: rgba(212, 88, 26, 0.7);
+  border-color: var(--color-accent);
+}
+
+.gallery__arrow--prev {
+  left: var(--space-lg);
+}
+
+.gallery__arrow--next {
+  right: var(--space-lg);
+}
+
+.gallery__arrow--prev:hover {
+  transform: translateY(-50%) translateX(-2px);
+}
+
+.gallery__arrow--next:hover {
+  transform: translateY(-50%) translateX(2px);
+}
+
+
+/* ── SLIDE COUNTER ────────────────────────────────────────── */
+
+.gallery__counter {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--section-pad-x);
+  z-index: 10;
+  color: rgba(245, 242, 236, 0.5);
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.gallery__counter-current {
+  color: var(--color-text-inverse);
+}
+
+
+/* ── TOUCH / MOBILE ───────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .gallery__arrow {
+    display: none; /* swipe handles navigation on mobile */
+  }
+
+  .gallery__dots {
+    bottom: var(--space-md);
+  }
+}

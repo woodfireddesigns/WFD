@@ -1,0 +1,95 @@
+/* css/sections/cta.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   cta.css — CTA / Close section
+   Full-viewport height. All content centered.
+   Warm background. Large italic headline. Two CTAs.
+   All values via brand.css variables only.
+   Scoped to .section-cta only.
+   ───────────────────────────────────────────────────────────── */
+
+
+.section-cta {
+  /* Cream base — orange bloom bottom-left, dark fade top-right */
+  background:
+    radial-gradient(ellipse 80% 70% at 5% 100%,  #D4581A 0%, transparent 55%),
+    radial-gradient(ellipse 60% 55% at 100% 0%,  #1A1713 0%, transparent 50%),
+    radial-gradient(ellipse 45% 40% at 90% 90%,  rgba(212, 88, 26, 0.4) 0%, transparent 45%),
+    #F5F2EC;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.cta__inner {
+  max-width: 1000px;
+  width: 100%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.cta__kicker {
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-wider);
+}
+
+.cta__headline {
+  margin-top: var(--gap-overline);
+  font-family: var(--font-display);
+  font-size: var(--type-display-lg);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+}
+
+.cta__subhead {
+  margin-top: var(--gap-sub);
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  max-width: var(--prose-md);
+}
+
+.cta__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+  margin-top: var(--gap-cta);
+}
+
+/* Secondary text link */
+.cta__secondary-link {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2px;
+  transition:
+    color var(--duration-fast) var(--ease-in-out),
+    border-color var(--duration-fast) var(--ease-in-out);
+}
+
+.cta__secondary-link:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+}
+
+.cta__secondary-link .link__inner {
+  height: var(--link-inner-h);
+}

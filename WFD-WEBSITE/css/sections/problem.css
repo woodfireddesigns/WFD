@@ -1,0 +1,157 @@
+/* css/sections/problem.css — Wood Fired Designs — woodfireddesigns.com */
+
+.section-problem {
+  background: var(--color-bg-inverse);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.problem__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+.problem__header {
+  margin-bottom: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-overline);
+}
+
+.problem__kicker {
+  color: var(--color-text-secondary);
+}
+
+.problem__headline {
+  font-family: var(--font-display);
+  font-size: var(--type-display-sm);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+  max-width: 820px;
+}
+
+
+/* ── CARDS ─────────────────────────────────────────────────── */
+
+.problem__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(12px, 1.5vw, 16px);
+}
+
+@media (min-width: 768px) {
+  .problem__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.problem__card {
+  padding: var(--space-xl) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: border-color var(--duration-mid) var(--ease-out-expo),
+              background  var(--duration-mid) var(--ease-out-expo);
+}
+
+.problem__card:hover {
+  border-color: var(--color-accent);
+  background: rgba(212, 88, 26, 0.04);
+}
+
+.problem__card-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  line-height: 1;
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-wide);
+}
+
+.problem__card-title {
+  font-family: var(--font-display);
+  font-size: var(--type-heading);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+}
+
+.problem__card-body {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+
+/* ── CLOSER ─────────────────────────────────────────────────── */
+
+.problem__closer {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.problem__closer-text {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 8.5rem);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+}
+
+.problem__closer-text em {
+  color: var(--color-accent);
+  font-style: normal;
+}
+
+.problem__closer-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+
+/* Accent words (second half) in the fire reveal get the orange color */
+.word-reveal--fire .wr-outer--accent .wr-inner {
+  color: var(--color-accent);
+}
+
+
+/* ── FIRE WORD REVEAL ──────────────────────────────────────── */
+/* Enhanced variant: skew + scale + rise — applied to .word-reveal--fire */
+
+.word-reveal--fire .wr-inner {
+  transform: translateY(115%) skewX(-10deg);
+  transition:
+    transform calc(var(--duration-reveal) * 1.1) var(--ease-out-expo);
+}
+
+.word-reveal--fire .wr-inner.is-visible {
+  transform: translateY(0) skewX(0deg);
+}
+
+/* Reduced motion override */
+@media (prefers-reduced-motion: reduce) {
+  .word-reveal--fire .wr-inner {
+    transform: none;
+    transition: none;
+  }
+}

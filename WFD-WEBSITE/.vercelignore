@@ -1,0 +1,10 @@
+# Dev & source files — not needed in production
+*.pdf
+*.skill
+components/
+Website Design inspiration/
+assets/video/FINAL DESKTOP HERO PAGES.mp4
+assets/video/Hero-desktop-2.mp4
+assets/video/hero-desktop.mp4
+.DS_Store
+*.md

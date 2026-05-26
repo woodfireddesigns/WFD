@@ -1,0 +1,315 @@
+/* css/sections/hero-sequence.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   hero-sequence.css
+   300vh sticky scroll container. Three panels crossfade over
+   a shared pinned video background. GSAP ScrollTrigger drives
+   all panel transitions — see js/scroll-sequence.js.
+   Replaces: hero.css, manifesto.css, about.css for the
+   blended intro sequence.
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── SCROLL CONTAINER ─────────────────────────────────────── */
+/* Creates the scroll distance GSAP rides. The inner .hero-seq
+   sticks to the top while the user scrolls through 300vh.     */
+
+.hero-seq-scroll {
+  height: 300vh;
+  position: relative;
+}
+
+
+/* ── STICKY PANEL WRAPPER ─────────────────────────────────── */
+
+.hero-seq {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  background-color: var(--color-bg-inverse);
+}
+
+
+/* ── VIDEO BACKGROUND ─────────────────────────────────────── */
+
+.hero-seq__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-seq__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-seq__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 23, 19, 0.35) 0%,
+    rgba(26, 23, 19, 0.15) 35%,
+    rgba(26, 23, 19, 0.50) 65%,
+    rgba(26, 23, 19, 0.88) 100%
+  );
+}
+
+
+/* ── PANELS ───────────────────────────────────────────────── */
+/* All three panels are absolutely stacked. GSAP controls
+   opacity + y-transform. Panel 1 starts visible; 2 and 3
+   start hidden (set via JS to avoid flash on load).          */
+
+.hero-seq__panel {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--space-2xl) + var(--space-lg)); /* clears fixed nav */
+  padding-bottom: var(--space-2xl);
+  padding-inline: var(--section-pad-x);
+  /* visibility controlled by GSAP — default opacity set in JS */
+}
+
+.hero-seq__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+
+/* ── PANEL TYPOGRAPHY ─────────────────────────────────────── */
+
+.hero-seq__kicker {
+  color: var(--color-text-secondary);
+}
+
+.hero-seq__display {
+  font-family: var(--font-display);
+  font-size: var(--type-display-xl);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+  margin-top: var(--gap-overline);
+  margin-bottom: 0;
+}
+
+/* Slightly smaller for longer headlines (panel 3) */
+.hero-seq__display--lg {
+  font-size: var(--type-display-lg);
+}
+
+.hero-seq__accent {
+  color: var(--color-accent);
+}
+
+.hero-seq__body {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: rgba(245, 242, 236, 0.82);
+  max-width: var(--prose-md);
+  margin-top: var(--gap-sub);
+}
+
+.hero-seq__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  margin-top: var(--gap-cta);
+}
+
+.hero-seq__text-link {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-inverse);
+  margin-top: var(--gap-cta);
+  display: inline-block;
+}
+
+/* Inside the actions flex row — zero out the standalone margin so it
+   stays vertically aligned with the sibling CTA button. */
+.hero-seq__actions .hero-seq__text-link {
+  margin-top: 0;
+}
+
+
+/* ── PANEL 3 STATS ROW ────────────────────────────────────── */
+
+.hero-seq__stats {
+  display: flex;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+  margin-top: var(--gap-sub);
+  padding-top: var(--gap-sub);
+  border-top: 1px solid rgba(245, 242, 236, 0.12);
+}
+
+.hero-seq__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.hero-seq__stat-num {
+  font-family: var(--font-display);
+  font-size: var(--type-display-sm);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+}
+
+.hero-seq__stat-label {
+  color: var(--color-text-secondary);
+}
+
+
+/* ── SHARED BOTTOM BAR ────────────────────────────────────── */
+
+.hero-seq__bottom {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: var(--section-pad-x);
+  right: var(--section-pad-x);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(245, 242, 236, 0.12);
+  color: var(--color-text-secondary);
+}
+
+
+/* ── PROGRESS DOTS ────────────────────────────────────────── */
+
+.hero-seq__dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-seq__dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(245, 242, 236, 0.25);
+  transition:
+    background  var(--duration-mid) var(--ease-out-expo),
+    transform   var(--duration-mid) var(--ease-out-expo),
+    width       var(--duration-mid) var(--ease-out-expo);
+}
+
+.hero-seq__dot.is-active {
+  background: var(--color-accent);
+  transform: scale(1.3);
+  width: 18px;
+  border-radius: var(--radius-pill);
+}
+
+
+/* ── SCROLL HINT ──────────────────────────────────────────── */
+
+.hero-seq__scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+@keyframes seq-arrow-pulse {
+  0%, 100% { transform: translateY(0);  opacity: 0.5; }
+  50%       { transform: translateY(5px); opacity: 1;   }
+}
+
+.hero-seq__arrow {
+  display: inline-block;
+  animation: seq-arrow-pulse 2s var(--ease-in-out) infinite;
+}
+
+/* Hide scroll hint on last panel */
+.hero-seq.at-panel-3 .hero-seq__scroll-hint {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-mid) var(--ease-out-expo);
+}
+
+
+/* ── NAV LOGO — IMAGE ─────────────────────────────────────── */
+
+.nav__logo-img {
+  height: auto;
+  width: 55px;
+  padding: 4px 12px 4px 0;
+  display: block;
+  /* Always white — nav is always a dark pill */
+  filter: brightness(0) invert(1);
+}
+
+/* Keep white when overlay is open */
+.nav--open .nav__logo-img {
+  filter: brightness(0) invert(1);
+}
+
+
+/* ── FOOTER LOGO — IMAGE ──────────────────────────────────── */
+
+.footer__logo-img {
+  height: clamp(48px, 8vw, 80px);
+  width: auto;
+  display: block;
+  /* Invert dark script to white for dark footer */
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .hero-seq__display {
+    font-size: var(--type-display-lg);
+  }
+
+  .hero-seq__display--lg {
+    font-size: var(--type-display-md);
+  }
+
+  .hero-seq__stats {
+    gap: var(--space-md);
+  }
+
+  .hero-seq__bottom {
+    /* On very small screens, hide the left label */
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-seq__display--lg {
+    font-size: var(--type-display-xl);
+  }
+}

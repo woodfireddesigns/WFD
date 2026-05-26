@@ -1,0 +1,178 @@
+/* brand.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   brand.css — Wood Fired Designs
+   Single source of truth for all design tokens.
+   ───────────────────────────────────────────────────────────── */
+
+
+/* ── FONT FACES — Owners XNarrow (local) ────────────────── */
+
+@font-face {
+  font-family: 'Owners XNarrow';
+  src: url('Fonts/OwnersTRIALXNarrow-Black-BF64361ef4cc588.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Owners XNarrow';
+  src: url('Fonts/OwnersTRIALXNarrow-BlackItalic-BF64361ef518e01.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Owners XNarrow';
+  src: url('Fonts/OwnersTRIALXNarrow-XBlack-BF64361ef464c49.otf') format('opentype');
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Owners XNarrow';
+  src: url('Fonts/OwnersTRIALXNarrow-XBlackItalic-BF64361ef4b9cb8.otf') format('opentype');
+  font-weight: 950;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Owners XNarrow';
+  src: url('Fonts/OwnersTRIALXNarrow-Bold-BF64361ef52c32a.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Owners XNarrow';
+  src: url('Fonts/OwnersTRIALXNarrow-BoldItalic-BF64361ef52b3ba.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+:root {
+
+  /* ── COLORS ─────────────────────────────────────────────── */
+  --color-bg:              #F5F2EC;     /* warm off-white */
+  --color-bg-alt:          #EDE9E0;     /* slightly deeper warm white */
+  --color-bg-inverse:      #1A1713;     /* near-black warm */
+  --color-text-primary:    #1A1713;     /* near-black */
+  --color-text-secondary:  #6B6560;     /* muted warm gray */
+  --color-text-inverse:    #F5F2EC;     /* inverse copy on dark bg */
+  --color-accent:          #D4581A;     /* wood fire orange */
+  --color-accent-hover:    #B8490F;     /* darker orange on hover */
+  --color-border:          #DDD8CF;     /* subtle divider */
+  --color-border-strong:   #BAB4AA;     /* stronger divider */
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────────── */
+  --font-display:    'Owners XNarrow', Georgia, sans-serif;
+  --font-body:       'Inter', -apple-system, sans-serif;
+  --font-label:      'Inter', -apple-system, sans-serif;
+
+  --type-display-xl: clamp(4rem, 12vw, 13rem);
+  --type-display-lg: clamp(3rem, 8vw, 9rem);
+  --type-display-md: clamp(2rem, 5vw, 5.5rem);
+  --type-display-sm: clamp(1.6rem, 3.5vw, 3.5rem);
+  --type-heading:    clamp(1.2rem, 2vw, 1.8rem);
+  --type-body-lg:    clamp(1.05rem, 1.4vw, 1.2rem);
+  --type-body:       clamp(0.95rem, 1.2vw, 1.05rem);
+  --type-label:      clamp(0.7rem, 0.9vw, 0.8rem);
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-bold:     700;
+  --weight-black:    900;
+  --weight-xblack:   950;  /* Owners XNarrow XBlack — uppercase display only */
+
+  --leading-tight:   0.82;
+  --leading-snug:    0.95;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight:  -0.05em;
+  --tracking-snug:   -0.03em;
+  --tracking-normal: 0em;
+  --tracking-wide:   0em;
+  --tracking-wider:  0.08em;
+
+  /* ── SPACING ─────────────────────────────────────────────── */
+  --space-xs:   clamp(0.5rem, 1vw, 0.75rem);
+  --space-sm:   clamp(0.75rem, 1.5vw, 1rem);
+  --space-md:   clamp(1rem, 2vw, 1.5rem);
+  --space-lg:   clamp(1.5rem, 3vw, 2.5rem);
+  --space-xl:   clamp(2.5rem, 5vw, 5rem);
+  --space-2xl:  clamp(4rem, 8vw, 9rem);
+  --space-3xl:  clamp(6rem, 12vw, 14rem);
+
+  --section-pad-y:  var(--space-2xl);
+  --section-pad-x:  clamp(1.5rem, 5vw, 6rem);
+
+  /* ── LAYOUT ─────────────────────────────────────────────── */
+  --max-width:        1400px;
+  --grid-cols:        12;
+  --col-gap:          clamp(1rem, 2vw, 2rem);
+
+  /* ── BORDERS / RADIUS ───────────────────────────────────── */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  16px;
+  --radius-pill: 999px;
+
+  /* ── MOTION ─────────────────────────────────────────────── */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:     cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast:   0.2s;
+  --duration-mid:    0.4s;
+  --duration-slow:   0.7s;
+  --duration-reveal: 0.9s;
+
+  /* ── Z-INDEX ─────────────────────────────────────────────── */
+  --z-nav:      50;
+  --z-overlay:  100;
+  --z-modal:    200;
+
+  /* ── PROSE WIDTHS ────────────────────────────────────────── */
+  --prose-sm:   380px;   /* narrow summary columns (services, process) */
+  --prose-md:   560px;   /* standard subhead/body columns (hero, CTA) */
+
+  /* ── COMPONENT TOKENS ────────────────────────────────────── */
+  --link-inner-h:  1.3em;  /* clone-hover link inner height */
+  --row-num-min-w: 2.5em;  /* numbered row index min-width */
+  --blur-nav:      8px;    /* nav scrolled backdrop-filter blur radius */
+
+  /* ── CONTENT HIERARCHY RHYTHM ────────────────────────────── */
+  /* Three distinct gaps that enforce visual hierarchy in content stacks.
+     Apply in order: overline → heading → body copy → CTA. */
+  --gap-overline: var(--space-xs);   /* overline/kicker → heading  (tight ~8px) */
+  --gap-sub:      var(--space-md);   /* heading → supporting copy  (medium ~16px) */
+  --gap-cta:      var(--space-xl);   /* body copy → CTA actions    (loose ~48px) */
+}
+
+/* Dark section override — apply to any section with class .theme-dark */
+.theme-dark {
+  --color-bg:           #1A1713;
+  --color-bg-alt:       #222018;
+  --color-text-primary: #F5F2EC;
+  --color-text-secondary: #A09A93;
+  --color-border:       #333028;
+  --color-border-strong: #4A453E;
+}
+
+/* Reduced motion override */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

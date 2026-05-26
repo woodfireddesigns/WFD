@@ -1,0 +1,142 @@
+/* css/sections/proof.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   proof.css — Social Proof / Testimonials section
+   Centered pull quote (word reveal) + 3-column card grid.
+   No box shadows. No borders on cards except top rule.
+   All values via brand.css variables only.
+   Scoped to .section-proof only.
+   ───────────────────────────────────────────────────────────── */
+
+
+.section-proof {
+  background-color: var(--color-bg);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.proof__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+
+/* ── HEADER / PULL QUOTE ──────────────────────────────────── */
+
+.proof__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: 920px;
+  margin-inline: auto;
+  width: 100%;
+  text-align: center;
+}
+
+.proof__kicker {
+  color: var(--color-text-secondary);
+  text-align: left;
+  align-self: flex-start;
+  width: 100%;
+}
+
+.proof__pull-quote {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+
+/* ── TESTIMONIAL GRID ─────────────────────────────────────── */
+
+.proof__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .proof__cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--col-gap);
+    align-items: start;
+  }
+}
+
+
+/* ── INDIVIDUAL CARD ──────────────────────────────────────── */
+
+/*
+ * No rounded cards.
+ * Structure: 2px top border + padding-top + quote + name.
+ * CSS sets opacity: 1 as a fallback — GSAP animates from 0 to 1
+ * on scroll, but if GSAP fails the cards remain readable.
+ */
+.proof__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0 var(--space-md);
+  border-top: 2px solid var(--color-border-strong);
+  background: transparent;
+  /* GPU-composited hover — no layout shift */
+  transition:
+    border-color var(--duration-mid) var(--ease-out-expo),
+    transform    var(--duration-mid) var(--ease-out-expo);
+}
+
+.proof__card:hover {
+  border-top-color: var(--color-accent);
+  transform: translateY(-4px);
+}
+
+/* Opening quotation mark */
+.proof__card-quote::before {
+  content: '\201C';
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--type-display-sm);
+  font-weight: var(--weight-xblack);
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.35;
+  margin-bottom: var(--space-xs);
+  transition: opacity var(--duration-mid) var(--ease-out-expo);
+}
+
+.proof__card:hover .proof__card-quote::before {
+  opacity: 0.7;
+}
+
+.proof__card-quote {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-primary);
+  flex: 1;
+  font-style: normal;
+}
+
+.proof__card-name {
+  color: var(--color-text-secondary);
+  font-style: normal;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .proof__card {
+    transition: border-color var(--duration-fast) var(--ease-out-expo);
+  }
+  .proof__card:hover {
+    transform: none;
+  }
+}

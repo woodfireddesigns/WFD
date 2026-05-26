@@ -1,0 +1,925 @@
+<!-- /ux/index.html — Wood Fired Designs — Conversion Landing Page v2 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Websites Built for Trades & Service Businesses — Wood Fired Designs</title>
+  <meta name="description" content="That preview we sent you? Let's build the real thing. Custom websites for trades and service businesses — live in 7 days, starting at $1,200. Book a free 15-min call with Michael.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://woodfireddesigns.com/ux">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://woodfireddesigns.com/ux">
+  <meta property="og:title" content="Websites Built for Trades & Service Businesses — Wood Fired Designs">
+  <meta property="og:description" content="Custom websites for trades and service businesses. Live in 7 days. Starting at $1,200.">
+  <meta property="og:image" content="https://woodfireddesigns.com/assets/video/hero-poster.jpg">
+  <meta name="theme-color" content="#1a1713">
+
+  <link rel="icon" type="image/png" href="/brand/Artboard 26 copy 9@300x.png">
+  <link rel="apple-touch-icon" href="/brand/Artboard 26 copy 9@300x.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/brand.css?v=4">
+  <link rel="stylesheet" href="/css/base.css?v=5">
+
+  <style>
+
+    /* ── RESET EXTRAS ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body { overflow-x: hidden; }
+
+    /* ── PRELOADER ────────────────────────────────────────── */
+    #pl { position:fixed;inset:0;z-index:99999;background:#1a1713;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .5s ease,visibility .5s ease }
+    #pl.out { opacity:0;visibility:hidden;pointer-events:none }
+    #pl-logo { opacity:0;transform:scale(.94);transition:opacity .6s ease,transform .6s ease }
+    #pl-logo.in { opacity:1;transform:scale(1) }
+    #pl-logo img { height:clamp(36px,6vw,60px);filter:brightness(0) invert(1) }
+    #pl-bar { width:160px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden }
+    #pl-fill { height:100%;width:0%;background:linear-gradient(90deg,#d4581a,#ff8c42);border-radius:2px;transition:width 1s cubic-bezier(.4,0,.2,1) }
+    #pl-fill.go { width:100% }
+
+    /* ── STICKY NAV ───────────────────────────────────────── */
+    #N { position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 clamp(1rem,4vw,2.5rem);background:transparent;transition:background .25s,box-shadow .25s }
+    #N.solid { background:rgba(10,8,6,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(255,255,255,.06) }
+    #N-logo img { display:block;height:26px;width:auto;filter:brightness(0) invert(1) }
+    #N-cta { font-family:'Inter',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#e8632a,#d4581a 50%,#b84010);border:1.5px solid rgba(255,120,50,.35);border-radius:100px;padding:.45rem 1.125rem;text-decoration:none;white-space:nowrap;box-shadow:0 2px 8px rgba(212,88,26,.3),inset 0 1px 0 rgba(255,180,100,.2);transition:filter .2s,transform .15s,box-shadow .2s }
+    #N-cta:hover { filter:brightness(1.1) saturate(1.1);transform:translateY(-1px);box-shadow:0 4px 18px rgba(212,88,26,.5),0 0 0 1px rgba(255,120,50,.5),inset 0 1px 0 rgba(255,200,130,.25) }
+
+    /* ── STICKY BOTTOM BAR (mobile) ───────────────────────── */
+    #sticky-bar { position:fixed;bottom:0;left:0;right:0;z-index:999;background:rgba(10,8,6,.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);padding:.75rem 1.25rem;display:flex;gap:.625rem;align-items:center;justify-content:center;transform:translateY(100%);transition:transform .35s var(--ease-out-expo);opacity:0 }
+    #sticky-bar.on { transform:translateY(0);opacity:1 }
+    #sticky-bar .sb-primary { flex:1;text-align:center;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#e8632a,#d4581a 50%,#b84010);border:1.5px solid rgba(255,120,50,.35);border-radius:100px;padding:.625rem 1rem;text-decoration:none }
+    #sticky-bar .sb-secondary { font-family:'Inter',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(245,242,236,.5);text-decoration:none;padding:.625rem .875rem;border:1.5px solid rgba(255,255,255,.1);border-radius:100px;white-space:nowrap }
+
+    /* ── BUTTON SYSTEM ────────────────────────────────────── */
+    .btn { display:inline-flex;align-items:center;justify-content:center;gap:.375rem;padding:.65rem 1.5rem;font-family:'Inter',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border-radius:100px;cursor:pointer;text-decoration:none;border:1.5px solid transparent;transition:filter .2s,box-shadow .25s,transform .15s,border-color .15s,background .15s,color .15s;position:relative }
+    .btn:active { transform:scale(.96)!important }
+    .btn--accent { background:linear-gradient(135deg,#e8632a 0%,#d4581a 45%,#b84010 100%);border-color:rgba(255,120,50,.4);color:#fff;box-shadow:0 2px 10px rgba(212,88,26,.35),0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,180,100,.2) }
+    .btn--accent:hover { filter:brightness(1.12) saturate(1.1);box-shadow:0 0 0 1px rgba(255,120,50,.55),0 4px 22px rgba(212,88,26,.55),0 10px 48px rgba(212,88,26,.2),inset 0 1px 0 rgba(255,200,130,.25);transform:translateY(-1px) }
+    .btn--lg { padding:.875rem 2.25rem;font-size:.78rem;letter-spacing:.1em }
+    .btn--xl { padding:1rem 2.5rem;font-size:.82rem;letter-spacing:.1em }
+    .btn--ghost { background:transparent;border-color:rgba(245,242,236,.22);color:rgba(245,242,236,.65) }
+    .btn--ghost:hover { background:rgba(245,242,236,.05);border-color:rgba(245,242,236,.5);color:#f5f2ec;transform:translateY(-1px) }
+    .btn--outline { background:transparent;border-color:rgba(26,23,19,.35);color:#1a1713 }
+    .btn--outline:hover { background:#1a1713;border-color:#1a1713;color:#f5f2ec;transform:translateY(-1px) }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero { position:relative;min-height:100svh;display:flex;align-items:flex-end;background:#0a0806;overflow:hidden }
+    .hero__bg { position:absolute;inset:0;z-index:0 }
+    .hero__video { width:100%;height:100%;object-fit:cover;opacity:.3 }
+    .hero__overlay { position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,8,6,.5) 0%,rgba(10,8,6,.15) 40%,rgba(10,8,6,.75) 85%,rgba(10,8,6,.95) 100%) }
+    .hero__inner { position:relative;z-index:1;width:100%;max-width:var(--max-width);margin-inline:auto;padding:0 clamp(1.25rem,5vw,6rem) clamp(3rem,7vw,6rem);padding-top:calc(60px + clamp(2rem,6vw,5rem)) }
+
+    /* In-hero trust strip */
+    .hero__trust { display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-bottom:clamp(1.5rem,3vw,2.5rem) }
+    .hero__trust-item { display:flex;align-items:center;gap:.375rem;font-family:'Inter',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,236,.45) }
+    .hero__trust-dot { width:5px;height:5px;border-radius:50%;background:#d4581a;box-shadow:0 0 6px rgba(212,88,26,.7);flex-shrink:0 }
+    .hero__trust-divider { color:rgba(245,242,236,.15);font-size:.7rem }
+
+    /* Headline */
+    .hero__kicker { font-family:'Inter',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(212,88,26,.9);margin-bottom:.875rem }
+    .hero__h1 { font-family:var(--font-display);font-weight:950;font-size:clamp(3.5rem,11vw,11rem);line-height:.85;text-transform:uppercase;color:#f5f2ec;letter-spacing:-.015em;margin-bottom:clamp(1.25rem,2.5vw,2rem);max-width:14ch }
+    .hero__h1 em { font-style:italic;color:#d4581a }
+
+    /* In-hero testimonial pull */
+    .hero__proof-quote { display:flex;flex-direction:column;gap:.5rem;margin-bottom:clamp(1.75rem,3.5vw,3rem);padding-left:1rem;border-left:2px solid rgba(212,88,26,.5);max-width:440px }
+    .hero__proof-quote blockquote { font-family:'Inter',sans-serif;font-size:.88rem;font-weight:400;line-height:1.55;color:rgba(245,242,236,.6);font-style:italic }
+    .hero__proof-quote cite { font-family:'Inter',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(212,88,26,.7);font-style:normal }
+
+    /* CTAs */
+    .hero__actions { display:flex;flex-wrap:wrap;gap:.875rem;align-items:center }
+    .hero__subtext { font-family:'Inter',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:rgba(245,242,236,.3);margin-top:.875rem }
+
+    /* ── TRUST BAR ────────────────────────────────────────── */
+    .trust-bar { background:#111009;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:clamp(.75rem,1.25vw,1rem) clamp(1.25rem,5vw,6rem) }
+    .trust-bar__inner { max-width:var(--max-width);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:.625rem 1.5rem }
+    .trust-bar__item { display:flex;align-items:center;gap:.4rem;font-family:'Inter',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,236,.38) }
+    .trust-bar__dot { width:4px;height:4px;border-radius:50%;background:#d4581a;flex-shrink:0 }
+    .trust-bar__sep { color:rgba(255,255,255,.1);font-size:.8rem }
+
+    /* ── SHARED SECTION STYLES ────────────────────────────── */
+    .section { padding:var(--space-2xl) clamp(1.25rem,5vw,6rem) }
+    .section__inner { max-width:var(--max-width);margin-inline:auto }
+    .kicker { font-family:'Inter',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:.625rem }
+    .headline { font-family:var(--font-display);font-weight:950;font-size:clamp(2.5rem,6.5vw,7rem);line-height:.87;text-transform:uppercase;color:var(--color-text-primary);letter-spacing:-.01em;margin-bottom:var(--space-md) }
+    .subhead { font-size:clamp(1rem,1.25vw,1.125rem);color:var(--color-text-secondary);line-height:1.65;max-width:500px }
+
+    /* ── PROBLEM ──────────────────────────────────────────── */
+    .problem { background:#1a1713 }
+    .problem .kicker { color:rgba(160,154,147,.65) }
+    .problem .headline { color:#f5f2ec }
+    .problem__grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:clamp(2rem,4vw,3.5rem);gap:1px;background:rgba(255,255,255,.07);border-radius:var(--radius-lg);overflow:hidden }
+    .problem__card { background:#1a1713;padding:clamp(1.75rem,3vw,2.5rem);position:relative;transition:background .25s }
+    .problem__card:hover { background:#201e1b }
+    .problem__card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#d4581a,transparent);opacity:0;transition:opacity .3s }
+    .problem__card:hover::before { opacity:1 }
+    .problem__num { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#d4581a;margin-bottom:.875rem }
+    .problem__title { font-family:var(--font-display);font-weight:900;font-size:clamp(1.3rem,2.2vw,1.875rem);color:#f5f2ec;text-transform:uppercase;line-height:1;margin-bottom:.75rem }
+    .problem__body { font-size:.9rem;color:rgba(245,242,236,.5);line-height:1.65 }
+    .problem__pull { margin-top:clamp(3rem,6vw,5rem) }
+    .problem__pull-text { font-family:var(--font-display);font-weight:950;font-size:clamp(1.75rem,4vw,4.5rem);text-transform:uppercase;line-height:.9;color:#f5f2ec;max-width:20ch;margin-bottom:clamp(1.5rem,3vw,2.5rem) }
+    .problem__pull-text em { font-style:italic;color:#d4581a }
+    .problem__pull-actions { display:flex;flex-wrap:wrap;gap:.875rem }
+
+    /* ── WORK GRID ────────────────────────────────────────── */
+    .work { background:var(--color-bg-alt) }
+    .work__grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.875rem;margin-top:clamp(2rem,4vw,3rem) }
+    .work-card { position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:4/3;background:#111;cursor:pointer }
+    .work-card__img { width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out-expo),opacity .35s }
+    .work-card:hover .work-card__img { transform:scale(1.04);opacity:.8 }
+    .work-card__video { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s }
+    .work-card:hover .work-card__video { opacity:1 }
+    .work-card__overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,6,.9) 0%,rgba(10,8,6,.15) 55%,transparent 100%) }
+    .work-card__info { position:absolute;bottom:0;left:0;right:0;padding:clamp(1.25rem,2vw,1.75rem) }
+    .work-card__tags { display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.45rem }
+    .work-card__tag { font-family:'Inter',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,236,.5);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.175rem .55rem }
+    .work-card__title { font-family:var(--font-display);font-weight:900;font-size:clamp(1rem,1.8vw,1.4rem);color:#f5f2ec;text-transform:uppercase;line-height:1 }
+
+    /* ── MICHAEL ──────────────────────────────────────────── */
+    .michael { background:var(--color-bg) }
+    .michael__inner { display:grid;gap:clamp(2.5rem,5vw,5rem);align-items:center }
+    @media(min-width:860px) { .michael__inner { grid-template-columns:auto 1fr } }
+    .michael__photo-wrap { width:clamp(180px,26vw,300px);border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:3/4;flex-shrink:0 }
+    .michael__photo { width:100%;height:100%;object-fit:cover;object-position:top center }
+    .michael__copy { display:flex;flex-direction:column;gap:var(--space-md) }
+    .michael__pull { font-family:var(--font-display);font-weight:950;font-size:clamp(2rem,4.5vw,5rem);text-transform:uppercase;line-height:.9;color:var(--color-text-primary) }
+    .michael__pull em { font-style:italic;color:#d4581a }
+    .michael__bio { font-size:clamp(.9rem,1.1vw,1rem);color:var(--color-text-secondary);line-height:1.7;max-width:500px }
+    .michael__creds { display:flex;flex-wrap:wrap;gap:.4rem }
+    .michael__cred { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-secondary);background:var(--color-bg-alt);border:1px solid var(--color-border);border-radius:100px;padding:.275rem .7rem }
+    .michael__actions { display:flex;flex-wrap:wrap;gap:.75rem }
+
+    /* ── TESTIMONIALS ─────────────────────────────────────── */
+    .proof { background:#f5f2ec }
+    .proof__pull { font-family:var(--font-display);font-weight:950;font-size:clamp(1.5rem,3.5vw,3.5rem);text-transform:uppercase;line-height:.9;color:#1a1713;max-width:22ch;margin-bottom:clamp(2rem,4vw,3.5rem) }
+    .proof__pull em { font-style:italic;color:#d4581a }
+    .proof__grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem }
+    .proof__card { background:#fff;border:1.5px solid #ddd8cf;border-radius:var(--radius-lg);padding:clamp(1.5rem,2.5vw,2.25rem);display:flex;flex-direction:column;gap:1rem }
+    .proof__stars { display:flex;gap:.2rem }
+    .proof__star { color:#d4581a;font-size:.8rem }
+    .proof__quote { font-size:clamp(.9rem,1.1vw,1rem);color:#1a1713;line-height:1.65;font-style:italic;flex:1 }
+    .proof__name { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6b6560;padding-top:.875rem;border-top:1px solid #ede9e0 }
+
+    /* ── PRICING ──────────────────────────────────────────── */
+    .pricing { background:#1a1713 }
+    .pricing .kicker { color:rgba(160,154,147,.6) }
+    .pricing .headline { color:#f5f2ec }
+    .pricing .subhead { color:rgba(245,242,236,.45) }
+    .pricing__grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.125rem;margin-top:clamp(2rem,4vw,3rem);align-items:start }
+    .price-card { border:1.5px solid rgba(255,255,255,.09);border-radius:var(--radius-lg);padding:clamp(1.5rem,2.5vw,2.25rem);background:rgba(255,255,255,.025);display:flex;flex-direction:column;gap:1.125rem;position:relative }
+    .price-card--feat { border-color:rgba(212,88,26,.45);background:rgba(212,88,26,.055) }
+    .price-card__badge { position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-family:'Inter',sans-serif;font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#d4581a;border-radius:0 0 var(--radius-md) var(--radius-md);padding:.275rem .875rem;white-space:nowrap }
+    .price-card__tier { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#d4581a }
+    .price-card__name { font-family:var(--font-display);font-weight:950;font-size:clamp(1.5rem,2.8vw,2.25rem);text-transform:uppercase;color:#f5f2ec;line-height:.95 }
+    .price-card__price { display:flex;align-items:baseline;gap:.2rem }
+    .price-card__cur { font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:700;color:#d4581a;line-height:1 }
+    .price-card__amt { font-family:var(--font-display);font-weight:950;font-size:clamp(2.25rem,4.5vw,3.75rem);color:#f5f2ec;line-height:1;text-transform:uppercase }
+    .price-card__div { border:none;border-top:1px solid rgba(255,255,255,.09);margin:0 }
+    .price-card__desc { font-size:.87rem;color:rgba(245,242,236,.45);line-height:1.6 }
+    .price-card__features { display:flex;flex-direction:column;gap:.55rem;list-style:none }
+    .price-card__feature { display:flex;align-items:flex-start;gap:.55rem;font-size:.85rem;color:rgba(245,242,236,.65);line-height:1.4 }
+    .price-card__check { color:#d4581a;font-weight:800;flex-shrink:0;font-size:.8rem }
+    .price-card__timeline { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:rgba(245,242,236,.3) }
+    .price-card__cta { display:block;text-align:center;padding:.7rem 1.25rem;border-radius:100px;font-family:'Inter',sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;border:1.5px solid transparent;transition:filter .2s,transform .15s,box-shadow .2s }
+    .price-card__cta--p { background:linear-gradient(135deg,#e8632a,#d4581a 45%,#b84010);color:#fff;border-color:rgba(255,120,50,.4);box-shadow:0 2px 10px rgba(212,88,26,.3),inset 0 1px 0 rgba(255,180,100,.2) }
+    .price-card__cta--p:hover { filter:brightness(1.1);box-shadow:0 4px 20px rgba(212,88,26,.5);transform:translateY(-1px) }
+    .price-card__cta--s { background:transparent;border-color:rgba(245,242,236,.18);color:rgba(245,242,236,.55) }
+    .price-card__cta--s:hover { background:rgba(245,242,236,.05);border-color:rgba(245,242,236,.45);color:#f5f2ec;transform:translateY(-1px) }
+    .pricing__note { margin-top:clamp(1.5rem,3vw,2rem);font-size:.82rem;color:rgba(245,242,236,.3);text-align:center }
+    .pricing__note a { color:rgba(212,88,26,.65);text-decoration:underline;text-underline-offset:3px }
+
+    /* ── PROCESS ──────────────────────────────────────────── */
+    .process { background:var(--color-bg) }
+    .process__grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:clamp(2rem,4vw,3rem);gap:1px;background:var(--color-border);border-radius:var(--radius-lg);overflow:hidden }
+    .process__step { background:var(--color-bg);padding:clamp(1.5rem,2.5vw,2.25rem) }
+    .process__num { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#d4581a;margin-bottom:.75rem }
+    .process__title { font-family:var(--font-display);font-weight:900;font-size:clamp(1.2rem,2vw,1.75rem);text-transform:uppercase;color:var(--color-text-primary);line-height:1;margin-bottom:.625rem }
+    .process__body { font-size:.87rem;color:var(--color-text-secondary);line-height:1.6 }
+
+    /* ── CONVERSION SECTION ───────────────────────────────── */
+    .convert { background:#111009;padding:var(--space-2xl) clamp(1.25rem,5vw,6rem) }
+    .convert__inner { max-width:1100px;margin-inline:auto }
+    .convert .kicker { color:rgba(160,154,147,.55) }
+    .convert .headline { color:#f5f2ec;font-size:clamp(2.25rem,5.5vw,6rem);margin-bottom:.625rem }
+    .convert__subhead { font-size:clamp(.95rem,1.2vw,1.075rem);color:rgba(245,242,236,.4);line-height:1.65;margin-bottom:clamp(2.5rem,5vw,4rem);max-width:480px }
+
+    /* Two-path split */
+    .convert__split { display:grid;grid-template-columns:1fr;gap:1px;background:rgba(255,255,255,.07);border-radius:var(--radius-lg);overflow:hidden }
+    @media(min-width:720px) { .convert__split { grid-template-columns:1fr 1fr } }
+
+    .convert__path { background:#111009;padding:clamp(2rem,4vw,3rem) }
+    .convert__path-label { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#d4581a;margin-bottom:1.125rem }
+    .convert__path-title { font-family:var(--font-display);font-weight:950;font-size:clamp(1.5rem,3vw,2.5rem);text-transform:uppercase;color:#f5f2ec;line-height:.95;margin-bottom:.875rem }
+    .convert__path-desc { font-size:.88rem;color:rgba(245,242,236,.4);line-height:1.6;margin-bottom:1.5rem }
+
+    /* Mini form (call track) */
+    .form-mini { display:flex;flex-direction:column;gap:.75rem }
+    .form-mini label { display:flex;flex-direction:column;gap:.35rem;font-family:'Inter',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.35) }
+    .form-mini input, .form-mini select, .form-mini textarea { background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.09);border-radius:var(--radius-md);padding:.7rem .95rem;font-family:'Inter',sans-serif;font-size:.92rem;color:#f5f2ec;width:100%;outline:none;transition:border-color .2s,box-shadow .2s }
+    .form-mini input::placeholder, .form-mini textarea::placeholder { color:rgba(245,242,236,.22) }
+    .form-mini input:focus, .form-mini select:focus, .form-mini textarea:focus { border-color:rgba(212,88,26,.55);box-shadow:0 0 0 3px rgba(212,88,26,.1) }
+    .form-mini select { appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' fill='none'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23a09a93' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;cursor:pointer;color:rgba(245,242,236,.5) }
+    .form-mini select option { background:#1a1713;color:#f5f2ec }
+    .form-mini textarea { resize:vertical;min-height:100px }
+    .form-mini__submit { margin-top:.25rem }
+    .form-mini__note { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.04em;color:rgba(245,242,236,.22);line-height:1.5;margin-top:.625rem }
+
+    /* Two-step form state */
+    .form-step { display:flex;flex-direction:column;gap:.75rem }
+    .form-step[hidden] { display:none }
+    .form-step__progress { display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem }
+    .form-step__dot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15) }
+    .form-step__dot.active { background:#d4581a;box-shadow:0 0 6px rgba(212,88,26,.6) }
+    .form-step__label { font-family:'Inter',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.3) }
+
+    /* Path divider label */
+    .convert__or { display:none;align-items:center;justify-content:center }
+    @media(min-width:720px) { .convert__or { display:none } }
+    /* (handled by gap/grid line instead) */
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .footer { background:#0a0806;padding:clamp(2rem,4vw,3rem) clamp(1.25rem,5vw,6rem) }
+    .footer__inner { max-width:var(--max-width);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem }
+    .footer__logo img { height:22px;filter:brightness(0) invert(1);opacity:.4 }
+    .footer__links { display:flex;flex-wrap:wrap;gap:1rem }
+    .footer__link { font-family:'Inter',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,242,236,.22);text-decoration:none;transition:color .2s }
+    .footer__link:hover { color:rgba(245,242,236,.5) }
+    .footer__copy { font-family:'Inter',sans-serif;font-size:.6rem;color:rgba(245,242,236,.16);letter-spacing:.05em;text-transform:uppercase }
+
+    /* ── SCROLL TOP ───────────────────────────────────────── */
+    #st { position:fixed;bottom:5.5rem;right:1.25rem;width:2.5rem;height:2.5rem;border-radius:100px;background:#1a1713;border:1px solid rgba(255,255,255,.1);color:rgba(245,242,236,.5);font-size:.7rem;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s,background .2s;transform:translateY(.5rem);z-index:100 }
+    #st.on { opacity:1;pointer-events:auto;transform:translateY(0) }
+    #st:hover { background:#d4581a;border-color:#d4581a;color:#fff }
+    @media(min-width:769px) { #st { bottom:1.25rem } }
+
+    /* ── ANIMATIONS ───────────────────────────────────────── */
+    .fade-up { opacity:0;transform:translateY(1.75rem);transition:opacity .65s var(--ease-out-expo),transform .65s var(--ease-out-expo) }
+    .fade-up.in { opacity:1;transform:translateY(0) }
+    .fade-up:nth-child(2) { transition-delay:.08s }
+    .fade-up:nth-child(3) { transition-delay:.14s }
+    .fade-up:nth-child(4) { transition-delay:.2s }
+
+    /* ── CUSTOM CURSOR (desktop) ──────────────────────────── */
+    .cursor-ring, .cursor-dot { position:fixed;top:0;left:0;pointer-events:none;z-index:9999;opacity:0;transition:opacity .3s }
+    .cursor-ring.on, .cursor-dot.on { opacity:1 }
+    .cursor-ring { width:36px;height:36px;border:1.5px solid #d4581a;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:difference }
+    .cursor-dot { width:4px;height:4px;background:#d4581a;border-radius:50%;transform:translate(-50%,-50%) }
+    @media(max-width:768px) { .cursor-ring, .cursor-dot { display:none } }
+  </style>
+</head>
+<body>
+
+  <!-- PRELOADER -->
+  <div id="pl" role="status" aria-label="Loading">
+    <div id="pl-logo"><img src="/brand/Stacked Script.png" alt="Wood Fired Designs"></div>
+    <div id="pl-bar"><div id="pl-fill"></div></div>
+  </div>
+  <script>
+    (function(){
+      var p=document.getElementById('pl'),f=document.getElementById('pl-fill'),l=document.getElementById('pl-logo');
+      setTimeout(function(){l&&l.classList.add('in')},60);
+      setTimeout(function(){f&&f.classList.add('go')},120);
+      var a=false,b=false;
+      function done(){if(a&&b){p.classList.add('out');setTimeout(function(){p&&p.remove()},550)}}
+      setTimeout(function(){a=true;done()},1100);
+      if(document.readyState==='complete'){b=true;done()}else{window.addEventListener('load',function(){b=true;done()})}
+    })();
+  </script>
+
+  <!-- NAV -->
+  <nav id="N" aria-label="Main navigation">
+    <a id="N-logo" href="https://woodfireddesigns.com" aria-label="Wood Fired Designs">
+      <img src="/brand/Stacked Script.png" alt="Wood Fired Designs" width="110" height="30">
+    </a>
+    <a id="N-cta" href="#convert">Book a Free Call →</a>
+  </nav>
+
+  <!-- STICKY BOTTOM BAR (appears on scroll, mobile) -->
+  <div id="sticky-bar" role="complementary" aria-label="Quick actions">
+    <a class="sb-primary" href="#convert-call">Book a Free Call →</a>
+    <a class="sb-secondary" href="#convert-proposal">Get a Proposal</a>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       1. HERO
+       Goal: answer "who is this for, what do I get,
+       why trust them" within 3 seconds. One primary CTA.
+  ════════════════════════════════════════════ -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero__bg" aria-hidden="true">
+      <video class="hero__video" autoplay muted loop playsinline preload="metadata"
+             poster="/assets/video/hero-poster.jpg" id="hero-video">
+        <source src="/assets/video/hero-final.mp4" type="video/mp4">
+      </video>
+      <div class="hero__overlay"></div>
+    </div>
+
+    <div class="hero__inner">
+
+      <!-- In-hero trust strip — visible before first scroll -->
+      <div class="hero__trust" aria-label="Trust indicators">
+        <span class="hero__trust-item"><span class="hero__trust-dot"></span>60+ Brands Built</span>
+        <span class="hero__trust-divider">·</span>
+        <span class="hero__trust-item"><span class="hero__trust-dot"></span>Live in 7 Days</span>
+        <span class="hero__trust-divider">·</span>
+        <span class="hero__trust-item"><span class="hero__trust-dot"></span>Starting at $1,200</span>
+        <span class="hero__trust-divider">·</span>
+        <span class="hero__trust-item"><span class="hero__trust-dot"></span>You Own Everything</span>
+      </div>
+
+      <p class="hero__kicker">/ For Trades &amp; Service Businesses</p>
+      <h1 class="hero__h1">Stop losing<br>jobs to a<br><em>bad website.</em></h1>
+
+      <!-- Testimonial pulled INTO the hero — social proof before first CTA -->
+      <div class="hero__proof-quote" aria-label="Client testimonial">
+        <blockquote>"He took our brand from embarrassing to something we're proud to put on everything. The new site gets us calls we never used to get."</blockquote>
+        <cite>— Jason R., Roofing Contractor, Delaware</cite>
+      </div>
+
+      <div class="hero__actions">
+        <a class="btn btn--accent btn--lg" href="#convert">Book a Free 15-Min Call →</a>
+        <a class="btn btn--ghost" href="#pricing">See Pricing</a>
+      </div>
+      <p class="hero__subtext">No pitch deck. No agency BS. Just a straight conversation with Michael — reply within 1 business day.</p>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       2. TRUST BAR
+  ════════════════════════════════════════════ -->
+  <div class="trust-bar" aria-label="Key facts">
+    <div class="trust-bar__inner">
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>Live in 7 Days</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>Mobile-First Build</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>SEO Foundation Included</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>You Own Everything</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>No Agency Overhead</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>1-Person Studio — Direct Access</span>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       3. PROBLEM
+       Agitate before showing solution — validates why they clicked.
+  ════════════════════════════════════════════ -->
+  <section class="section problem" aria-label="Why your website is costing you jobs">
+    <div class="section__inner">
+
+      <p class="kicker fade-up">/ Sound Familiar?</p>
+      <h2 class="headline fade-up">Your website is<br>losing you jobs<br>right now.</h2>
+
+      <div class="problem__grid fade-up">
+        <div class="problem__card">
+          <p class="problem__num">01</p>
+          <h3 class="problem__title">You're invisible on Google</h3>
+          <p class="problem__body">Slow, thin, or not mobile-optimized? Google buries you. Your competitor with the better site is taking your calls — every single day.</p>
+        </div>
+        <div class="problem__card">
+          <p class="problem__num">02</p>
+          <h3 class="problem__title">Customers click away in seconds</h3>
+          <p class="problem__body">A homeowner finds two roofers. One looks sharp and professional. One doesn't. They call the sharp one. Every time, without exception.</p>
+        </div>
+        <div class="problem__card">
+          <p class="problem__num">03</p>
+          <h3 class="problem__title">You've been meaning to fix it</h3>
+          <p class="problem__body">You've been running a business, not building websites. That's what I'm here for. And now you found me — let's stop leaving money on the table.</p>
+        </div>
+      </div>
+
+      <div class="problem__pull fade-up">
+        <p class="problem__pull-text">That preview you saw?<br><em>That's what's possible.</em><br>This is how we build it.</p>
+        <div class="problem__pull-actions">
+          <a class="btn btn--accent btn--lg" href="#convert">Book a Free Call →</a>
+          <a class="btn btn--ghost" href="#work">See the Work →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       4. WORK SAMPLES
+       Credibility through portfolio — before they meet Michael.
+  ════════════════════════════════════════════ -->
+  <section class="section work" id="work" aria-label="Selected Work">
+    <div class="section__inner">
+      <p class="kicker fade-up">/ Selected Work</p>
+      <h2 class="headline fade-up">Work that earns<br>its keep.</h2>
+      <p class="subhead fade-up">Real brands, real businesses. Built from scratch, delivered fast. Hover any card to see the work in motion.</p>
+
+      <div class="work__grid fade-up">
+
+        <article class="work-card" tabindex="0" aria-label="Keeping Balanced Solutions — Web Design, Finance, 2026">
+          <img class="work-card__img" src="/assets/portfolio/keeping-balanced-thumb.jpg"
+               alt="Keeping Balanced Solutions — premium financial website" loading="lazy" decoding="async">
+          <video class="work-card__video" loop muted playsinline preload="none">
+            <source src="/assets/portfolio/videos/Keeping Balanced Solutions _ Premium Financial Architecture - 11 May 2026.mp4" type="video/mp4">
+          </video>
+          <div class="work-card__overlay"></div>
+          <div class="work-card__info">
+            <div class="work-card__tags">
+              <span class="work-card__tag">Web Design</span>
+              <span class="work-card__tag">Finance</span>
+            </div>
+            <h3 class="work-card__title">Keeping Balanced Solutions</h3>
+          </div>
+        </article>
+
+        <article class="work-card" tabindex="0" aria-label="Western Welder — Brand Identity, Trades, 2025">
+          <img class="work-card__img" src="/assets/portfolio/western-welder-thumb.jpg"
+               alt="Western Welder — brand identity" loading="lazy" decoding="async">
+          <video class="work-card__video" loop muted playsinline preload="none">
+            <source src="/assets/portfolio/videos/Western Welder.mp4" type="video/mp4">
+          </video>
+          <div class="work-card__overlay"></div>
+          <div class="work-card__info">
+            <div class="work-card__tags">
+              <span class="work-card__tag">Brand Identity</span>
+              <span class="work-card__tag">Trades</span>
+            </div>
+            <h3 class="work-card__title">Western Welder</h3>
+          </div>
+        </article>
+
+        <article class="work-card" tabindex="0" aria-label="Northwood Nutrition — Brand + Packaging, 2024">
+          <img class="work-card__img" src="/assets/portfolio/northwood-thumb.jpg"
+               alt="Northwood Nutrition — brand and packaging" loading="lazy" decoding="async">
+          <video class="work-card__video" loop muted playsinline preload="none">
+            <source src="/assets/portfolio/videos/Northwood.mp4" type="video/mp4">
+          </video>
+          <div class="work-card__overlay"></div>
+          <div class="work-card__info">
+            <div class="work-card__tags">
+              <span class="work-card__tag">Brand Identity</span>
+              <span class="work-card__tag">Packaging</span>
+            </div>
+            <h3 class="work-card__title">Northwood Nutrition</h3>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       5. MICHAEL
+       Build personal trust before asking for the price decision.
+       Research: professional services sell the person, not the product.
+  ════════════════════════════════════════════ -->
+  <section class="section michael" id="michael" aria-label="About Michael Deschenes">
+    <div class="section__inner">
+      <div class="michael__inner">
+
+        <div class="michael__photo-wrap fade-up">
+          <img class="michael__photo"
+               src="/assets/150ppi/Michael.png"
+               alt="Michael Deschenes — Founder of Wood Fired Designs"
+               loading="lazy" decoding="async">
+        </div>
+
+        <div class="michael__copy fade-up">
+          <p class="kicker">/ About</p>
+          <h2 class="michael__pull">You're not<br>hiring an agency.<br><em>You're hiring me.</em></h2>
+          <p class="michael__bio">I'm Michael — the founder and the one who does the actual work. Every logo, every website, every decision comes directly from me. Not a project manager. Not a junior designer you've never met. Me.</p>
+          <p class="michael__bio">12 years across CPG, apparel, fitness, hospitality, and trades. I blend manual craftsmanship with AI-powered speed — so your site is sharp, fast, and delivered without the agency timeline or the agency bill.</p>
+          <div>
+            <p class="kicker" style="margin-bottom:.5rem">/ Previously worked with</p>
+            <div class="michael__creds">
+              <span class="michael__cred">Facebook</span>
+              <span class="michael__cred">US Open</span>
+              <span class="michael__cred">Masters Tournament</span>
+              <span class="michael__cred">American Needle</span>
+            </div>
+          </div>
+          <div class="michael__actions">
+            <a class="btn btn--accent" href="#convert">Book a Free Call →</a>
+            <a class="btn btn--outline" href="mailto:michael@woodfireddesigns.com">Ask Me Anything →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       6. TESTIMONIALS
+       Placed before pricing — research proves this reduces
+       purchase anxiety at the critical decision point.
+  ════════════════════════════════════════════ -->
+  <section class="section proof" aria-label="Client testimonials">
+    <div class="section__inner">
+      <p class="kicker fade-up">/ What Clients Say</p>
+      <h2 class="proof__pull fade-up">Real results.<br><em>Real clients.</em><br>Real businesses.</h2>
+
+      <div class="proof__grid fade-up">
+
+        <div class="proof__card">
+          <div class="proof__stars" aria-label="5 out of 5 stars">
+            <span class="proof__star">★</span><span class="proof__star">★</span>
+            <span class="proof__star">★</span><span class="proof__star">★</span>
+            <span class="proof__star">★</span>
+          </div>
+          <blockquote class="proof__quote">"He took our brand from embarrassing to something we're genuinely proud to put on everything. The new site gets us calls we never used to get. Paid for itself in the first month."</blockquote>
+          <cite class="proof__name">— Jason R., Roofing Contractor, Delaware</cite>
+        </div>
+
+        <div class="proof__card">
+          <div class="proof__stars" aria-label="5 out of 5 stars">
+            <span class="proof__star">★</span><span class="proof__star">★</span>
+            <span class="proof__star">★</span><span class="proof__star">★</span>
+            <span class="proof__star">★</span>
+          </div>
+          <blockquote class="proof__quote">"Fast, sharp, and the site actually gets us leads. The ROI was obvious within the first month. Worth every dollar and more."</blockquote>
+          <cite class="proof__name">— Laura M., E-commerce Founder</cite>
+        </div>
+
+        <div class="proof__card">
+          <div class="proof__stars" aria-label="5 out of 5 stars">
+            <span class="proof__star">★</span><span class="proof__star">★</span>
+            <span class="proof__star">★</span><span class="proof__star">★</span>
+            <span class="proof__star">★</span>
+          </div>
+          <blockquote class="proof__quote">"Agency quality without the agency attitude. Communicates better than any team I've worked with. Delivered exactly what he said, exactly when he said it."</blockquote>
+          <cite class="proof__name">— Chris B., Fitness Studio Owner</cite>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       7. PRICING
+       Testimonials directly above pricing = reduced anxiety
+       at the critical decision moment.
+  ════════════════════════════════════════════ -->
+  <section class="section pricing" id="pricing" aria-label="Pricing">
+    <div class="section__inner">
+      <p class="kicker fade-up">/ Pricing</p>
+      <h2 class="headline fade-up">Straight-up pricing.<br>No agency markup.</h2>
+      <p class="subhead fade-up" style="color:rgba(245,242,236,.4)">Pick what fits. If you're not sure, book a call — I'll tell you exactly what makes sense, no pressure.</p>
+
+      <div class="pricing__grid fade-up">
+
+        <div class="price-card">
+          <div>
+            <p class="price-card__tier">Starter</p>
+            <h3 class="price-card__name">Starter Site</h3>
+          </div>
+          <div class="price-card__price">
+            <span class="price-card__cur">$</span>
+            <span class="price-card__amt">1,200</span>
+          </div>
+          <hr class="price-card__div">
+          <p class="price-card__desc">Strong, professional presence. Fast to launch. Built to convert the visitors you already have.</p>
+          <ul class="price-card__features" role="list">
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Single-page website</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Mobile-optimized</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Contact form + click-to-call</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Google-ready (basic SEO)</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>You own domain &amp; hosting</li>
+          </ul>
+          <span class="price-card__timeline">Live in 5 days</span>
+          <a class="price-card__cta price-card__cta--s" href="#convert">Get Started →</a>
+        </div>
+
+        <div class="price-card price-card--feat">
+          <span class="price-card__badge">Most Popular</span>
+          <div>
+            <p class="price-card__tier">Pro</p>
+            <h3 class="price-card__name">Full Website</h3>
+          </div>
+          <div class="price-card__price">
+            <span class="price-card__cur">$</span>
+            <span class="price-card__amt">2,400</span>
+          </div>
+          <hr class="price-card__div">
+          <p class="price-card__desc">Multi-page, built to rank and convert. The site that makes customers call you instead of your competitor.</p>
+          <ul class="price-card__features" role="list">
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Up to 5 pages</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>SEO foundation setup</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Contact form + lead capture</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Services &amp; portfolio pages</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Google Analytics + Search Console</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>You own everything</li>
+          </ul>
+          <span class="price-card__timeline">Live in 7 days</span>
+          <a class="price-card__cta price-card__cta--p" href="#convert">Get Started →</a>
+        </div>
+
+        <div class="price-card">
+          <div>
+            <p class="price-card__tier">Premium</p>
+            <h3 class="price-card__name">Brand + Site</h3>
+          </div>
+          <div class="price-card__price">
+            <span class="price-card__cur">$</span>
+            <span class="price-card__amt">4,200</span>
+          </div>
+          <hr class="price-card__div">
+          <p class="price-card__desc">Logo, brand identity, and a full website — all built together. Done right the first time so you never have to do it again.</p>
+          <ul class="price-card__features" role="list">
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Everything in Full Website</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Logo &amp; brand identity</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Color &amp; typography system</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Brand guidelines document</li>
+            <li class="price-card__feature"><span class="price-card__check">✓</span>Truck wrap / signage-ready files</li>
+          </ul>
+          <span class="price-card__timeline">Live in 14 days</span>
+          <a class="price-card__cta price-card__cta--s" href="#convert">Get Started →</a>
+        </div>
+
+      </div>
+      <p class="pricing__note fade-up">Not sure which tier is right? <a href="#convert">Book a free call</a> — I'll tell you straight.</p>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       8. PROCESS
+       Placed after pricing — reduces post-decision anxiety.
+       "Here's how easy it is once you say yes."
+  ════════════════════════════════════════════ -->
+  <section class="section process" aria-label="How it works">
+    <div class="section__inner">
+      <p class="kicker fade-up">/ How It Works</p>
+      <h2 class="headline fade-up">Live in 7 days.<br>No mystery.</h2>
+
+      <div class="process__grid fade-up">
+        <div class="process__step">
+          <p class="process__num">01 — Discovery</p>
+          <h3 class="process__title">One focused call</h3>
+          <p class="process__body">30 minutes. We cover your goals, your customers, and what winning looks like. That's it.</p>
+        </div>
+        <div class="process__step">
+          <p class="process__num">02 — Design</p>
+          <h3 class="process__title">You see it first</h3>
+          <p class="process__body">Concepts built around your brand, not a template. You approve before a single line of code is written.</p>
+        </div>
+        <div class="process__step">
+          <p class="process__num">03 — Build</p>
+          <h3 class="process__title">Clean, fast code</h3>
+          <p class="process__body">Delivered to your domain. Not a staging link that expires after 30 days.</p>
+        </div>
+        <div class="process__step">
+          <p class="process__num">04 — Launch</p>
+          <h3 class="process__title">You go live</h3>
+          <p class="process__body">Revisions and support are built in. I'm not disappearing after delivery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       9. CONVERSION — DUAL-PATH
+       Two tracks: Book a Call (low friction, phone people)
+       vs. Start a Proposal (form people, email people).
+       Research: dual-path outperforms single path for service businesses.
+       Primary = call. Secondary = proposal form.
+  ════════════════════════════════════════════ -->
+  <section class="convert" id="convert" aria-label="Get started">
+    <div class="convert__inner">
+
+      <p class="kicker fade-up">/ Ready to Stop Losing Jobs?</p>
+      <h2 class="headline fade-up" style="font-family:var(--font-display);font-weight:950;font-size:clamp(2.25rem,5.5vw,6rem);line-height:.87;text-transform:uppercase;color:#f5f2ec;letter-spacing:-.01em;margin-bottom:.625rem">Choose how<br>you want to start.</h2>
+      <p class="convert__subhead fade-up">No pitch decks. No agency nonsense. Just a straight conversation about what your business actually needs.</p>
+
+      <div class="convert__split fade-up">
+
+        <!-- PATH A: BOOK A CALL -->
+        <div class="convert__path" id="convert-call">
+          <p class="convert__path-label">/ Fastest Path — Recommended</p>
+          <h3 class="convert__path-title">Book a Free<br>15-Min Call</h3>
+          <p class="convert__path-desc">Tell me your name and number. I'll call you within one business day. No pitch, no pressure — just a straight conversation about what would actually work for your business.</p>
+
+          <form class="form-mini" id="form-call"
+                action="mailto:michael@woodfireddesigns.com"
+                method="post" enctype="text/plain"
+                aria-label="Book a call">
+
+            <!-- Step 1 -->
+            <div class="form-step" id="call-step1" aria-label="Step 1 of 2">
+              <div class="form-step__progress" aria-hidden="true">
+                <span class="form-step__dot active"></span>
+                <span class="form-step__dot"></span>
+                <span class="form-step__label">Step 1 of 2</span>
+              </div>
+              <label>
+                What are you looking for?
+                <select id="call-service" name="service" required>
+                  <option value="" disabled selected>Select the best fit…</option>
+                  <option value="Starter Site — $1,200">Starter Site — $1,200</option>
+                  <option value="Full Website — $2,400">Full Website — $2,400</option>
+                  <option value="Brand + Site — $4,200">Brand + Site — $4,200</option>
+                  <option value="Not sure — let's talk">Not sure yet — let's talk</option>
+                </select>
+              </label>
+              <button type="button" id="call-next" class="btn btn--accent btn--lg" style="width:100%;justify-content:center">
+                Next Step →
+              </button>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="form-step" id="call-step2" hidden aria-label="Step 2 of 2">
+              <div class="form-step__progress" aria-hidden="true">
+                <span class="form-step__dot"></span>
+                <span class="form-step__dot active"></span>
+                <span class="form-step__label">Step 2 of 2</span>
+              </div>
+              <label>Your Name <input type="text" name="name" placeholder="John Smith" required autocomplete="name"></label>
+              <label>Phone Number <input type="tel" name="phone" placeholder="(555) 000-0000" required autocomplete="tel"></label>
+              <div class="form-mini__submit">
+                <button type="submit" class="btn btn--accent btn--lg" style="width:100%;justify-content:center">Have Michael Call Me →</button>
+              </div>
+              <p class="form-mini__note">I'll call within 1 business day. No spam, no pitch — just a real conversation.</p>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- PATH B: START A PROPOSAL -->
+        <div class="convert__path" id="convert-proposal" style="border-top:1px solid rgba(255,255,255,.06)">
+          <p class="convert__path-label">/ Prefer Email?</p>
+          <h3 class="convert__path-title">Start a<br>Proposal</h3>
+          <p class="convert__path-desc">Prefer email over a call? Fill this out and I'll send you a custom proposal within one business day. Four fields — that's it.</p>
+
+          <form class="form-mini" id="form-proposal"
+                action="mailto:michael@woodfireddesigns.com"
+                method="post" enctype="text/plain"
+                aria-label="Start a proposal">
+
+            <label>Your Name <input type="text" name="name" placeholder="John Smith" required autocomplete="name"></label>
+            <label>Email Address <input type="email" name="email" placeholder="john@smithroofing.com" required autocomplete="email"></label>
+            <label>Business Name <input type="text" name="business" placeholder="Smith Roofing LLC" required></label>
+            <label>
+              What do you need?
+              <select name="service" required>
+                <option value="" disabled selected>Select a service…</option>
+                <option value="Starter Site — $1,200">Starter Site — $1,200</option>
+                <option value="Full Website — $2,400">Full Website — $2,400</option>
+                <option value="Brand + Site — $4,200">Brand + Site — $4,200</option>
+                <option value="Not sure yet">Not sure yet — you tell me</option>
+              </select>
+            </label>
+            <div class="form-mini__submit">
+              <button type="submit" class="btn btn--ghost btn--lg" style="width:100%;justify-content:center">Send My Proposal Request →</button>
+            </div>
+            <p class="form-mini__note">Custom proposal in your inbox within 1 business day. No obligation.</p>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       10. FOOTER
+  ════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <a class="footer__logo" href="https://woodfireddesigns.com" aria-label="Wood Fired Designs — Home">
+        <img src="/brand/Stacked Script.png" alt="Wood Fired Designs" width="90" height="26">
+      </a>
+      <nav class="footer__links" aria-label="Footer links">
+        <a class="footer__link" href="#work">Work</a>
+        <a class="footer__link" href="#pricing">Pricing</a>
+        <a class="footer__link" href="#convert">Contact</a>
+        <a class="footer__link" href="https://woodfireddesigns.com">Main Site →</a>
+        <a class="footer__link" href="mailto:michael@woodfireddesigns.com">michael@woodfireddesigns.com</a>
+      </nav>
+      <p class="footer__copy">© 2026 Wood Fired Designs</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button id="st" aria-label="Back to top">↑</button>
+
+  <!-- Custom cursor -->
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <script>
+  (function(){
+    'use strict';
+
+    // ── Nav solid on scroll ──────────────────────────────────
+    var N = document.getElementById('N');
+    var sb = document.getElementById('sticky-bar');
+    var heroEnd = 0;
+
+    function onScroll(){
+      var y = window.scrollY;
+      N && N.classList.toggle('solid', y > 20);
+      if(sb) sb.classList.toggle('on', y > 300);
+      document.getElementById('st') && document.getElementById('st').classList.toggle('on', y > 500);
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // ── Scroll top ───────────────────────────────────────────
+    var st = document.getElementById('st');
+    st && st.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}) });
+
+    // ── Smooth scroll all #links ─────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var hash = this.getAttribute('href');
+        if(!hash || hash==='#') return;
+        var t = document.querySelector(hash);
+        if(!t) return;
+        e.preventDefault();
+        window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 68, behavior:'smooth' });
+      });
+    });
+
+    // ── Fade-up intersection observer ───────────────────────
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) }
+      });
+    }, { threshold:0.1, rootMargin:'0px 0px -36px 0px' });
+    document.querySelectorAll('.fade-up').forEach(function(el){ io.observe(el) });
+
+    // ── Work card hover video ────────────────────────────────
+    document.querySelectorAll('.work-card').forEach(function(card){
+      var vid = card.querySelector('.work-card__video');
+      if(!vid) return;
+      function play(){ vid.play().catch(function(){}) }
+      function stop(){ vid.pause(); vid.currentTime = 0 }
+      card.addEventListener('mouseenter', play);
+      card.addEventListener('mouseleave', stop);
+      card.addEventListener('focus', play);
+      card.addEventListener('blur', stop);
+    });
+
+    // ── 2-step call form ─────────────────────────────────────
+    var callNext = document.getElementById('call-next');
+    var callStep1 = document.getElementById('call-step1');
+    var callStep2 = document.getElementById('call-step2');
+    var callSvc = document.getElementById('call-service');
+
+    if(callNext && callStep1 && callStep2){
+      callNext.addEventListener('click', function(){
+        if(!callSvc.value){ callSvc.focus(); return; }
+        callStep1.setAttribute('hidden','');
+        callStep2.removeAttribute('hidden');
+        callStep2.querySelector('input') && callStep2.querySelector('input').focus();
+      });
+    }
+
+    // ── Hero video fallback ──────────────────────────────────
+    var hv = document.getElementById('hero-video');
+    hv && hv.addEventListener('error', function(){ hv.style.display='none' }, {once:true});
+
+    // ── Magnetic accent buttons ─────────────────────────────
+    document.querySelectorAll('.btn--accent').forEach(function(btn){
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        btn.style.transform = 'translate('+(e.clientX-r.left-r.width/2)*.14+'px,'+(e.clientY-r.top-r.height/2)*.22+'px)';
+      });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform = '' });
+    });
+
+    // ── Custom cursor ───────────────────────────────────────
+    var ring = document.querySelector('.cursor-ring');
+    var dot  = document.querySelector('.cursor-dot');
+    if(ring && window.matchMedia('(min-width:769px) and (pointer:fine)').matches){
+      ring.classList.add('on'); dot.classList.add('on');
+      var cx=0,cy=0,tx=0,ty=0;
+      document.addEventListener('mousemove', function(e){
+        tx=e.clientX; ty=e.clientY;
+        dot.style.transform = 'translate(calc('+tx+'px - 50%), calc('+ty+'px - 50%))';
+      }, {passive:true});
+      (function loop(){
+        cx+=(tx-cx)*.13; cy+=(ty-cy)*.13;
+        ring.style.transform = 'translate(calc('+cx+'px - 50%), calc('+cy+'px - 50%))';
+        requestAnimationFrame(loop);
+      })();
+    }
+
+  })();
+  </script>
+
+</body>
+</html>

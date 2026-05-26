@@ -1,0 +1,142 @@
+/* css/sections/footer.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   footer.css — Site footer
+   Dark background. Large logotype. 3-column link grid.
+   All clone-hover links. Copyright bottom row.
+   All values via brand.css variables only.
+   Scoped to .site-footer only.
+   ───────────────────────────────────────────────────────────── */
+
+
+/*
+ * .theme-dark sets --color-bg → #1A1713.
+ * background-color: var(--color-bg) resolves to dark automatically.
+ */
+.site-footer {
+  background-color: var(--color-bg);
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.footer__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+
+/* ── TOP ROW — LOGOTYPE ───────────────────────────────────── */
+
+.footer__top {
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.footer__logotype {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footer__logo-text {
+  font-family: var(--font-display);
+  font-size: var(--type-display-lg);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  display: block;
+}
+
+.footer__tagline {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+  max-width: 520px;
+}
+
+
+/* ── MIDDLE ROW — COLUMNS ─────────────────────────────────── */
+
+.footer__columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl) var(--col-gap);
+}
+
+@media (min-width: 768px) {
+  .footer__columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.footer__col-label {
+  color: var(--color-text-secondary);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.footer__col-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.footer__link {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-in-out);
+}
+
+.footer__link:hover {
+  color: var(--color-text-primary);
+}
+
+/* Clone-hover height for footer links */
+.footer__link .link__inner {
+  height: 1.2em;
+}
+
+.footer__text {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  color: var(--color-text-secondary);
+}
+
+
+/* ── BOTTOM ROW ───────────────────────────────────────────── */
+
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.footer__copyright,
+.footer__credit {
+  color: var(--color-text-secondary);
+}

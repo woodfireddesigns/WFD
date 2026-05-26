@@ -1,0 +1,70 @@
+/* css/sections/marquee.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   marquee.css (section) — Service ticker strip
+   Pure CSS animation. No JS required.
+   Pause on hover. Seamless loop via 3x content repetition.
+   All values via brand.css variables only.
+   Scoped to .section-marquee only.
+   ───────────────────────────────────────────────────────────── */
+
+
+.section-marquee {
+  width: 100%;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  overflow: hidden;
+  /* Prevent height collapse during animation */
+  padding-block: var(--space-sm);
+}
+
+.marquee__track-wrap {
+  overflow: hidden;
+  width: 100%;
+}
+
+/*
+ * Track contains 3 identical copies of the item list.
+ * animate: translateX(0) → translateX(-33.333%) = one full copy width.
+ * Browser loops back to 0 seamlessly since copy 1 = copy 2 = copy 3.
+ */
+.marquee__track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: max-content;
+  white-space: nowrap;
+  animation: ticker-scroll 32s linear infinite;
+  will-change: transform;
+}
+
+.section-marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__item {
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.marquee__sep {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  font-size: var(--type-label);
+  line-height: 1;
+  /* Slight extra spacing around separator */
+  margin-inline: var(--space-xs);
+}
+
+@media (min-width: 1024px) {
+  .section-marquee {
+    padding-block: var(--space-md);
+  }
+}

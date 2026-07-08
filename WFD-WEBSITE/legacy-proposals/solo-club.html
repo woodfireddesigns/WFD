@@ -1,0 +1,1086 @@
+<!-- kyle.html — Wood Fired Designs × The Solo Club — Personalized for Kyle -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wood Fired Designs × The Solo Club — A community-led running lifestyle brand, built from scratch. Foundation package for Kyle.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Wood Fired Designs × The Solo Club</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="brand/Artboard 26 copy 9@300x.png">
+  <link rel="apple-touch-icon" href="brand/Artboard 26 copy 9@300x.png">
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="css/brand.css?v=4">
+  <link rel="stylesheet" href="css/base.css?v=5">
+
+  <!-- Components -->
+  <link rel="stylesheet" href="css/components/nav.css?v=5">
+  <link rel="stylesheet" href="css/components/buttons.css?v=2">
+  <link rel="stylesheet" href="css/components/forms.css?v=2">
+  <link rel="stylesheet" href="css/components/marquee.css?v=2">
+
+  <!-- Sections -->
+  <link rel="stylesheet" href="css/sections/hero-sequence.css?v=5">
+  <link rel="stylesheet" href="css/sections/marquee.css?v=2">
+  <link rel="stylesheet" href="css/sections/services.css?v=4">
+  <link rel="stylesheet" href="css/sections/bento.css?v=1">
+  <link rel="stylesheet" href="css/sections/proof.css?v=2">
+  <link rel="stylesheet" href="css/sections/process.css?v=2">
+  <link rel="stylesheet" href="css/sections/trust-bar.css?v=1">
+  <link rel="stylesheet" href="css/sections/problem.css?v=1">
+  <link rel="stylesheet" href="css/sections/pricing.css?v=1">
+  <link rel="stylesheet" href="css/sections/michael.css?v=1">
+  <link rel="stylesheet" href="css/sections/cta.css?v=5">
+  <link rel="stylesheet" href="css/sections/footer.css?v=2">
+
+  <style>
+    /* ─── Solo Club accent override — hot pink ─── */
+    :root {
+      --color-accent:        #FF2D78;
+      --color-accent-dark:   #D91F61;
+      --color-accent-glow:   rgba(255, 45, 120, 0.18);
+    }
+
+    /* Personalization banner */
+    .personal-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 100px;
+      white-space: nowrap;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    /* ─── Revenue Ideas Section ─── */
+    .section-revenue {
+      padding: var(--space-2xl) 0;
+      background: var(--color-surface, #0a0a0a);
+    }
+
+    .revenue__inner {
+      max-width: var(--content-max, 1200px);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    .revenue__header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: end;
+      margin-bottom: var(--space-xl);
+    }
+
+    .revenue__headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      line-height: var(--leading-tight);
+      color: var(--color-text-primary, #fff);
+    }
+
+    .revenue__subhead {
+      font-family: var(--font-body);
+      font-size: var(--type-body-lg);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .revenue__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .revenue-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: var(--space-lg);
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .revenue-card:hover {
+      border-color: var(--color-accent);
+      background: rgba(255, 45, 120, 0.05);
+    }
+
+    .revenue-card__icon {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    .revenue-card__num {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .revenue-card__title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-text-primary, #fff);
+      margin-bottom: var(--space-sm);
+      line-height: 1.3;
+    }
+
+    .revenue-card__body {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    .revenue-card__potential {
+      margin-top: var(--space-sm);
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent);
+      border-radius: 100px;
+      padding: 3px 10px;
+    }
+
+    .revenue__closer {
+      margin-top: var(--space-xl);
+      padding: var(--space-xl);
+      background: linear-gradient(135deg, rgba(255,45,120,0.12) 0%, rgba(29,62,255,0.08) 100%);
+      border: 1px solid rgba(255, 45, 120, 0.25);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .revenue__closer-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      color: var(--color-text-primary, #fff);
+      line-height: var(--leading-tight);
+      margin-bottom: var(--space-sm);
+    }
+
+    .revenue__closer-sub {
+      font-family: var(--font-body);
+      font-size: var(--type-body-base);
+      color: var(--color-text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: var(--leading-relaxed);
+    }
+
+    @media (max-width: 900px) {
+      .revenue__header {
+        grid-template-columns: 1fr;
+      }
+      .revenue__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .revenue__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="sr-only sr-only--focusable" href="#services">Skip to main content</a>
+
+  <!-- Personalization tag -->
+  <div class="personal-banner" aria-hidden="true">Prepared for Kyle · The Solo Club</div>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════ -->
+  <nav class="site-nav nav--on-dark" id="site-nav" role="navigation" aria-label="Main navigation">
+
+    <div class="nav__collapsed-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+
+    <div class="nav__inner">
+      <a class="nav__logo" href="#" aria-label="Wood Fired Designs — Home">
+        <img class="nav__logo-img" src="brand/Stacked Script.png" alt="Wood Fired Designs" decoding="async">
+      </a>
+
+      <ul class="nav__links" role="list">
+        <li><a class="nav__link" href="#work"><span class="link__inner"><span class="link__label">Work</span><span class="link__label link__label--clone" aria-hidden="true">Work</span></span></a></li>
+        <li><a class="nav__link" href="#services"><span class="link__inner"><span class="link__label">Services</span><span class="link__label link__label--clone" aria-hidden="true">Services</span></span></a></li>
+        <li><a class="nav__link" href="#revenue"><span class="link__inner"><span class="link__label">Revenue</span><span class="link__label link__label--clone" aria-hidden="true">Revenue</span></span></a></li>
+        <li><a class="nav__link" href="#pricing"><span class="link__inner"><span class="link__label">Pricing</span><span class="link__label link__label--clone" aria-hidden="true">Pricing</span></span></a></li>
+        <li><a class="nav__link" href="#michael"><span class="link__inner"><span class="link__label">About</span><span class="link__label link__label--clone" aria-hidden="true">About</span></span></a></li>
+        <li><a class="nav__link" href="#contact"><span class="link__inner"><span class="link__label">Contact</span><span class="link__label link__label--clone" aria-hidden="true">Contact</span></span></a></li>
+      </ul>
+
+      <a class="nav__cta btn btn--outline" href="#contact">Start a Project →</a>
+
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Full-screen nav overlay -->
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div class="nav-overlay__inner">
+      <ul class="nav-overlay__links" role="list">
+        <li class="overlay-link__item"><a class="overlay-link" href="#work" data-overlay-link><span class="link__inner"><span class="link__label">Work</span><span class="link__label link__label--clone" aria-hidden="true">Work</span></span></a></li>
+        <li class="overlay-link__item"><a class="overlay-link" href="#services" data-overlay-link><span class="link__inner"><span class="link__label">Services</span><span class="link__label link__label--clone" aria-hidden="true">Services</span></span></a></li>
+        <li class="overlay-link__item"><a class="overlay-link" href="#revenue" data-overlay-link><span class="link__inner"><span class="link__label">Revenue Ideas</span><span class="link__label link__label--clone" aria-hidden="true">Revenue Ideas</span></span></a></li>
+        <li class="overlay-link__item"><a class="overlay-link" href="#pricing" data-overlay-link><span class="link__inner"><span class="link__label">Pricing</span><span class="link__label link__label--clone" aria-hidden="true">Pricing</span></span></a></li>
+        <li class="overlay-link__item"><a class="overlay-link" href="#michael" data-overlay-link><span class="link__inner"><span class="link__label">About</span><span class="link__label link__label--clone" aria-hidden="true">About</span></span></a></li>
+        <li class="overlay-link__item"><a class="overlay-link" href="#contact" data-overlay-link><span class="link__inner"><span class="link__label">Contact</span><span class="link__label link__label--clone" aria-hidden="true">Contact</span></span></a></li>
+      </ul>
+      <div class="nav-overlay__bottom">
+        <a class="nav-overlay__contact-link" href="mailto:michael@woodfireddesigns.com">michael@woodfireddesigns.com</a>
+        <a class="nav-overlay__contact-link" href="https://instagram.com/woodfireddesigns" target="_blank" rel="noopener noreferrer">@woodfireddesigns</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       HERO SCROLL SEQUENCE
+  ═══════════════════════════════════════════════ -->
+  <div id="about" aria-hidden="true"></div>
+  <div class="hero-seq-scroll">
+    <div class="hero-seq theme-dark" id="hero-sequence" aria-label="Introduction">
+
+      <div class="hero-seq__bg" aria-hidden="true">
+        <video class="hero-seq__video" autoplay muted loop playsinline preload="metadata"
+               poster="assets/video/hero-poster.jpg" id="hero-video">
+          <source src="assets/video/hero-final.mp4" type="video/mp4">
+        </video>
+        <div class="hero-seq__overlay"></div>
+      </div>
+
+      <!-- Panel 1 -->
+      <div class="hero-seq__panel" id="seq-p1" aria-label="Brand identity built for The Solo Club">
+        <div class="hero-seq__inner">
+          <p class="label-text hero-seq__kicker">/ The Solo Club</p>
+          <h1 class="hero-seq__display">Running is a solo sport.<br>Building a movement<br><span class="hero-seq__accent">is anything but.</span></h1>
+          <div class="hero-seq__actions">
+            <a class="btn btn--accent" href="#pricing">See the Package →</a>
+            <a class="hero-seq__text-link nav__link" href="#work">
+              <span class="link__inner">
+                <span class="link__label">See Relevant Work</span>
+                <span class="link__label link__label--clone" aria-hidden="true">See Relevant Work</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2 -->
+      <div class="hero-seq__panel" id="seq-p2" aria-label="Brand strategy for The Solo Club">
+        <div class="hero-seq__inner">
+          <p class="label-text hero-seq__kicker">/ The Strategy</p>
+          <h2 class="hero-seq__display">
+            goodr built a vibe.<br>
+            Sugar Loaf built a scene.<br>
+            <span class="hero-seq__accent">The Solo Club builds a movement.</span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- Panel 3 -->
+      <div class="hero-seq__panel" id="seq-p3" aria-label="Built from scratch — Solo Club brand identity">
+        <div class="hero-seq__inner">
+          <p class="label-text hero-seq__kicker">/ For the miles between who you were and who you're becoming.</p>
+          <h2 class="hero-seq__display hero-seq__display--lg">
+            Built with intention.<br>Built to last.
+          </h2>
+          <p class="hero-seq__body">
+            No templates. No shortcuts. A brand foundation built from scratch — logo system,
+            color, type, and guidelines — that feels like a movement from day one.
+            Community comes first. The apparel follows. And when this thing grows, the
+            brand grows with it.
+          </p>
+          <div class="hero-seq__stats">
+            <div class="hero-seq__stat">
+              <span class="hero-seq__stat-num" data-target="60">60+</span>
+              <span class="hero-seq__stat-label label-text">Brands Built</span>
+            </div>
+            <div class="hero-seq__stat">
+              <span class="hero-seq__stat-num" data-target="10">10</span>
+              <span class="hero-seq__stat-label label-text">Day Delivery</span>
+            </div>
+            <div class="hero-seq__stat">
+              <span class="hero-seq__stat-num">100%</span>
+              <span class="hero-seq__stat-label label-text">You Own It</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-seq__bottom" aria-hidden="true">
+        <span class="label-text">/ Est. 2014 — Michael Deschenes</span>
+        <div class="hero-seq__dots">
+          <span class="hero-seq__dot is-active"></span>
+          <span class="hero-seq__dot"></span>
+          <span class="hero-seq__dot"></span>
+        </div>
+        <span class="label-text hero-seq__scroll-hint">
+          Scroll <span class="hero-seq__arrow">↓</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       MARQUEE
+  ═══════════════════════════════════════════════ -->
+  <section class="section-marquee" aria-hidden="true">
+    <div class="marquee__track-wrap">
+      <div class="marquee__track">
+        <span class="marquee__item">Brand Identity</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Logo Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Community Brands</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Running Culture</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Color &amp; Typography</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Brand Guidelines</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Apparel Ready</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Built to Grow</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Brand Identity</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Logo Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Community Brands</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Running Culture</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Color &amp; Typography</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Brand Guidelines</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Apparel Ready</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Built to Grow</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Brand Identity</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Logo Design</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Community Brands</span>
+        <span class="marquee__sep">✦</span>
+        <span class="marquee__item">Running Culture</span>
+        <span class="marquee__sep">✦</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       TRUST BAR
+  ═══════════════════════════════════════════════ -->
+  <section class="section-trust-bar" aria-label="Quick facts">
+    <div class="trust-bar__inner">
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>Foundational Package · $1,800</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>Community Brand Experience</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>Lifestyle &amp; Apparel Ready</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>You Own All Files</span>
+      <span class="trust-bar__sep">|</span>
+      <span class="trust-bar__item"><span class="trust-bar__dot"></span>No Templates. Ever.</span>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PROBLEM / AGITATION
+  ═══════════════════════════════════════════════ -->
+  <section class="section-problem theme-dark" aria-label="Why brand matters for The Solo Club">
+    <div class="problem__inner">
+
+      <div class="problem__header">
+        <p class="label-text problem__kicker">/ The Solo Club Challenge</p>
+        <h2 class="problem__headline word-reveal">A community brand without a visual system is just a group chat that sometimes goes for a run.</h2>
+      </div>
+
+      <div class="problem__grid stagger-group">
+
+        <div class="problem__card">
+          <span class="problem__card-num">01</span>
+          <h3 class="problem__card-title">Your logo is the movement's handshake</h3>
+          <p class="problem__card-body">The first thing someone sees on a hat at a run, a shirt at a coffee shop, or a post on their feed — that's your logo doing its job. It needs to communicate community, athleticism, and something worth belonging to before a single word is read.</p>
+        </div>
+
+        <div class="problem__card">
+          <span class="problem__card-num">02</span>
+          <h3 class="problem__card-title">Apparel without identity is just merchandise</h3>
+          <p class="problem__card-body">The Solo Club's apparel is designed to be a quiet badge of belonging — not just product. That only works if the brand is strong enough to carry that meaning. Without a real identity system underneath it, you're selling a t-shirt. With one, you're selling belonging.</p>
+        </div>
+
+        <div class="problem__card">
+          <span class="problem__card-num">03</span>
+          <h3 class="problem__card-title">What you build now is the foundation for everything next</h3>
+          <p class="problem__card-body">The Solo Club has runway. Apparel, memberships, events, partnerships — this is a brand with a lot of directions to grow. The identity you establish at the start either holds all of that together or falls apart as soon as you try to scale it.</p>
+        </div>
+
+      </div>
+
+      <div class="problem__closer">
+        <p class="problem__closer-text word-reveal word-reveal--fire"
+           aria-label="A brand that makes people want to belong before they've even laced up."
+           data-accent-from="4">A brand that makes people want to belong before they've even laced up.</p>
+        <div class="problem__closer-actions scroll-reveal">
+          <a class="btn btn--accent btn--lg" href="#pricing">See the Package →</a>
+          <a class="btn btn--outline-inverse" href="#work">See the Work →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SERVICES
+  ═══════════════════════════════════════════════ -->
+  <section class="section-services theme-dark" id="services" aria-label="Services">
+    <div class="services__inner">
+
+      <div class="services__header">
+        <div class="services__header-left">
+          <p class="label-text services__kicker">/ What We Build for The Solo Club</p>
+          <p class="services__subhead scroll-reveal">
+            Every deliverable is part of a system — built to stay consistent
+            whether it's on a hat, a shirt, a website, or a phone screen.
+          </p>
+        </div>
+        <div class="services__header-right">
+          <h2 class="services__headline word-reveal">
+            A brand that works everywhere the community shows up.
+          </h2>
+        </div>
+      </div>
+
+      <div class="services__list stagger-group" role="list">
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">01</span>
+          <span class="services__row-name">Logo Design</span>
+          <span class="services__row-desc">Primary mark, alternate lockups, icon version. Built around your vision of the beat-up running shoe with wings — refined into something that looks just as good embroidered on a hat as it does on a phone screen. Three curated concepts, not a wall of rough sketches.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">02</span>
+          <span class="services__row-name">Color &amp; Typography</span>
+          <span class="services__row-desc">Hot pink, electron blue, yellow — codified into a real system with primary, secondary, and utility roles. Not a mood board. A palette you can hand to any printer, decorator, or designer and get consistent results every time.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">03</span>
+          <span class="services__row-name">Brand Guidelines</span>
+          <span class="services__row-desc">A living document that keeps The Solo Club looking like The Solo Club everywhere it shows up — on merch, social, event collateral, and whatever comes next. Built for the next three years, not just this week.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">04</span>
+          <span class="services__row-name">Apparel &amp; Merch Ready</span>
+          <span class="services__row-desc">Files prepared for screen printing, embroidery, DTG, and print-on-demand. You'll have exactly what a decorator needs the day you're ready to place your first order — no back-and-forth, no extra setup fees.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">05</span>
+          <span class="services__row-name">Production Files</span>
+          <span class="services__row-desc">Every format — SVG, PNG, PDF, EPS. Web-ready, print-ready, embroidery-ready. You own all of it. No files held hostage, no licensing games.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+        <div class="services__row" role="listitem">
+          <span class="services__row-num label-text">06</span>
+          <span class="services__row-name">Strategic Brand Direction <span style="font-size:0.75em;opacity:0.55">(Included)</span></span>
+          <span class="services__row-desc">A clear articulation of what The Solo Club is, who it's for, and what it should and shouldn't feel like — so every future decision about the brand has a north star. This is the brief, sharpened and made useful.</span>
+          <span class="services__row-arrow" aria-hidden="true">→</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       REVENUE IDEAS
+  ═══════════════════════════════════════════════ -->
+  <section class="section-revenue theme-dark" id="revenue" aria-label="Revenue ideas for The Solo Club">
+    <div class="revenue__inner">
+
+      <div class="revenue__header">
+        <div>
+          <p class="label-text" style="color:var(--color-accent);letter-spacing:0.12em;font-size:0.72rem;font-weight:700;text-transform:uppercase;margin-bottom:var(--space-sm);">/ What This Brand Can Become</p>
+          <h2 class="revenue__headline">Six ways The Solo<br>Club becomes a business.</h2>
+        </div>
+        <div>
+          <p class="revenue__subhead">
+            The brand foundation unlocks all of this. Right now it's a club.
+            With the right identity underneath it, here's what the path to
+            real revenue looks like — and none of these require a massive audience to start.
+          </p>
+        </div>
+      </div>
+
+      <div class="revenue__grid stagger-group">
+
+        <div class="revenue-card">
+          <span class="revenue-card__num">01</span>
+          <h3 class="revenue-card__title">Branded Apparel Drops</h3>
+          <p class="revenue-card__body">Limited-run merch drops create scarcity and demand. Hats, shorts, tees — released in small quantities so they actually sell out. A strong brand makes people want to wear it before they've ever run with you. Start with a local printer or print-on-demand and reinvest from there.</p>
+          <span class="revenue-card__potential">Low overhead · High margin</span>
+        </div>
+
+        <div class="revenue-card">
+          <span class="revenue-card__num">02</span>
+          <h3 class="revenue-card__title">Membership Model</h3>
+          <p class="revenue-card__body">A monthly or annual club membership — $10–$25/month — that unlocks access to organized runs, community events, training resources, and early access to merch drops. Even 50 members at $15/month is $750 recurring. The brand is what makes the membership worth paying for.</p>
+          <span class="revenue-card__potential">Recurring revenue · Scales cleanly</span>
+        </div>
+
+        <div class="revenue-card">
+          <span class="revenue-card__num">03</span>
+          <h3 class="revenue-card__title">Events &amp; Community Runs</h3>
+          <p class="revenue-card__body">Organized Saturday runs, local 5Ks, social runs followed by coffee or breakfast — ticketed or sponsored. A branded event with a visible identity builds community fast and creates the kind of organic social content that money can't buy. Charge a small entry fee or bring in a local business as a presenting sponsor.</p>
+          <span class="revenue-card__potential">Community builder · Sponsor-friendly</span>
+        </div>
+
+        <div class="revenue-card">
+          <span class="revenue-card__num">04</span>
+          <h3 class="revenue-card__title">Brand Partnerships</h3>
+          <p class="revenue-card__body">Running brands want access to tight-knit, authentic running communities. Once The Solo Club has a real identity and an engaged following — even a small one — you become an attractive partner for shoes, nutrition, gear, and recovery brands. A strong brand makes the outreach email land differently.</p>
+          <span class="revenue-card__potential">Passive income · Grows with audience</span>
+        </div>
+
+        <div class="revenue-card">
+          <span class="revenue-card__num">05</span>
+          <h3 class="revenue-card__title">Run Coaching &amp; Training Plans</h3>
+          <p class="revenue-card__body">Coaching is a natural extension of a community built around growth. Offer personalized training plans, a beginner cohort, or a structured 12-week program — sold individually or bundled into the membership. The Solo Club brand gives it credibility that a generic coach doesn't have.</p>
+          <span class="revenue-card__potential">High margin · Leverages community trust</span>
+        </div>
+
+        <div class="revenue-card">
+          <span class="revenue-card__num">06</span>
+          <h3 class="revenue-card__title">Digital Content &amp; Newsletter</h3>
+          <p class="revenue-card__body">A Solo Club newsletter or content hub — training tips, member spotlights, community stories, run recaps — builds audience and opens doors for sponsorships and affiliate revenue. Content is how you stay top of mind between runs and keep people emotionally connected to the brand year-round.</p>
+          <span class="revenue-card__potential">Zero overhead · Sponsor-friendly</span>
+        </div>
+
+      </div>
+
+      <div class="revenue__closer">
+        <p class="revenue__closer-text">None of this works without a brand people actually believe in.</p>
+        <p class="revenue__closer-sub">The logo, the colors, the guidelines — that's the thing that makes someone buy a hat from a club they've never run with, pay for a membership to a community that's still growing, and tell their friends about it. The brand is the product. Everything else follows.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PRICING
+  ═══════════════════════════════════════════════ -->
+  <section class="section-pricing" id="pricing" aria-label="Foundational package pricing">
+    <div class="pricing__inner">
+
+      <div class="pricing__header">
+        <p class="label-text pricing__kicker">/ The Solo Club Package</p>
+        <h2 class="pricing__headline word-reveal">One package.<br>Everything you need to start.</h2>
+      </div>
+
+      <div class="pricing__grid pricing__grid--two stagger-group">
+
+        <!-- Foundational — built for Kyle -->
+        <div class="pricing-card pricing-card--featured">
+          <span class="pricing-card__badge">Where The Solo Club Starts</span>
+          <div>
+            <p class="pricing-card__tier">Foundational</p>
+            <h3 class="pricing-card__name">Brand Identity Package</h3>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__currency">$</span>
+            <span class="pricing-card__amount">1,800</span>
+          </div>
+          <hr class="pricing-card__divider">
+          <p class="pricing-card__desc">A complete brand foundation built from scratch — the identity, the system, and the files you need to show up consistently everywhere the club lives. Delivered in 10 days.</p>
+          <ul class="pricing-card__features" role="list">
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>3 curated logo concepts — each with clear rationale</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Primary logo + alternate lockups</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Icon / submark — works on hats, app icons, patches</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Full color system — hot pink, electron blue, yellow + neutrals</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Typography system — display, body, utility</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Brand guidelines PDF — usable by any designer or printer</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>All source files — SVG, PNG, PDF, EPS — you own everything</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Apparel, embroidery &amp; print-on-demand ready exports</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Strategic brand direction — what The Solo Club is and isn't</li>
+          </ul>
+          <span class="pricing-card__timeline">Delivered in 10 days</span>
+          <a class="pricing-card__cta pricing-card__cta--primary" href="mailto:michael@woodfireddesigns.com?subject=The Solo Club — Brand Identity">Let's Build This →</a>
+        </div>
+
+        <!-- Next step — when Kyle is ready -->
+        <div class="pricing-card">
+          <div>
+            <p class="pricing-card__tier">Next Step</p>
+            <h3 class="pricing-card__name">Brand Identity + Website</h3>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__currency">$</span>
+            <span class="pricing-card__amount">3,200</span>
+          </div>
+          <hr class="pricing-card__divider">
+          <p class="pricing-card__desc">When The Solo Club is ready for its online home — a custom website designed to match the brand. Community-first design that works as a membership hub, event calendar, and merch storefront in one.</p>
+          <ul class="pricing-card__features" role="list">
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Everything in Brand Identity</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Brand strategy &amp; messaging framework</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Custom multi-page website</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Mobile-first, fast-loading</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Events &amp; community section</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Merch integration ready</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>SEO foundation setup</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>You own the domain &amp; hosting</li>
+          </ul>
+          <span class="pricing-card__timeline">Delivered in 14–18 days</span>
+          <a class="pricing-card__cta pricing-card__cta--secondary" href="mailto:michael@woodfireddesigns.com?subject=The Solo Club — Brand Identity + Website">Get Started →</a>
+        </div>
+
+      </div>
+
+      <p class="pricing__note">Not sure where to start? <a href="mailto:michael@woodfireddesigns.com?subject=The Solo Club — Let's Talk">Send me a message</a> — happy to walk through what makes the most sense right now.</p>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       ABOUT MICHAEL
+  ═══════════════════════════════════════════════ -->
+  <section class="section-michael" id="michael" aria-label="About Michael Deschenes">
+    <div class="michael__inner">
+
+      <div class="michael__photo-col scroll-reveal">
+        <div class="michael__photo-wrap">
+          <img class="michael__photo"
+            src="assets/150ppi/Michael.png"
+            alt="Michael Deschenes — Founder of Wood Fired Designs"
+            loading="lazy" decoding="async">
+        </div>
+        <div class="michael__name-block">
+          <p class="michael__title">Founder · Lead Designer · Strategist</p>
+          <h2 class="michael__name">Michael<br>Deschenes</h2>
+        </div>
+      </div>
+
+      <div class="michael__copy-col">
+        <p class="label-text michael__kicker">/ About Me</p>
+        <p class="michael__pullquote word-reveal">You're not hiring an agency.<br><em>You're hiring me.</em></p>
+
+        <div class="michael__bio stagger-group">
+          <p class="michael__bio-p">
+            I'm the founder and the one who does the work — not a project manager who delegates to a junior designer you've never met. Every logo, every concept, every decision comes directly from me.
+          </p>
+          <p class="michael__bio-p">
+            I've built brands in the trades, CPG, hospitality, fitness, and lifestyle — with the kind of restraint and intention that makes a brand feel like something worth belonging to. I know how to take a concept that's still forming and build something that can carry the weight of what it's meant to become.
+          </p>
+          <p class="michael__bio-p">
+            The Solo Club is exactly the kind of project I want to work on. There's a real idea here, a real story, and a clear direction. It just needs to be built right from the start.
+          </p>
+        </div>
+
+        <div class="michael__namedrops">
+          <p class="label-text michael__namedrops-label">/ Previously worked with</p>
+          <div class="michael__namedrops-list">
+            <span class="michael__namedrop">Facebook</span>
+            <span class="michael__namedrop">US Open</span>
+            <span class="michael__namedrop">Masters Tournament</span>
+            <span class="michael__namedrop">American Needle</span>
+          </div>
+        </div>
+
+        <div class="michael__cta">
+          <a class="btn btn--accent" href="#pricing">See the Package →</a>
+          <a class="btn btn--outline" href="mailto:michael@woodfireddesigns.com?subject=The Solo Club — Question">Ask Me Anything →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION — PORTFOLIO BENTO GRID
+  ═══════════════════════════════════════════════ -->
+  <section class="section-bento" id="work" aria-label="Selected Work">
+
+    <div class="bento__header">
+      <p class="label-text bento__kicker">/ Selected Work</p>
+      <h2 class="bento__headline word-reveal">Work that earns its keep.</h2>
+        <p style="font-family:var(--font-body);font-size:var(--type-body-lg);color:var(--color-text-secondary);line-height:var(--leading-relaxed);max-width:540px;">Real brands, real businesses. Hover any card to see the work in motion.</p>
+    </div>
+
+    <div class="bento-grid">
+
+      <!-- Card 1 — Keeping Balanced Solutions -->
+      <article class="bento-card" tabindex="0"
+        aria-label="Keeping Balanced Solutions — Web Design, Motion — 2026">
+        <div class="bento-card__media">
+          <img class="bento-card__poster"
+            src="assets/portfolio/keeping-balanced-thumb.jpg"
+            alt="Keeping Balanced Solutions — premium financial website"
+            loading="lazy" decoding="async">
+          <video class="bento-card__video" loop muted playsinline preload="none">
+            <source src="assets/portfolio/videos/Keeping Balanced Solutions _ Premium Financial Architecture - 11 May 2026.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="bento-card__overlay"></div>
+        <div class="bento-card__info">
+          <div class="bento-card__tags">
+            <span class="bento-card__tag">Web Design</span>
+            <span class="bento-card__tag">Motion</span>
+            <span class="bento-card__tag">Finance</span>
+          </div>
+          <div class="bento-card__meta">
+            <h3 class="bento-card__title">Keeping Balanced Solutions</h3>
+            <span class="bento-card__year">2026</span>
+          </div>
+        </div>
+        <div class="bento-card__arrow" aria-hidden="true">→</div>
+      </article>
+
+      <!-- Card 2 — Niam Meta Ad -->
+      <article class="bento-card" tabindex="0"
+        aria-label="NIAM — Meta Ad, Social Media — 2026">
+        <div class="bento-card__media">
+          <img class="bento-card__poster"
+            src="assets/portfolio/niam-meta-ad-thumb.jpg"
+            alt="NIAM — Meta ad creative"
+            loading="lazy" decoding="async">
+          <video class="bento-card__video" loop muted playsinline preload="none">
+            <source src="assets/portfolio/videos/Niam_Meta_Ad_1_Jan_2026.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="bento-card__overlay"></div>
+        <div class="bento-card__info">
+          <div class="bento-card__tags">
+            <span class="bento-card__tag">Meta Ad</span>
+            <span class="bento-card__tag">Social Media</span>
+          </div>
+          <div class="bento-card__meta">
+            <h3 class="bento-card__title">NIAM</h3>
+            <span class="bento-card__year">2026</span>
+          </div>
+        </div>
+        <div class="bento-card__arrow" aria-hidden="true">→</div>
+      </article>
+
+      <!-- Card 3 — Crosswave -->
+      <article class="bento-card" tabindex="0"
+        aria-label="Crosswave — E-Commerce, Brand Identity — 2024">
+        <div class="bento-card__media">
+          <img class="bento-card__poster"
+            src="assets/portfolio/crosswave-thumb.jpg"
+            alt="Crosswave — brand and e-commerce"
+            loading="lazy" decoding="async">
+          <video class="bento-card__video" loop muted playsinline preload="none">
+            <source src="assets/portfolio/videos/Crosswave.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="bento-card__overlay"></div>
+        <div class="bento-card__info">
+          <div class="bento-card__tags">
+            <span class="bento-card__tag">E-Commerce</span>
+            <span class="bento-card__tag">Brand Identity</span>
+          </div>
+          <div class="bento-card__meta">
+            <h3 class="bento-card__title">Crosswave</h3>
+            <span class="bento-card__year">2024</span>
+          </div>
+        </div>
+        <div class="bento-card__arrow" aria-hidden="true">→</div>
+      </article>
+
+      <!-- Card 4 — Northwood -->
+      <article class="bento-card" tabindex="0"
+        aria-label="Northwood Nutrition — Brand Identity, Packaging — 2024">
+        <div class="bento-card__media">
+          <img class="bento-card__poster"
+            src="assets/portfolio/northwood-thumb.jpg"
+            alt="Northwood Nutrition — brand video"
+            loading="lazy" decoding="async">
+          <video class="bento-card__video" loop muted playsinline preload="none">
+            <source src="assets/portfolio/videos/Northwood.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="bento-card__overlay"></div>
+        <div class="bento-card__info">
+          <div class="bento-card__tags">
+            <span class="bento-card__tag">Brand Identity</span>
+            <span class="bento-card__tag">Packaging</span>
+          </div>
+          <div class="bento-card__meta">
+            <h3 class="bento-card__title">Northwood Nutrition</h3>
+            <span class="bento-card__year">2024</span>
+          </div>
+        </div>
+        <div class="bento-card__arrow" aria-hidden="true">→</div>
+      </article>
+
+      <!-- Card 5 — Western Welder -->
+      <article class="bento-card" tabindex="0"
+        aria-label="Western Welder — Brand Identity — 2025">
+        <div class="bento-card__media">
+          <img class="bento-card__poster"
+            src="assets/portfolio/western-welder-thumb.jpg"
+            alt="Western Welder — brand identity"
+            loading="lazy" decoding="async">
+          <video class="bento-card__video" loop muted playsinline preload="none">
+            <source src="assets/portfolio/videos/Western Welder.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="bento-card__overlay"></div>
+        <div class="bento-card__info">
+          <div class="bento-card__tags">
+            <span class="bento-card__tag">Brand Identity</span>
+            <span class="bento-card__tag">Trades</span>
+          </div>
+          <div class="bento-card__meta">
+            <h3 class="bento-card__title">Western Welder</h3>
+            <span class="bento-card__year">2025</span>
+          </div>
+        </div>
+        <div class="bento-card__arrow" aria-hidden="true">→</div>
+      </article>
+
+      <!-- Card 6 — Dope Smoke Country -->
+      <article class="bento-card" tabindex="0"
+        aria-label="Dope Rope — Smoke Country Campaign — 2024">
+        <div class="bento-card__media">
+          <img class="bento-card__poster"
+            src="assets/portfolio/dope-smoke-country-thumb.jpg"
+            alt="Dope Rope — Smoke Country campaign creative"
+            loading="lazy" decoding="async">
+          <video class="bento-card__video" loop muted playsinline preload="none">
+            <source src="assets/portfolio/videos/Dope smoke country.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="bento-card__overlay"></div>
+        <div class="bento-card__info">
+          <div class="bento-card__tags">
+            <span class="bento-card__tag">Campaign Creative</span>
+            <span class="bento-card__tag">Brand Content</span>
+          </div>
+          <div class="bento-card__meta">
+            <h3 class="bento-card__title">Dope Rope — Smoke Country</h3>
+            <span class="bento-card__year">2024</span>
+          </div>
+        </div>
+        <div class="bento-card__arrow" aria-hidden="true">→</div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PROCESS — tailored to the Solo Club workflow
+  ═══════════════════════════════════════════════ -->
+  <section class="section-process theme-dark" id="process" aria-label="How it works">
+    <div class="process__inner">
+
+      <div class="process__left scroll-reveal">
+        <p class="label-text process__kicker">/ How It Works for The Solo Club</p>
+        <p class="process__summary">
+          A tight, direct process. You've already done the hard thinking — you've got a brand narrative, a visual direction, and a clear sense of what it should feel like. My job is to take that and turn it into something real.
+        </p>
+      </div>
+
+      <div class="process__right stagger-group">
+
+        <div class="process__step">
+          <span class="process__step-num">01</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Brief</h3>
+            <p class="process__step-body">
+              We start with what you already have — the narrative brief, the vision for the icon, the inspiration brands. I ask a handful of focused questions, not a 20-question intake form starting from scratch.
+            </p>
+          </div>
+        </div>
+
+        <div class="process__step">
+          <span class="process__step-num">02</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Concepts</h3>
+            <p class="process__step-body">
+              Three curated, distinct logo directions — each with a clear rationale tied back to what The Solo Club is. Not a dump of rough ideas. Three that are actually worth choosing between.
+            </p>
+          </div>
+        </div>
+
+        <div class="process__step">
+          <span class="process__step-num">03</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Refine</h3>
+            <p class="process__step-body">
+              You pick a direction, we refine it until it's right. Real revisions with clear intent — not endless rounds of minor tweaks. I push back when something isn't serving the brand.
+            </p>
+          </div>
+        </div>
+
+        <div class="process__step">
+          <span class="process__step-num">04</span>
+          <div class="process__step-content">
+            <h3 class="process__step-title">Deliver</h3>
+            <p class="process__step-body">
+              Every file, every format. Brand guidelines, full color system, source files, and apparel-ready exports. The Solo Club owns all of it. Day one and beyond.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       CTA
+  ═══════════════════════════════════════════════ -->
+  <section class="section-cta" id="contact" aria-label="Start The Solo Club's brand">
+    <div class="cta__inner">
+      <p class="label-text cta__kicker">/ Let's Build The Solo Club</p>
+      <h2 class="cta__headline word-reveal">
+        The community exists.<br>Now let's give it an identity.
+      </h2>
+      <p class="cta__subhead scroll-reveal">
+        You've done the thinking. You know what The Solo Club is, who it's for, and what it's not. The brand foundation is what turns that clarity into something people can see, wear, and believe in — before they've ever laced up with you. Let's build it right, from the start.
+      </p>
+      <div class="cta__actions scroll-reveal">
+        <a class="btn btn--accent btn--lg" href="mailto:michael@woodfireddesigns.com?subject=The%20Solo%20Club%20%E2%80%94%20Let%27s%20Build%20This&body=Hey%20Michael%2C%0A%0AThis%20looks%20great.%20I%27d%20like%20to%20move%20forward%20with%20the%20foundational%20brand%20identity%20package%20for%20The%20Solo%20Club.%20What%20do%20we%20need%20to%20do%20to%20get%20started%3F%0A%0AThanks%2C%0AKyle">Let's Build The Solo Club →</a>
+        <a class="cta__secondary-link nav__link" href="#pricing">
+          <span class="link__inner">
+            <span class="link__label">See the package first →</span>
+            <span class="link__label link__label--clone" aria-hidden="true">See the package first →</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer class="site-footer theme-dark" id="footer" role="contentinfo">
+    <div class="footer__inner">
+
+      <div class="footer__top">
+        <div class="footer__logotype">
+          <a href="#" aria-label="Wood Fired Designs — Back to top">
+            <img class="footer__logo-img" src="brand/Stacked Script.png" alt="Wood Fired Designs">
+          </a>
+          <p class="footer__tagline">No fluff. No filler. Purpose-built design that lights a fire under your brand.</p>
+        </div>
+      </div>
+
+      <div class="footer__columns">
+
+        <div class="footer__col">
+          <p class="footer__col-label label-text">Links</p>
+          <ul class="footer__col-links" role="list">
+            <li><a class="footer__link nav__link" href="#work"><span class="link__inner"><span class="link__label">Work</span><span class="link__label link__label--clone" aria-hidden="true">Work</span></span></a></li>
+            <li><a class="footer__link nav__link" href="#services"><span class="link__inner"><span class="link__label">Services</span><span class="link__label link__label--clone" aria-hidden="true">Services</span></span></a></li>
+            <li><a class="footer__link nav__link" href="#revenue"><span class="link__inner"><span class="link__label">Revenue Ideas</span><span class="link__label link__label--clone" aria-hidden="true">Revenue Ideas</span></span></a></li>
+            <li><a class="footer__link nav__link" href="#pricing"><span class="link__inner"><span class="link__label">Pricing</span><span class="link__label link__label--clone" aria-hidden="true">Pricing</span></span></a></li>
+            <li><a class="footer__link nav__link" href="#michael"><span class="link__inner"><span class="link__label">About</span><span class="link__label link__label--clone" aria-hidden="true">About</span></span></a></li>
+            <li><a class="footer__link nav__link" href="#contact"><span class="link__inner"><span class="link__label">Start a Project</span><span class="link__label link__label--clone" aria-hidden="true">Start a Project</span></span></a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <p class="footer__col-label label-text">Contact</p>
+          <ul class="footer__col-links" role="list">
+            <li><a class="footer__link nav__link" href="mailto:michael@woodfireddesigns.com"><span class="link__inner"><span class="link__label">michael@woodfireddesigns.com</span><span class="link__label link__label--clone" aria-hidden="true">michael@woodfireddesigns.com</span></span></a></li>
+            <li><span class="footer__text">Salisbury, MD</span></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <p class="footer__col-label label-text">Social</p>
+          <ul class="footer__col-links" role="list">
+            <li><a class="footer__link nav__link" href="https://instagram.com/woodfireddesigns" target="_blank" rel="noopener noreferrer"><span class="link__inner"><span class="link__label">Instagram</span><span class="link__label link__label--clone" aria-hidden="true">Instagram</span></span></a></li>
+            <li><a class="footer__link nav__link" href="https://linkedin.com/in/michaeldeschenes" target="_blank" rel="noopener noreferrer"><span class="link__inner"><span class="link__label">LinkedIn</span><span class="link__label link__label--clone" aria-hidden="true">LinkedIn</span></span></a></li>
+            <li><a class="footer__link nav__link" href="https://contra.com/woodfireddesigns" target="_blank" rel="noopener noreferrer"><span class="link__inner"><span class="link__label">Contra</span><span class="link__label link__label--clone" aria-hidden="true">Contra</span></span></a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright label-text">© 2026 Wood Fired Designs. All rights reserved.</p>
+        <p class="footer__credit label-text">Designed & built by Michael Deschenes — Salisbury, MD</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <div class="custom-cursor-dot" aria-hidden="true"></div>
+  <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="js/scroll-sequence.js" defer></script>
+  <script src="js/bento.js" defer></script>
+  <script src="js/reveals.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/animations.js" defer></script>
+
+</body>
+</html>

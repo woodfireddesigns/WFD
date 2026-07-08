@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/ux", "destination": "/ux/index.html" },
+    { "source": "/proposals/plus-one", "destination": "/proposals/plus-one/index.html" },
+    { "source": "/proposals/brand-refresh", "destination": "/proposals/brand-refresh/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [

@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposal for Plus One — Wood Fired Designs</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.png">
+
+  <style>
+  /* ─────────────────────────────────────────
+     TOKENS
+  ───────────────────────────────────────── */
+  :root {
+    --bg:           #F5F2EC;
+    --bg-alt:       #EDE9E0;
+    --bg-dark:      #1A1713;
+    --bg-dark-alt:  #222018;
+    --text:         #1A1713;
+    --text-muted:   #6B6560;
+    --text-inv:     #F5F2EC;
+    --text-inv-muted: #A09A93;
+    --accent:       #D4581A;
+    --accent-hi:    #E8632A;
+    --accent-lo:    #B84010;
+    --border:       #DDD8CF;
+    --border-dark:  rgba(255,255,255,.07);
+
+    --font-d: 'Anton','Arial Black',sans-serif;
+    --font-b: 'Inter',-apple-system,sans-serif;
+
+    --ease:    cubic-bezier(.16,1,.3,1);
+    --ease-io: cubic-bezier(.76,0,.24,1);
+
+    /* section vertical rhythm */
+    --sec-y: clamp(5rem,10vw,9rem);
+  }
+
+  /* ─────────────────────────────────────────
+     RESET
+  ───────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-b);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+
+  /* ─────────────────────────────────────────
+     SKIP LINK (accessibility)
+  ───────────────────────────────────────── */
+  .skip-link {
+    position: absolute; top: -100%; left: 1rem; z-index: 10000;
+    padding: .6rem 1.2rem;
+    background: var(--accent); color: #fff;
+    font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    border-radius: 0 0 8px 8px;
+    transition: top .2s;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ─────────────────────────────────────────
+     FOCUS VISIBLE — global
+  ───────────────────────────────────────── */
+  :focus { outline: none; }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ─────────────────────────────────────────
+     UTILITY
+  ───────────────────────────────────────── */
+  /* FIX: removed global opacity from .label — was causing invisible labels in dark sections */
+  .label {
+    font-family: var(--font-b);
+    font-size: .72rem;         /* FIX: was .68rem — too small */
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: block;
+  }
+  /* dark-section label override */
+  .label--inv    { color: var(--text-inv-muted); }
+  /* fire accent label */
+  .label--fire   { color: var(--accent); }
+
+  .container {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem,5vw,5rem);
+  }
+
+  /* ─────────────────────────────────────────
+     SCROLL REVEAL
+     FIX: added will-change for GPU compositing
+  ───────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s var(--ease), transform .7s var(--ease);
+    will-change: opacity, transform;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .d1 { transition-delay: .1s; }
+  .d2 { transition-delay: .2s; }
+  .d3 { transition-delay: .3s; }
+  .d4 { transition-delay: .4s; }
+
+  /* ─────────────────────────────────────────
+     BUTTONS
+  ───────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+    padding: .7rem 1.6rem;
+    font-family: var(--font-b);
+    font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    min-height: 44px;            /* FIX: WCAG touch target */
+    transition: filter .25s, box-shadow .3s, transform .18s, background .18s, color .18s, border-color .18s;
+  }
+  .btn:active { transform: scale(.96) !important; }
+
+  .btn--fire {
+    background: linear-gradient(135deg,#E8632A 0%,#D4581A 45%,#B84010 100%);
+    border-color: rgba(255,120,50,.4);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(212,88,26,.4), inset 0 1px 0 rgba(255,180,100,.25);
+    text-shadow: 0 1px 2px rgba(0,0,0,.2);
+  }
+  .btn--fire:hover {
+    filter: brightness(1.12) saturate(1.1);
+    box-shadow: 0 0 0 1px rgba(255,120,50,.6), 0 4px 22px rgba(212,88,26,.6), 0 10px 48px rgba(212,88,26,.25);
+    transform: translateY(-1px);
+  }
+  .btn--fire-lg { padding: .9rem 2.25rem; font-size: .8rem; }
+
+  .btn--ghost-inv {
+    background: transparent;
+    border-color: rgba(245,242,236,.3);
+    color: rgba(245,242,236,.8);
+  }
+  .btn--ghost-inv:hover {
+    background: rgba(245,242,236,.07);
+    border-color: rgba(245,242,236,.6);
+    color: var(--text-inv);
+    transform: translateY(-1px);
+  }
+
+  /* ─────────────────────────────────────────
+     NAV
+  ───────────────────────────────────────── */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    padding: 0 clamp(1.25rem,4vw,3rem);
+    background: transparent;
+    transition: background .35s, box-shadow .35s;
+  }
+  #nav.scrolled {
+    background: rgba(10,8,6,.93);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 1px 0 rgba(255,255,255,.07);
+  }
+  #nav-logo img {
+    height: 30px; width: auto;
+    filter: brightness(0) invert(1);
+    display: block;
+  }
+  /* FIX: was <p> — changed to <span> in HTML; hide below 500px not 680px */
+  #nav-badge {
+    font-family: var(--font-b);
+    font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(245,242,236,.4);
+    display: none;
+  }
+  #nav-badge strong { color: var(--accent); font-weight: 700; }
+  #nav-cta {
+    display: none;
+    align-items: center;
+    font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg,#E8632A,#D4581A,#B84010);
+    border: 1.5px solid rgba(255,120,50,.4);
+    border-radius: 999px;
+    padding: 0 1.25rem;
+    height: 38px; min-height: 38px;   /* FIX: proper height without overflow */
+    box-shadow: 0 2px 8px rgba(212,88,26,.35);
+    transition: filter .25s, transform .18s;
+    white-space: nowrap;
+  }
+  #nav-cta:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  @media(min-width:500px)  { #nav-badge { display: block; } }
+  @media(min-width:680px)  { #nav-cta  { display: inline-flex; } }
+
+  /* ─────────────────────────────────────────
+     HERO
+  ───────────────────────────────────────── */
+  #hero {
+    position: relative;
+    min-height: 100vh;       /* FIX: fallback before svh */
+    min-height: 100svh;
+    background: var(--bg-dark);
+    overflow: hidden;
+  }
+  /* FIX: fire glow uses opacity only — scaleY caused GPU thrash & layout shift */
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 105%, rgba(212,88,26,.5)  0%, transparent 65%),
+      radial-gradient(ellipse 45% 35% at 18% 100%, rgba(184,64,16,.3)  0%, transparent 55%),
+      radial-gradient(ellipse 45% 35% at 82% 100%, rgba(232,99,42,.25) 0%, transparent 55%);
+    animation: heroGlow 7s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes heroGlow {
+    0%   { opacity: .8;  }
+    50%  { opacity: 1;   }
+    100% { opacity: .85; }
+  }
+  #hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,88,26,.45), transparent);
+    pointer-events: none;
+  }
+  /* FIX: removed align-items:center from #hero — caused centering+padding conflict on short viewports.
+     Now hero uses top padding to clear nav + breathing room. */
+  .hero__inner {
+    position: relative; z-index: 2;
+    padding-top:    max(88px, clamp(7rem,14vh,11rem)); /* FIX: always at least 88px (nav+20px) */
+    padding-bottom: clamp(5rem,10vh,8rem);
+  }
+  .hero__tag {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(212,88,26,.14);
+    border: 1px solid rgba(212,88,26,.3);
+    border-radius: 999px;
+    padding: .4rem 1rem;
+    font-size: .72rem; /* FIX: was .65rem */
+    font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent-hi);
+    margin-bottom: 2rem;
+  }
+  .hero__tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .hero__h1 {
+    font-family: var(--font-d);
+    font-size: clamp(3.2rem, 9.5vw, 9.5rem); /* FIX: tightened top to avoid overflow */
+    line-height: .93;
+    letter-spacing: 0;
+    color: var(--text-inv);
+    text-transform: uppercase;
+    margin-bottom: 1.75rem;
+  }
+  .hero__h1 em {
+    font-style: normal;
+    -webkit-text-stroke: 1px var(--accent);
+    color: transparent;
+  }
+  .hero__sub {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: var(--text-inv-muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  /* FIX: hero CTA row — column on small mobile */
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .875rem;
+  }
+  @media(max-width:400px) {
+    .hero__ctas { flex-direction: column; align-items: flex-start; }
+    .hero__ctas .btn { width: 100%; justify-content: center; }
+  }
+  .hero__meta {
+    display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+    margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .hero__meta-item {
+    font-size: .7rem; /* FIX: was .65rem */
+    font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(245,242,236,.32);
+  }
+  .hero__meta-item strong { color: rgba(245,242,236,.65); font-weight: 700; }
+
+  /* FIX: scroll indicator z-index above content, above hero::after line */
+  .hero__scroll {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    z-index: 3;
+    animation: scrollBounce 2.2s ease-in-out infinite;
+  }
+  .hero__scroll span {
+    font-size: .62rem; letter-spacing: .16em; text-transform: uppercase;
+    color: rgba(245,242,236,.22);
+  }
+  .hero__scroll-line {
+    width: 1px; height: 30px;
+    background: linear-gradient(to bottom, rgba(212,88,26,.55), transparent);
+  }
+  @keyframes scrollBounce {
+    0%,100% { transform: translateX(-50%) translateY(0);   }
+    55%      { transform: translateX(-50%) translateY(7px); }
+  }
+
+  /* ─────────────────────────────────────────
+     MARQUEE
+     FIX: added will-change
+  ───────────────────────────────────────── */
+  .marquee-wrap {
+    background: var(--accent);
+    overflow: hidden;
+    padding: .85rem 0;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 24s linear infinite;
+    will-change: transform; /* FIX */
+  }
+  .marquee-track span {
+    font-family: var(--font-b);
+    font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    color: #fff;
+    padding: 0 1.5rem;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .marquee-track .sep { opacity: .45; padding: 0 .25rem; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* ─────────────────────────────────────────
+     SECTION — BRIEF
+  ───────────────────────────────────────── */
+  #brief { padding: var(--sec-y) 0; background: var(--bg); }
+
+  .brief__grid {
+    display: grid; gap: clamp(2.5rem,5vw,5rem);
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:780px) {
+    .brief__grid { grid-template-columns: 1fr 1fr; align-items: start; }
+  }
+  .brief__kicker { margin-bottom: .875rem; }
+  .brief__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(2.8rem,5.5vw,5.5rem);
+    line-height: .93; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .brief__h2 em { font-style: normal; color: var(--accent); }
+  .brief__body {
+    font-size: clamp(1rem,1.3vw,1.1rem);
+    color: var(--text-muted); line-height: 1.78;
+  }
+  .brief__body p + p { margin-top: 1.1rem; }
+  .brief__body strong { color: var(--text); }
+  .brief__stat-row {
+    display: flex; flex-wrap: wrap; gap: 2rem 3rem;
+    margin-top: 3rem; padding-top: 2.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .brief__stat { min-width: 80px; }
+  .brief__stat-num {
+    font-family: var(--font-d);
+    font-size: 4.5rem;  /* FIX: was 3.5rem — too small */
+    line-height: 1; color: var(--accent);
+  }
+  .brief__stat-label {
+    font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-muted); margin-top: .3rem; max-width: 120px;
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION — INSIGHT
+  ───────────────────────────────────────── */
+  #insight {
+    padding: var(--sec-y) 0;
+    background: var(--bg-dark);
+    position: relative; overflow: hidden;
+  }
+  #insight::before {
+    content: '';
+    position: absolute; top: -40%; left: -8%; width: 55%; height: 130%;
+    background: radial-gradient(ellipse, rgba(212,88,26,.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .insight__inner { position: relative; z-index: 1; }
+  /* FIX: eyebrow labels in dark sections need color override, no dimmed opacity */
+  .insight__eyebrow { color: var(--accent); margin-bottom: 1.5rem; }
+  .insight__statement {
+    font-family: var(--font-d);
+    font-size: clamp(2.6rem,5.8vw,6.8rem);
+    line-height: .93; text-transform: uppercase;
+    color: var(--text-inv);
+    max-width: 1100px; margin-bottom: 3rem;
+    letter-spacing: 0;
+  }
+  .insight__statement em { font-style: normal; color: var(--accent); }
+  .insight__divider {
+    width: 56px; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 2rem;
+  }
+  .insight__body {
+    max-width: 640px;
+    font-size: clamp(1rem,1.3vw,1.1rem); /* FIX: 1rem floor */
+    color: var(--text-inv-muted); line-height: 1.78;
+  }
+  .insight__body p + p { margin-top: 1.1rem; }
+  /* FIX: callout border more visible, background stronger */
+  .insight__callout {
+    margin-top: 3rem;
+    padding: 1.75rem 2rem;
+    border: 1px solid rgba(212,88,26,.3);
+    border-left: 3px solid var(--accent);
+    background: rgba(212,88,26,.09); /* FIX: was .06 — too subtle */
+    border-radius: 0 10px 10px 0;
+    font-size: 1rem; color: rgba(245,242,236,.72);
+    line-height: 1.72; max-width: 640px;
+  }
+  .insight__callout strong { color: var(--text-inv); }
+
+  /* insight split — text + product photo */
+  .insight__split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 3.5rem;
+  }
+  @media(min-width:780px) {
+    .insight__split { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  }
+  .insight__split-copy { display: flex; flex-direction: column; gap: 2rem; }
+  .insight__product-shot {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .insight__product-shot img {
+    width: 100%; height: clamp(260px,35vw,480px);
+    object-fit: cover;
+    display: block;
+    transition: transform .65s var(--ease);
+  }
+  .insight__product-shot:hover img { transform: scale(1.03); }
+  .insight__product-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(to top, rgba(26,23,19,.85) 0%, transparent 100%);
+    font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(245,242,236,.55);
+  }
+
+  /* full-bleed photo break between sections */
+  .photo-break {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    position: relative;
+  }
+  .photo-break img {
+    width: 100%;
+    height: clamp(260px,30vw,420px);
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    opacity: .88;
+    transition: opacity .4s;
+  }
+  .photo-break:hover img { opacity: 1; }
+  .photo-break__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(26,23,19,.35) 0%,
+      transparent 40%,
+      transparent 60%,
+      rgba(26,23,19,.35) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION — PROOF
+  ───────────────────────────────────────── */
+  #proof { padding: var(--sec-y) 0; background: var(--bg-alt); }
+
+  .proof__header {
+    display: grid; gap: 1.5rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 3rem;
+  }
+  @media(min-width:780px) {
+    .proof__header { grid-template-columns: 1fr 1fr; align-items: end; }
+  }
+  .proof__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(2.6rem,5.5vw,5rem);
+    line-height: .93; text-transform: uppercase;
+    letter-spacing: 0;
+  }
+  .proof__h2 em { font-style: normal; color: var(--accent); }
+  .proof__subhead {
+    font-size: clamp(1rem,1.2vw,1.05rem);
+    color: var(--text-muted); line-height: 1.72;
+    max-width: 400px; align-self: end;
+  }
+
+  /* Feature card */
+  .proof__feature {
+    background: var(--bg-dark);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  /* FIX: image wrapper for proper overflow clip on desktop grid */
+  .proof__feature-media {
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .proof__feature-img {
+    width: 100%;
+    height: clamp(240px,32vw,460px);
+    object-fit: cover;
+    display: block;
+    opacity: .88;
+    transition: opacity .4s, transform .6s var(--ease);
+  }
+  .proof__feature:hover .proof__feature-img { opacity: 1; transform: scale(1.025); }
+
+  .proof__feature-body {
+    padding: clamp(1.5rem,3vw,2.5rem);
+    display: flex; flex-direction: column; gap: 1.25rem;
+  }
+  @media(min-width:860px) {
+    .proof__feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .proof__feature-media { overflow: hidden; }
+    .proof__feature-img {
+      width: 100%; height: 100%;
+      min-height: 400px;
+      object-fit: cover;
+    }
+  }
+  .proof__tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .proof__tag {
+    font-size: .63rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent-hi);
+    background: rgba(212,88,26,.11); border: 1px solid rgba(212,88,26,.22);
+    border-radius: 999px; padding: .25rem .75rem;
+  }
+  .proof__feature-title {
+    font-family: var(--font-d);
+    font-size: clamp(2.2rem,4vw,4rem);
+    line-height: .93; text-transform: uppercase; letter-spacing: 0;
+    color: var(--text-inv);
+  }
+  .proof__feature-desc {
+    font-size: 1rem; color: var(--text-inv-muted); line-height: 1.72;
+  }
+  .proof__scope {
+    display: flex; flex-direction: column; gap: .55rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .proof__scope-item {
+    display: flex; align-items: baseline; gap: .75rem;
+    font-size: .82rem; color: rgba(245,242,236,.55);
+    line-height: 1.5;
+  }
+  .proof__scope-item::before { content: '→'; color: var(--accent); font-size: .72rem; flex-shrink: 0; }
+
+  /* Photo grid — FIX: aspect-ratio on thumb prevents CLS */
+  .proof__grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: .75rem;
+    margin-top: .75rem;
+  }
+  @media(min-width:640px) { .proof__grid { grid-template-columns: repeat(4,1fr); } }
+
+  .proof__thumb {
+    border-radius: 12px; /* FIX: was 10px — standardised */
+    overflow: hidden;
+    background: var(--bg-dark);
+    aspect-ratio: 4/3;
+  }
+  .proof__thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: .78;
+    transition: transform .55s var(--ease), opacity .35s;
+  }
+  .proof__thumb:hover img { transform: scale(1.07); opacity: 1; }
+
+  /* Name drops */
+  .proof__namedrops {
+    margin-top: 3rem; padding-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .proof__namedrops-label { margin-bottom: 1.25rem; }
+  .proof__namedrops-list { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .proof__namedrop {
+    font-family: var(--font-d);
+    font-size: clamp(1rem,1.8vw,1.7rem); /* FIX: tighter max prevents overflow */
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: .6rem 1.3rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    transition: color .2s, border-color .2s, background .2s;
+  }
+  .proof__namedrop:hover {
+    color: var(--text);
+    border-color: var(--accent);
+    background: rgba(212,88,26,.05);
+  }
+
+  /* ─────────────────────────────────────────
+     SECTION — PROCESS
+  ───────────────────────────────────────── */
+  #process { padding: var(--sec-y) 0; background: var(--bg-dark); }
+  .process__header { margin-bottom: 3.5rem; }
+  /* FIX: eyebrow in dark section */
+  .process__eyebrow { color: var(--accent); margin-bottom: .875rem; }
+  .process__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(2.8rem,5.5vw,6rem);
+    line-height: .93; text-transform: uppercase; letter-spacing: 0;
+    color: var(--text-inv);
+  }
+  .process__h2 em { font-style: normal; color: var(--accent); }
+  .process__grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  @media(min-width:760px) { .process__grid { grid-template-columns: repeat(3,1fr); } }
+  .process__step {
+    padding: clamp(1.75rem,4vw,3rem);
+    background: var(--bg-dark-alt);
+    transition: background .3s;
+  }
+  .process__step:hover { background: #25221a; }
+  .process__step-num {
+    font-family: var(--font-d);
+    font-size: 4.5rem; line-height: 1;
+    color: var(--accent);
+    opacity: .4; /* FIX: was .25 — too invisible */
+    display: block; margin-bottom: 1.5rem;
+    transition: opacity .3s;
+  }
+  .process__step:hover .process__step-num { opacity: .7; }
+  .process__step-title {
+    font-family: var(--font-d);
+    font-size: clamp(1.8rem,2.8vw,2.75rem);
+    text-transform: uppercase; letter-spacing: 0;
+    color: var(--text-inv); margin-bottom: 1rem;
+  }
+  .process__step-body {
+    font-size: 1rem; /* FIX: was .95rem */
+    color: var(--text-inv-muted); line-height: 1.72;
+  }
+  .process__step-body p + p { margin-top: .75rem; }
+
+  /* ─────────────────────────────────────────
+     SECTION — DELIVERABLES
+  ───────────────────────────────────────── */
+  #deliverables { padding: var(--sec-y) 0; background: var(--bg); }
+  .deliv__grid {
+    display: grid; gap: clamp(3rem,5vw,5.5rem);
+    grid-template-columns: 1fr;
+  }
+  @media(min-width:860px) { .deliv__grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+  .deliv__kicker { margin-bottom: .875rem; }
+  .deliv__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(2.5rem,5vw,5.25rem);
+    line-height: .93; text-transform: uppercase; letter-spacing: 0;
+    margin-bottom: 1.5rem;
+  }
+  .deliv__h2 em { font-style: normal; color: var(--accent); }
+  .deliv__sub {
+    font-size: clamp(1rem,1.2vw,1.05rem);
+    color: var(--text-muted); line-height: 1.75; margin-bottom: 2rem;
+  }
+  /* FIX: cannabis note background more visible */
+  .deliv__note {
+    padding: 1.5rem;
+    background: rgba(212,88,26,.07); /* FIX: was .06 */
+    border: 1px solid rgba(212,88,26,.22); /* FIX: stronger border */
+    border-radius: 12px;
+  }
+  .deliv__note p { font-size: .95rem; color: var(--text-muted); line-height: 1.68; }
+  .deliv__note strong { color: var(--text); }
+  .deliv__list { border-top: 1px solid var(--border); }
+  .deliv__item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 1rem; /* FIX: was .95rem */
+    line-height: 1.55;
+    transition: color .2s;
+  }
+  .deliv__item:hover { color: var(--accent); }
+  .deliv__check {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    background: rgba(212,88,26,.1);
+    border: 1.5px solid rgba(212,88,26,.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .62rem; color: var(--accent);
+    margin-top: .15rem; /* FIX: aligns check with first text line */
+  }
+  .deliv__item-txt strong { color: var(--text); display: block; margin-bottom: .2rem; font-weight: 700; }
+  .deliv__item-txt span  { font-size: .88rem; color: var(--text-muted); }
+
+  /* ─────────────────────────────────────────
+     SECTION — PRICING
+  ───────────────────────────────────────── */
+  #pricing { padding: var(--sec-y) 0; background: var(--bg-dark); }
+  .pricing__header { margin-bottom: 3.5rem; }
+  /* FIX: eyebrow in dark section */
+  .pricing__eyebrow { color: var(--accent); margin-bottom: .875rem; }
+  .pricing__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(2.8rem,5.5vw,6rem);
+    line-height: .93; text-transform: uppercase; letter-spacing: 0;
+    color: var(--text-inv);
+  }
+  /* FIX: padding-top gives badge room; align-items:stretch = equal height cards */
+  .pricing__grid {
+    display: grid; gap: 1.25rem;
+    grid-template-columns: 1fr;
+    align-items: stretch;     /* FIX */
+    padding-top: 1rem;        /* FIX: badge clearance */
+  }
+  @media(min-width:760px) { .pricing__grid { grid-template-columns: repeat(3,1fr); } }
+
+  .pricing-card {
+    position: relative;
+    background: var(--bg-dark-alt);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+    display: flex; flex-direction: column; gap: 1.25rem;
+    transition: border-color .25s, transform .25s var(--ease), box-shadow .25s;
+    /* FIX: subtle shadow for depth */
+    box-shadow: 0 4px 24px rgba(0,0,0,.25);
+  }
+  .pricing-card:hover {
+    border-color: rgba(212,88,26,.35);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(212,88,26,.15);
+  }
+  .pricing-card--featured {
+    border-color: rgba(212,88,26,.5);
+    background: linear-gradient(155deg,#252218 0%,#1e1b14 100%);
+    box-shadow: 0 4px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(212,88,26,.15);
+  }
+  .pricing-card--featured:hover {
+    border-color: rgba(212,88,26,.75);
+    box-shadow: 0 12px 50px rgba(0,0,0,.4), 0 0 0 1px rgba(212,88,26,.3), 0 0 60px rgba(212,88,26,.1);
+  }
+  .pricing-card__badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg,#E8632A,#D4581A);
+    color: #fff;
+    font-size: .63rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    padding: .35rem 1rem; border-radius: 999px; white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(212,88,26,.45);
+  }
+  .pricing-card__tier {
+    font-size: .66rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .pricing-card__name {
+    font-family: var(--font-d);
+    font-size: clamp(1.8rem,2.4vw,2.4rem);
+    text-transform: uppercase; letter-spacing: 0;
+    color: var(--text-inv); margin-top: .25rem;
+  }
+  /* FIX: remove align-self on currency — use baseline for all */
+  .pricing-card__price {
+    display: flex; align-items: baseline; gap: .2rem;
+  }
+  .pricing-card__currency {
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--text-inv-muted);
+  }
+  .pricing-card__amount {
+    font-family: var(--font-d);
+    font-size: clamp(3rem,5vw,4.5rem);
+    color: var(--text-inv); line-height: 1;
+  }
+  .pricing-card__suffix {
+    font-size: .88rem; color: var(--text-inv-muted); margin-left: .15rem;
+  }
+  .pricing-card__divider { border: none; border-top: 1px solid rgba(255,255,255,.07); }
+  .pricing-card__desc {
+    font-size: .92rem; color: var(--text-inv-muted); line-height: 1.68;
+  }
+  .pricing-card__features {
+    display: flex; flex-direction: column; gap: .7rem;
+    flex: 1; /* FIX: pushes CTA to bottom */
+  }
+  .pricing-card__feature {
+    display: flex; align-items: flex-start; gap: .7rem;
+    font-size: .9rem; /* FIX: was .88rem */
+    color: rgba(245,242,236,.62); line-height: 1.5;
+  }
+  .pricing-card__check { color: var(--accent); font-weight: 900; flex-shrink: 0; margin-top: .1rem; }
+  .pricing-card__timeline {
+    font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-inv-muted);
+    padding: .6rem 0;
+    border-top: 1px solid rgba(255,255,255,.07);
+  }
+  .pricing-card__cta {
+    display: block; text-align: center;
+    padding: .8rem;
+    border-radius: 10px;
+    font-size: .73rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+    min-height: 44px; /* FIX: touch target */
+    display: flex; align-items: center; justify-content: center;
+    transition: filter .2s, transform .18s, background .2s, border-color .2s, color .2s;
+  }
+  .pricing-card__cta--primary {
+    background: linear-gradient(135deg,#E8632A,#D4581A,#B84010);
+    color: #fff;
+    box-shadow: 0 2px 14px rgba(212,88,26,.4);
+  }
+  .pricing-card__cta--primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .pricing-card__cta--secondary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.15);
+    color: rgba(245,242,236,.7);
+  }
+  .pricing-card__cta--secondary:hover {
+    background: rgba(255,255,255,.07);
+    border-color: rgba(255,255,255,.3);
+    color: var(--text-inv);
+  }
+  .pricing__note {
+    margin-top: 2.25rem; text-align: center;
+    font-size: .9rem; color: var(--text-inv-muted);
+  }
+  .pricing__note a { color: var(--accent); text-decoration: underline; }
+
+  /* ─────────────────────────────────────────
+     SECTION — FAQ
+  ───────────────────────────────────────── */
+  #faq { padding: var(--sec-y) 0; background: var(--bg); }
+  .faq__header { margin-bottom: 3rem; }
+  .faq__kicker { margin-bottom: .875rem; }
+  .faq__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(2.5rem,5vw,5rem);
+    line-height: .93; text-transform: uppercase; letter-spacing: 0;
+  }
+  .faq__list { max-width: 860px; border-top: 1px solid var(--border); }
+  .faq__item { border-bottom: 1px solid var(--border); }
+  .faq__q {
+    width: 100%; background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    padding: 1.4rem 0;
+    font-family: var(--font-b);
+    font-size: clamp(.95rem,1.15vw,1.05rem);
+    font-weight: 700; color: var(--text); text-align: left;
+    min-height: 44px; /* FIX: touch target */
+    transition: color .2s;
+  }
+  .faq__q:hover { color: var(--accent); }
+  .faq__icon {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border: 1.5px solid var(--border); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .78rem; color: var(--text-muted);
+    will-change: transform; /* FIX */
+    transition: transform .3s var(--ease), border-color .2s, background .2s, color .2s;
+  }
+  .faq__item.open .faq__icon {
+    transform: rotate(45deg);
+    border-color: var(--accent);
+    background: rgba(212,88,26,.08);
+    color: var(--accent);
+  }
+  /* FIX: smooth accordion via max-height transition instead of display:none/block */
+  .faq__a {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .35s var(--ease);
+  }
+  .faq__a-inner {
+    overflow: hidden;
+    font-size: 1rem; /* FIX: was .95rem */
+    color: var(--text-muted); line-height: 1.75;
+  }
+  .faq__item.open .faq__a { grid-template-rows: 1fr; }
+  .faq__item.open .faq__a-inner { padding-bottom: 1.5rem; }
+
+  /* ─────────────────────────────────────────
+     SECTION — MICHAEL
+  ───────────────────────────────────────── */
+  #michael { padding: var(--sec-y) 0; background: var(--bg-alt); }
+  .michael__grid {
+    display: grid; gap: clamp(2.5rem,4vw,4rem);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media(min-width:860px) { .michael__grid { grid-template-columns: 260px 1fr; gap: clamp(3rem,5vw,5rem); } }
+
+  /* FIX: photo sizing, aspect-ratio, mobile centering */
+  .michael__photo-wrap {
+    display: flex; justify-content: flex-start;
+  }
+  @media(max-width:859px) { .michael__photo-wrap { justify-content: center; } }
+  .michael__photo {
+    width: 100%; max-width: 260px;
+    aspect-ratio: 3/4; /* FIX: consistent height regardless of source image */
+    object-fit: cover; object-position: top;
+    border-radius: 12px;
+    filter: grayscale(.12);
+  }
+  .michael__kicker { margin-bottom: .875rem; }
+  .michael__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(2.2rem,4vw,4.75rem);
+    line-height: .93; text-transform: uppercase; letter-spacing: 0;
+    margin: .75rem 0 1.5rem;
+  }
+  .michael__h2 em { font-style: normal; color: var(--accent); }
+  .michael__bio {
+    font-size: clamp(1rem,1.2vw,1.05rem);
+    color: var(--text-muted); line-height: 1.78;
+  }
+  .michael__bio p + p { margin-top: 1rem; }
+  .michael__creds {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem;
+  }
+  .michael__cred {
+    font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-muted);
+    padding: .4rem .9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px; /* FIX: was 6px */
+    transition: border-color .2s, color .2s;
+    min-height: 36px; display: inline-flex; align-items: center; /* FIX: touch height */
+  }
+  .michael__cred:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ─────────────────────────────────────────
+     SECTION — CTA
+  ───────────────────────────────────────── */
+  #cta {
+    padding: clamp(6rem,12vw,12rem) 0;
+    background: var(--bg-dark);
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  #cta::before {
+    content: '';
+    position: absolute; bottom: -25%; left: 50%; transform: translateX(-50%);
+    width: 90%; height: 130%;
+    background: radial-gradient(ellipse 65% 45% at 50% 100%, rgba(212,88,26,.32) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta__inner { position: relative; z-index: 1; max-width: 740px; margin: 0 auto; }
+  /* FIX: eyebrow in dark section */
+  .cta__eyebrow { color: var(--accent); margin-bottom: 1.25rem; display: block; }
+  .cta__h2 {
+    font-family: var(--font-d);
+    font-size: clamp(3rem,7vw,8rem);
+    line-height: .93; text-transform: uppercase; letter-spacing: 0;
+    color: var(--text-inv); margin-bottom: 1.5rem;
+  }
+  .cta__h2 em { font-style: normal; color: var(--accent); }
+  .cta__sub {
+    font-size: clamp(1rem,1.4vw,1.15rem);
+    color: var(--text-inv-muted); line-height: 1.72;
+    margin-bottom: 3rem;
+  }
+  /* FIX: column on mobile, centered */
+  .cta__actions {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    justify-content: center;
+  }
+  @media(max-width:400px) {
+    .cta__actions { flex-direction: column; align-items: center; }
+    .cta__actions .btn { width: 100%; max-width: 320px; }
+  }
+  .cta__fine {
+    margin-top: 2.5rem;
+    font-size: .78rem;
+    color: rgba(245,242,236,.3); /* FIX: was .25 — too faint */
+    line-height: 1.6;
+  }
+
+  /* ─────────────────────────────────────────
+     FOOTER
+     FIX: mobile column layout, logo opacity
+  ───────────────────────────────────────── */
+  #footer {
+    background: #0f0d0a;
+    padding: 2.5rem clamp(1.25rem,5vw,5rem);
+    border-top: 1px solid rgba(255,255,255,.05);
+    display: flex; flex-wrap: wrap; gap: 1.25rem;
+    align-items: center; justify-content: space-between;
+  }
+  @media(max-width:640px) {
+    #footer { flex-direction: column; align-items: center; text-align: center; gap: 1rem; }
+    .footer__links { justify-content: center; }
+  }
+  .footer__logo img {
+    height: 24px; width: auto;
+    filter: brightness(0) invert(1);
+    opacity: .65; /* FIX: was .5 — too dim */
+  }
+  .footer__copy {
+    font-size: .67rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(245,242,236,.2);
+  }
+  .footer__links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer__links a {
+    font-size: .67rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(245,242,236,.3);
+    min-height: 44px; display: inline-flex; align-items: center; /* FIX: touch target */
+    transition: color .2s;
+  }
+  .footer__links a:hover { color: var(--accent); }
+
+  /* ─────────────────────────────────────────
+     SCROLL TO TOP
+  ───────────────────────────────────────── */
+  #scroll-top {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 800;
+    width: 44px; height: 44px;   /* FIX: WCAG minimum */
+    background: rgba(26,23,19,.88);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(245,242,236,.65);
+    font-size: .85rem; font-family: var(--font-b);
+    cursor: pointer;
+    opacity: 0; pointer-events: none;
+    -webkit-backdrop-filter: blur(10px); /* FIX: webkit prefix */
+    backdrop-filter: blur(10px);
+    transition: opacity .3s, background .2s, transform .2s, color .2s;
+  }
+  #scroll-top.visible { opacity: 1; pointer-events: auto; }
+  #scroll-top:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+
+  /* ─────────────────────────────────────────
+     REDUCED MOTION — FIX: disable all anim
+  ───────────────────────────────────────── */
+  @media(prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- NAV -->
+  <header id="nav" role="banner">
+    <a id="nav-logo" href="https://www.woodfireddesigns.com" target="_blank" rel="noopener" aria-label="Wood Fired Designs — home">
+      <img src="logo.png" alt="Wood Fired Designs" width="140" height="40">
+    </a>
+    <span id="nav-badge">Proposal for <strong>Plus One</strong> · 2026</span>
+    <a id="nav-cta" href="mailto:michael@woodfireddesigns.com?subject=Plus One Project — Let's Start">Start the Project →</a>
+  </header>
+
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Proposal introduction">
+    <div class="container">
+      <div class="hero__inner" id="main">
+
+        <div class="hero__tag reveal">Prepared for Plus One · Brand + Packaging · 2026</div>
+
+        <h1 class="hero__h1 reveal d1">
+          A Brand<br>
+          System Built<br>
+          For <em>Plus One.</em>
+        </h1>
+
+        <p class="hero__sub reveal d2">
+          This isn't a proposal. It's a preview of what your brand could be — and exactly how we'd build it.
+        </p>
+
+        <div class="hero__ctas reveal d3">
+          <a href="#pricing" class="btn btn--fire btn--fire-lg">See the Investment →</a>
+          <a href="#proof"   class="btn btn--ghost-inv">See the Work First</a>
+        </div>
+
+        <div class="hero__meta reveal d4">
+          <div class="hero__meta-item">Studio <strong>Wood Fired Designs</strong></div>
+          <div class="hero__meta-item">Scope <strong>Brand Identity + Packaging</strong></div>
+          <div class="hero__meta-item">Est. <strong>2014 · 60+ Brands Built</strong></div>
+          <div class="hero__meta-item">Category <strong>Cannabis / Low-Dose CPG</strong></div>
+        </div>
+
+      </div>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Brand Strategy</span><span class="sep">✦</span>
+      <span>Brand Identity</span><span class="sep">✦</span>
+      <span>Packaging Design</span><span class="sep">✦</span>
+      <span>Cannabis CPG</span><span class="sep">✦</span>
+      <span>Multi-SKU Systems</span><span class="sep">✦</span>
+      <span>Production Files</span><span class="sep">✦</span>
+      <span>AI Product Photography</span><span class="sep">✦</span>
+      <span>Campaign Creative</span><span class="sep">✦</span>
+      <span>Brand Strategy</span><span class="sep">✦</span>
+      <span>Brand Identity</span><span class="sep">✦</span>
+      <span>Packaging Design</span><span class="sep">✦</span>
+      <span>Cannabis CPG</span><span class="sep">✦</span>
+      <span>Multi-SKU Systems</span><span class="sep">✦</span>
+      <span>Production Files</span><span class="sep">✦</span>
+      <span>AI Product Photography</span><span class="sep">✦</span>
+      <span>Campaign Creative</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+
+  <!-- THE BRIEF -->
+  <section id="brief" aria-label="Project brief">
+    <div class="container">
+      <div class="brief__grid">
+
+        <div class="reveal">
+          <p class="label brief__kicker">/ The Brief</p>
+          <h2 class="brief__h2">Premium.<br>Social.<br><em>Inevitable.</em></h2>
+        </div>
+
+        <div class="reveal d2">
+          <div class="brief__body">
+            <p>You're building something sophisticated. The brief writes itself: premium enough to sit on a bar cart, discreet enough to slip in a pocket. <strong>"Plus One"</strong> as a name already says <em>social occasion</em> — the brand needs to deliver on that promise at every touchpoint.</p>
+            <p>This isn't a cannabis brand. It's a lifestyle brand that happens to contain low-dose THC and CBD. The consumer isn't buying a product — they're buying a ritual, a signal, a choice they're comfortable making in public.</p>
+            <p>The market is full of brands that solved "cannabis." We're here to solve the category you're <em>actually</em> competing in: premium adult occasion products that happen to be effective.</p>
+          </div>
+          <div class="brief__stat-row">
+            <div class="brief__stat reveal d1">
+              <div class="brief__stat-num">$8B+</div>
+              <div class="brief__stat-label">Hemp-derived THC market by 2027</div>
+            </div>
+            <div class="brief__stat reveal d2">
+              <div class="brief__stat-num">2"</div>
+              <div class="brief__stat-label">Visual real estate on a mint tin</div>
+            </div>
+            <div class="brief__stat reveal d3">
+              <div class="brief__stat-num">3s</div>
+              <div class="brief__stat-label">First impression window</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- THE INSIGHT -->
+  <section id="insight" aria-label="Strategic insight">
+    <div class="container">
+      <div class="insight__inner">
+
+        <p class="label label--fire insight__eyebrow reveal">/ The Insight</p>
+
+        <h2 class="insight__statement reveal d1">
+          Most cannabis designers<br>
+          solve <em>"cannabis."</em><br>
+          We solve the category<br>
+          you're competing in.
+        </h2>
+
+        <div class="insight__split">
+
+          <div class="insight__split-copy">
+            <div class="insight__divider reveal d2"></div>
+
+            <div class="insight__body reveal d2">
+              <p>The low-dose social occasion market isn't competing against Kiva or Wana. It's competing against craft cocktails, luxury wellness products, and the curated objects people choose to put on their countertops.</p>
+              <p>That positioning changes everything — the typography has to feel editorial, the color palette has to feel considered, the hierarchy has to communicate sophistication before it communicates dosage.</p>
+            </div>
+
+            <div class="insight__callout reveal d3">
+              <strong>The mint form factor challenge:</strong> a tin or slider gives you roughly 2 square inches of visual real estate to communicate "premium adult brand" without reading pharmaceutical and without reading dispensary. Every element is load-bearing — wordmark weight, color blocking, surface finish, and how compliance callouts get integrated without killing the premium signal. Get one element wrong and the whole thing reads cheap.
+            </div>
+          </div>
+
+          <div class="insight__product-shot reveal d2">
+            <img src="dope-rope-photo-thumb.jpg" alt="Dope Rope Sour Apple Smash — AI-enhanced product photography" loading="lazy">
+            <p class="insight__product-caption">Dope Rope — AI-Enhanced Product Photography</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROOF -->
+  <section id="proof" aria-label="Relevant work">
+    <div class="container">
+
+      <div class="proof__header reveal">
+        <div>
+          <p class="label label--fire">/ Relevant Work</p>
+          <h2 class="proof__h2">We know<br><em>this category.</em></h2>
+        </div>
+        <p class="proof__subhead">We just completed a full brand universe for a THC cannabis edibles company. Strategy through production — the full scope.</p>
+      </div>
+
+      <div class="proof__feature reveal">
+        <div class="proof__feature-media">
+          <img class="proof__feature-img" src="dope-rope-flavor-campaign.jpg" alt="Dope Rope — full cannabis brand and multi-SKU packaging system" loading="lazy">
+        </div>
+        <div class="proof__feature-body">
+          <div class="proof__tags">
+            <span class="proof__tag">Cannabis</span>
+            <span class="proof__tag">Brand Identity</span>
+            <span class="proof__tag">Packaging System</span>
+            <span class="proof__tag">Multi-SKU</span>
+            <span class="proof__tag">Campaign Creative</span>
+          </div>
+          <h3 class="proof__feature-title">Dope Rope</h3>
+          <p class="proof__feature-desc">A THC cannabis gummy rope brand in a crowded edibles market drowning in muted palettes and generic lifestyle vibes. We built a full brand universe instead of a logo.</p>
+          <div class="proof__scope">
+            <div class="proof__scope-item">Market research + competitive landscape</div>
+            <div class="proof__scope-item">Brand strategy &amp; positioning</div>
+            <div class="proof__scope-item">Brand identity system + mascot character (Gummy Demarco)</div>
+            <div class="proof__scope-item">9+ SKU packaging system with flavor-specific design</div>
+            <div class="proof__scope-item">Limited edition "WTF" series packaging</div>
+            <div class="proof__scope-item">AI product photography for every SKU</div>
+            <div class="proof__scope-item">Campaign creative + flavor copy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof__grid">
+        <div class="proof__thumb reveal d1">
+          <img src="dope-rope-cherry-tarty.jpg"    alt="Dope Rope Cherry Fizz and Tarty Party packaging" loading="lazy">
+        </div>
+        <div class="proof__thumb reveal d2">
+          <img src="dope-rope-packaging-grid.jpg"  alt="Dope Rope full SKU packaging lineup" loading="lazy">
+        </div>
+        <div class="proof__thumb reveal d3">
+          <img src="dope-rope-billboards.jpg"      alt="Dope Rope outdoor billboard campaign" loading="lazy">
+        </div>
+        <div class="proof__thumb reveal d4">
+          <img src="dope-smoke-country.jpg" alt="Dope Smoke Country — Gummy Demarco campaign" loading="lazy">
+        </div>
+      </div>
+
+      <div class="proof__namedrops reveal">
+        <p class="label proof__namedrops-label">/ Also worked with</p>
+        <div class="proof__namedrops-list">
+          <span class="proof__namedrop">Facebook</span>
+          <span class="proof__namedrop">US Open</span>
+          <span class="proof__namedrop">Masters Tournament</span>
+          <span class="proof__namedrop">American Needle</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PROCESS -->
+  <section id="process" aria-label="Our process">
+    <div class="container">
+
+      <div class="process__header reveal">
+        <p class="label label--fire process__eyebrow">/ The Wood Fired Way</p>
+        <h2 class="process__h2">We go deep<br>before we <em>go wide.</em></h2>
+      </div>
+
+      <div class="process__grid">
+        <div class="process__step reveal d1">
+          <span class="process__step-num">01</span>
+          <h3 class="process__step-title">Discover</h3>
+          <div class="process__step-body">
+            <p>We start by absorbing everything we can about your world — your goals, your audience, your challenges, and the story behind your product.</p>
+            <p>Business plans, existing branding, research, screenshots, messy notes — it all helps us get aligned. Our goal: understand you better than anyone else does.</p>
+          </div>
+        </div>
+        <div class="process__step reveal d2">
+          <span class="process__step-num">02</span>
+          <h3 class="process__step-title">Define</h3>
+          <div class="process__step-body">
+            <p>With real insight in hand, we shape the strategy and creative direction. A collaborative phase where we clarify your positioning, lock in your voice, and establish the visual foundation.</p>
+            <p>We explore quickly using AI, then refine intentionally by hand. You walk away knowing exactly where the brand is heading — and why.</p>
+          </div>
+        </div>
+        <div class="process__step reveal d3">
+          <span class="process__step-num">03</span>
+          <h3 class="process__step-title">Execute</h3>
+          <div class="process__step-body">
+            <p>This is where everything becomes real. Identity, packaging, photography, digital, social, motion — built with precision and delivered with purpose.</p>
+            <p>Every asset is crafted to work in the real world, scale with your business, and stay consistent across every touchpoint. The output is polished, cohesive, production-ready.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PHOTO BREAK — packaging grid -->
+  <div class="photo-break" aria-hidden="true">
+    <img src="dope-rope-packaging-grid.jpg" alt="Dope Rope full SKU packaging lineup" style="object-position: center center;">
+    <div class="photo-break__overlay"></div>
+  </div>
+
+
+  <!-- DELIVERABLES -->
+  <section id="deliverables" aria-label="What you get">
+    <div class="container">
+      <div class="deliv__grid">
+
+        <div class="reveal">
+          <p class="label deliv__kicker">/ What You Get</p>
+          <h2 class="deliv__h2">Built for<br><em>Plus One.</em><br>Specifically.</h2>
+          <p class="deliv__sub">Everything below is scoped specifically for a premium low-dose mint brand — a system built for your form factor, compliance requirements, and expansion roadmap.</p>
+          <div class="deliv__note">
+            <p><strong>Cannabis compliance, built in from day one.</strong> Required dosage callouts, child-resistant language, and state-specific warnings are integrated into the design architecture — not bolted on after the fact. No compromises to the premium feel.</p>
+          </div>
+        </div>
+
+        <div class="reveal d2">
+          <ul class="deliv__list">
+            <li class="deliv__item">
+              <div class="deliv__check" aria-hidden="true">✓</div>
+              <div class="deliv__item-txt">
+                <strong>Brand Identity System</strong>
+                <span>Wordmark, icon system, color palette, typography — designed for the mint container first, screen and print second.</span>
+              </div>
+            </li>
+            <li class="deliv__item">
+              <div class="deliv__check" aria-hidden="true">✓</div>
+              <div class="deliv__item-txt">
+                <strong>Mint Packaging Design</strong>
+                <span>All panels designed as a cohesive system. Every element load-bearing — nothing decorative that doesn't earn its space.</span>
+              </div>
+            </li>
+            <li class="deliv__item">
+              <div class="deliv__check" aria-hidden="true">✓</div>
+              <div class="deliv__item-txt">
+                <strong>1–2 Format Explorations</strong>
+                <span>Tin vs. slider vs. tube — we explore before committing to production files. You validate direction before investing in print.</span>
+              </div>
+            </li>
+            <li class="deliv__item">
+              <div class="deliv__check" aria-hidden="true">✓</div>
+              <div class="deliv__item-txt">
+                <strong>Compliance Language Integration</strong>
+                <span>Dosage, warnings, and child-resistant callouts designed in from the start. Legally sound and visually clean.</span>
+              </div>
+            </li>
+            <li class="deliv__item">
+              <div class="deliv__check" aria-hidden="true">✓</div>
+              <div class="deliv__item-txt">
+                <strong>Production-Ready Dieline Files</strong>
+                <span>AI/PDF with proper bleed, safe zones, CMYK/Pantone values, and print specs confirmed with your vendor.</span>
+              </div>
+            </li>
+            <li class="deliv__item">
+              <div class="deliv__check" aria-hidden="true">✓</div>
+              <div class="deliv__item-txt">
+                <strong>Brand Guidelines Document</strong>
+                <span>The master reference your co-packer, printer, and any future designer will need. Keeps the brand consistent as you scale SKUs.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PHOTO BREAK — campaign shot -->
+  <div class="photo-break" aria-hidden="true">
+    <img src="dope-rope-wendys-campaign.png" alt="Dope Rope campaign creative — Wendy's and McDonald's mashup">
+    <div class="photo-break__overlay"></div>
+  </div>
+
+
+  <!-- PRICING -->
+  <section id="pricing" aria-label="Pricing">
+    <div class="container">
+
+      <div class="pricing__header reveal">
+        <p class="label label--fire pricing__eyebrow">/ The Investment</p>
+        <h2 class="pricing__h2">Straight-up pricing.<br>No agency markup.</h2>
+      </div>
+
+      <div class="pricing__grid">
+
+        <div class="pricing-card reveal d1">
+          <div>
+            <p class="pricing-card__tier">Option A</p>
+            <h3 class="pricing-card__name">Brand Sprint</h3>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__currency">$</span>
+            <span class="pricing-card__amount">3,500</span>
+          </div>
+          <hr class="pricing-card__divider">
+          <p class="pricing-card__desc">Brand identity system + initial packaging direction. The foundation that makes everything else possible.</p>
+          <ul class="pricing-card__features">
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Full brand identity system</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Packaging concept (1 format)</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Color + typography system</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>2 rounds of revisions</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>All source files — you own everything</li>
+          </ul>
+          <span class="pricing-card__timeline">⏱ 2-week delivery</span>
+          <a href="mailto:michael@woodfireddesigns.com?subject=Plus One — Brand Sprint" class="pricing-card__cta pricing-card__cta--secondary">Start Brand Sprint →</a>
+        </div>
+
+        <div class="pricing-card pricing-card--featured reveal d2">
+          <span class="pricing-card__badge">Recommended</span>
+          <div>
+            <p class="pricing-card__tier">Option B</p>
+            <h3 class="pricing-card__name">Full System</h3>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__currency">$</span>
+            <span class="pricing-card__amount">5,500</span>
+          </div>
+          <hr class="pricing-card__divider">
+          <p class="pricing-card__desc">Everything in Brand Sprint plus production-ready packaging files, brand guidelines, and a second SKU format. Done right, done once.</p>
+          <ul class="pricing-card__features">
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Everything in Brand Sprint</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Full dieline-ready packaging files</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>1 additional SKU format exploration</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Brand guidelines document (PDF)</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>CMYK/Pantone values + print specs</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Compliance layout integration</li>
+          </ul>
+          <span class="pricing-card__timeline">⏱ 3–4 week delivery</span>
+          <a href="mailto:michael@woodfireddesigns.com?subject=Plus One — Full System" class="pricing-card__cta pricing-card__cta--primary">Start Full System →</a>
+        </div>
+
+        <div class="pricing-card reveal d3">
+          <div>
+            <p class="pricing-card__tier">Option C</p>
+            <h3 class="pricing-card__name">Ongoing</h3>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__currency">$</span>
+            <span class="pricing-card__amount">65</span>
+            <span class="pricing-card__suffix">/hr</span>
+          </div>
+          <hr class="pricing-card__divider">
+          <p class="pricing-card__desc">Ongoing creative partnership for brands expanding SKUs, building campaigns, or needing a reliable creative arm on retainer.</p>
+          <ul class="pricing-card__features">
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>New SKU design as you expand</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Campaign creative + product photography</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Social + ad creative</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Seasonal packaging updates</li>
+            <li class="pricing-card__feature"><span class="pricing-card__check">✓</span>Brand stewardship + guideline enforcement</li>
+          </ul>
+          <span class="pricing-card__timeline">⏱ Ongoing · Flexible</span>
+          <a href="mailto:michael@woodfireddesigns.com?subject=Plus One — Ongoing Partnership" class="pricing-card__cta pricing-card__cta--secondary">Discuss Partnership →</a>
+        </div>
+
+      </div>
+
+      <p class="pricing__note reveal">Not sure which fits best? <a href="mailto:michael@woodfireddesigns.com?subject=Plus One Question">Send me a message</a> — I'll tell you exactly which one makes sense, no pressure.</p>
+
+    </div>
+  </section>
+
+
+  <!-- FAQ -->
+  <section id="faq" aria-label="Frequently asked questions">
+    <div class="container" style="max-width:960px;">
+
+      <div class="faq__header reveal">
+        <p class="label faq__kicker">/ Common Questions</p>
+        <h2 class="faq__h2">Everything you<br>need to know.</h2>
+      </div>
+
+      <div class="faq__list reveal d1">
+
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false">
+            Do you have experience with cannabis brands specifically?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" role="region">
+            <div class="faq__a-inner">Yes — we just completed a full brand universe for a THC edibles company (Dope Rope): brand strategy, full identity system, 9+ SKU packaging, mascot character, campaign creative, and AI product photography. We know how to design for the cannabis category, navigate compliance requirements, and still deliver something that looks premium and shelf-ready.</div>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false">
+            What do production-ready files include?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" role="region">
+            <div class="faq__a-inner">Dieline-ready files in AI and press-ready PDF format. CMYK color values with Pantone equivalents. Proper bleed (0.125"), safe zones, and crop marks. All specs confirmed against your printer's requirements before delivery. You receive all layered source files — you own everything.</div>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false">
+            How many revisions are included?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" role="region">
+            <div class="faq__a-inner">Two full rounds of revisions are included in both flat-rate packages. A "round" means you provide consolidated feedback and I implement all changes in one pass. Additional rounds at $150/hr. In practice, most projects wrap within two rounds because the discovery phase does the heavy lifting upfront.</div>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false">
+            Do you handle compliance requirements?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" role="region">
+            <div class="faq__a-inner">Yes. Required dosage callouts, warnings, child-resistant language, and net weight information are built into the design architecture from day one — not retrofitted after the creative is done. Compliance elements are treated as design constraints, not afterthoughts, so they integrate cleanly without killing the premium feel.</div>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false">
+            Can we start with the Brand Sprint and upgrade later?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" role="region">
+            <div class="faq__a-inner">Absolutely. Many clients start with the Brand Sprint to validate direction and get investor or retail feedback before committing to full production files. If you upgrade to the Full System afterward, the Brand Sprint investment is credited toward the total — you're not paying twice.</div>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false">
+            What do you need from us to get started?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" role="region">
+            <div class="faq__a-inner">A short kickoff questionnaire (I send this after contract signing — takes about 20 minutes). Any existing brand assets, mood boards, or references you have. Your target packaging format and vendor if known. And a clear picture of who your customer is and what channels you're targeting. That's it — the rest is on me.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT MICHAEL -->
+  <section id="michael" aria-label="About Michael Deschenes">
+    <div class="container">
+      <div class="michael__grid">
+
+        <div class="michael__photo-wrap reveal">
+          <img src="michael.png" alt="Michael Deschenes — Founder, Wood Fired Designs" class="michael__photo" loading="lazy">
+        </div>
+
+        <div class="reveal d2">
+          <p class="label michael__kicker">/ Who's Doing the Work</p>
+          <h2 class="michael__h2">You're not hiring<br>an agency. <em>You're<br>hiring me.</em></h2>
+          <div class="michael__bio">
+            <p>I'm Michael Deschenes — the founder and the one who does the work. Not a project manager who delegates to a junior designer you've never met. Every brand system, every packaging layout, every creative decision comes directly from me.</p>
+            <p>I've spent years building brands across CPG, cannabis, apparel, fitness, hospitality, and trades. I blend manual craftsmanship with AI-powered speed — world-class creative without the agency timeline or the agency bill.</p>
+            <p>Clients trust me because I bring clarity, taste, and actual solutions. Not buzzwords. Work that earns its keep.</p>
+          </div>
+          <div class="michael__creds">
+            <span class="michael__cred">Est. 2014</span>
+            <span class="michael__cred">60+ Brands Built</span>
+            <span class="michael__cred">Facebook</span>
+            <span class="michael__cred">US Open</span>
+            <span class="michael__cred">Masters Tournament</span>
+            <span class="michael__cred">American Needle</span>
+            <span class="michael__cred">Cannabis CPG ✓</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA -->
+  <section id="cta" aria-label="Start the project">
+    <div class="container">
+      <div class="cta__inner">
+        <span class="label label--fire cta__eyebrow reveal">/ Ready When You Are</span>
+        <h2 class="cta__h2 reveal d1">
+          Make Plus One<br>feel <em>inevitable.</em>
+        </h2>
+        <p class="cta__sub reveal d2">
+          The name is there. The positioning is clear. All that's missing is the brand system that makes it all click. Let's build it.
+        </p>
+        <div class="cta__actions reveal d3">
+          <a href="mailto:michael@woodfireddesigns.com?subject=Plus One Project — Let's Start" class="btn btn--fire btn--fire-lg">Start the Project →</a>
+          <a href="https://www.woodfireddesigns.com" target="_blank" rel="noopener" class="btn btn--ghost-inv">View Full Portfolio</a>
+        </div>
+        <p class="cta__fine reveal d4">
+          Prepared by Michael Deschenes · Wood Fired Designs · michael@woodfireddesigns.com
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer__logo">
+      <img src="logo.png" alt="Wood Fired Designs" width="120" height="34">
+    </div>
+    <p class="footer__copy">© 2026 Wood Fired Designs. Proposal for Plus One.</p>
+    <nav class="footer__links" aria-label="Footer links">
+      <a href="https://www.woodfireddesigns.com" target="_blank" rel="noopener">Portfolio</a>
+      <a href="mailto:michael@woodfireddesigns.com?subject=Plus One Project">Email</a>
+      <a href="https://instagram.com/woodfireddesigns" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </footer>
+
+
+  <button id="scroll-top" aria-label="Back to top">↑</button>
+
+
+  <script>
+  (() => {
+    'use strict';
+
+    // ── NAV scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ── Scroll reveals
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── FAQ accordion — smooth grid-rows animation
+    document.querySelectorAll('.faq__q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item  = btn.closest('.faq__item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq__item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq__q').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // ── Scroll to top
+    const scrollBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      scrollBtn.classList.toggle('visible', window.scrollY > 700);
+    }, { passive: true });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ── Anchor smooth scroll (respects reduced-motion)
+    const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+        }
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+# This repo (github.com/woodfireddesigns/WFD) is the marketing website only.
+# The folders below are independent projects/data that don't belong here —
+# most have their own git repos already; the rest are local-only reference material.
+WFD-OS/
+WFD-THE FORGE/
+WFD-BRAND_IDENTITY_FORGER/
+WFD- OFFICIAL DASHBOARD/
+MY BLOOM EXPORT DOCS/
+_ARCHIVE-*/
+
+# macOS
+.DS_Store
+Icon?
+
+# editor/tooling
+.claude/
+
+# transient Google Drive sync artifacts
+.tmp.driveupload/

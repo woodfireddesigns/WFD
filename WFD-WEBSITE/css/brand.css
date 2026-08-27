@@ -6,55 +6,22 @@
    ───────────────────────────────────────────────────────────── */
 
 
-/* ── FONT FACES — Owners XNarrow (local) ────────────────── */
+/* ── FONT FACES — licensed via Adobe Fonts (Typekit) ─────────
+   Owners XXNarrow and Altesse Std 24pt are served by the Adobe
+   Fonts web project (kit wys5omr) under an active web license.
+   The @font-face rules live in the kit CSS, which every page
+   loads in <head>:
 
-@font-face {
-  font-family: 'Owners XNarrow';
-  src: url('Fonts/OwnersTRIALXNarrow-Black-BF64361ef4cc588.otf') format('opentype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
+     <link rel="stylesheet" href="https://use.typekit.net/wys5omr.css">
 
-@font-face {
-  font-family: 'Owners XNarrow';
-  src: url('Fonts/OwnersTRIALXNarrow-BlackItalic-BF64361ef518e01.otf') format('opentype');
-  font-weight: 900;
-  font-style: italic;
-  font-display: swap;
-}
+   Available faces in the kit:
+     owners-xxnarrow      — 800 normal, 900 normal
+     altesse-std-24pt     — 400 normal
 
-@font-face {
-  font-family: 'Owners XNarrow';
-  src: url('Fonts/OwnersTRIALXNarrow-XBlack-BF64361ef464c49.otf') format('opentype');
-  font-weight: 950;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Owners XNarrow';
-  src: url('Fonts/OwnersTRIALXNarrow-XBlackItalic-BF64361ef4b9cb8.otf') format('opentype');
-  font-weight: 950;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Owners XNarrow';
-  src: url('Fonts/OwnersTRIALXNarrow-Bold-BF64361ef52c32a.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Owners XNarrow';
-  src: url('Fonts/OwnersTRIALXNarrow-BoldItalic-BF64361ef52b3ba.otf') format('opentype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
+   DO NOT self-host these fonts or add local @font-face rules for
+   them. The previous trial .otf files were removed — serving them
+   from our own domain was outside the foundry's license.
+   ─────────────────────────────────────────────────────────── */
 
 
 :root {
@@ -72,7 +39,8 @@
   --color-border-strong:   #BAB4AA;     /* stronger divider */
 
   /* ── TYPOGRAPHY ─────────────────────────────────────────── */
-  --font-display:    'Owners XNarrow', Georgia, sans-serif;
+  --font-display:    'owners-xxnarrow', 'Arial Narrow', Impact, sans-serif;
+  --font-script:     'altesse-std-24pt', 'Snell Roundhand', cursive;
   --font-body:       'Inter', -apple-system, sans-serif;
   --font-label:      'Inter', -apple-system, sans-serif;
 
@@ -88,8 +56,8 @@
   --weight-regular:  400;
   --weight-medium:   500;
   --weight-bold:     700;
-  --weight-black:    900;
-  --weight-xblack:   950;  /* Owners XNarrow XBlack — uppercase display only */
+  --weight-black:    800;  /* Owners XXNarrow Black */
+  --weight-xblack:   900;  /* Owners XXNarrow XBlack — uppercase display only */
 
   --leading-tight:   0.82;
   --leading-snug:    0.95;

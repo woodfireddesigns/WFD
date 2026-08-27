@@ -285,7 +285,7 @@ button:hover .link__label {
 
 /* ── DISPLAY UPPERCASE UTILITY ───────────────────────────── */
 /* Use on --font-display elements that are uppercase.
-   Pairs with Owners XNarrow XBlack (weight 950). */
+   Pairs with Owners XXNarrow XBlack (weight 900). */
 
 .display-uppercase {
   font-weight: var(--weight-xblack);

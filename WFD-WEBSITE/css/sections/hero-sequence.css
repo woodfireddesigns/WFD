@@ -99,7 +99,10 @@
 
 .hero-seq__display {
   font-family: var(--font-display);
-  font-size: var(--type-display-xl);
+  /* Dialed down from the shared --type-display-xl token (up to 13rem) —
+     the scroll sequence reads better restrained; other sections still
+     use the full-size token untouched. */
+  font-size: clamp(2.25rem, 5.5vw, 5.5rem);
   font-weight: var(--weight-xblack);
   font-style: normal;
   text-transform: uppercase;
@@ -112,7 +115,7 @@
 
 /* Slightly smaller for longer headlines (panel 3) */
 .hero-seq__display--lg {
-  font-size: var(--type-display-lg);
+  font-size: clamp(1.9rem, 4.25vw, 4.25rem);
 }
 
 .hero-seq__accent {
@@ -276,27 +279,15 @@
 }
 
 
-/* ── FOOTER LOGO — IMAGE ──────────────────────────────────── */
-
-.footer__logo-img {
-  height: clamp(48px, 8vw, 80px);
-  width: auto;
-  display: block;
-  /* Invert dark script to white for dark footer */
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
-}
-
-
 /* ── RESPONSIVE ───────────────────────────────────────────── */
 
 @media (max-width: 767px) {
   .hero-seq__display {
-    font-size: var(--type-display-lg);
+    font-size: clamp(2rem, 9vw, 3rem);
   }
 
   .hero-seq__display--lg {
-    font-size: var(--type-display-md);
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
   }
 
   .hero-seq__stats {
@@ -305,11 +296,5 @@
 
   .hero-seq__bottom {
     /* On very small screens, hide the left label */
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-seq__display--lg {
-    font-size: var(--type-display-xl);
   }
 }

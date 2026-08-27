@@ -1,0 +1,316 @@
+/* css/sections/case-study.css — Wood Fired Designs — case-study.html */
+
+/* ── HERO ─────────────────────────────────────────────────── */
+
+.cs-hero {
+  position: relative;
+  min-height: 70vh;
+  min-height: 70svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background-color: var(--color-bg-inverse);
+}
+
+.cs-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.cs-hero__media img,
+.cs-hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(26, 23, 19, 0.94) 0%,
+    rgba(26, 23, 19, 0.55) 45%,
+    rgba(26, 23, 19, 0.25) 100%
+  );
+}
+
+.cs-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  width: 100%;
+  padding: calc(var(--space-2xl) + var(--space-lg)) var(--section-pad-x) var(--space-xl);
+}
+
+.cs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-label);
+  font-size: var(--type-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: rgba(245, 242, 236, 0.65);
+  margin-bottom: var(--space-lg);
+  transition: color var(--duration-fast) var(--ease-out-expo);
+}
+
+.cs-back:hover {
+  color: var(--color-text-inverse);
+}
+
+.cs-kicker {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--gap-overline);
+}
+
+.cs-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.5vw, 5rem);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-inverse);
+  max-width: 16ch;
+}
+
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: var(--space-md);
+}
+
+.cs-tags .cs-tag {
+  font-family: var(--font-label);
+  font-size: clamp(0.65rem, 0.8vw, 0.72rem);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-inverse);
+  background: rgba(212, 88, 26, 0.75);
+  border-radius: var(--radius-pill);
+  padding: 5px 14px;
+  white-space: nowrap;
+}
+
+/* Passion-project tag reads differently — quieter, not a sales tag */
+.cs-tags .cs-tag--passion {
+  background: rgba(245, 242, 236, 0.12);
+  border: 1px solid rgba(245, 242, 236, 0.25);
+  color: rgba(245, 242, 236, 0.85);
+}
+
+
+/* ── DISCLAIMER BANNER ────────────────────────────────────── */
+
+.cs-disclaimer {
+  background: #221a0f;
+  border-top: 1px solid rgba(212, 168, 26, 0.35);
+  border-bottom: 1px solid rgba(212, 168, 26, 0.35);
+  padding: var(--space-md) var(--section-pad-x);
+}
+
+.cs-disclaimer p {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  font-family: var(--font-body);
+  font-size: clamp(0.82rem, 1vw, 0.92rem);
+  line-height: var(--leading-relaxed);
+  color: rgba(245, 242, 236, 0.8);
+}
+
+.cs-disclaimer strong {
+  color: #E8B84A;
+  font-weight: var(--weight-bold);
+}
+
+
+/* ── SUMMARY / BLURB ──────────────────────────────────────── */
+
+.cs-summary {
+  background-color: var(--color-bg);
+  padding: var(--space-2xl) var(--section-pad-x) var(--space-xl);
+}
+
+.cs-summary__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 900px) {
+  .cs-summary__inner {
+    grid-template-columns: 7fr 3fr;
+    align-items: start;
+  }
+}
+
+.cs-blurb {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-primary);
+  max-width: 62ch;
+}
+
+.cs-meta {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 900px) {
+  .cs-meta {
+    flex-direction: column;
+    gap: var(--space-md);
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--space-lg);
+  }
+}
+
+.cs-meta__item dt {
+  margin-bottom: 4px;
+}
+
+.cs-meta__item dd {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--type-heading);
+  color: var(--color-text-primary);
+}
+
+
+/* ── GALLERY ──────────────────────────────────────────────── */
+
+.cs-gallery {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 0 var(--section-pad-x) var(--space-2xl);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 700px) {
+  .cs-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cs-gallery__item {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-bg-alt);
+  box-shadow: 0 0 0 1px rgba(26, 23, 19, 0.06);
+}
+
+.cs-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+/* ── MORE WORK ────────────────────────────────────────────── */
+
+.cs-more {
+  background-color: var(--color-bg-alt);
+  padding: var(--space-2xl) var(--section-pad-x);
+}
+
+.cs-more__kicker {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  margin-bottom: var(--space-lg);
+}
+
+.cs-more__grid {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 700px) {
+  .cs-more__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cs-more__card {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-bg-inverse);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: transform var(--duration-mid) var(--ease-out-expo), box-shadow var(--duration-mid) var(--ease-out-expo);
+}
+
+.cs-more__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1.5px var(--color-accent), 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.cs-more__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+.cs-more__card-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: linear-gradient(to top, rgba(26, 23, 19, 0.9), transparent);
+  font-family: var(--font-display);
+  font-weight: var(--weight-xblack);
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--color-text-inverse);
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+}
+
+
+/* ── CTA ──────────────────────────────────────────────────── */
+
+.cs-cta {
+  background-color: var(--color-bg-inverse);
+  padding: var(--space-2xl) var(--section-pad-x);
+  text-align: center;
+}
+
+.cs-cta__headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  color: var(--color-text-inverse);
+  margin-bottom: var(--space-lg);
+}
+
+.cs-cta__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}

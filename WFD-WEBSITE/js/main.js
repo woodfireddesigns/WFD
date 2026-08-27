@@ -34,7 +34,11 @@
 
   M && M.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () {
-      var t = document.querySelector(a.getAttribute('href'));
+      var href = a.getAttribute('href') || '';
+      var t = null;
+      if (href.charAt(0) === '#') {
+        try { t = document.querySelector(href); } catch (err) { t = null; }
+      }
       closeMenu();
       if (t) setTimeout(function () {
         window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });

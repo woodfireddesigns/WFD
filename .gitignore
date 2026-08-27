@@ -2,6 +2,8 @@
 # The folders below are independent projects/data that don't belong here —
 # most have their own git repos already; the rest are local-only reference material.
 WFD-OS/
+WFD-COMMAND-CENTER/
+WFD-DASHBOARD 3.0/
 WFD-THE FORGE/
 WFD-BRAND_IDENTITY_FORGER/
 WFD- OFFICIAL DASHBOARD/

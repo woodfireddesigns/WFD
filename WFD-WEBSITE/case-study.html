@@ -1,0 +1,167 @@
+<!-- case-study.html — Wood Fired Designs — data-driven case study template
+     Usage: case-study.html?slug=<slug-from-data/case-studies.js> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title id="cs-doc-title">Case Study — Wood Fired Designs</title>
+  <meta name="description" id="cs-doc-desc" content="Selected work by Michael Deschenes — Wood Fired Designs.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://woodfireddesigns.com/case-study.html" id="cs-canonical">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="brand/Artboard 26 copy 9@300x.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="brand/Artboard 26 copy 9@300x.png">
+
+  <!-- Adobe Fonts (Typekit) — licensed webfonts: Owners XXNarrow + Altesse Std 24pt -->
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+  <link rel="stylesheet" href="https://use.typekit.net/wys5omr.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/brand.css?v=5">
+  <link rel="stylesheet" href="css/base.css?v=5">
+  <link rel="stylesheet" href="css/components/nav.css?v=30">
+  <style>
+    #H{position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 clamp(1.25rem,4vw,3rem);background:rgba(10,8,6,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(255,255,255,.07)}
+    #H-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
+    #H-logo img{display:block;height:32px;width:auto;filter:brightness(0) invert(1)}
+    #H-links{display:none;align-items:center;gap:2rem;list-style:none;margin:0;padding:0}
+    #H-links a{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.6);text-decoration:none;transition:color .2s}
+    #H-links a:hover{color:#fff}
+    #H-right{display:flex;align-items:center;gap:.75rem}
+    #H-cta{display:none;font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#e8632a 0%,#d4581a 40%,#b84010 100%);border:1.5px solid rgba(255,120,50,.4);border-radius:100px;padding:.5rem 1.25rem;text-decoration:none;white-space:nowrap}
+    #H-btn{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:0;position:relative;z-index:10000}
+    #H-t,#H-b{display:block;width:22px;height:1.5px;background:#f5f2ec;transition:transform .3s ease}
+    #H.open #H-t{transform:translateY(3.25px) rotate(45deg)}
+    #H.open #H-b{transform:translateY(-3.25px) rotate(-45deg)}
+    @media(min-width:860px){#H-links{display:flex}#H-cta{display:inline-flex}}
+    #M{position:fixed;inset:0;z-index:9998;background:#0f0d0b;display:flex;flex-direction:column;justify-content:center;padding:5rem clamp(1.5rem,8vw,5rem) 3rem}
+    #M[hidden]{display:none}
+    #M>a{display:block;font-size:clamp(3rem,9vw,7rem);font-weight:900;text-transform:uppercase;line-height:1.05;color:#f5f2ec;text-decoration:none;transition:color .2s;font-family:var(--font-display,'Arial Black',sans-serif)}
+    #M>a:hover{color:#d4581a}
+    #M-foot{margin-top:auto;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;gap:1.5rem}
+    #M-foot a{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,236,.35);text-decoration:none;transition:color .2s}
+    #M-foot a:hover{color:rgba(245,242,236,.7)}
+  </style>
+  <link rel="stylesheet" href="css/components/buttons.css?v=3">
+  <link rel="stylesheet" href="css/sections/footer.css?v=2">
+  <link rel="stylesheet" href="css/sections/case-study.css?v=1">
+</head>
+<body class="theme-dark">
+
+  <!-- NAV -->
+  <header id="H">
+    <a id="H-logo" href="index.html"><img src="brand/Stacked Script.png" alt="Wood Fired Designs" width="140" height="40" style="display:block;height:32px;width:auto;filter:brightness(0) invert(1)"></a>
+    <div id="H-links">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#michael">About</a>
+    </div>
+    <div id="H-right">
+      <a id="H-cta" href="mailto:michael@woodfireddesigns.com?subject=Freelance Inquiry">Get In Touch</a>
+      <button id="H-btn" aria-label="Menu" aria-expanded="false">
+        <span id="H-t"></span>
+        <span id="H-b"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENU -->
+  <div id="M" hidden>
+    <a href="index.html#work"     id="M-1">Work</a>
+    <a href="index.html#services" id="M-2">Services</a>
+    <a href="index.html#michael"  id="M-4">About</a>
+    <a href="index.html#contact"  id="M-5">Contact</a>
+    <div id="M-foot">
+      <a href="mailto:michael@woodfireddesigns.com">michael@woodfireddesigns.com</a>
+      <a href="https://instagram.com/woodfireddesigns" target="_blank" rel="noopener">@woodfireddesigns</a>
+    </div>
+  </div>
+
+  <main id="cs-root">
+    <!-- ═══ CASE STUDY HERO ═══ -->
+    <section class="cs-hero">
+      <div class="cs-hero__media" id="cs-hero-media"><!-- injected video/image --></div>
+      <div class="cs-hero__overlay"></div>
+      <div class="cs-hero__inner">
+        <a class="cs-back" href="index.html#work">
+          <span aria-hidden="true">←</span> Back to Work
+        </a>
+        <p class="label-text cs-kicker" id="cs-kicker">/ Case Study</p>
+        <h1 class="cs-title" id="cs-title">Loading…</h1>
+        <div class="cs-tags" id="cs-tags"></div>
+      </div>
+    </section>
+
+    <!-- ═══ DISCLAIMER (passion projects only) ═══ -->
+    <div class="cs-disclaimer" id="cs-disclaimer" hidden>
+      <p><strong>Just for fun.</strong> <span id="cs-disclaimer-text"></span></p>
+    </div>
+
+    <!-- ═══ BLURB + META ═══ -->
+    <section class="cs-summary">
+      <div class="cs-summary__inner">
+        <p class="cs-blurb" id="cs-blurb"></p>
+        <dl class="cs-meta">
+          <div class="cs-meta__item">
+            <dt class="label-text">Client</dt>
+            <dd id="cs-client">—</dd>
+          </div>
+          <div class="cs-meta__item">
+            <dt class="label-text">Year</dt>
+            <dd id="cs-year">—</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ═══ GALLERY ═══ -->
+    <section class="cs-gallery" id="cs-gallery" aria-label="Project gallery"></section>
+
+    <!-- ═══ MORE WORK ═══ -->
+    <section class="cs-more">
+      <p class="label-text cs-more__kicker">/ More Work</p>
+      <div class="cs-more__grid" id="cs-more-grid"></div>
+    </section>
+
+    <!-- ═══ CTA ═══ -->
+    <section class="cs-cta">
+      <h2 class="cs-cta__headline">Want work like this?</h2>
+      <div class="cs-cta__actions">
+        <a class="btn btn--accent btn--lg" href="mailto:michael@woodfireddesigns.com?subject=Freelance Inquiry">Get In Touch →</a>
+        <a class="btn btn--outline-inverse" href="index.html#work">See All Work →</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer theme-dark" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div class="footer__logotype">
+          <a href="index.html" aria-label="Wood Fired Designs — Home">
+            <img class="footer__logo-img" src="brand/Stacked Script.png" alt="Wood Fired Designs">
+          </a>
+          <p class="footer__tagline">No fluff. No filler. Purpose-built design that lights a fire under your brand.</p>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright label-text">© 2026 Wood Fired Designs. All rights reserved.</p>
+        <p class="footer__credit label-text">Designed &amp; built by Michael Deschenes — Salisbury, MD</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <script src="data/case-studies.js"></script>
+  <script src="js/case-study.js"></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

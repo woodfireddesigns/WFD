@@ -1,0 +1,92 @@
+/* css/sections/passion.css — Wood Fired Designs — woodfireddesigns.com */
+
+/* ─────────────────────────────────────────────────────────────
+   passion.css — "Just For Fun" passion-project showcase.
+   Deliberately separated from the client Work section above it —
+   different background, an explicit disclaimer, and a quieter
+   tag treatment so it never reads as paid/official client work.
+   ───────────────────────────────────────────────────────────── */
+
+.section-passion {
+  background-color: var(--color-bg-alt);
+  padding: var(--section-pad-y) var(--section-pad-x);
+  border-top: 1px dashed var(--color-border);
+}
+
+.passion__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 900px) {
+  .passion__inner {
+    grid-template-columns: minmax(0, 1fr) 440px;
+    align-items: center;
+  }
+}
+
+.passion__header {
+  max-width: var(--prose-md);
+  margin-bottom: 0;
+}
+
+.passion__kicker {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--gap-overline);
+}
+
+.passion__headline {
+  font-family: var(--font-display);
+  font-size: var(--type-display-sm);
+  font-weight: var(--weight-xblack);
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  margin-bottom: var(--gap-sub);
+}
+
+.passion__note {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+/* Reuses .bento-card / .bento-card__* structure + hover-video
+   behavior from bento.css + js/bento.js, just sized standalone
+   instead of living inside .bento-grid. */
+
+.passion-card {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  height: auto;
+  border-radius: var(--radius-lg);
+}
+
+/* .passion-card also carries .bento-card (shared hover-video JS/CSS from
+   bento.css), but bento.css's ".bento-card:nth-child(2) { grid-area: c2; }"
+   leaks onto it here since it happens to be the 2nd child of .passion__inner.
+   .passion__inner has no grid-template-areas, so that stray "c2" line-name
+   reference corrupts this grid. Reset placement back to auto explicitly —
+   same specificity as the leaking rule, but this file loads after bento.css. */
+.passion__inner .passion-card {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+/* Quieter tag — this isn't a sales tag, don't style it like one */
+.bento-card__tag--quiet {
+  background: rgba(245, 242, 236, 0.14);
+  border: 1px solid rgba(245, 242, 236, 0.3);
+  color: var(--color-text-inverse);
+}

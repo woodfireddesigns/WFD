@@ -75,6 +75,19 @@
 .bento-card:nth-child(7) { grid-area: c7; }
 .bento-card:nth-child(8) { grid-area: c8; }
 
+/* Cards appended after the named c1-c8 layout auto-flow into new implicit
+   rows. When one lands alone in a row, span it full-width edge-to-edge
+   instead of leaving empty columns beside it. */
+.bento-card--full-row {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 1023px) {
+  .bento-card--full-row {
+    grid-column: auto;
+  }
+}
+
 /* Tablet: 2-col auto flow */
 @media (max-width: 1023px) and (min-width: 600px) {
   .bento-grid {

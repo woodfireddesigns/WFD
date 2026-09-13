@@ -3,6 +3,7 @@
   'use strict';
   var SUPABASE_URL = 'https://aqeipagwuerfosxdgkie.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_5xuWTfWdLloVXMWVAmGwZw_ZEk68Qu5';
+  var REQUIRE_LOGIN = false; // open access for now; flip to true (and private.fin_open_access() to false) to require login
   var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   var L = FinLogic;
 
@@ -104,7 +105,7 @@
   sb.auth.onAuthStateChange(function (event, session) {
     if (event === 'PASSWORD_RECOVERY') { recovering = true; showAuth(true); $('#auth-form').hidden = true; $('#reset-form').hidden = false; $('#auth-msg').textContent = 'Choose a new password.'; return; }
     if (session && session.user && !recovering) boot(session.user);
-    else if (!session) { S.user = null; showAuth(true); }
+    else if (!session) { S.user = null; if (REQUIRE_LOGIN) showAuth(true); }
   });
   var booted = false;
   function boot(user) {
@@ -112,7 +113,8 @@
     if (booted) return; booted = true;
     refresh();
   }
-  sb.auth.getSession().then(function (r) { if (!(r.data && r.data.session)) showAuth(true); });
+  if (REQUIRE_LOGIN) sb.auth.getSession().then(function (r) { if (!(r.data && r.data.session)) showAuth(true); });
+  else { showAuth(false); $('#who').textContent = 'Open access'; booted = true; refresh(); }
 
   // ---------- navigation ----------
   var ICON = {
@@ -586,8 +588,8 @@
     v.appendChild(card('Settings', [
       el('div', { class: 'kv' }, el('span', null, 'Cash buffer the plan never spends'), el('button', { class: 'pill amber', onclick: bufferForm }, fmt(reserveCents(), { whole: true }))),
       el('div', { class: 'kv' }, el('span', null, 'Forecast includes likely income'), el('button', { class: 'pill ' + (S.prefs.includeLikely ? 'blue' : ''), onclick: function () { S.prefs.includeLikely = !S.prefs.includeLikely; savePrefs(); render(); } }, S.prefs.includeLikely ? 'On' : 'Off')),
-      el('div', { class: 'kv' }, el('span', null, 'Signed in as'), el('span', { class: 'small' }, S.user ? S.user.email : '')),
-      el('div', { class: 'actions', style: 'margin-top:12px' }, el('button', { class: 'btn', onclick: function () { refresh().then(function () { toast('Refreshed'); }); } }, 'Refresh'), el('button', { class: 'btn danger', onclick: function () { sb.auth.signOut().then(function () { location.reload(); }); } }, 'Sign out'))
+      el('div', { class: 'kv' }, el('span', null, 'Access'), el('span', { class: 'small' }, S.user ? S.user.email : 'Open (no login)')),
+      el('div', { class: 'actions', style: 'margin-top:12px' }, el('button', { class: 'btn', onclick: function () { refresh().then(function () { toast('Refreshed'); }); } }, 'Refresh'), S.user ? el('button', { class: 'btn danger', onclick: function () { sb.auth.signOut().then(function () { location.reload(); }); } }, 'Sign out') : null)
     ]));
     v.appendChild(el('div', { class: 'dim small', style: 'text-align:center;padding:8px 0 20px' }, 'On iPhone: Share → Add to Home Screen for the app icon.'));
   }
@@ -661,5 +663,5 @@
 
   // ---------- PWA ----------
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('/sw.js').catch(function () {});
-  document.addEventListener('visibilitychange', function () { if (!document.hidden && S.user) refresh(); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && (S.user || !REQUIRE_LOGIN)) refresh(); });
 })();

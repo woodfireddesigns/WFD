@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>WFD Money</title>
+<meta name="description" content="Bills, income, debts, goals and cash flow.">
+<meta name="theme-color" content="#0b0c0e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Money">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<section id="auth" class="auth" hidden>
+  <div class="auth-card">
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="#1a1206"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="8" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg></div>
+      <div><h1>WFD Money</h1><span>Use your command center login</span></div>
+    </div>
+    <form id="auth-form">
+      <div class="field"><label>Email</label><input id="auth-email" type="email" autocomplete="username" required inputmode="email"></div>
+      <div class="field"><label>Password</label><input id="auth-pass" type="password" autocomplete="current-password" required></div>
+      <button class="btn primary block" type="submit">Sign in</button>
+    </form>
+    <form id="reset-form" hidden>
+      <div class="field"><label>New password</label><input id="reset-pass" type="password" autocomplete="new-password" required minlength="8"></div>
+      <button class="btn primary block" type="submit">Set password</button>
+    </form>
+    <div id="auth-msg" class="auth-msg"></div>
+    <button id="auth-forgot" class="link-btn" type="button">Forgot password? Email me a reset link</button>
+  </div>
+</section>
+
+<div id="app" class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="#1a1206"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="8" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg></div>
+      <div><h1>WFD Money</h1><span>Deschenes household</span></div>
+    </div>
+    <div id="side-nav"></div>
+    <div class="spacer"></div>
+    <div class="who" id="who"></div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><h2 id="title">Today</h2><div class="date" id="today-date"></div></div>
+    <div id="view"><div class="loading">Loading…</div></div>
+  </main>
+  <nav class="nav" id="nav"></nav>
+  <button class="fab" id="fab" hidden aria-label="Add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+</div>
+
+<div class="sheet-bg" id="sheet-bg"><div class="sheet" id="sheet" role="dialog"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
+<script src="/logic.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

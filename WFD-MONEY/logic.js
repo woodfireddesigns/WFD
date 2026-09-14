@@ -155,7 +155,11 @@
         var src = inc.filter(function (e) { return e.date === payOn; }).map(function (e) { return e.income.source; });
         plan.push({ occ: o, status: 'wait', payOn: payOn, late: payOn > o.due, waitFor: src });
       } else {
-        var short = o.bill.amount_cents - Math.max.apply(null, avail.slice(idx));
+        // Unfunded. Count only the part not covered by whatever cash is left, then consume it
+        // so later unfunded bills don't measure against the same pool.
+        var maxAvail = Math.max.apply(null, avail.slice(idx));
+        var short = o.bill.amount_cents - Math.max(0, maxAvail);
+        spendFrom(idx, o.bill.amount_cents);
         plan.push({ occ: o, status: 'short', payOn: null, late: true, shortBy: short });
       }
     });

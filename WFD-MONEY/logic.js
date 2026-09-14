@@ -164,6 +164,9 @@
       }
     });
     plan.sort(function (a, b) {
+      // anything already past due stays pinned at the top, funded or not
+      var ao = a.occ.overdue ? 0 : 1, bo = b.occ.overdue ? 0 : 1;
+      if (ao !== bo) return ao - bo;
       var order = { overdue: 0, now: 1, wait: 2, scheduled: 3, short: 4 };
       if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
       var ad = a.payOn || a.occ.effective, bd = b.payOn || b.occ.effective;

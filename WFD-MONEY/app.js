@@ -208,6 +208,7 @@
       else if (p.status === 'now') { sub = 'Due ' + relDue(o.due) + '. Cash covers it.'; pill = ['amber', 'Pay now']; }
       else if (p.status === 'scheduled') { sub = 'Due ' + fdate(o.due, true) + (b.autopay ? '. Autopay.' : '. Covered.'); pill = ['green', b.autopay ? 'Autopay' : 'Covered']; }
       else if (p.status === 'wait') { sub = 'Due ' + fdate(o.due) + '. Pay ' + fdate(p.payOn) + (p.waitFor && p.waitFor.length ? ' after ' + p.waitFor.join(', ') : '') + (p.late ? ' (late)' : ''); pill = [p.late ? 'yellow' : 'blue', p.late ? 'Wait, late' : 'Wait']; }
+      else if (o.overdue) { sub = Math.abs(L.diffDays(t, o.due)) + ' days late. Need ' + fmt(p.shortBy) + ' to clear it.'; pill = ['red', 'Past due']; }
       else { sub = 'Due ' + fdate(o.due) + '. Short by ' + fmt(p.shortBy) + '.'; pill = ['red', 'Short']; }
       var when = L.parse(p.payOn || o.effective);
       return el('div', { class: 'plan-item ' + billSide(b), onclick: function () { billDetail(b); } },

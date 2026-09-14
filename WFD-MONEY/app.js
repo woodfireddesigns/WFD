@@ -150,8 +150,8 @@
     else if (S.tab === 'accounts') { fab.onclick = function () { accountForm(); }; renderAccounts(v); }
   }
 
-  function stat(label, value, sub, cls) {
-    return el('div', { class: 'stat' }, el('div', { class: 'l' }, label), el('div', { class: 'v ' + (cls || '') }, value), sub ? el('div', { class: 's' }, sub) : null);
+  function stat(label, value, sub, cls, side) {
+    return el('div', { class: 'stat' + (side ? ' ' + side : '') }, el('div', { class: 'l' }, label), el('div', { class: 'v ' + (cls || '') }, value), sub ? el('div', { class: 's' }, sub) : null);
   }
   function card(title, body, right) {
     var c = el('div', { class: 'card' + (title === null ? ' tight' : '') });
@@ -164,8 +164,14 @@
     if (!rows.length) c.appendChild(el('div', { class: 'empty' }, emptyMsg)); else append(c, rows);
     return c;
   }
+  // which side of the house a bill belongs to: the account it pays from decides, else the category
+  function billSide(b) {
+    var a = b.pay_from_account_id && acct(b.pay_from_account_id);
+    if (a) return a.is_business ? 'biz' : 'per';
+    return b.category === 'Business' ? 'biz' : 'per';
+  }
   function row(o) {
-    return el('div', { class: 'row', onclick: o.onclick },
+    return el('div', { class: 'row' + (o.side ? ' ' + o.side : ''), onclick: o.onclick },
       el('div', { class: 'ic', style: o.icStyle || '' }, o.ic || initial(o.title)),
       el('div', { class: 'body' }, el('div', { class: 't' }, o.title), el('div', { class: 'sub' }, o.sub)),
       el('div', { class: 'amt ' + (o.amtClass || '') }, o.amt, o.amtSub ? el('div', { class: 'sub' }, o.amtSub) : null));
@@ -186,13 +192,14 @@
       v.appendChild(el('div', { class: 'btnrow' }, el('button', { class: 'btn primary', onclick: function () { accountForm(); } }, 'Add account'), el('button', { class: 'btn', onclick: function () { billForm(); } }, 'Add bill'), el('button', { class: 'btn', onclick: function () { incomeForm(); } }, 'Add income')));
     }
 
-    v.appendChild(el('div', { class: 'hero' },
-      stat('Cash on hand', fmt(cash, { whole: true }), reserve ? fmt(reserve, { whole: true }) + ' buffer held back' : cashAccounts().length + ' account' + (cashAccounts().length === 1 ? '' : 's'), cash < 0 ? 'neg' : ''),
+    var perCash = cashAccounts().filter(function (a) { return !a.is_business; }).reduce(function (s, a) { return s + a.balance_cents; }, 0);
+    var bizCash = cashAccounts().filter(function (a) { return a.is_business; }).reduce(function (s, a) { return s + a.balance_cents; }, 0);
+    v.appendChild(el('div', { class: 'hero five' },
+      stat('Personal cash', fmt(perCash, { whole: true }), reserve ? fmt(reserve, { whole: true }) + ' buffer held back' : 'joint checking', perCash < 0 ? 'neg' : '', 'per'),
+      stat('Business cash', fmt(bizCash, { whole: true }), 'business checking', bizCash < 0 ? 'neg' : '', 'biz'),
       stat('Due next 14 days', fmt(due14, { whole: true }), overdue.length ? overdue.length + ' overdue' : 'nothing overdue', overdue.length ? 'neg' : ''),
       stat('Income, next 30 days', fmt(confirmed30, { whole: true }), likely30 ? '+ ' + fmt(likely30, { whole: true }) + ' likely' : 'confirmed only', 'pos'),
       stat('Lowest point', fmt(fc.minBalance, { whole: true }), fc.minBalance < 0 ? 'goes negative ' + fdate(fc.firstNegative) : 'on ' + fdate(fc.minDate), fc.minBalance < 0 ? 'neg' : fc.minBalance < 50000 ? 'warn' : 'pos')));
-
-    if (plan.shortTotal > 0) v.appendChild(el('div', { class: 'notice red' }, el('b', null, 'Short ' + fmt(plan.shortTotal) + ' over the next 30 days'), 'Confirmed income does not cover every bill. Land ' + fmt(plan.shortTotal) + ' or move something to a later date.'));
 
     // pay plan
     var items = plan.plan.map(function (p) {
@@ -203,7 +210,7 @@
       else if (p.status === 'wait') { sub = 'Due ' + fdate(o.due) + '. Pay ' + fdate(p.payOn) + (p.waitFor && p.waitFor.length ? ' after ' + p.waitFor.join(', ') : '') + (p.late ? ' (late)' : ''); pill = [p.late ? 'yellow' : 'blue', p.late ? 'Wait, late' : 'Wait']; }
       else { sub = 'Due ' + fdate(o.due) + '. Short by ' + fmt(p.shortBy) + '.'; pill = ['red', 'Short']; }
       var when = L.parse(p.payOn || o.effective);
-      return el('div', { class: 'plan-item', onclick: function () { billDetail(b); } },
+      return el('div', { class: 'plan-item ' + billSide(b), onclick: function () { billDetail(b); } },
         el('div', { class: 'when' }, el('b', null, when.getDate()), el('span', null, MONTHS[when.getMonth()])),
         el('div', { class: 'body' }, el('div', { class: 't' }, b.name, !b.essential ? el('span', { class: 'dim small' }, '  · flexible') : null), el('div', { class: 'sub' }, sub)),
         el('div', { class: 'amt' }, fmt(b.amount_cents), el('div', null, el('span', { class: 'pill ' + pill[0] }, pill[1]))));
@@ -281,7 +288,7 @@
   function billRow(b) {
     var late = b.next_due_date < L.today();
     return row({ title: b.name, sub: (late ? 'Late. Was due ' : 'Due ') + fdate(b.next_due_date, true) + ' · ' + b.frequency + (b.autopay ? ' · autopay' : '') + (b.essential ? '' : ' · flexible'),
-      amt: fmt(b.amount_cents), amtClass: late ? 'neg' : '', icStyle: late ? 'color:var(--red);background:rgba(240,96,93,.14)' : '', onclick: function () { billDetail(b); } });
+      amt: fmt(b.amount_cents), amtClass: late ? 'neg' : '', icStyle: late ? 'color:var(--red);background:rgba(240,96,93,.14)' : '', side: billSide(b), onclick: function () { billDetail(b); } });
   }
   function billDetail(b) {
     var hist = S.payments.filter(function (p) { return p.bill_id === b.id; }).slice(0, 6);

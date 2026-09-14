@@ -186,6 +186,51 @@
     });
   }
 
+
+  // ---- spending trends ----
+  // Totals per calendar month, newest last. months = how many to include, ending with the current one.
+  function spendMonths(spend, todayISO, months) {
+    var out = [];
+    for (var i = months - 1; i >= 0; i--) {
+      var ms = monthStart(addMonths(todayISO, -i)), me = monthEnd(ms);
+      var rows = spend.filter(function (s) { return s.spent_on >= ms && s.spent_on <= me; });
+      out.push({ month: ms, label: ms.slice(0, 7), total: rows.reduce(function (t, s) { return t + s.amount_cents; }, 0),
+        count: rows.length, rows: rows });
+    }
+    return out;
+  }
+  // Per-budget view of the current month with a trend against the prior full months.
+  function spendTrend(budgets, spend, todayISO, lookback) {
+    var back = lookback || 3;
+    var ms = monthStart(todayISO), me = monthEnd(ms);
+    var prior = [];
+    for (var i = 1; i <= back; i++) { var p = monthStart(addMonths(todayISO, -i)); prior.push([p, monthEnd(p)]); }
+    return budgets.filter(function (b) { return b.active; }).map(function (b) {
+      var mine = spend.filter(function (s) { return s.budget_id === b.id; });
+      var used = mine.filter(function (s) { return s.spent_on >= ms && s.spent_on <= me; })
+        .reduce(function (t, s) { return t + s.amount_cents; }, 0);
+      var sums = prior.map(function (w) {
+        return mine.filter(function (s) { return s.spent_on >= w[0] && s.spent_on <= w[1]; })
+          .reduce(function (t, s) { return t + s.amount_cents; }, 0);
+      }).filter(function (v, i) { return hadData(spend, prior[i]); });
+      var avg = sums.length ? Math.round(sums.reduce(function (a, b2) { return a + b2; }, 0) / sums.length) : 0;
+      return { budget: b, used: used, cap: b.monthly_cap_cents, left: b.monthly_cap_cents - used,
+        pct: b.monthly_cap_cents ? Math.min(1, used / b.monthly_cap_cents) : 0,
+        avg: avg, delta: avg ? used - avg : 0,
+        count: mine.filter(function (s) { return s.spent_on >= ms && s.spent_on <= me; }).length };
+    });
+  }
+  function hadData(spend, window) {
+    return spend.some(function (s) { return s.spent_on >= window[0] && s.spent_on <= window[1]; });
+  }
+  // Where the month lands if the rest of it looks like the part already spent.
+  function projectMonth(usedCents, todayISO) {
+    var day = parseInt(todayISO.slice(8, 10), 10);
+    var days = parseInt(monthEnd(todayISO).slice(8, 10), 10);
+    return { day: day, days: days, perDay: day ? Math.round(usedCents / day) : 0,
+      projected: day ? Math.round(usedCents / day * days) : 0 };
+  }
+
   // ---- debt payoff estimate (months at current min payment, simple interest approx) ----
   function payoffMonths(balance, apr, payment) {
     if (balance <= 0) return 0;
@@ -198,5 +243,6 @@
 
   return { toISO: toISO, parse: parse, today: today, addDays: addDays, addMonths: addMonths, diffDays: diffDays, nextDue: nextDue,
     monthStart: monthStart, monthEnd: monthEnd, fmt: fmt, toCents: toCents, billOccurrences: billOccurrences, liquidCash: liquidCash,
-    cardDebt: cardDebt, incomeEvents: incomeEvents, forecast: forecast, payPlan: payPlan, budgetUsage: budgetUsage, payoffMonths: payoffMonths };
+    cardDebt: cardDebt, incomeEvents: incomeEvents, forecast: forecast, payPlan: payPlan, budgetUsage: budgetUsage, payoffMonths: payoffMonths,
+    spendMonths: spendMonths, spendTrend: spendTrend, projectMonth: projectMonth };
 });

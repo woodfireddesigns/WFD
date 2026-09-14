@@ -56,7 +56,7 @@
   // ---------- data ----------
   function q(p) { return p.then(function (r) { if (r.error) throw r.error; return r.data; }); }
   function loadAll() {
-    var t = L.today(), back = L.addDays(t, -90), back60 = L.addDays(t, -60), ms = L.monthStart(L.addMonths(t, -1));
+    var t = L.today(), back = L.addDays(t, -90), back60 = L.addDays(t, -60), ms = L.monthStart(L.addMonths(t, -7));
     return Promise.all([
       q(sb.from('fin_accounts').select('*').eq('archived', false).order('sort_order').order('name')),
       q(sb.from('fin_bills').select('*').eq('active', true).order('next_due_date')),
@@ -123,9 +123,10 @@
     income: '<svg viewBox="0 0 24 24"><path d="M12 20V4M5 11l7-7 7 7"/></svg>',
     debts: '<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg>',
     plan: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-    accounts: '<svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6"/><path d="M5 10v9M19 10v9M9 10v9M15 10v9M3 19h18"/></svg>'
+    accounts: '<svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6"/><path d="M5 10v9M19 10v9M9 10v9M15 10v9M3 19h18"/></svg>',
+    spend: '<svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>'
   };
-  var TABS = [['today', 'Today'], ['bills', 'Bills'], ['income', 'Income'], ['debts', 'Debts'], ['plan', 'Plan'], ['accounts', 'Accounts']];
+  var TABS = [['today', 'Today'], ['bills', 'Bills'], ['spend', 'Spend'], ['income', 'Income'], ['debts', 'Debts'], ['plan', 'Plan'], ['accounts', 'Accounts']];
   function buildNav() {
     var nav = clear($('#nav')), side = clear($('#side-nav'));
     TABS.forEach(function (t) {
@@ -146,6 +147,7 @@
     else if (S.tab === 'bills') { fab.onclick = function () { billForm(); }; renderBills(v); }
     else if (S.tab === 'income') { fab.onclick = function () { incomeForm(); }; renderIncome(v); }
     else if (S.tab === 'debts') { fab.onclick = function () { debtForm(); }; renderDebts(v); }
+    else if (S.tab === 'spend') { fab.onclick = function () { spendForm(); }; renderSpend(v); }
     else if (S.tab === 'plan') { fab.onclick = planMenu; renderPlan(v); }
     else if (S.tab === 'accounts') { fab.onclick = function () { accountForm(); }; renderAccounts(v); }
   }
@@ -482,6 +484,86 @@
   }
 
   // ---------- PLAN (goals + budgets) ----------
+  // ---------- SPEND ----------
+  function renderSpend(v) {
+    var t = L.today();
+    var series = L.spendMonths(S.spend, t, 6).filter(function (m) { return m.count || m.month === L.monthStart(t); });
+    var cur = series[series.length - 1] || { total: 0, count: 0 };
+    var prev = series.length > 1 ? series[series.length - 2] : null;
+    var caps = S.budgets.reduce(function (a, b) { return a + b.monthly_cap_cents; }, 0);
+    var proj = L.projectMonth(cur.total, t);
+    var done = series.filter(function (m) { return m.count && m.month !== L.monthStart(t); });
+    var avg = done.length ? Math.round(done.reduce(function (a, m) { return a + m.total; }, 0) / done.length) : 0;
+
+    v.appendChild(el('div', { class: 'hero' },
+      stat('Spent this month', fmt(cur.total, { whole: true }), cur.count + ' transactions', cur.total > caps ? 'neg' : ''),
+      stat('Monthly budget', fmt(caps, { whole: true }), cur.total > caps ? fmt(cur.total - caps, { whole: true }) + ' over' : fmt(caps - cur.total, { whole: true }) + ' left', cur.total > caps ? 'neg' : 'pos'),
+      stat('On pace for', fmt(proj.projected, { whole: true }), fmt(proj.perDay, { whole: true }) + '/day, day ' + proj.day + ' of ' + proj.days, proj.projected > caps ? 'warn' : 'pos'),
+      stat('Typical month', fmt(avg, { whole: true }), done.length ? 'average of ' + done.length + ' full months' : 'not enough history', '')));
+
+    // month over month
+    if (series.length > 1) {
+      v.appendChild(card('Month over month', [barChart(series, caps), el('div', { class: 'chart-legend' },
+        el('span', null, monthLabel(series[0].month)), el('span', null, 'dashed line = budget'), el('span', null, monthLabel(series[series.length - 1].month))),
+        el('div', { class: 'tiny muted', style: 'margin-top:8px' }, 'A month only counts everything if a full statement covering it has been loaded. Part-month bars read low.')]));
+    }
+
+    // categories with trend
+    var tr = L.spendTrend(S.budgets, S.spend, t, 3);
+    ['essential', 'non_essential'].forEach(function (kind) {
+      var us = tr.filter(function (u) { return u.budget.kind === kind; })
+                 .sort(function (a, b) { return b.used - a.used; });
+      var rows = us.map(function (u) {
+        var arrow = !u.avg ? null : u.delta > u.avg * 0.08 ? ['neg', '▲ ' + fmt(u.delta, { whole: true }) + ' vs usual']
+                  : u.delta < -u.avg * 0.08 ? ['pos', '▼ ' + fmt(-u.delta, { whole: true }) + ' vs usual'] : ['muted', 'on pace'];
+        return el('div', { class: 'row', style: 'display:block', onclick: function () { budgetDetail(u.budget); } },
+          el('div', { style: 'display:flex;justify-content:space-between;gap:10px' },
+            el('div', { class: 't' }, u.budget.name, u.count ? el('span', { class: 'dim small' }, '  ' + u.count + 'x') : null),
+            el('div', { class: 'amt ' + (u.left < 0 ? 'neg' : '') }, fmt(u.used, { whole: true }), el('span', { class: 'muted' }, ' / ' + fmt(u.cap, { whole: true })))),
+          el('div', { class: 'bar' }, el('i', { class: u.left < 0 ? 'over' : '', style: 'width:' + pct(u.pct) })),
+          el('div', { class: 'sub', style: 'margin-top:6px;display:flex;justify-content:space-between;gap:8px' },
+            el('span', null, u.left < 0 ? fmt(-u.left, { whole: true }) + ' over cap' : fmt(u.left, { whole: true }) + ' left'),
+            arrow ? el('span', { class: arrow[0] }, arrow[1]) : null));
+      });
+      v.appendChild(listCard(kind === 'essential' ? 'Essentials' : 'Non-essentials', rows,
+        'No caps set. Tap + Cap to add one.', el('button', { class: 'pill', onclick: function () { budgetForm({ kind: kind }); } }, '+ Cap')));
+    });
+
+    // biggest single purchases this month
+    var ms = L.monthStart(t);
+    var big = S.spend.filter(function (s) { return s.spent_on >= ms; })
+      .slice().sort(function (a, b) { return b.amount_cents - a.amount_cents; }).slice(0, 5).map(spendRow);
+    if (big.length) v.appendChild(listCard('Biggest this month', big, ''));
+
+    var recent = S.spend.slice(0, 12).map(spendRow);
+    v.appendChild(listCard('Recent transactions', recent, 'Nothing logged yet.',
+      el('button', { class: 'pill amber', onclick: function () { spendForm(); } }, '+ Log')));
+  }
+  function spendRow(s) {
+    var b = budget(s.budget_id);
+    return row({ title: s.note || (b ? b.name : 'Spend'), sub: fdate(s.spent_on) + (b ? ' · ' + b.name : ''),
+      amt: fmt(s.amount_cents), amtClass: 'muted', side: s.from_account_id && acct(s.from_account_id) && acct(s.from_account_id).is_business ? 'biz' : 'per',
+      onclick: function () { confirmSheet('Delete this spend?', fmt(s.amount_cents) + ' on ' + fdate(s.spent_on) + '. Balances are restored.', 'Delete', function () { return rpc('fin_delete_spend', { p_spend: s.id }).then(function () { toast('Deleted'); }); }); } });
+  }
+  function monthLabel(iso) { return MONTHS[parseInt(iso.slice(5, 7), 10) - 1] + ' ' + iso.slice(2, 4); }
+  function barChart(series, cap) {
+    var W = 600, H = 130, pad = 8, n = series.length;
+    var mx = Math.max.apply(null, series.map(function (m) { return m.total; }).concat([cap, 1]));
+    var bw = (W - pad * 2) / n, gap = Math.min(14, bw * 0.28);
+    var capY = pad + (1 - cap / mx) * (H - pad * 2 - 16);
+    var bars = series.map(function (m, i) {
+      var h = (m.total / mx) * (H - pad * 2 - 16);
+      var x = pad + i * bw + gap / 2, y = H - pad - 16 - h;
+      var over = m.total > cap;
+      return '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + (bw - gap).toFixed(1) + '" height="' + Math.max(1, h).toFixed(1) +
+        '" rx="3" fill="' + (over ? '#f0605d' : '#e9a23b') + '" opacity="' + (i === n - 1 ? '1' : '.65') + '"/>' +
+        '<text x="' + (x + (bw - gap) / 2).toFixed(1) + '" y="' + (H - 4) + '" text-anchor="middle" font-size="10" fill="#8b8b8b">' + monthLabel(m.month) + '</text>';
+    }).join('');
+    var svg = '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">' + bars +
+      '<line x1="0" x2="' + W + '" y1="' + capY.toFixed(1) + '" y2="' + capY.toFixed(1) + '" stroke="#6aa6f8" stroke-dasharray="5 4" stroke-width="1.5" opacity=".8"/></svg>';
+    return el('div', { html: svg });
+  }
+
   function renderPlan(v) {
     var t = L.today();
     var goalRows = S.goals.map(function (g) {
@@ -495,24 +577,7 @@
     });
     v.appendChild(listCard('Saving for', goalRows, 'No savings goals. Add a tax set-aside, emergency buffer, equipment fund.', el('button', { class: 'pill', onclick: function () { goalForm(); } }, '+ Goal')));
 
-    var usage = L.budgetUsage(S.budgets, S.spend, t);
-    ['essential', 'non_essential'].forEach(function (kind) {
-      var us = usage.filter(function (u) { return u.budget.kind === kind; });
-      var rows = us.map(function (u) {
-        return el('div', { class: 'row', style: 'display:block', onclick: function () { budgetDetail(u.budget); } },
-          el('div', { style: 'display:flex;justify-content:space-between;gap:10px' }, el('div', { class: 't' }, u.budget.name), el('div', { class: 'amt ' + (u.left < 0 ? 'neg' : '') }, fmt(u.used, { whole: true }), el('span', { class: 'muted' }, ' / ' + fmt(u.budget.monthly_cap_cents, { whole: true })))),
-          el('div', { class: 'bar' }, el('i', { class: u.left < 0 ? 'over' : '', style: 'width:' + pct(u.pct) })),
-          el('div', { class: 'sub', style: 'margin-top:6px' }, u.left < 0 ? fmt(-u.left, { whole: true }) + ' over' : fmt(u.left, { whole: true }) + ' left this month'));
-      });
-      v.appendChild(listCard(kind === 'essential' ? 'Essential spending' : 'Non-essential spending', rows, kind === 'essential' ? 'Groceries, gas, kids. Tap + to add a cap.' : 'Eating out, fun, gear. Tap + to add a cap.',
-        el('button', { class: 'pill', onclick: function () { budgetForm({ kind: kind }); } }, '+ Cap')));
-    });
-    var recent = S.spend.slice(0, 8).map(function (s) {
-      var b = budget(s.budget_id);
-      return row({ title: (b ? b.name : 'Spend') + (s.note ? ' · ' + s.note : ''), sub: fdate(s.spent_on) + (s.from_account_id && acct(s.from_account_id) ? ' · ' + acct(s.from_account_id).name : s.from_debt_id && debt(s.from_debt_id) ? ' · ' + debt(s.from_debt_id).name : ''), amt: fmt(s.amount_cents), amtClass: 'muted',
-        onclick: function () { confirmSheet('Delete this spend?', fmt(s.amount_cents) + ' on ' + fdate(s.spent_on) + '. Balances are restored.', 'Delete', function () { return rpc('fin_delete_spend', { p_spend: s.id }).then(function () { toast('Deleted'); }); }); } });
-    });
-    v.appendChild(listCard('Recent spending', recent, 'Nothing logged yet.', el('button', { class: 'pill amber', onclick: function () { spendForm(); } }, '+ Log')));
+    v.appendChild(el('div', { class: 'notice' }, el('b', null, 'Spending lives on the Spend tab'), 'Budgets, categories and month-over-month trends moved there.'));
   }
   function planMenu() {
     openSheet('Add', [el('div', { class: 'actions', style: 'flex-direction:column' },

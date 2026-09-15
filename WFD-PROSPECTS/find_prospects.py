@@ -15,7 +15,7 @@ Run:
     python3 find_prospects.py --dry              # print, write nothing
 
 Quota: 10,000 units/day free. Searches cost 100 each, everything else costs 1.
-A full run over all 18 niches is about 5,600 units, so you can run it twice a day.
+A full run over all 21 niches is about 6,000 units, so you can run it twice a day.
 """
 
 import json, os, re, sys, time, urllib.parse, urllib.request, urllib.error
@@ -29,24 +29,40 @@ HOUSEHOLD = "8b825046-dbb8-4d33-8b95-351a1eb05d2c"
 # Verticals where deep expertise and a devoted audience routinely sit on top of
 # a store nobody has touched since 2014. Add your own; the seeds are the whole game.
 NICHES = {
-    "aquarium":    ["aquarium setup", "planted tank", "reef tank", "aquascaping"],
-    "welding":     ["welding projects", "tig welding", "metal fabrication shop"],
+    # Tuned to the work WFD has actually shipped: CPG food and drink, apparel and
+    # workwear, outdoor and sporting goods, tabletop and home. Narrow craft terms
+    # beat category terms, because "bladesmith" finds makers and "knives" finds reviewers.
+
+    # --- Tabletop and home. The Pitcher & Pour lane. ---
+    "tabletop":    ["tablescape styling", "entertaining at home", "handmade ceramics studio"],
     "woodworking": ["woodworking shop", "furniture making", "hand tool woodworking"],
-    "knives":      ["knife making", "forging knives", "bladesmith"],
-    "leather":     ["leathercraft", "leather working", "handmade leather goods"],
-    "bbq":         ["bbq smoking", "offset smoker", "barbecue recipes"],
+    "leather":     ["leathercraft", "handmade leather goods", "leather workshop"],
+    "candles":     ["candle making business", "soy candle studio"],
+
+    # --- Food and drink CPG. Dope Rope, Mad Matcha, Bean & Leaf. ---
+    "bbq":         ["bbq smoking", "offset smoker", "competition barbecue"],
     "hotsauce":    ["hot sauce making", "fermented hot sauce", "pepper growing"],
     "coffee":      ["coffee roasting", "specialty coffee brewing"],
     "bees":        ["beekeeping", "honey harvest", "apiary"],
-    "homestead":   ["homesteading", "small farm", "permaculture garden"],
-    "bushcraft":   ["bushcraft camping", "survival skills", "axe restoration"],
+    "homestead":   ["homesteading", "small farm", "canning and preserving"],
+
+    # --- Apparel and workwear. Niam, Western Welder. ---
+    "welding":     ["welding projects", "tig welding", "metal fabrication shop"],
+    "machining":   ["machine shop", "lathe projects", "cnc shop"],
+    "knives":      ["knife making", "forging knives", "bladesmith"],
+
+    # --- Outdoor and sporting. Daddy Caddies, Tactical Tanks, Out of Bounds. ---
     "overland":    ["overlanding build", "truck camper build", "van build"],
-    "reptiles":    ["reptile keeping", "bioactive terrarium", "snake breeding"],
+    "bushcraft":   ["bushcraft camping", "survival skills", "axe restoration"],
     "archery":     ["traditional archery", "bow making", "bowhunting"],
     "fishing":     ["fly tying", "rod building", "lure making"],
+    "golf":        ["golf club fitting", "clubmaking", "golf course vlog"],
+    "pickleball":  ["pickleball gear", "pickleball paddle review"],
+
+    # --- Niche hobby with devoted audiences and terrible stores. Father Fish lane. ---
+    "aquarium":    ["aquarium setup", "planted tank", "aquascaping"],
+    "reptiles":    ["reptile keeping", "bioactive terrarium", "snake breeding"],
     "autorestore": ["car restoration", "engine rebuild", "classic truck build"],
-    "machining":   ["machine shop", "lathe projects", "cnc shop"],
-    "ceramics":    ["pottery throwing", "ceramic studio", "glaze testing"],
 }
 
 # The tell: a great channel pointing at a store that was never designed.
@@ -135,22 +151,51 @@ def find_store(description):
 
 
 def inspect_store(url):
-    """Platform and a rough product count. Never fails the run."""
+    """Platform and catalogue size. Never fails the run.
+
+    "unreachable" is deliberately NOT the same as "unknown". A store that times out
+    or sits behind a bot wall is a lead to eyeball by hand, not one to silently sink
+    to the bottom of the list, which is what happened when both returned "unknown".
+    """
     if not url:
         return "none", None
-    try:
-        html = get(url, timeout=12)
-    except Exception:
-        return "unknown", None
+    html = None
+    for timeout in (12, 25):                       # one slow retry before giving up
+        try:
+            html = get(url, timeout=timeout)
+            break
+        except Exception:
+            continue
+    if html is None:
+        return "unreachable", None
+
     low = html.lower()
     platform = "custom"
     for name, pats in PLATFORM_SIGNS:
         if any(re.search(p, low) for p in pats):
             platform = name
             break
-    # crude catalogue size: distinct /products/ or /product/ paths on the page
+
+    # Homepages increasingly render the catalogue in JS, so counting /products/ links
+    # in the HTML under-reports badly. Shopify publishes the real list, so ask it.
+    if platform == "shopify":
+        n = shopify_product_count(url)
+        if n is not None:
+            return platform, n
     products = len(set(re.findall(r"/products?/([a-z0-9\-]{3,60})", low)))
     return platform, (products or None)
+
+
+def shopify_product_count(url):
+    """Real catalogue size from Shopify's public products.json. None if unavailable."""
+    base = "%s://%s" % (urllib.parse.urlparse(url).scheme or "https",
+                        urllib.parse.urlparse(url).netloc)
+    try:
+        data = json.loads(get(base + "/products.json?limit=250", timeout=15))
+    except Exception:
+        return None
+    items = data.get("products")
+    return len(items) if isinstance(items, list) else None
 
 
 def score(p):
@@ -173,7 +218,9 @@ def score(p):
         else:            s -= 15; why.append("gone quiet")
 
     plat, count = p.get("platform"), p.get("product_count") or 0
-    if plat in ("none", "linktree", "amazon_only"):
+    if plat == "unreachable":
+        s += 15; why.append("store would not load, check by hand")
+    elif plat in ("none", "linktree", "amazon_only"):
         s += 30; why.append("no real store at all")
     elif plat in ("squarespace", "wix", "bigcartel", "etsy"):
         s += 22; why.append("store on a hobbyist platform")

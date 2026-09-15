@@ -21,10 +21,14 @@ That's it. Stdlib only, no pip install.
 ```bash
 python3 find_prospects.py --dry            # print, write nothing
 python3 find_prospects.py aquarium knives  # two niches
-python3 find_prospects.py                  # all 18
+python3 find_prospects.py                  # all 21
 ```
 
-A full run costs about 5,600 of the 10,000 free daily quota units.
+A full run costs about 6,400 of the 10,000 free daily quota units.
+
+Note: this will not run inside a Claude Code cloud session. That container's egress
+proxy refuses arbitrary hosts, so every store fetch comes back unreachable. Run it
+on your own machine.
 
 ## Scoring
 
@@ -39,6 +43,7 @@ Higher score means a real audience plus a gap you can close visibly in one image
 | No store, Linktree, or Amazon links only | +30 |
 | Squarespace, Wix, Big Cartel, Etsy | +22 |
 | Shopify with 8 products or fewer | +18 |
+| Store would not load, check by hand | +15 |
 | Over 60 lifetime views per subscriber | +10 |
 
 Anything above 70 is worth a brand board. Above 85 is worth a phone call.

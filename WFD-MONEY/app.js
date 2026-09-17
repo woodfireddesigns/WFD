@@ -47,7 +47,7 @@
   function initial(s) { return (s || '?').trim().charAt(0).toUpperCase(); }
 
   // ---------- state ----------
-  var S = { user: null, tab: 'today', accounts: [], bills: [], payments: [], income: [], debts: [], debtPayments: [], goals: [], budgets: [], spend: [],
+  var S = { user: null, tab: 'today', accounts: [], bills: [], payments: [], income: [], debts: [], debtPayments: [], goals: [], budgets: [], spend: [], pending: [],
     prefs: loadPrefs(), sub: { bills: 'upcoming', income: 'expected' } };
   function loadPrefs() { try { return JSON.parse(localStorage.getItem('wfd-money-prefs') || '{}'); } catch (e) { return {}; } }
   function savePrefs() { try { localStorage.setItem('wfd-money-prefs', JSON.stringify(S.prefs)); } catch (e) {} }
@@ -66,9 +66,10 @@
       q(sb.from('fin_debt_payments').select('*').gte('paid_on', back).order('paid_on', { ascending: false })),
       q(sb.from('fin_goals').select('*').eq('active', true).order('created_at')),
       q(sb.from('fin_budgets').select('*').eq('active', true).order('kind').order('sort_order').order('name')),
-      q(sb.from('fin_spend').select('*').gte('spent_on', ms).order('spent_on', { ascending: false }).order('created_at', { ascending: false }))
+      q(sb.from('fin_spend').select('*').gte('spent_on', ms).order('spent_on', { ascending: false }).order('created_at', { ascending: false })),
+      q(sb.from('fin_pending').select('*').is('cleared_on', null).order('expects_on', { nullsFirst: false }))
     ]).then(function (r) {
-      S.accounts = r[0]; S.bills = r[1]; S.payments = r[2]; S.income = r[3]; S.debts = r[4]; S.debtPayments = r[5]; S.goals = r[6]; S.budgets = r[7]; S.spend = r[8];
+      S.accounts = r[0]; S.bills = r[1]; S.payments = r[2]; S.income = r[3]; S.debts = r[4]; S.debtPayments = r[5]; S.goals = r[6]; S.budgets = r[7]; S.spend = r[8]; S.pending = r[9];
     });
   }
   function refresh() { return loadAll().then(render).catch(function (e) { toast(e.message || 'Load failed', true); }); }
@@ -77,6 +78,27 @@
   function bill(id) { return S.bills.find(function (b) { return b.id === id; }); }
   function budget(id) { return S.budgets.find(function (b) { return b.id === id; }); }
   function cashAccounts() { return S.accounts.filter(function (a) { return a.type !== 'credit'; }); }
+
+  // Balances are whatever the bank says right now. Anything still moving lives in
+  // fin_pending, so "available" is the balance plus what is landing minus what is
+  // about to leave. source_debited means the money is already out of the sending
+  // account, so only the receiving end is still outstanding.
+  function pendingNet(accountId) {
+    return S.pending.reduce(function (s, p) {
+      if (p.to_account_id === accountId) return s + p.amount_cents;
+      if (p.from_account_id === accountId && !p.source_debited) return s - p.amount_cents;
+      return s;
+    }, 0);
+  }
+  function pendingNetAll() {
+    return cashAccounts().reduce(function (s, a) { return s + pendingNet(a.id); }, 0);
+  }
+  // A bill being paid right now is already priced into available cash by its pending row.
+  // Leave it in the pay plan too and the same money comes off the balance twice.
+  function billsNotInFlight() {
+    var paying = S.pending.filter(function (p) { return p.bill_id; }).map(function (p) { return p.bill_id; });
+    return paying.length ? S.bills.filter(function (b) { return paying.indexOf(b.id) < 0; }) : S.bills;
+  }
   function cards() { return S.debts.filter(function (d) { return d.kind === 'credit_card'; }); }
 
   // ---------- auth ----------
@@ -179,12 +201,79 @@
       el('div', { class: 'amt ' + (o.amtClass || '') }, o.amt, o.amtSub ? el('div', { class: 'sub' }, o.amtSub) : null));
   }
 
+  // ---------- MONEY IN FLIGHT ----------
+  // one word, so the expected date survives on a phone instead of being ellipsed away
+  function shortAcct(a) { return a ? a.name.replace(/\s*\(.*\)/, '').replace(/\s*checking$/i, '') : 'account'; }
+  function pendingRow(p) {
+    var into = acct(p.to_account_id), from = acct(p.from_account_id), incoming = !!into;
+    var where = incoming ? 'into ' + shortAcct(into) : 'out of ' + shortAcct(from);
+    var when = !p.expects_on ? 'No date set'
+      : p.expects_on < L.today() ? 'Due ' + fdate(p.expects_on) + ', still not in'
+      : fdate(p.expects_on, true);
+    return row({
+      title: p.description, sub: when + ' · ' + where,
+      amt: (incoming ? '+' : '-') + fmt(p.amount_cents), amtClass: incoming ? 'pos' : 'neg',
+      side: (into || from) ? ((into || from).is_business ? 'biz' : 'per') : '',
+      ic: incoming ? '↓' : '↑',
+      onclick: function () { pendingDetail(p); }
+    });
+  }
+  function pendingDetail(p) {
+    formSheet(p.description, [
+      { k: 'cleared_on', label: 'Cleared on', type: 'date', v: L.today(), req: true, half: true },
+      { k: 'amount_cents', label: 'Amount that actually moved', type: 'money', v: p.amount_cents, req: true, half: true }
+    ], function (d) { return clearPending(p, d.cleared_on, d.amount_cents); },
+       function () { return q(sb.from('fin_pending').delete().eq('id', p.id)).then(function () { toast('Removed'); }); },
+       'Mark cleared');
+  }
+  // clearing is what moves the real balances, so a pending row is never counted twice
+  function clearPending(p, on, cents) {
+    var into = acct(p.to_account_id), from = acct(p.from_account_id);
+    var first = p.bill_id
+      // a bill payment goes through the same path as paying from the Bills tab, so it
+      // lands in payment history and rolls the due date forward
+      ? rpc('fin_pay_bill', { p_bill: p.bill_id, p_amount_cents: cents, p_paid_on: on,
+          p_account: p.source_debited ? null : p.from_account_id, p_debt: null,
+          p_note: p.description })
+      : Promise.resolve();
+    return first.then(function () {
+      var jobs = [q(sb.from('fin_pending').update({ cleared_on: on, amount_cents: cents }).eq('id', p.id))];
+      if (into) jobs.push(q(sb.from('fin_accounts').update({ balance_cents: into.balance_cents + cents }).eq('id', into.id)));
+      // fin_pay_bill already moved the money for a linked bill; only adjust here otherwise
+      if (!p.bill_id && from && !p.source_debited) jobs.push(q(sb.from('fin_accounts').update({ balance_cents: from.balance_cents - cents }).eq('id', from.id)));
+      return Promise.all(jobs);
+    }).then(function () { toast('Cleared. Balances updated.'); });
+  }
+  function pendingForm() {
+    var accts = [['', 'Not set']].concat(cashAccounts().map(function (a) { return [a.id, a.name]; }));
+    formSheet('Money in flight', [
+      { k: 'description', label: 'What is it', type: 'text', v: '', req: true, ph: 'Transfer to M&T, mortgage payment' },
+      { k: 'amount_cents', label: 'Amount', type: 'money', v: 0, req: true, half: true },
+      { k: 'expects_on', label: 'Expected by', type: 'date', v: L.addDays(L.today(), 1), req: true, half: true },
+      { k: 'kind', label: 'Type', type: 'select', v: 'transfer', opts: [['transfer', 'Transfer between accounts'], ['payment', 'Payment going out'], ['deposit', 'Deposit coming in']], half: true },
+      { k: 'from_account_id', label: 'Out of', type: 'select', v: '', opts: accts, half: true },
+      { k: 'to_account_id', label: 'Into', type: 'select', v: '', opts: accts, half: true },
+      { k: 'bill_id', label: 'Paying a bill (optional)', type: 'select', v: '', opts: [['', 'No']].concat(S.bills.map(function (b) { return [b.id, b.name]; })) },
+      { k: 'source_debited', label: 'Already gone from the sending account', type: 'check', v: true },
+      { k: 'note', label: 'Note', type: 'textarea', v: '' }
+    ], function (d) {
+      d.from_account_id = d.from_account_id || null;
+      d.to_account_id = d.to_account_id || null;
+      d.bill_id = d.bill_id || null;
+      d.initiated_on = L.today();
+      return q(sb.from('fin_pending').insert(d)).then(function () { toast('Tracking it'); });
+    });
+  }
+
   // ---------- TODAY ----------
   function renderToday(v) {
-    var t = L.today(), cash = L.liquidCash(S.accounts), reserve = reserveCents();
-    var plan = L.payPlan({ today: t, cash: cash, bills: S.bills, income: S.income, days: 30, reserve: reserve });
-    var fc = L.forecast({ today: t, cash: cash - reserve, bills: S.bills, income: S.income, days: 45, includeLikely: !!S.prefs.includeLikely });
-    var due14 = L.billOccurrences(S.bills, t, L.addDays(t, 14)).reduce(function (s, o) { return s + o.bill.amount_cents; }, 0);
+    // plan and forecast run on available cash, not bank balances: a transfer still in
+    // transit is spendable, a payment that has not cleared yet is not.
+    var t = L.today(), cash = L.liquidCash(S.accounts) + pendingNetAll(), reserve = reserveCents();
+    var open = billsNotInFlight();
+    var plan = L.payPlan({ today: t, cash: cash, bills: open, income: S.income, days: 30, reserve: reserve });
+    var fc = L.forecast({ today: t, cash: cash - reserve, bills: open, income: S.income, days: 45, includeLikely: !!S.prefs.includeLikely });
+    var due14 = L.billOccurrences(open, t, L.addDays(t, 14)).reduce(function (s, o) { return s + o.bill.amount_cents; }, 0);
     var confirmed30 = 0, likely30 = 0;
     S.income.forEach(function (i) { if (i.received_on || i.expected_date > L.addDays(t, 30)) return; if (i.confidence === 'confirmed') confirmed30 += i.amount_cents; else if (i.confidence === 'likely') likely30 += i.amount_cents; });
     var overdue = plan.plan.filter(function (p) { return p.status === 'overdue'; });
@@ -194,14 +283,38 @@
       v.appendChild(el('div', { class: 'btnrow' }, el('button', { class: 'btn primary', onclick: function () { accountForm(); } }, 'Add account'), el('button', { class: 'btn', onclick: function () { billForm(); } }, 'Add bill'), el('button', { class: 'btn', onclick: function () { incomeForm(); } }, 'Add income')));
     }
 
-    var perCash = cashAccounts().filter(function (a) { return !a.is_business; }).reduce(function (s, a) { return s + a.balance_cents; }, 0);
-    var bizCash = cashAccounts().filter(function (a) { return a.is_business; }).reduce(function (s, a) { return s + a.balance_cents; }, 0);
+    function sideCash(biz) {
+      var ids = cashAccounts().filter(function (a) { return !!a.is_business === biz; }).map(function (a) { return a.id; });
+      var o = { bank: 0, in: 0, out: 0 };
+      cashAccounts().forEach(function (a) { if (ids.indexOf(a.id) >= 0) o.bank += a.balance_cents; });
+      S.pending.forEach(function (p) {
+        if (ids.indexOf(p.to_account_id) >= 0) o.in += p.amount_cents;
+        if (ids.indexOf(p.from_account_id) >= 0 && !p.source_debited) o.out += p.amount_cents;
+      });
+      return o;
+    }
+    // headline is what he can actually spend; the gross movements go underneath, not the
+    // net, because "+$58 in flight" hides a $2,508 arrival and a $2,450 departure
+    function cashSub(c, fallback) {
+      var parts = [];
+      if (c.in) parts.push('+' + fmt(c.in, { whole: true }) + ' landing');
+      if (c.out) parts.push('-' + fmt(c.out, { whole: true }) + ' leaving');
+      return parts.length ? fmt(c.bank, { whole: true }) + ' at the bank · ' + parts.join(' · ') : fallback;
+    }
+    var per = sideCash(false), biz = sideCash(true);
+    var perCash = per.bank + per.in - per.out, bizCash = biz.bank + biz.in - biz.out;
     v.appendChild(el('div', { class: 'hero five' },
-      stat('Personal cash', fmt(perCash, { whole: true }), reserve ? fmt(reserve, { whole: true }) + ' buffer held back' : 'joint checking', perCash < 0 ? 'neg' : '', 'per'),
-      stat('Business cash', fmt(bizCash, { whole: true }), 'business checking', bizCash < 0 ? 'neg' : '', 'biz'),
+      stat('Personal cash', fmt(perCash, { whole: true }), cashSub(per, reserve ? fmt(reserve, { whole: true }) + ' buffer held back' : 'joint checking'), perCash < 0 ? 'neg' : '', 'per'),
+      stat('Business cash', fmt(bizCash, { whole: true }), cashSub(biz, 'business checking'), bizCash < 0 ? 'neg' : '', 'biz'),
       stat('Due next 14 days', fmt(due14, { whole: true }), overdue.length ? overdue.length + ' overdue' : 'nothing overdue', overdue.length ? 'neg' : ''),
       stat('Income, next 30 days', fmt(confirmed30, { whole: true }), likely30 ? '+ ' + fmt(likely30, { whole: true }) + ' likely' : 'confirmed only', 'pos'),
       stat('Lowest point', fmt(fc.minBalance, { whole: true }), fc.minBalance < 0 ? 'goes negative ' + fdate(fc.firstNegative) : 'on ' + fdate(fc.minDate), fc.minBalance < 0 ? 'neg' : fc.minBalance < 50000 ? 'warn' : 'pos')));
+
+    // money in motion
+    if (S.pending.length) {
+      v.appendChild(listCard('In flight', S.pending.map(pendingRow), '',
+        el('button', { class: 'pill', onclick: function () { pendingForm(); } }, '+ Add')));
+    }
 
     // pay plan
     var items = plan.plan.map(function (p) {
@@ -655,7 +768,9 @@
     v.appendChild(el('div', { class: 'hero' }, stat('Cash on hand', fmt(cash, { whole: true }), 'all cash accounts', cash < 0 ? 'neg' : ''), stat('Buffer', fmt(reserveCents(), { whole: true }), 'held back from the plan')));
     var TYPE = { checking: 'Checking', savings: 'Savings', cash: 'Cash', other: 'Other', credit: 'Card' };
     var rows = S.accounts.map(function (a) {
-      return row({ title: a.name, sub: TYPE[a.type] + (a.is_business ? ' · business' : ' · personal') + ' · updated ' + fdate(a.updated_at.slice(0, 10)), amt: fmt(a.balance_cents), amtClass: a.balance_cents < 0 ? 'neg' : '', onclick: function () { accountForm(a); } });
+      var flight = pendingNet(a.id);
+      return row({ title: a.name, sub: TYPE[a.type] + (a.is_business ? ' · business' : ' · personal') + ' · updated ' + fdate(a.updated_at.slice(0, 10)), amt: fmt(a.balance_cents), amtClass: a.balance_cents < 0 ? 'neg' : '',
+        amtSub: flight ? (flight > 0 ? '+' : '') + fmt(flight, { whole: true }) + ' in flight' : null, onclick: function () { accountForm(a); } });
     });
     v.appendChild(listCard('Accounts', rows, 'Add checking, savings, business checking. Credit cards go under Debts.'));
     v.appendChild(card('Settings', [

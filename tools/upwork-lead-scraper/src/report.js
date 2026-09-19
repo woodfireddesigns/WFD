@@ -1,5 +1,5 @@
 /**
- * Outputs: CSV for the pipeline, Markdown digest for your morning scan.
+ * Outputs: CSV for the pipeline, Markdown digest grouped by retainer potential.
  */
 
 import fs from 'node:fs';
@@ -7,9 +7,10 @@ import path from 'node:path';
 import { DATA_DIR } from './store.js';
 
 const CSV_COLUMNS = [
-  'score', 'tier', 'title', 'url', 'contractType', 'fixedBudget', 'hourlyMin', 'hourlyMax',
-  'proposals', 'paymentVerified', 'clientSpend', 'clientRating', 'clientCountry',
-  'postedRelative', 'experienceLevel', 'estimatedDuration', 'skills', 'sourceId', 'firstSeenAt',
+  'retainerLevel', 'retainerScore', 'score', 'tier', 'title', 'url',
+  'contractType', 'fixedBudget', 'hourlyMin', 'hourlyMax', 'estimatedDuration', 'durationMonths', 'workload',
+  'proposals', 'paymentVerified', 'clientSpend', 'clientHires', 'clientHireRate', 'clientRating', 'clientCountry',
+  'postedRelative', 'experienceLevel', 'connectsRequired', 'skills', 'sourceId', 'firstSeenAt',
 ];
 
 function csvCell(value) {
@@ -34,39 +35,65 @@ function money(job) {
   return 'budget not listed';
 }
 
+/** The line that tells you whether this is a client or a transaction. */
+function clientLine(job) {
+  const bits = [];
+  if (job.clientSpend != null) bits.push(`$${job.clientSpend.toLocaleString()} spent`);
+  if (job.clientHires != null) bits.push(`${job.clientHires} hires`);
+  if (job.clientHireRate) bits.push(`${job.clientHireRate} hire rate`);
+  if (job.clientRating != null) bits.push(`${job.clientRating}★`);
+  if (job.clientCountry) bits.push(job.clientCountry);
+  return bits.join(' · ') || 'client history not shown';
+}
+
+function jobBlock(job) {
+  const lines = [];
+  lines.push(`### ${job.retainerLevel} retainer · fit ${job.score} · ${job.title}`);
+  const terms = [money(job)];
+  if (job.estimatedDuration) terms.push(job.estimatedDuration);
+  if (job.workload) terms.push(job.workload);
+  terms.push(`${job.proposals ?? '?'} proposals`);
+  if (job.postedRelative) terms.push(job.postedRelative);
+  if (job.connectsRequired) terms.push(`${job.connectsRequired} connects`);
+  lines.push(terms.join(' · '));
+  lines.push(`Client: ${clientLine(job)}`);
+  lines.push(``);
+
+  const desc = (job.description || '').replace(/\s+/g, ' ').slice(0, 360);
+  if (desc) lines.push(`${desc}${desc.length >= 360 ? '…' : ''}`, ``);
+
+  if (job.retainerReasons?.length) lines.push(`Retainer signals: ${job.retainerReasons.slice(0, 6).join(', ')}`);
+  lines.push(`Fit: ${job.reasons.slice(0, 6).join(', ')}`);
+  lines.push(``, `[Open job](${job.url})`, ``, `---`, ``);
+  return lines;
+}
+
 export function toMarkdown(jobs, meta = {}) {
-  const priority = jobs.filter((j) => j.tier === 'PRIORITY');
-  const qualified = jobs.filter((j) => j.tier === 'QUALIFIED');
+  const high = jobs.filter((j) => j.retainerLevel === 'HIGH');
+  const medium = jobs.filter((j) => j.retainerLevel === 'MEDIUM');
+  const low = jobs.filter((j) => j.retainerLevel === 'LOW');
   const stamp = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
 
   const lines = [
     `# Upwork lead digest`,
     ``,
-    `${stamp} ET · ${jobs.length} new qualified · ${priority.length} priority`,
-    meta.blockedPages ? `\n> ${meta.blockedPages} search page(s) came back blocked or empty. See README troubleshooting.` : '',
-    ``,
+    `${stamp} ET · ${jobs.length} qualified · ${high.length} high retainer potential`,
   ];
+  if (meta.disqualified) lines.push(`${meta.disqualified} dropped at the budget gate.`);
+  if (meta.blockedPages) lines.push(``, `> ${meta.blockedPages} search page(s) came back blocked or empty. See README troubleshooting.`);
+  lines.push(``);
 
-  const section = (label, list) => {
+  const section = (label, note, list) => {
     if (!list.length) return;
-    lines.push(`## ${label}`, ``);
-    for (const job of list) {
-      lines.push(`### ${job.score} · ${job.title}`);
-      lines.push(`${money(job)} · ${job.proposals ?? '?'} proposals · ${job.clientCountry || 'location n/a'} · ${job.postedRelative || 'posted n/a'}`);
-      lines.push(``);
-      const desc = (job.description || '').replace(/\s+/g, ' ').slice(0, 320);
-      if (desc) lines.push(`${desc}${desc.length >= 320 ? '…' : ''}`, ``);
-      lines.push(`Why it scored: ${job.reasons.slice(0, 6).join(', ')}`);
-      lines.push(``);
-      lines.push(`[Open job](${job.url})`);
-      lines.push(``, `---`, ``);
-    }
+    lines.push(`## ${label}`, ``, `_${note}_`, ``);
+    for (const job of list) lines.push(...jobBlock(job));
   };
 
-  section('Priority — bid today', priority);
-  section('Qualified', qualified);
+  section('High retainer potential', 'Ongoing shape, repeat hirer, or long duration. Pitch the relationship, not the project.', high);
+  section('Medium retainer potential', 'Could extend. Pitch the project, plant the seed for phase two.', medium);
+  section('One-off, but worth the budget', 'Treat as project revenue. Bid only if the number justifies the connects.', low);
 
-  if (!jobs.length) lines.push(`No new jobs cleared the score floor this run.`, ``);
+  if (!jobs.length) lines.push(`Nothing cleared the gates and score floor this run.`, ``);
   return lines.join('\n');
 }
 
@@ -76,7 +103,6 @@ export function writeOutputs(jobs, meta) {
   const csvPath = path.join(DATA_DIR, `leads-${day}.csv`);
   const mdPath = path.join(DATA_DIR, `digest-${day}.md`);
 
-  // Append to the day's CSV rather than clobbering it on the second run.
   const csv = toCsv(jobs);
   if (fs.existsSync(csvPath)) {
     fs.appendFileSync(csvPath, '\n' + csv.split('\n').slice(1).join('\n'));

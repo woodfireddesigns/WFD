@@ -35,7 +35,9 @@ const JOB_FIELDS = {
   hourlyMin: { type: 'number', description: 'Low end of hourly range in USD, null if fixed price' },
   hourlyMax: { type: 'number', description: 'High end of hourly range in USD, null if fixed price' },
   experienceLevel: { type: 'string', description: 'Entry level, Intermediate, or Expert' },
-  estimatedDuration: { type: 'string' },
+  estimatedDuration: { type: 'string', description: 'Expected contract length exactly as shown, e.g. "More than 6 months", "1 to 3 months"' },
+  workload: { type: 'string', description: 'Expected weekly commitment as shown, e.g. "Less than 30 hrs/week"' },
+  clientHires: { type: 'number', description: 'Number of people this client has hired on Upwork before' },
   proposals: { type: 'number', description: 'Number of proposals submitted. If shown as a range like "5 to 10", use the low number' },
   paymentVerified: { type: 'boolean' },
   clientCountry: { type: 'string' },
@@ -59,7 +61,6 @@ export const JOB_SCHEMA = {
   type: 'object',
   properties: {
     ...JOB_FIELDS,
-    clientHires: { type: 'number' },
     clientHireRate: { type: 'string' },
     clientMemberSince: { type: 'string' },
     connectsRequired: { type: 'number' },
@@ -70,12 +71,16 @@ export const JOB_SCHEMA = {
 const SEARCH_PROMPT = `Extract every job posting card on this Upwork search results page.
 For each card capture the title, the absolute job URL, the full visible description snippet,
 the posted time exactly as displayed, contract type, budget or hourly range, experience level,
-number of proposals, whether the client's payment method is verified, the client's country,
-total client spend, client rating, and the listed skill tags.
+expected contract duration, expected weekly hours, number of proposals, whether the client's
+payment method is verified, the client's country, total client spend, client rating, how many
+people the client has hired before, and the listed skill tags.
 Return an empty jobs array if the page shows a login wall, a captcha, or no results.`;
 
-const JOB_PROMPT = `Extract the full details of this single Upwork job posting, including the complete
-job description text, budget, client history, screening questions, and required connects.`;
+const JOB_PROMPT = `Extract the full details of this single Upwork job posting. Capture the COMPLETE
+job description text verbatim, the budget, expected contract duration and weekly hours, the client's
+full hiring history (total spend, number of hires, hire rate, member since), every screening question,
+and the required connects. The full description matters most - long-term and ongoing intent is usually
+buried in the last paragraph.`;
 
 /** Pull one page of Upwork search results. */
 export async function scrapeSearchPage(searchCfg, page = 1) {
@@ -171,12 +176,14 @@ export function normalizeJob(raw = {}, sourceId = null) {
     hourlyMax,
     experienceLevel: str(raw.experienceLevel),
     estimatedDuration: str(raw.estimatedDuration),
+    workload: str(raw.workload),
     proposals: num(raw.proposals),
     paymentVerified: typeof raw.paymentVerified === 'boolean' ? raw.paymentVerified : null,
     clientCountry: str(raw.clientCountry),
     clientSpend: num(raw.clientSpend),
     clientRating: num(raw.clientRating),
     clientHires: num(raw.clientHires),
+    clientHireRate: str(raw.clientHireRate),
     connectsRequired: num(raw.connectsRequired),
     questions: Array.isArray(raw.questions) ? raw.questions.map(str).filter(Boolean) : [],
     skills: Array.isArray(raw.skills) ? raw.skills.map(str).filter(Boolean) : [],

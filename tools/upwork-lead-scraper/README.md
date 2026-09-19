@@ -1,7 +1,11 @@
 # Upwork Lead Scraper (Firecrawl)
 
-Pulls Upwork job posts through Firecrawl, scores them against the Wood Fired Designs ICP,
-dedupes against everything already seen, and spits out a CSV plus a morning digest.
+Pulls Upwork job posts through Firecrawl, gates out anything without a serious budget, scores
+what's left on two axes (fit and retainer potential), dedupes against everything already seen,
+and spits out a CSV plus a morning digest grouped by how likely the job turns into monthly work.
+
+Target: **ecommerce management and brand identity work with real budgets that can grow into a
+retainer.** Posts almost never say "retainer" out loud, so it's inferred from proxy signals.
 
 Zero dependencies. Node 20+. Nothing to build.
 
@@ -60,7 +64,42 @@ which is how you get these into Notion or a Slack channel without touching this 
 
 Everything you'll actually want to change lives in `config.js`.
 
-**`searches`** — the queries and filters. Each entry becomes an Upwork search URL:
+### 1. `gates` — the serious-budget filter
+
+Hard disqualifiers, applied **before** scoring. Fail any one and the job is dropped, no matter
+how well it reads. This is what keeps the digest short.
+
+```js
+requirePaymentVerified: true,
+minFixedBudget: 2000,
+minHourlyRate: 45,
+allowUnknownBudget: true,   // search cards often omit budget; enrichment recovers it
+minClientSpend: 0,          // set to 5000 once volume is healthy
+maxProposals: 0,            // 0 = off
+```
+
+Raise `minFixedBudget` to 3500 and `minHourlyRate` to 60 after a week if too much junk gets through.
+Set `allowUnknownBudget: false` to be ruthless, at the cost of missing real jobs whose cards hide
+the number.
+
+### 2. `searches` — what gets pulled
+
+Ten searches, weighted toward recurring-by-nature work:
+
+| Search | Why it's here |
+|---|---|
+| `shopify-store-management` | Ongoing by definition |
+| `ecommerce-manager` | Ongoing by definition |
+| `klaviyo-email-design` | Email is a monthly need, never one-and-done |
+| `shopify-cro-product-pages` | Repeats every product launch |
+| `brand-identity` | Core offer, highest project value |
+| `brand-strategist` | Highest-ticket positioning work |
+| `dtc-brand-designer` | Where brand and ecommerce overlap |
+| `rebrand` | Big budgets, often opens the door to ongoing |
+| `ongoing-design-partner` | Explicitly retainer-shaped |
+| `creative-director-part-time` | Expert tier only, usually a monthly arrangement |
+
+Each entry becomes an Upwork search URL:
 
 ```js
 {
@@ -69,7 +108,7 @@ Everything you'll actually want to change lives in `config.js`.
   pages: 2,
   filters: {
     paymentVerified: true,
-    fixedMin: 1000,        // -> &amount=1000-
+    fixedMin: 2000,        // -> &amount=2000-
     hourlyMin: 50,         // -> &hourly_rate=50-
     tiers: ['intermediate', 'expert'],
     contractType: 'fixed', // optional: 'fixed' | 'hourly', default both
@@ -78,31 +117,62 @@ Everything you'll actually want to change lives in `config.js`.
 }
 ```
 
-Each page costs one Firecrawl scrape call. The default config is 11 calls a run.
+### 3. `scoring` — fit
 
-**`scoring`** — the point weights.
+How well the work matches what you sell. Budget bands carry the most weight, then category
+keywords (store management, brand identity, brand strategy, Klaviyo, CRO), then client-quality
+signals (spend, proposals, rating, country, freshness).
 
-- `fixedBands` / `hourlyBands`: budget is the heaviest single signal.
-- `positive`: phrases that mean it's your work. Brand identity, Framer, rebrand, retainer language.
-- `negative`: phrases that mean walk away. Contests, Canva, SEO, "beginner welcome".
-- `signals`: payment verified, client spend, proposal count, rating, country, freshness.
-- `minScore` (55) is the floor for the digest. `priorityScore` (95) flags "bid today".
+Negatives do real work here: contests (-50), equity-only (-50), "just a logo" (-30), Canva (-22),
+dropshipping (-20), WordPress (-16).
 
-Calibration: a plain $2k website job lands around 55-65. A $6k brand-identity-plus-Framer job
-with a verified, high-spend US client lands 120+. Adjust the floor after a week of real runs —
-if the digest is too long, raise `minScore` before you touch anything else.
+`minScore` (60) is the floor for the digest. `priorityScore` (100) is the fit ceiling flag.
 
-**`run`** — `enrichAboveScore` (65) pulls the full job page for high scorers so you get the
-complete description, screening questions, and connects cost before you spend connects.
-Each enrichment is one extra scrape call, capped at `maxEnrichPerRun` (12).
+### 4. `retainer` — the part that matters
+
+Scored **separately** from fit, because a $14k one-and-done rebrand and a $3k store-management
+gig that runs all year are both good for different reasons, and you want to know which is which
+before you spend connects.
+
+Five proxy groups, none of which require the word "retainer":
+
+- **Ongoing language** — "long term", "grow with us", "more projects", "phase 1", "day to day",
+  "hours per week", "manage our".
+- **Recurring categories** — store management, Klaviyo/email, lifecycle, campaigns, product
+  launches, seasonal work, ad creative. Structurally repeat business.
+- **Contract duration** — "More than 6 months" is worth +30. "Less than 1 month" is worth -8.
+- **Client hire count** — someone with 22 past hires hires again. 25+ hires is +24.
+- **Hourly vs fixed** — hourly contracts renew, fixed-price contracts end. +14 for hourly.
+
+Output is a `HIGH` / `MEDIUM` / `LOW` label (thresholds `highAt: 55`, `mediumAt: 28`).
+
+**The digest sorts by retainer level first, fit second.** A HIGH-retainer job at fit 80 outranks
+a LOW-retainer job at fit 110, on purpose.
+
+Worked example — this post never says "retainer" and scores HIGH (144):
+
+> "We need someone to manage our Shopify store day to day. Product launches, collection pages,
+> Klaviyo campaigns each month. We are scaling fast and want someone who can grow with us."
+> $55-80/hr · More than 6 months · client has 22 past hires, $180k spent
+
+### 5. `run` — enrichment
+
+`enrichAboveScore` (60) and `maxEnrichPerRun` (20) control detail-page pulls. Enrichment is
+deliberately aggressive now: duration, weekly hours, client hire count, and the tail of the
+description are where nearly all retainer signal lives, and none of it reliably appears on the
+search card. Jobs missing those fields get enriched first.
 
 ---
 
 ## Cost per run
 
-Default config, worst case: 11 search scrapes + up to 12 enrichments = 23 Firecrawl calls.
+Default config, worst case: 15 search scrapes + up to 20 enrichments = 35 Firecrawl calls.
 Stealth proxy costs more credits per call than basic. Run every 4 hours and you're at roughly
-140 calls a day. Drop `pages` to 1 and set `--no-enrich` if you want that cut roughly in half.
+210 calls a day.
+
+To cut it: drop `pages` to 1 across the board (15 -> 10 search calls), or lower `maxEnrichPerRun`.
+Do **not** reach for `--no-enrich` as your first lever — that's the setting that buys you the
+retainer signal. Cut search breadth before you cut enrichment depth.
 
 ---
 
@@ -137,16 +207,23 @@ field descriptions in `JOB_FIELDS` in `src/upwork.js`.
 **Same job appears twice.** Both would need to have different `~0...` ids in their URLs. Check
 `data/jobs.json`; delete it to reset the dedupe memory entirely.
 
+**Everything comes back LOW retainer.** Enrichment isn't running or isn't finding duration and
+hire counts. Confirm you're not passing `--no-enrich`, then check that `enrichAboveScore` isn't
+set above what your jobs actually score.
+
+**Digest is empty but the run found jobs.** The gates are eating them. The run log prints how many
+were dropped and an example reason. Lower `gates.minFixedBudget` or set `allowUnknownBudget: true`.
+
 ---
 
 ## Files
 
 ```
-config.js            searches + scoring weights   <- you edit this
+config.js            gates + searches + fit scoring + retainer signals   <- you edit this
 src/index.js         CLI
 src/firecrawl.js     Firecrawl v2 client, retries, backoff
 src/upwork.js        URL builder, extraction schemas, normalization
-src/score.js         ICP scoring
+src/score.js         gates, fit scoring, retainer scoring, ranking
 src/store.js         JSON dedupe store
-src/report.js        CSV, markdown digest, webhook push
+src/report.js        CSV, retainer-grouped digest, webhook push
 ```

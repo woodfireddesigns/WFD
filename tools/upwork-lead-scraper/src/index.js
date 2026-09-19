@@ -20,7 +20,7 @@ loadDotEnv(path.join(ROOT, '.env'));
 const { searches, scoring, run: runCfg } = await import('../config.js');
 const { scrapeSearchPage, scrapeJobDetail, discoverViaWebSearch, buildSearchUrl } = await import('./upwork.js');
 const { scrapeJson, hasKey } = await import('./firecrawl.js');
-const { scoreJob } = await import('./score.js');
+const { scoreJob, rank } = await import('./score.js');
 const store = await import('./store.js');
 const { writeOutputs, pushWebhook, toMarkdown } = await import('./report.js');
 
@@ -104,35 +104,51 @@ async function doRun() {
   const { fresh } = store.split(state, [...byId.values()]);
   log(`\n${byId.size} unique jobs scraped, ${fresh.length} never seen before.`);
 
-  let scored = fresh.map((job) => ({ ...job, ...scoreJob(job) }));
-  let qualified = scored.filter((j) => j.score >= minScore).sort((a, b) => b.score - a.score);
+  const scored = fresh.map((job) => ({ ...job, ...scoreJob(job) }));
+  const gated = scored.filter((j) => j.disqualified);
+  if (gated.length) {
+    log(`${gated.length} dropped at the gates (e.g. ${gated[0].disqualifiedReason}).`);
+  }
 
-  // Enrich the best ones with full job-page detail, then rescore on better data.
+  let qualified = scored.filter((j) => !j.disqualified && j.score >= minScore).sort(rank);
+
+  // Enrich with full job-page detail, then rescore. This is where retainer signal
+  // actually lives: duration, weekly hours, client hire count, and the tail end of
+  // the description where "looking for someone long term" usually hides. Jobs still
+  // missing those fields go first.
   if (!flags['no-enrich']) {
-    const toEnrich = qualified.filter((j) => j.score >= runCfg.enrichAboveScore).slice(0, runCfg.maxEnrichPerRun);
+    const needsDetail = (j) => j.estimatedDuration === '' || j.clientHires == null;
+    const toEnrich = qualified
+      .filter((j) => j.score >= runCfg.enrichAboveScore)
+      .sort((a, b) => Number(needsDetail(b)) - Number(needsDetail(a)) || rank(a, b))
+      .slice(0, runCfg.maxEnrichPerRun);
+
     for (const job of toEnrich) {
       try {
         const detail = await scrapeJobDetail(job.url);
         if (detail) {
           Object.assign(job, { ...detail, id: job.id, sourceId: job.sourceId, firstSeenAt: job.firstSeenAt });
           Object.assign(job, scoreJob(job));
-          log(`  enriched: ${job.title.slice(0, 60)} -> ${job.score}`);
+          log(`  enriched: ${job.title.slice(0, 55)} -> fit ${job.score}, retainer ${job.retainerLevel}`);
         }
       } catch (err) {
         console.error(`  enrich failed (${job.url}): ${err.message}`);
       }
       await sleep(runCfg.delayMs);
     }
-    qualified = qualified.sort((a, b) => b.score - a.score);
+    // Enrichment can disqualify a job that looked fine on the card.
+    qualified = qualified.filter((j) => !j.disqualified && j.score >= minScore).sort(rank);
   }
 
   store.commit(state, scored);
   store.save(state);
 
-  const { csvPath, mdPath } = writeOutputs(qualified, { blockedPages });
+  const { csvPath, mdPath } = writeOutputs(qualified, { blockedPages, disqualified: gated.length });
   const hook = await pushWebhook(qualified);
 
-  log(`\n${qualified.length} qualified (score >= ${minScore}), ${qualified.filter((j) => j.tier === 'PRIORITY').length} priority.`);
+  const high = qualified.filter((j) => j.retainerLevel === 'HIGH').length;
+  const medium = qualified.filter((j) => j.retainerLevel === 'MEDIUM').length;
+  log(`\n${qualified.length} qualified (fit >= ${minScore}) · ${high} high retainer potential · ${medium} medium.`);
   log(`CSV:    ${csvPath}`);
   log(`Digest: ${mdPath}`);
   if (hook.sent) log(`Webhook: ${hook.sent} pushed`);
@@ -145,8 +161,8 @@ async function report() {
   const state = store.load();
   const jobs = Object.values(state.jobs)
     .map((j) => ({ ...j, ...scoreJob(j) }))
-    .filter((j) => j.score >= Number(flags['min-score'] ?? scoring.minScore))
-    .sort((a, b) => b.score - a.score)
+    .filter((j) => !j.disqualified && j.score >= Number(flags['min-score'] ?? scoring.minScore))
+    .sort(rank)
     .slice(0, Number(flags.limit || 50));
   log(toMarkdown(jobs));
 }

@@ -170,22 +170,38 @@ def build_loft():
 ANCHORS, HDOOR_MID, HDOOR_DIR, HDOOR_NRM, east_edge = build_loft()
 
 # ======================================================================
-# 2. LADDER  (at the Cp-Bp face, west side)
+# 2. LADDER  -  REMOVABLE.  This is the 18-month barrier, not the gate.
 # ======================================================================
 def build_ladder():
     a, b = FACE_LADDER
     (x0, y0), (x1, y1), L, d = edge(a, b)
-    n_in = inward(a, b)
-    out = (-n_in[0], -n_in[1])
+    n_in = inward(a, b); out = (-n_in[0], -n_in[1])
     cx, cy = (x0+x1)/2, (y0+y1)/2
     top = (cx, cy, DECK_TOP)
     bot = (cx + out[0]*LADDER_RUN, cy + out[1]*LADDER_RUN, 0.0)
-    for s in (-1, 1):
-        ox, oy = d[0]*s*(LADDER_W/2 - T_2X/2), d[1]*s*(LADDER_W/2 - T_2X/2)
-        M("Ladder", f"Stringer {'L' if s<0 else 'R'}",
+    # hanger rail on the deck rim - the ladder hooks over this and lifts off
+    M("Ladder", "Hanger rail 2x6",
+      (x0+d[0]*3+n_in[0]*T_2X*1.6, y0+d[1]*3+n_in[1]*T_2X*1.6, DECK_TOP-2.75),
+      (x1-d[0]*3+n_in[0]*T_2X*1.6, y1-d[1]*3+n_in[1]*T_2X*1.6, DECK_TOP-2.75),
+      T_2X, W_2X6, mat="honey", stock="2x6",
+      note="lag to rim + both posts; ladder hooks over this, 3/8 pin locks it")
+    for s_ in (-1, 1):
+        ox, oy = d[0]*s_*(LADDER_W/2 - T_2X/2), d[1]*s_*(LADDER_W/2 - T_2X/2)
+        M("Ladder", f"Stringer {'L' if s_<0 else 'R'}",
           (bot[0]+ox, bot[1]+oy, bot[2]), (top[0]+ox, top[1]+oy, top[2]),
-          T_2X, W_2X4, up=(0,0,1), mat="walnut", stock="2x4",
-          ends=(65.0, 65.0), note=f"{LADDER_LEN:.2f}\" o/a, 65 deg, both ends cut 25 deg")
+          T_2X, W_2X4, up=(0,0,1), mat="walnut", stock="2x4", ends=(65.0, 65.0),
+          note=f"{LADDER_LEN:.2f}\" o/a; notch top to hook the hanger rail, 25 deg cut both ends")
+        # rigid grab rail - replaces the rope handrails (no slack rope near a toddler)
+        gx, gy = d[0]*s_*(LADDER_W/2 + 3.0), d[1]*s_*(LADDER_W/2 + 3.0)
+        M("Ladder", f"Grab rail {'L' if s_<0 else 'R'} 2x2",
+          (bot[0]+gx, bot[1]+gy, bot[2]+16), (top[0]+gx, top[1]+gy, top[2]+8),
+          BAL_S, BAL_S, up=(0,0,1), mat="walnut", stock="2x2",
+          note="1/2\" roundover, sand 180. RIGID - sagging rope is a strangulation risk under 3")
+        for k in (0.35, 0.8):
+            sx = bot[0]+(top[0]-bot[0])*k; sy = bot[1]+(top[1]-bot[1])*k
+            M("Ladder", f"Grab standoff {'L' if s_<0 else 'R'}{int(k*100)}",
+              (sx+ox, sy+oy, k*LADDER_RISE+2), (sx+gx, sy+gy, k*LADDER_RISE+2),
+              BAL_S, BAL_S, mat="walnut", stock="2x2", note="grab-rail standoff block")
     for k in range(1, LADDER_RUNGS+1):
         t = (k*LADDER_RISER)/LADDER_RISE
         rz = k*LADDER_RISER
@@ -194,39 +210,79 @@ def build_ladder():
           (rx-d[0]*(LADDER_W/2-T_2X), ry-d[1]*(LADDER_W/2-T_2X), rz),
           (rx+d[0]*(LADDER_W/2-T_2X), ry+d[1]*(LADDER_W/2-T_2X), rz),
           W_2X4, T_2X, mat="honey", stock="2x4",
-          note=f"riser {LADDER_RISER:.2f}\", dado 3/4\" into stringers + 2 screws/end")
+          note=f"riser {LADDER_RISER:.2f}\"; dado 3/4\" into stringers + 2 screws/end")
     return bot, top, d, out
 LADDER_BOT, LADDER_TOP, LADDER_DIR, LADDER_OUT = build_ladder()
 
 # ======================================================================
-# 3. BOOKSHELF GUARD  (C-D face)
+# 3. GUARDS  -  vertical balusters, CPSC 3.5" torso rule
+#    (replaces the rope net AND the bookshelf: shelves in a guard are a ladder)
 # ======================================================================
-def build_shelf():
-    a, b = FACE_SHELF
+GUARD_INFO = {}
+def build_guards():
+    for a, b in [("B","C"), ("C","D"), ("D","Cp"), ("Cp","Bp")]:
+        (x0, y0), (x1, y1), L, d = edge(a, b)
+        n_in = inward(a, b)
+        ins = POST/2 + 0.5
+        ax, ay = x0 + d[0]*ins, y0 + d[1]*ins
+        clear = L - 2*ins
+        kind = ("GATE" if (a, b) == GATE_FACE else
+                "REMOVABLE PANEL" if (a, b) == PANEL_FACE else "FIXED")
+        nb = 3
+        while True:
+            gap = (clear - nb*BAL_S) / (nb + 1)
+            if gap <= BAL_MAX_GAP or nb > 20: break
+            nb += 1
+        GUARD_INFO[(a, b)] = dict(kind=kind, clear=clear, n=nb, gap=gap)
+        note = {"FIXED": "fixed guard",
+                "GATE": "SELF-CLOSING GATE leaf - hinged at Cp, swings IN over the deck",
+                "REMOVABLE PANEL": "REMOVABLE - 8 screws. Take it off to add the bridge later."}[kind]
+        ox, oy = n_in[0]*(BAL_S/2), n_in[1]*(BAL_S/2)
+        M("Loft / Guards", f"{a}-{b} top rail",
+          (ax+ox, ay+oy, POST_TOP-RAIL_T/2), (ax+d[0]*clear+ox, ay+d[1]*clear+oy, POST_TOP-RAIL_T/2),
+          W_2X4, RAIL_T, mat="walnut", stock="2x4",
+          note=f"{note}; top of rail = {POST_TOP:.0f}\" = {GUARD_H:.0f}\" above deck")
+        M("Loft / Guards", f"{a}-{b} toe board",
+          (ax+ox, ay+oy, DECK_TOP+TOE_H/2), (ax+d[0]*clear+ox, ay+d[1]*clear+oy, DECK_TOP+TOE_H/2),
+          T_2X, TOE_H, mat="walnut", stock="2x4",
+          note="on edge at deck level; closes the bottom gap, stops kicked toys")
+        for k in range(nb):
+            t = (gap*(k+1) + BAL_S*k + BAL_S/2) / clear
+            bx, by = ax + d[0]*clear*t + ox, ay + d[1]*clear*t + oy
+            M("Loft / Guards", f"{a}-{b} baluster {k+1}",
+              (bx, by, BAL_BOT), (bx, by, BAL_TOP), BAL_S, BAL_S, up=(0,0,1),
+              mat="walnut", stock="2x2",
+              note=f"{gap:.3f}\" clear gap - CPSC limit is 3.5\"; 1/4\" roundover")
+        if kind == "GATE":
+            for s_, nm in ((0.0, "hinge stile"), (1.0, "latch stile")):
+                sx, sy = ax + d[0]*clear*s_ + ox, ay + d[1]*clear*s_ + oy
+                M("Loft / Guards", f"Gate {nm}", (sx, sy, DECK_TOP), (sx, sy, POST_TOP),
+                  W_2X4, T_2X, up=(0,0,1), mat="walnut", stock="2x4",
+                  note="self-closing spring hinges (pr) / gravity latch + magnetic catch. NO lock.")
+build_guards()
+
+# ======================================================================
+# 3b. GROUND-LEVEL DEN SHELF  (apothecary relocated out of the guardrail)
+# ======================================================================
+def build_den_shelf():
+    a, b = DEN_SHELF_FACE
     (x0, y0), (x1, y1), L, d = edge(a, b)
     n_in = inward(a, b)
-    clear = L - POST*math.sqrt(2)/2 - POST/2 - 1.0
-    ins = (POST/2 + 0.5)
-    sx0, sy0 = x0 + d[0]*ins + n_in[0]*(SHELF_DEPTH/2), y0 + d[1]*ins + n_in[1]*(SHELF_DEPTH/2)
-    sx1, sy1 = sx0 + d[0]*clear, sy0 + d[1]*clear
-    for k in range(SHELF_COUNT + 2):
-        z = DECK_TOP + PLY/2 + k*(SHELF_H - PLY)/(SHELF_COUNT+1)
-        M("Loft / Bookshelf", f"Shelf {k+1}" if 0 < k <= SHELF_COUNT else ("Shelf base" if k == 0 else "Shelf cap"),
-          (sx0, sy0, z), (sx1, sy1, z), SHELF_DEPTH, PLY, mat="honey", stock='3/4" ply',
-          note=f'{clear:.2f}" x {SHELF_DEPTH}" - 1/4" roundover all edges')
-    for s, nm in ((0.0, "end L"), (1.0, "end R")):
-        ex, ey = sx0 + (sx1-sx0)*s, sy0 + (sy1-sy0)*s
-        M("Loft / Bookshelf", f"Shelf {nm}", (ex, ey, DECK_TOP), (ex, ey, DECK_TOP+SHELF_H),
-          SHELF_DEPTH, PLY, up=(0,0,1), mat="honey", stock='3/4" ply',
-          note="lag to post w/ 2x 1/4 x 3 lag")
-    # front lip on each shelf so books cannot slide off
-    for k in range(1, SHELF_COUNT+2):
-        z = DECK_TOP + PLY/2 + k*(SHELF_H - PLY)/(SHELF_COUNT+1)
-        ox, oy = -n_in[0]*(SHELF_DEPTH/2 - 0.375), -n_in[1]*(SHELF_DEPTH/2 - 0.375)
-        M("Loft / Bookshelf", f"Shelf lip {k}", (sx0+ox, sy0+oy, z+1.0), (sx1+ox, sy1+oy, z+1.0),
-          0.75, 2.0, mat="walnut", stock="1x3", note="2\" book lip, rounded")
+    ins = POST/2 + 1.5
+    clear = L - 2*ins
+    for z in DEN_SHELF_Z:
+        M("Loft / Den shelf", f'Shelf @ {z:.0f}"',
+          (x0+d[0]*ins+n_in[0]*(DEN_SHELF_D/2+W_2X4), y0+d[1]*ins+n_in[1]*(DEN_SHELF_D/2+W_2X4), z),
+          (x0+d[0]*(ins+clear)+n_in[0]*(DEN_SHELF_D/2+W_2X4), y0+d[1]*(ins+clear)+n_in[1]*(DEN_SHELF_D/2+W_2X4), z),
+          DEN_SHELF_D, PLY, mat="honey", stock='3/4" ply',
+          note=f'{clear:.1f}" x {DEN_SHELF_D}"; screw to studs, 1/4" roundover, 2" lip')
+        lipo = W_2X4 + DEN_SHELF_D - 0.4
+        M("Loft / Den shelf", f'Shelf lip @ {z:.0f}"',
+          (x0+d[0]*ins+n_in[0]*lipo, y0+d[1]*ins+n_in[1]*lipo, z+1.4),
+          (x0+d[0]*(ins+clear)+n_in[0]*lipo, y0+d[1]*(ins+clear)+n_in[1]*lipo, z+1.4),
+          0.75, 2.0, mat="walnut", stock="1x3", note="book lip, rounded")
     return clear
-SHELF_CLEAR = build_shelf()
+DEN_SHELF_CLEAR = build_den_shelf()
 
 # ======================================================================
 # 4. PLAYHOUSE
@@ -283,22 +339,22 @@ def build_playhouse():
 build_playhouse()
 
 # ======================================================================
-# 5. BRIDGE
+# 5. BRIDGE PROVISIONS ONLY  -  the bridge itself is NOT built in phase 1
 # ======================================================================
 def build_bridge():
     yc = ROOM_D - PH_BRIDGE_BAY/2 - T_2X
     y0, y1 = yc - BRIDGE_W/2, yc + BRIDGE_W/2
-    # ledgers lagged into north-wall studs, eye bolts through-bolted into these
-    for nm, x0, x1 in (("Bridge ledger - loft side", LOFT_SIZE-18, LOFT_SIZE+1.5),
-                       ("Bridge ledger - playhouse side", PH_X0-1.5, PH_X0+18)):
-        M("Bridge / Ledgers", nm, (x0, ROOM_D-T_2X/2, DECK_TOP-W_2X6/2), (x1, ROOM_D-T_2X/2, DECK_TOP-W_2X6/2),
+    for nm, x0, x1 in (("Future bridge ledger - loft side", LOFT_SIZE-20, LOFT_SIZE+1.5),
+                       ("Future bridge ledger - playhouse side", PH_X0-1.5, PH_X0+20)):
+        M("Bridge / Future provisions", nm,
+          (x0, ROOM_D-T_2X/2, DECK_TOP-W_2X6/2), (x1, ROOM_D-T_2X/2, DECK_TOP-W_2X6/2),
           T_2X, W_2X6, mat="honey", stock="2x6 PT",
-          note="lag 3/8 x 4 into 2 studs min; eye bolts THROUGH-bolted w/ washer + nylock")
-    for nm, x in (("Bridge header - loft", LOFT_SIZE-T_2X/2), ("Bridge header - playhouse", PH_X0+T_2X/2)):
-        M("Bridge / Ledgers", nm, (x, y0, DECK_TOP-W_2X6/2), (x, y1, DECK_TOP-W_2X6/2),
-          T_2X, W_2X6, mat="honey", stock="2x6", note="net anchor header, 4x 3/8 eye bolts")
-        M("Bridge / Ledgers", nm.replace("header","top rail"), (x, y0, BRIDGE_TOP_Z), (x, y1, BRIDGE_TOP_Z),
-          T_2X, W_2X4, mat="walnut", stock="2x4", note="top rope anchor, 2x 3/8 eye bolts")
+          note="INSTALL NOW. Lag 3/8x4 into 2 studs min. Eye bolts get added later.")
+    for nm, x in (("Future net header - loft", LOFT_SIZE-T_2X/2),
+                  ("Future net header - playhouse", PH_X0+T_2X/2)):
+        M("Bridge / Future provisions", nm, (x, y0, DECK_TOP-W_2X6/2), (x, y1, DECK_TOP-W_2X6/2),
+          T_2X, W_2X6, mat="honey", stock="2x6",
+          note="INSTALL NOW as blocking. Drill for 4x 3/8 eye bolts when the bridge goes in.")
     return y0, y1, yc
 BR_Y0, BR_Y1, BR_YC = build_bridge()
 

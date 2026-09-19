@@ -1,8 +1,24 @@
 # Kids' Playroom Build — Loft, Playhouse & Rope Bridge
 
-Parametric 3D model, construction plan set, and render pipeline for two connected
-indoor play structures in a 13'6" x 13'5" playroom with 8-foot ceilings.
-Woodsy / hobbit-hole theme. Dimensional lumber and stock hardware only.
+Parametric 3D model, construction plan set, and render pipeline for two indoor play
+structures in a 13'6" x 13'5" playroom with 8-foot ceilings. Woodsy / hobbit-hole theme.
+Dimensional lumber and stock hardware only.
+
+**Designed to serve an 18-month-old and a four-year-old at the same time, in three
+phases.** That constraint drove a redesign: the rope net guard, the bookshelf railing,
+the rope handrails and the bridge all came out.
+
+## Phases
+
+| Phase | Age | What is in use | What keeps the little one out |
+|---|---|---|---|
+| 1 | 18 mo - 3 yr | Ground den + playhouse. Both at floor level. | The ladder is stored **off** the structure. Nothing to climb. |
+| 2 | 3 yr + | Ladder hung, loft in use. | Self-closing gate at the deck. Ladder still pulls off at night. |
+| 3 | 5 yr + (or when the youngest is 4) | Rope bridge. | Deferred. All provisions are already in the wall. |
+
+Phase 3 is a two-hour job later: unscrew an 8-screw baluster panel, drill 8 holes, bolt
+8 eye bolts, hang the net. The wall ledgers, the playhouse bay post and the net-header
+blocking all go in during phase 1 so nothing finished has to be opened up.
 
 ## Three specs in the original brief are not buildable. This set fixes them.
 
@@ -11,10 +27,23 @@ Woodsy / hobbit-hole theme. Dimensional lumber and stock hardware only.
 | 1 | Hobbit door R.O. 36-38" tall | **R.O. 26" W x 32" H** | 44" deck − 3/4" ply − 5-1/2" joist = 37-3/4" of wall. Minus plates, header and a cripple, 32" is what physically remains. |
 | 2 | Knee wall studs 40-42" | **34-3/4"** | Same arithmetic. The wall dies at 37-3/4" and two plates eat 3". |
 | 3 | Bridge span ~42" | **54" clear** | 162" wall − 60" loft − 48" playhouse = 54". Both structures are in corners, so neither can slide. |
+| 4 | Rope net guardrail, 4-6" mesh | **2x2 balusters, 2.59-2.70" clear** | CPSC: any opening between 3.5" and 9" passes a small body and catches the head. A 4-6" mesh fails both probes. |
+| 5 | Bookshelf built into the railing | **moved to the ground-level den** | A shelf in a guardrail is a ladder. A 4-year-old puts a foot on it and their centre of mass clears the 36" rail. |
 
-A fourth tension is flagged on sheet A9: "Home Depot only" vs "commercial playground-rated
-net." Home Depot does carry 500 lb polyester cargo netting, which satisfies both. Certified
-ASTM F1487 equipment does not exist there — that one line item would have to leave the store.
+### On the bridge: strength was never the problem
+
+Two 42 lb kids with a 5x dynamic factor is 420 lb, 105 lb per anchor. A 3/8" forged
+shoulder eye bolt is good for ~1000 lb in line, and the 3/8" lags into studs give ~587 lb
+each in withdrawal. **Eight to eleven times the load.** What actually made it wrong for
+this age range was 18" of width (a balance beam, not a bridge) and 4-6" net mesh sitting
+in the head-entrapment window. The loft's bridge gate went from 20" to 24" so the future
+bridge is a real 24" wide — which also grew the deck slightly, to 22.36 sq ft.
+
+### Rope is decoration now
+
+Tight spiral wraps on the posts, whipping on the rail ends. No spans, no slack, no loops.
+A loose rope loop over 5" is a strangulation hazard under 3, so the ladder's rope
+handrails became rigid 2x2 grab rails.
 
 ## Resolved hexagon geometry
 
@@ -25,14 +54,14 @@ come out collinear, so the middle vertex is not a corner. A true six-sided deck 
 | Vertex | u | v | Post |
 |---|---|---|---|
 | A | 0.000 | 0.000 | 4x4 x 37-3/4" (corner stub) |
-| B | 60.000 | 0.000 | 4x4 x 80" — bridge |
-| C | 60.000 | 20.000 | 4x4 x 80" |
-| D | 48.284 | 48.284 | 4x4 x 80" — rotated 45 deg |
-| C' | 20.000 | 60.000 | 4x4 x 80" |
+| B | 60.000 | 0.000 | 4x4 x 80" — future bridge |
+| C | 60.000 | 24.000 | 4x4 x 80" |
+| D | 49.456 | 49.456 | 4x4 x 80" — rotated 45 deg |
+| C' | 24.000 | 60.000 | 4x4 x 80" |
 | B' | 0.000 | 60.000 | 4x4 x 80" — ladder |
 
 Interior angles 90 / 90 / 157.5 / 135 / 157.5 / 90 = 720. Every miter is 11-1/4 or
-22-1/2 degrees — both are detents on any 10" miter saw. Deck area 21.75 sq ft.
+22-1/2 degrees — both are detents on any 10" miter saw. Deck area 22.36 sq ft.
 Six posts total, and both 60" wall runs stay full length for maximum ledger engagement.
 
 ## Layout
@@ -40,11 +69,11 @@ Six posts total, and both 60" wall runs stay full length for maximum ledger enga
 ```
                     NORTH WALL  (162")
   +--------60"--------+------54" clear-----+-------48"-------+
-  |   CORNER LOFT     |    ROPE BRIDGE     |    PLAYHOUSE    |
-  |   hex deck 44"    |    net @ 44"       |   floor-ceiling |
-  |   post B  -------------- 54" span ----------- post NW    |
-  |   apothecary      |                    |  ranger's post  |
-  +-- ladder @ post B'                                       |
+  |   CORNER LOFT     |  (bridge: phase 3) |    PLAYHOUSE    |
+  |   hex deck 44"    |   provisions only  |   floor-ceiling |
+  |   post B  · · · · · · · 54" span · · · · · · · post WM   |
+  |   den below       |                    |  ranger's post  |
+  +-- ladder @ post B' — LIFTS OFF                           |
 ```
 
 ## Repository
@@ -83,11 +112,11 @@ python3 plans/generate_plans.py     # the PDF
 | A0 | Cover, critical notes, sheet index |
 | A1 | Overall room plan, wall anchor zones, stud layout |
 | A2 | Loft deck framing plan, hexagon geometry, joist layout |
-| A3 | Loft developed elevation — all four open faces unrolled |
+| A3 | Loft developed elevation — baluster guards, gate, removable panel |
 | A4 | Knee wall section + full hobbit door template on a 2" grid |
-| A5 | Ladder + bookshelf guard |
+| A5 | Removable ladder, hook and pin detail, ground-level den shelf |
 | A6 | Playhouse plan, south elevation, roof framing |
-| A7 | Rope bridge elevation, enlarged anchor detail, safety |
+| A7 | Bridge — DEFERRED. Provisions to install now, plus the load check |
 | A8 | Cut list |
 | A9 | Hardware schedule + Home Depot buy list with internet numbers |
 | A10 | Reference model views |
@@ -107,11 +136,24 @@ drilling any ledger.** These drawings are not engineer-stamped.
 
 ## Safety decisions baked into the model
 
-- Guard height 36" above the deck — the top of the 32-36" range, not the bottom.
-- The bridge gets a top rope **and** a mid rope at 18", plus full-height side net panels.
-  A single top rope 36" above a sagging net is not a guard.
-- Hobbit doors get a magnetic catch, never a latch and never a lock. A child has to be able
-  to push out from the inside with no hardware.
-- Porthole and playhouse window are acrylic. No glass anywhere, including the "apothecary" jars.
-- 3/4" interlocking foam under the full bridge span and 24" past each end.
-- Re-torque every eye bolt and lag at 30 days, then every 6 months.
+Measured against the CPSC Public Playground Safety Handbook (Pub. 325), ASTM F1148 for
+home playground equipment, and the 16 CFR 1213 bunk-bed guardrail gap rule. **Designed to
+those rules, certified against none of them, and not engineer-stamped.**
+
+- **Guard openings 2.59"-2.70" clear.** Nothing passes the 3.5" torso probe, and nothing
+  sits in the 3.5"-9" head-entrapment window.
+- **Guard height 36"** above the deck — top of the range, not the bottom.
+- **2x4 toe board on edge** at deck level. No gap under the balusters, and kicked toys
+  stay up top instead of landing on whoever is in the den.
+- **The ladder lifts off.** Two pins, and the loft is unreachable. This, not the gate, is
+  what keeps an 18-month-old out — any latch a 4-year-old can work, a toddler eventually works.
+- **Self-closing gate** at the deck opening, swings inward, no lock.
+- **Rigid 2x2 grab rails** on the ladder instead of rope. No slack rope anywhere.
+- **Acorn nuts on every through-bolt end** a child can reach (CPSC protrusion rule).
+- **2" gymnastics mat** under the ladder and open faces. 3/4" foam attenuates about a
+  2 ft fall; the deck is 44".
+- Hobbit doors get a magnetic catch — never a latch, never a lock. A child must be able to
+  push out from the inside with no hardware.
+- Acrylic only. No glass, including the apothecary jars — and the jars stay sealed or stay
+  out until the youngest is 3, because acorns and dried botanicals are a choking hazard.
+- Re-torque every lag at 30 days, then every 6 months.

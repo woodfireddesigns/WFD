@@ -5,8 +5,8 @@ from params import *
 import geometry as G
 from drawkit import *
 
-FACES = [("B","C",HEX_H,"BRIDGE GATE"), ("C","D",HEX_T,"BOOKSHELF GUARD"),
-         ("D","Cp",HEX_T,"ROPE NET GUARD / HOBBIT DOOR"), ("Cp","Bp",HEX_H,"LADDER ENTRY")]
+FACES = [("B","C",HEX_H,"REMOVABLE PANEL (future bridge)"), ("C","D",HEX_T,"FIXED GUARD"),
+         ("D","Cp",HEX_T,"FIXED GUARD / HOBBIT DOOR BELOW"), ("Cp","Bp",HEX_H,"SELF-CLOSING GATE")]
 DEV_W = sum(f[2] for f in FACES)
 
 def _face_x0(i): return sum(FACES[j][2] for j in range(i))
@@ -51,36 +51,42 @@ def developed_elev(sh):
         sh.txt(((x0+x1)/2, POST_TOP+8), f'face {frac(L)}', 6.0, THIN, "c")
         sh.dim((x0, 0), (x1, 0), -22, frac(L))
 
-    # --- face 1: bridge gate ropes
+    # --- guards: vertical balusters on every face ---------------------
+    import geometry as _G
+    for i, (a, b, L, lbl) in enumerate(FACES):
+        x0 = _face_x0(i); info = _G.GUARD_INFO[(a, b)]
+        ax = x0 + POST/2 + 0.5; clear = info["clear"]; nb = info["n"]; gap = info["gap"]
+        sh.poly([(ax, DECK_TOP), (ax+clear, DECK_TOP), (ax+clear, DECK_TOP+TOE_H), (ax, DECK_TOP+TOE_H)],
+                fill=HexColor("#a5804f"), stroke=INK, w=0.9)
+        sh.poly([(ax, POST_TOP-RAIL_T), (ax+clear, POST_TOP-RAIL_T), (ax+clear, POST_TOP), (ax, POST_TOP)],
+                fill=HexColor("#a5804f"), stroke=INK, w=0.9)
+        for k in range(nb):
+            bx = ax + gap*(k+1) + BAL_S*k
+            sh.poly([(bx, BAL_BOT), (bx+BAL_S, BAL_BOT), (bx+BAL_S, BAL_TOP), (bx, BAL_TOP)],
+                    fill=HexColor("#c8a468"), stroke=INK, w=0.7)
+        if info["kind"] == "GATE":
+            for sx in (ax, ax+clear-W_2X4):
+                sh.poly([(sx, DECK_TOP), (sx+W_2X4, DECK_TOP), (sx+W_2X4, POST_TOP), (sx, POST_TOP)],
+                        fill=HexColor("#8a6a44"), stroke=INK, w=0.9)
+            sh.arc_seg((ax+W_2X4, DECK_TOP+GUARD_H/2), clear-W_2X4, -18, 18, THIN, 0.6)
+        if info["kind"] == "REMOVABLE PANEL":
+            sh.poly([(ax-1, DECK_TOP-1), (ax+clear+1, DECK_TOP-1), (ax+clear+1, POST_TOP+1), (ax-1, POST_TOP+1)],
+                    fill=None, stroke=RED, w=1.2, dash=(4,2))
+        sh.dim((ax+gap+BAL_S, BAL_TOP+1), (ax+2*gap+BAL_S, BAL_TOP+1), 7, f'{gap:.2f}"')
     x0 = _face_x0(0)
-    for z in (DECK_TOP+18, POST_TOP-2):
-        sh.line((x0+POST, z), (x0+HEX_H, z), NOTE, 2.0)
-    sh.leader((x0+HEX_H/2, POST_TOP-2), (30, 26), '3/4" rope, thimble + 3/8" eye bolt ea. end')
-
-    # --- face 2: bookshelf
-    x0 = _face_x0(1); x1 = x0 + HEX_T
-    sh.poly([(x0+POST, DECK_TOP), (x1, DECK_TOP), (x1, DECK_TOP+SHELF_H), (x0+POST, DECK_TOP+SHELF_H)],
-            fill=HexColor("#e6dcc4"), stroke=INK, w=1.1)
-    for kk in range(SHELF_COUNT+2):
-        z = DECK_TOP + kk*(SHELF_H)/ (SHELF_COUNT+1)
-        sh.poly([(x0+POST, z), (x1, z), (x1, z+PLY), (x0+POST, z+PLY)], fill=HexColor("#c7ab7c"), stroke=INK, w=0.7)
-        if kk < SHELF_COUNT+1:
-            for bk in range(7):
-                bx = x0+POST+2 + bk*2.6
-                if bx+2 < x1-1:
-                    sh.poly([(bx, z+PLY), (bx+2.0, z+PLY), (bx+2.0, z+PLY+7.5), (bx, z+PLY+7.5)],
-                            fill=HexColor("#9aa88c") if bk % 2 else HexColor("#b08a5a"), stroke=THIN, w=0.4)
-    sh.dim((x1+1.2, DECK_TOP), (x1+1.2, DECK_TOP+SHELF_H), 9, frac(SHELF_H))
-    sh.leader(((x0+x1)/2, DECK_TOP+SHELF_H), (10, 30), 'BOOKSHELF GUARD · 3/4" ply · 1/4" roundover all edges · 2" book lip')
+    sh.leader((x0+HEX_H/2, POST_TOP-6), (-16, 40),
+              'REMOVABLE PANEL — 8 screws, unscrew to add the bridge', 6.0, anchor="r")
+    x0 = _face_x0(1)
+    sh.leader((x0+HEX_T*0.5, POST_TOP-4), (18, 34),
+              '2x2 BALUSTERS — max 3-3/8" clear. CPSC torso probe is 3.5".', 6.0)
+    sh.leader((x0+HEX_T*0.15, DECK_TOP+TOE_H/2), (-30, -40),
+              '2x4 TOE BOARD on edge — no gap at deck level, stops kicked toys', 6.0, anchor="r")
+    x0 = _face_x0(3)
+    sh.leader((x0+HEX_H*0.55, POST_TOP-3), (22, 50),
+              'SELF-CLOSING GATE — swings IN. Spring hinges + gravity latch. No lock.', 6.0)
 
     # --- face 3: rope net + hobbit door
     x0 = _face_x0(2); x1 = x0 + HEX_T
-    for kk in range(4):
-        z = DECK_TOP + 2 + kk*(GUARD_H-4)/3
-        sh.line((x0+POST, z), (x1, z), NOTE, 1.6)
-    for kk in range(8):
-        vx = x0+POST + (x1-x0-POST)*kk/7
-        sh.line((vx, DECK_TOP+2), (vx, POST_TOP-2), NOTE, 1.1)
     # hobbit door
     dc = (x0+x1)/2
     ro0, ro1 = dc-HDOOR_RO_W/2, dc+HDOOR_RO_W/2
@@ -128,9 +134,6 @@ def developed_elev(sh):
               f'{frac(PORTHOLE_D)} ACRYLIC PORTHOLE — no glass', 6.0, anchor="r")
 
     # --- face 4: ladder
-    x0 = _face_x0(3)
-    for z in (DECK_TOP+18, POST_TOP-2):
-        sh.line((x0+POST, z), (x0+HEX_H, z), NOTE, 2.0)
     sh.dim((-5.5, 0), (-5.5, DECK_TOP), 22, frac(DECK_TOP), flip=True)
     sh.dim((-5.5, DECK_TOP), (-5.5, POST_TOP), 22, frac(GUARD_H), flip=True)
     sh.dim((DEV_W+3, 0), (DEV_W+3, KNEE_TOTAL), 30, f'{frac(KNEE_TOTAL)} wall')

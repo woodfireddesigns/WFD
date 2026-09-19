@@ -43,7 +43,7 @@ POST_LEN_CORNER = JOIST_BOT              # stub post in the room corner (37.75)
 # Hexagon: symmetric about the 45-deg diagonal.
 # Interior angles: 90 (corner A), 90 (B), 157.5 (C), 135 (D), 157.5 (C'), 90 (B')
 # -> miters are 11.25 deg (22.5 joint) and 22.5 deg (45 joint). Both are saw detents.
-HEX_H         = 20.0         # length of the two short side faces B-C and C'-B'
+HEX_H         = 24.0         # short faces B-C and C'-B'. 24 so a FUTURE bridge can be 24" wide, not 18".
 _A22          = math.radians(22.5)
 _RUN_PER_LEN  = math.sin(_A22) + math.cos(_A22)   # 1.3065630
 HEX_T         = (LOFT_SIZE - HEX_H) / _RUN_PER_LEN  # length of each angled face
@@ -86,19 +86,43 @@ PORTHOLE_D    = 8.0                      # acrylic disc
 PORTHOLE_Z    = 24.0                     # center height off floor
 PORTHOLE_FACE = FACE_SHELF
 
+# --- age staging ------------------------------------------------------
+# 18 mo - 3 yr : ground den + playhouse only. Ladder stored off the structure.
+# 3 yr +       : ladder hung, loft in use, gate self-closing.
+# 5 yr +       : unscrew the bridge panel, add the bridge.
+AGE_MIN_LOFT  = 36           # months, and only once they climb it unassisted
+
 # --- ladder ----------------------------------------------------------
 LADDER_ANGLE  = 65.0                     # degrees from horizontal
 LADDER_RISE   = DECK_TOP
 LADDER_RUN    = LADDER_RISE / math.tan(math.radians(LADDER_ANGLE))
 LADDER_LEN    = LADDER_RISE / math.sin(math.radians(LADDER_ANGLE))
 LADDER_W      = 18.0                     # outside of stringers
-LADDER_RUNGS  = 4
+LADDER_REMOVABLE = True                  # lifts off its hanger rail - this is the toddler barrier
+LADDER_RUNGS  = 5                        # 5 rungs -> 7.33" riser, short legs
 LADDER_RISER  = LADDER_RISE / (LADDER_RUNGS + 1)   # 8.8"
 
-# --- bookshelf guard -------------------------------------------------
-SHELF_DEPTH   = 7.25
-SHELF_H       = GUARD_H
-SHELF_COUNT   = 2
+# --- GUARDS -----------------------------------------------------------
+# CPSC 3.5" torso rule: no opening in a guard may pass a 3.5" probe.
+# That rules out the 4-6" rope net originally specced - it sits square in the
+# 3.5"-9" head-entrapment window. Vertical balusters instead. Rope stays as a
+# tight decorative wrap only: no slack, no loops (strangulation risk under 3).
+BAL_S         = 1.5          # 2x2 actual
+BAL_MAX_GAP   = 3.375        # 1/8" under the 3.5" limit
+TOE_H         = 3.5          # 2x4 on edge at deck level - closes the bottom gap AND stops kicked toys
+RAIL_T        = T_2X         # 2x4 laid flat as the top rail
+BAL_BOT       = DECK_TOP + TOE_H
+BAL_TOP       = POST_TOP - RAIL_T
+BAL_LEN       = BAL_TOP - BAL_BOT
+
+GATE_FACE     = ("Cp", "Bp")   # ladder entry - self-closing swing gate
+PANEL_FACE    = ("B",  "C")    # future bridge gate - REMOVABLE baluster panel
+
+# --- ground-level den shelf (the apothecary moved down here) -----------
+# Shelves in a guardrail are a climbing aid. At floor level they are just shelves.
+DEN_SHELF_FACE  = ("B", "C")
+DEN_SHELF_D     = 7.25
+DEN_SHELF_Z     = (9.0, 19.0)
 
 # ----------------------------------------------------------------------
 # STRUCTURE 2 - PLAYHOUSE (northeast corner)
@@ -120,12 +144,16 @@ PH_WINDOW_D   = 12.0                     # round window above the door
 PH_WINDOW_Z   = 62.0
 
 # ----------------------------------------------------------------------
-# CONNECTOR - ROPE / NET BRIDGE
+# CONNECTOR - ROPE BRIDGE  ***NOT BUILT IN PHASE 1***
+# Provisions only: wall ledgers, the playhouse bay post, and a removable
+# baluster panel at the loft gate. Adding the bridge later = unscrew the
+# panel, drill 4 holes, bolt 4 eye bolts. No opening up of finished work.
 # ----------------------------------------------------------------------
+BRIDGE_BUILD  = False
 BRIDGE_X0     = LOFT_SIZE                # 60  - loft east rim
 BRIDGE_X1     = PH_X0                    # 114 - playhouse west face
 BRIDGE_SPAN   = BRIDGE_X1 - BRIDGE_X0    # 54  (brief said ~42 - see plan note 3)
-BRIDGE_W      = 18.0
+BRIDGE_W      = HEX_H                    # 24" - was 18", too narrow to walk
 BRIDGE_DECK_Z = DECK_TOP
 BRIDGE_TOP_Z  = DECK_TOP + GUARD_H       # 80
 BRIDGE_SAG    = 7.0                      # expected free-hang sag at this span

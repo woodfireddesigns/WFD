@@ -7,74 +7,111 @@ from drawkit import *
 
 def cover(sh, notes):
     c = sh.c; W, H = sh.W, sh.H
-    c.saveState(); c.setFillColor(HexColor("#20301f")); c.rect(0, H-268, W, 268, stroke=0, fill=1)
-    c.setFillColor(HexColor("#e8e2d2")); c.setFont("Helvetica-Bold", 44)
-    c.drawString(54, H-118, "KIDS' PLAYROOM BUILD")
-    c.setFont("Helvetica", 17); c.setFillColor(HexColor("#b9c4a8"))
-    c.drawString(56, H-146, "Corner Loft  ·  Rope Bridge  ·  Ranger's Outpost Playhouse")
+    c.saveState(); c.setFillColor(HexColor("#20301f")); c.rect(0, H-250, W, 250, stroke=0, fill=1)
+    c.setFillColor(HexColor("#e8e2d2")); c.setFont("Helvetica-Bold", 40)
+    c.drawString(54, H-112, "KIDS' PLAYROOM BUILD")
+    c.setFont("Helvetica", 16); c.setFillColor(HexColor("#b9c4a8"))
+    c.drawString(56, H-138, "Corner Loft  ·  Ranger's Outpost Playhouse  ·  bridge-ready")
     c.setFont("Helvetica", 9.5); c.setFillColor(HexColor("#8d9a80"))
-    c.drawString(56, H-172, "CONSTRUCTION DOCUMENT SET  ·  dimensional lumber + stock hardware only  ·  generated from the parametric Blender model")
+    c.drawString(56, H-162, "CONSTRUCTION DOCUMENT SET  ·  dimensional lumber + stock hardware  ·  generated from the parametric Blender model")
     c.setFont("Helvetica-Bold", 10); c.setFillColor(HexColor("#d8cfa8"))
-    c.drawString(56, H-206, f'ROOM  {frac(ROOM_W)} x {frac(ROOM_D)}   ·   CEILING  {frac(CEILING)}   ·   PLATFORM  {frac(DECK_TOP)}   ·   GUARD  {frac(GUARD_H)}')
+    c.drawString(56, H-192, f'ROOM {frac(ROOM_W)} x {frac(ROOM_D)}   CEILING {frac(CEILING)}   PLATFORM {frac(DECK_TOP)}   GUARD {frac(GUARD_H)}   GUARD OPENINGS 2.59"-2.70"')
+    c.setFont("Helvetica-Bold", 13); c.setFillColor(HexColor("#e8c89a"))
+    c.drawString(56, H-222, "DESIGNED FOR 18 MONTHS THROUGH ABOUT 8 YEARS — IN THREE PHASES")
     c.restoreState()
 
-    y = H-310
-    c.setFillColor(RED); c.setFont("Helvetica-Bold", 15)
-    c.drawString(54, y, "READ FIRST — THREE SPECS IN THE BRIEF ARE NOT BUILDABLE AS WRITTEN")
-    y -= 10
-    c.setStrokeColor(RED); c.setLineWidth(1.6); c.line(54, y, W-54, y); y -= 26
-    for i, (t, was, now, why) in enumerate(notes, 1):
+    TOP = H-276; CW = (W-108-22)/2; CH = 78; GAP = 84
+    c.setFillColor(RED); c.setFont("Helvetica-Bold", 13)
+    c.drawString(54, TOP+14, "READ FIRST — FIVE THINGS IN THE BRIEF THAT DO NOT WORK AS WRITTEN")
+    c.setStrokeColor(RED); c.setLineWidth(1.4); c.line(54, TOP+8, W-54, TOP+8)
+    for i, (t, was, now, why) in enumerate(notes):
+        col = 0 if i < 3 else 1
+        row = i if i < 3 else i-3
+        x = 54 + col*(CW+22); y = TOP - row*GAP
         c.setFillColor(HexColor("#fdf6ef")); c.setStrokeColor(HexColor("#d8c3ac")); c.setLineWidth(0.8)
-        c.rect(54, y-76, W-108, 84, stroke=1, fill=1)
-        c.setFillColor(RED); c.setFont("Helvetica-Bold", 11); c.drawString(68, y-6, f"{i}.  {t}")
-        c.setFont("Helvetica-Bold", 8.6); c.setFillColor(HexColor("#6b6b6b"))
-        c.drawString(68, y-24, "BRIEF SAID"); c.drawString(250, y-24, "THIS SET USES")
-        c.setFont("Helvetica-Bold", 10.5); c.setFillColor(HexColor("#8a3b12"))
-        c.drawString(68, y-40, was); c.setFillColor(ACCENT); c.drawString(250, y-40, now)
-        c.setFont("Helvetica", 8.4); c.setFillColor(INK)
-        for j, ln in enumerate(why):
-            c.drawString(68, y-58-j*10.5, ln)
-        y -= 96
+        c.rect(x, y-CH, CW, CH, stroke=1, fill=1)
+        c.setFillColor(RED); c.setFont("Helvetica-Bold", 9.6)
+        c.drawString(x+11, y-14, f"{i+1}.  {t}")
+        c.setFont("Helvetica-Bold", 7.4); c.setFillColor(HexColor("#6b6b6b"))
+        c.drawString(x+11, y-28, "BRIEF"); c.drawString(x+CW*0.40, y-28, "THIS SET")
+        c.setFont("Helvetica-Bold", 9.2); c.setFillColor(HexColor("#8a3b12"))
+        c.drawString(x+11, y-40, was); c.setFillColor(ACCENT); c.drawString(x+CW*0.40, y-40, now)
+        c.setFont("Helvetica", 7.1); c.setFillColor(INK)
+        for j, ln in enumerate(why[:3]):
+            c.drawString(x+11, y-53-j*8.6, ln)
 
-    # sheet index
-    c.setFont("Helvetica-Bold", 12); c.setFillColor(INK); c.drawString(54, y-4, "SHEET INDEX")
-    c.setLineWidth(1); c.setStrokeColor(INK); c.line(54, y-12, 470, y-12)
-    idx = [("A0","Cover · critical notes · sheet index"),
-           ("A1","Overall room plan · structure locations · wall anchor zones"),
-           ("A2","Loft — deck framing plan · hexagon geometry · joist layout"),
-           ("A3","Loft — developed elevation of all four open faces"),
-           ("A4","Loft — knee wall framing · hobbit door · arch template"),
-           ("A5","Ladder detail · bookshelf guard detail"),
-           ("A6","Playhouse — plan · elevations · roof framing"),
-           ("A7","Rope bridge — elevation · anchor details · load path"),
-           ("A8","Cut list (by structure, by stock)"),
-           ("A9","Hardware schedule · Home Depot buy list"),
-           ("A10","Photoreal reference views"),
-           ("A11","Technical model views")]
-    yy = y-28
-    for s, t in idx:
-        c.setFont("Helvetica-Bold", 8.6); c.setFillColor(ACCENT); c.drawString(58, yy, s)
-        c.setFont("Helvetica", 8.6); c.setFillColor(INK); c.drawString(94, yy, t); yy -= 13.5
+    # ---- phase table, right column under notes 4 and 5 ----
+    px = 54 + CW + 22; py = TOP - 2*GAP
+    c.setFillColor(HexColor("#20301f")); c.rect(px, py-CH, CW, CH, stroke=0, fill=1)
+    c.setFillColor(HexColor("#e8c89a")); c.setFont("Helvetica-Bold", 10)
+    c.drawString(px+11, py-15, "THE THREE PHASES")
+    ph = [("18 mo - 3 yr", "Ground den + playhouse. Ladder stored OFF the structure.",
+           "Nothing to fall from. Both spaces are at floor level."),
+          ("3 yr +", "Hang the ladder. Loft in use. Gate self-closes.",
+           "Only once he climbs it unassisted, both ways, every time."),
+          ("5 yr + (or when the youngest is 4)", "Unscrew the panel, bolt the eye bolts, hang the net.",
+           "Two hours. Every provision is already in the wall.")]
+    yy = py-28
+    for a, b, d in ph:
+        c.setFont("Helvetica-Bold", 7.4); c.setFillColor(HexColor("#d8cfa8")); c.drawString(px+11, yy, a)
+        c.setFont("Helvetica", 7.0); c.setFillColor(HexColor("#b9c4a8"))
+        c.drawString(px+134, yy, b); c.drawString(px+134, yy-8, d)
+        yy -= 18
 
-    # quick stats panel
-    px = W-470
-    c.setFillColor(HexColor("#f2efe6")); c.setStrokeColor(HexColor("#cfc8b6"))
-    c.rect(px, y-190, 416, 208, stroke=1, fill=1)
-    c.setFont("Helvetica-Bold", 12); c.setFillColor(INK); c.drawString(px+18, y-4, "AT A GLANCE")
-    rows = [("Loft deck area", "21.75 sq ft  (60\" x 60\" envelope, hexagonal)"),
-            ("Loft deck shape", "6-sided · angles 90/90/157.5/135/157.5/90"),
-            ("Miter angles required", "11-1/4 deg and 22-1/2 deg — both saw detents"),
-            ("Posts", "6 at the loft (5 tall + 1 corner stub), 4 at the playhouse"),
-            ("Bridge clear span", f'{frac(BRIDGE_SPAN)}  ·  net {frac(BRIDGE_W)} wide'),
-            ("Guard height", f'{frac(GUARD_H)} above deck (top of the 32-36" range)'),
-            ("Total 4x4 PT", "~65 lf     Total 2x4: ~127 lf     2x6: ~46 lf"),
-            ("Plywood", "3 sheets 3/4\" (2 structural, 1 skin/doors)"),
-            ("Est. material cost", "$1,050 - $1,350 — see sheet A9"),
-            ("Build time", "2 weekends for 1 person with a helper")]
-    yy = y-26
-    for a, b in rows:
-        c.setFont("Helvetica-Bold", 8.2); c.setFillColor(HexColor("#5a5a5a")); c.drawString(px+18, yy, a)
-        c.setFont("Helvetica", 8.4); c.setFillColor(INK); c.drawString(px+170, yy, b); yy -= 17
+    # ---- bottom band: index | at a glance | safety basis ----
+    BY = TOP - 3*GAP - 12
+    colw = (W-108-44)/3
+    def panel(x, title, rows, kv=True, fill=HexColor("#f2efe6")):
+        c.setFillColor(fill); c.setStrokeColor(HexColor("#cfc8b6")); c.setLineWidth(0.8)
+        c.rect(x, 62, colw, BY-62, stroke=1, fill=1)
+        c.setFont("Helvetica-Bold", 10.5); c.setFillColor(INK); c.drawString(x+12, BY-20, title)
+        c.setLineWidth(0.7); c.setStrokeColor(INK); c.line(x+12, BY-26, x+colw-12, BY-26)
+        yy = BY-40
+        for a, b in rows:
+            c.setFont("Helvetica-Bold", 7.3); c.setFillColor(ACCENT if kv else HexColor("#5a5a5a"))
+            c.drawString(x+12, yy, a)
+            c.setFont("Helvetica", 7.3); c.setFillColor(INK)
+            c.drawString(x+12+(38 if kv else 150), yy, b); yy -= 11.4
+    panel(54, "SHEET INDEX",
+          [("A0","Cover · critical notes · phases"),
+           ("A1","Overall room plan · anchor zones · studs"),
+           ("A2","Loft deck framing · hexagon geometry"),
+           ("A3","Loft developed elevation · guards · gate"),
+           ("A4","Knee wall · hobbit door · arch template"),
+           ("A5","Removable ladder · hook + pin · den shelf"),
+           ("A6","Playhouse plan · elevation · roof framing"),
+           ("A7","Bridge — DEFERRED. Provisions + load check"),
+           ("A8","Cut list"),
+           ("A9","Hardware · Home Depot buy list"),
+           ("A10","Reference model views"),
+           ("A11","Technical orthographic views")])
+    panel(54+colw+22, "AT A GLANCE",
+          [("Deck", "22.36 sq ft hexagonal, 60\" x 60\" envelope"),
+           ("Angles", "90/90/157.5/135/157.5/90 — miters 11.25 & 22.5"),
+           ("Posts", "6 at the loft, 4 at the playhouse"),
+           ("Guards", "2x2 balusters, 2.59\"-2.70\" clear, 36\" tall"),
+           ("Toe board", "2x4 on edge — no gap at deck level"),
+           ("Ladder", f'{LADDER_RUNGS} rungs @ {frac(LADDER_RISER)} — lifts off, 2 pins'),
+           ("Gate", "self-closing, swings in, no lock"),
+           ("Bridge", "deferred — provisions in the wall now"),
+           ("Lumber", "~65 lf 4x4 · ~137 lf 2x4 · ~55 lf 2x2"),
+           ("Plywood", "4 sheets 3/4\""),
+           ("Cost", "$900 - $1,150 phase 1 (sheet A9)"),
+           ("Build", "2 weekends, one person and a helper")], kv=False)
+    panel(54+2*(colw+22), "WHAT THIS SET IS MEASURED AGAINST",
+          [("", "CPSC Public Playground Safety Handbook, Pub. 325"),
+           ("", "  · 3.5\" torso probe — no guard opening passes it"),
+           ("", "  · 3.5\"-9\" head entrapment window avoided throughout"),
+           ("", "  · toddler platform cap of 32\" — why the loft is 3 yr+"),
+           ("", "  · protrusion limit — cap nuts on every through-bolt"),
+           ("", "ASTM F1148, home playground equipment"),
+           ("", "16 CFR 1213 bunk-bed guardrail gap rule, 3.5\""),
+           ("", ""),
+           ("", "NOT ENGINEER-STAMPED AND NOT CERTIFIED."),
+           ("", "Designed to these rules, tested against none of them."),
+           ("", "Verify stud spacing on site before drilling a ledger."),
+           ("", "Nothing here replaces watching a two-year-old.")], kv=False,
+          fill=HexColor("#faf0ea"))
 
 def room_plan(sh):
     sh.view(76, 96, sh.W-360, sh.H-208, -62, -62, ROOM_W+56, ROOM_D+46)
@@ -256,10 +293,10 @@ def loft_framing_plan(sh):
     sh.leader(P["D"], (50, -6), "135 deg   miter 22-1/2 deg each side", 6.0)
     sh.leader(P["Cp"], (-16, -48), "157-1/2 deg   miter 11-1/4 deg each side", 6.0, anchor="r")
     mid = lambda a, b: ((P[a][0]+P[b][0])/2, (P[a][1]+P[b][1])/2)
-    sh.leader(mid("B","C"), (52, 14), "BRIDGE GATE — net lands here", 6.2)
-    sh.leader(mid("Cp","Bp"), (-30, -34), "LADDER ENTRY", 6.2, anchor="r")
-    sh.leader(mid("C","D"), (54, -34), "BOOKSHELF GUARD  (A5)", 6.2)
-    sh.leader(mid("D","Cp"), (10, -50), "ROPE NET GUARD  ·  HOBBIT DOOR BELOW  (A3/A4)", 6.2)
+    sh.leader(mid("B","C"), (52, 14), "REMOVABLE PANEL — future bridge, 24\" wide", 6.2)
+    sh.leader(mid("Cp","Bp"), (-30, -34), "SELF-CLOSING GATE + removable ladder", 6.2, anchor="r")
+    sh.leader(mid("C","D"), (54, -34), "BALUSTER GUARD — 5 @ 2.59\" clear", 6.2)
+    sh.leader(mid("D","Cp"), (10, -50), "BALUSTER GUARD  ·  HOBBIT DOOR BELOW  (A3/A4)", 6.2)
     sh.leader((LOFT_SIZE*0.55, LOFT_SIZE-JOIST_OC), (34, 40), 'JOISTS 2x6 @ 16" O.C. — hung off LEDGER W', 6.0)
 
     # side panel

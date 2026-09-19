@@ -189,69 +189,32 @@ def build():
     return root, MATS
 
 def add_ropes(root, MATS):
+    """Rope is DECORATION ONLY now: tight spiral wraps, no slack, no loops.
+    A slack rope loop is a strangulation hazard under 3, and 4-6" net mesh sits
+    in the CPSC 3.5"-9" head-entrapment window. Guards are balusters (see geometry)."""
     rc = coll("40_Rope", root)
-    def rope(name, pts, r=NET_ROPE_D*0.95, m="rope"):
+    def rope(name, pts, r=0.40, m="rope"):
         cu = bpy.data.curves.new(name, 'CURVE'); cu.dimensions = '3D'
         cu.bevel_depth = r*IN; cu.bevel_resolution = 3; cu.resolution_u = 6
         sp = cu.splines.new('POLY'); sp.points.add(len(pts)-1)
         for i, p in enumerate(pts): sp.points[i].co = (p[0]*IN, p[1]*IN, p[2]*IN, 1)
         ob = bpy.data.objects.new(name, cu); rc.objects.link(ob); cu.materials.append(MATS[m])
         return ob
-    def catenary(p0, p1, sag, n=20):
-        return [tuple(a+(b-a)*i/n for a, b in zip(p0, p1)[:0]) for i in []] or [
-            (p0[0]+(p1[0]-p0[0])*i/n, p0[1]+(p1[1]-p0[1])*i/n,
-             p0[2]+(p1[2]-p0[2])*i/n - sag*math.sin(math.pi*i/n)) for i in range(n+1)]
-
-    # --- loft rope-net guard on the D-Cp face ---
-    a, b = FACE_NET
-    (x0,y0),(x1,y1),L,d = G.edge(a,b); nn = G.inward(a,b)
-    ins = POST/2 + 0.5
-    ax, ay = x0+d[0]*ins, y0+d[1]*ins
-    clear = L - 2*ins
-    for k in range(4):
-        z = DECK_TOP + 2 + k*(GUARD_H-4)/3
-        rope(f"Net rail {k+1}", catenary((ax, ay, z), (ax+d[0]*clear, ay+d[1]*clear, z), 0.5*(k<3)), 0.42)
-    nv = 7
-    for k in range(nv+1):
-        t = k/nv
-        px, py = ax+d[0]*clear*t, ay+d[1]*clear*t
-        rope(f"Net vert {k+1}", [(px, py, DECK_TOP+2), (px, py, DECK_TOP+GUARD_H-2)], NET_ROPE_D*0.8)
-    # --- rope across the ladder gate (Cp-Bp) and bridge gate (B-C) ---
-    for (a, b), nm in ((FACE_LADDER, "Ladder gate"), (FACE_BRIDGE, "Bridge gate")):
-        (x0,y0),(x1,y1),L,d = G.edge(a,b)
-        ax, ay = x0+d[0]*ins, y0+d[1]*ins; clear = L-2*ins
-        for z in (DECK_TOP+18, DECK_TOP+GUARD_H-2):
-            rope(f"{nm} rope z{z:.0f}", catenary((ax,ay,z), (ax+d[0]*clear, ay+d[1]*clear, z), 0.4))
-    # --- ladder rope handrails ---
-    lb, lt, ld, lo = G.LADDER_BOT, G.LADDER_TOP, G.LADDER_DIR, G.LADDER_OUT
-    for s in (-1, 1):
-        ox, oy = ld[0]*s*(LADDER_W/2+1.0), ld[1]*s*(LADDER_W/2+1.0)
-        rope(f"Ladder handrail {'L' if s<0 else 'R'}",
-             catenary((lb[0]+ox, lb[1]+oy, 30), (lt[0]+ox, lt[1]+oy, DECK_TOP+GUARD_H-4), 1.5), 0.46)
-    # --- BRIDGE: cargo net deck + side net panels + top ropes ---
-    y0b, y1b, yc = G.BR_Y0, G.BR_Y1, G.BR_YC
-    x0b, x1b = BRIDGE_X0, BRIDGE_X1
-    for y in (y0b, y1b):
-        rope(f"Bridge deck edge y{y:.0f}", catenary((x0b, y, DECK_TOP), (x1b, y, DECK_TOP), BRIDGE_SAG), 0.42)
-        rope(f"Bridge top rope y{y:.0f}", catenary((x0b, y, BRIDGE_TOP_Z), (x1b, y, BRIDGE_TOP_Z), 1.2), 0.42)
-        rope(f"Bridge mid rope y{y:.0f}", catenary((x0b, y, DECK_TOP+18), (x1b, y, DECK_TOP+18), BRIDGE_SAG*0.7), 0.36)
-    nx = 10
-    for k in range(nx+1):
-        t = k/nx; x = x0b + (x1b-x0b)*t
-        sg = BRIDGE_SAG*math.sin(math.pi*t)
-        rope(f"Bridge slat {k+1}", [(x, y0b, DECK_TOP-sg), (x, y1b, DECK_TOP-sg)], 0.42)
-        sg2 = 1.2*math.sin(math.pi*t)
-        for y in (y0b, y1b):
-            rope(f"Bridge side {k+1}", [(x, y, DECK_TOP-sg), (x, y, BRIDGE_TOP_Z-sg2)], 0.34)
-    for k in range(5):
-        t = (k+0.5)/5; x = x0b+(x1b-x0b)*t
-        pass
-    # rope wrap on the playhouse SW corner post
+    def wrap(name, cx, cy, z0, z1, r, pitch=0.95, turns_seg=16):
+        pts = []
+        n = max(6, int((z1-z0)/pitch*turns_seg))
+        for i in range(n+1):
+            t = i/n; a = 2*math.pi*(z1-z0)/pitch*t
+            pts.append((cx + r*math.cos(a), cy + r*math.sin(a), z0 + (z1-z0)*t))
+        return rope(name, pts, 0.45)
+    # playhouse exposed corner post - full-height tight wrap
     sx, sy = G.PH_POSTS["SW"]
-    for k in range(26):
-        z = 6 + k*2.6
-        rope(f"Post wrap {k}", [(sx-2.6, sy, z), (sx, sy-2.6, z+0.6), (sx+2.6, sy, z+1.2),
-                                (sx, sy+2.6, z+1.8), (sx-2.6, sy, z+2.4)], 0.40)
+    wrap("PH post rope wrap", sx, sy, 4.0, PH_WALL_H-4.0, POST/2*1.10)
+    # loft post D (the 45-deg feature post) - wrap the guard zone only
+    for m in G.MEMBERS:
+        if m["group"] == "Loft / Posts" and m["label"] == "Post D":
+            px, py = m["p0"][0], m["p0"][1]
+            wrap("Loft post D rope wrap", px, py, DECK_TOP+3, POST_TOP-4, POST/2*1.10)
 
 def main():
     root, MATS = build()

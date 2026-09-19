@@ -6,7 +6,7 @@ from reportlab.lib.colors import HexColor
 from params import *
 import geometry as G
 from drawkit import *
-import sheets_a as A, sheets_b as B, sheets_c as C, sheets_d as D
+import sheets_a as A, sheets_b as B, sheets_c as C, sheets_d as D, sheets_e as E
 
 W, H = 17*72, 11*72                      # ANSI B landscape
 OUT = os.path.join(os.path.dirname(HERE), "exports", "Playroom_Build_Plans.pdf")
@@ -14,6 +14,18 @@ RND = os.path.join(os.path.dirname(HERE), "exports", "renders")
 DATE = datetime.date.today().strftime("%Y-%m-%d")
 
 NOTES = [
+ ('This has to work for an 18-month-old AND a four-year-old. That drove a redesign.',
+  'one structure, one age',
+  'age-staged in three phases',
+  ['CPSC caps a TODDLER platform (6-23 months) at 32". This deck is 44". You cannot make a 44" loft safe for an',
+   '18-month-old, so the loft is not his. The enclosed ground den and the playhouse are, from day one.',
+   'The ladder LIFTS OFF, which is what actually keeps him out of the loft. Full phase table on this sheet.']),
+ ('The rope net guardrail had to go. It is a head-entrapment hazard.',
+  'rope net railing, 4-6" mesh',
+  '2x2 balusters, 2.59-2.70" clear',
+  ['CPSC: any opening between 3.5" and 9" lets a small body through and catches the head. A 4-6" mesh fails both probes.',
+   'Vertical balusters at under 3-3/8" clear instead, with a 2x4 toe board closing the gap at deck level.',
+   'Rope stays as tight decorative wrapping on the posts. No slack, no loops: a loose loop is a strangulation risk under 3.']),
  ('A 36-38" hobbit door will not fit under a 44" platform',
   'R.O. 24-26" W x 36-38" H',
   'R.O. 26" W x 32" H',
@@ -77,11 +89,11 @@ def main():
           B.developed_elev)
     sheet(c, "A4",  "LOFT — KNEE WALL + HOBBIT DOOR", "wall section · full arch template on a 2\" grid", 'template is scalable off its grid',
           B.kneewall_and_door)
-    sheet(c, "A5",  "LADDER + BOOKSHELF GUARD", "elevation · plan · build notes", 'model-derived, fit to sheet',
+    sheet(c, "A5",  "REMOVABLE LADDER + DEN SHELF", "elevation · hook and pin detail · ground-level shelf", 'model-derived, fit to sheet',
           C.ladder_and_shelf)
     sheet(c, "A6",  "PLAYHOUSE", "plan · south elevation · roof framing", 'model-derived, fit to sheet',
           C.playhouse)
-    sheet(c, "A7",  "ROPE BRIDGE", "elevation · anchor detail · span correction · safety", 'model-derived, fit to sheet',
+    sheet(c, "A7",  "BRIDGE — FUTURE PROVISIONS", "deferred to phase 3 · what to install now · why", 'model-derived, fit to sheet',
           C.bridge)
     sheet(c, "A8",  "CUT LIST", "every member, every finished length", "n.t.s.", D.cutlist)
     sheet(c, "A9",  "HARDWARE + HOME DEPOT BUY LIST", "internet numbers · quantities · budget", "n.t.s.", D.hardware)
@@ -103,6 +115,9 @@ def main():
              "T2  North elevation — the wall both structures anchor to",
              "T3  Loft framing only — skins, decking and all rope hidden",
              "T4  Playhouse framing only — posts, plates, rafters, door bucks"]))
+    sheet(c, "A12", "PRACTICALITIES + LIVE-WITH CHECKLIST",
+          "fit by age · adult access · air · finish · re-check schedule", "n.t.s.",
+          E.practicalities)
     c.save()
     print("PDF:", OUT, f"{os.path.getsize(OUT)/1024:.0f} KB")
 

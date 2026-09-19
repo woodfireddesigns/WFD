@@ -1,43 +1,40 @@
-# Higgsfield photoreal render set — PHASE 1 (current design)
+# Higgsfield renders — the Loft, pentagon + round door
 
-Generated with `gpt_image_2_5`, each driven by the matching Blender massing render as an
-`image_references` input so the geometry matches the plan set. Quality high, 2K.
+## Read this before generating any more
 
-These live in the Higgsfield account (michaeltdesh@gmail.com) and are viewable in the
-Higgsfield gallery. The build container's network policy blocks the delivery CDN, so the
-files could not be committed here — pull them from the gallery.
+**Never ask an image model for a plan, a diagram or a dimensioned drawing.** It returns
+something that looks authoritative with invented numbers, which is worse than nothing.
 
-## Current set — 2026-09-19, phase 1
-
-Baluster guards, no rope bridge, no bookshelf in the railing, removable ladder.
-
-| # | View | Reference render | Job ID |
-|---|---|---|---|
-| 1 | Hero — both structures, bridge-ready wall between | `01_hero_iso.png` | `dda4c15d-2e27-4511-9aad-3a9705270677` |
-| 2 | Loft three-quarter — baluster guard, gate, ladder | `02_loft_three_qtr.png` | `307752e5-f52c-46a5-b259-fe306938f936` |
-| 3 | The den — floor level, toddler's eye height | `05_hobbit_door.png` | `236c918d-82fb-43b5-9d9b-2928be21b397` |
-| 4 | From the doorway — wide | `06_from_doorway.png` | `23c83a67-ddca-4815-9154-bbf40b10ed0d` |
-
-## Reference media IDs (valid 24h, then re-upload)
-
-| Blender render | Higgsfield media_id |
+| Job | Tool |
 |---|---|
-| 01_hero_iso.png | `44475e7e-4ff8-4744-b079-f85095627be8` |
-| 02_loft_three_qtr.png | `cd61557f-e289-4b25-bea3-b000668af31e` |
-| 05_hobbit_door.png | `62653302-8669-4488-9988-0c0065acfc13` |
-| 06_from_doorway.png | `b6fda7cf-feb1-40c8-b874-c2a2a9e73aaf` |
+| Step-by-step build diagrams | `blender/render_steps.py` — rendered from the real model |
+| Dimensioned drawings | `plans/generate_plans.py` — vector, derived from `params.py` |
+| Finished hero / mood images | Higgsfield `gpt_image_2_5` — nobody builds from these |
 
-## SUPERSEDED — do not use
+## Current set — phase 1 loft, five-sided deck, true circular door
 
-An earlier set (jobs `57e8b669…`, `e3d72fea…`, `e8518204…`, `a257d983…`) shows the
-**original** design: rope net guardrails, a bookshelf built into the railing, and the
-rope bridge. All three of those were removed for cause — see sheet A0 of the plan set.
-Those images are still in the gallery. Delete them or label them clearly, because the
-details they show are the ones the redesign exists to eliminate.
+Reference for all three: `exports/steps/step_99_complete.png` (media_id
+`7c24c450-534a-40da-9500-1580195de85b`, valid 24h).
 
-## To generate more
+| # | View | Job ID |
+|---|---|---|
+| 1 | Hero — finished loft, door ajar, daylight | `f65541d4-e97a-43e4-a32e-d112d592978c` |
+| 2 | The circular door, close, low camera | `9f28df44-e219-48cb-80e8-165e659dea7c` |
+| 3 | Night — lit only from inside the den | `c49aadfd-e5a0-41c5-92c2-a03bbdc166d9` |
 
-`docs/higgsfield_prompts.md` holds the prompt library, including a shared **geometry
-block** that pins the balusters and forbids the removed elements. Always attach the
-matching Blender render — text-only prompts drift off the built geometry immediately,
-and here that means rendering an unsafe detail as if it were approved.
+The container's network policy blocks the delivery CDN, so these could not be committed.
+Pull them from the Higgsfield gallery.
+
+## SUPERSEDED — delete these
+
+Every earlier set shows geometry that no longer exists: the hexagonal deck, the arched
+door, the rope net guardrails, the bookshelf railing, the playhouse and the rope bridge.
+
+Jobs: `57e8b669…` `e3d72fea…` `e8518204…` `a257d983…` `dda4c15d…` `307752e5…`
+`236c918d…` `23c83a67…` and the 1K first pass before them.
+
+## Generating more
+
+`docs/higgsfield_prompts.md` carries the shared **geometry block**, which pins the
+five-sided deck, the balusters and the true circle, and forbids everything removed.
+Always attach a Blender render as `image_references`.

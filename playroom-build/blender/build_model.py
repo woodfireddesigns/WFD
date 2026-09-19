@@ -84,17 +84,25 @@ def build():
     # ---- loft deck (hexagon, 3/4 ply) -------------------------------
     dc = coll("20_Decking", root)
     me = bpy.data.meshes.new("LoftDeck"); ob = bpy.data.objects.new("LoftDeck", me); dc.objects.link(ob)
-    bm = bmesh.new()
-    vs = [bm.verts.new((x*IN, y*IN, (DECK_TOP-PLY)*IN)) for x, y in (G.RM[n] for n in G.ORDER)]
-    bm.faces.new(vs)
-    bmesh.ops.solidify(bm, geom=bm.faces[:], thickness=PLY*IN)
-    bm.to_mesh(me); bm.free()
+    outline = [G.RM[n] for n in G.ORDER]
+    z0, z1 = (DECK_TOP - PLY) * IN, DECK_TOP * IN
+    verts = [(x*IN, y*IN, z0) for x, y in outline] + [(x*IN, y*IN, z1) for x, y in outline]
+    nv = len(outline)
+    faces = [list(range(nv-1, -1, -1)), list(range(nv, 2*nv))]          # bottom, top
+    faces += [[i, (i+1) % nv, (i+1) % nv + nv, i + nv] for i in range(nv)]  # sides
+    me.from_pydata(verts, [], faces)
+    me.validate(); me.update()
+    # the outline winds clockwise seen from above, so the caps come out inverted.
+    # the prism IS manifold now, so a bmesh recalc gets it right.
+    bm = bmesh.new(); bm.from_mesh(me)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    bm.to_mesh(me); bm.free(); me.update()
     ob.data.materials.append(MATS["honey"])
     ob["stock"] = '3/4" plywood'; ob["note"] = f"{21.75:.2f} sq ft - cut from 1 sheet"
 
     # ---- knee-wall skin, hobbit door, porthole ----------------------
     sk = coll("21_Skin", root)
-    for a, b in [("B","C"), ("C","D"), ("D","Cp"), ("Cp","Bp")]:
+    for a, b in FACES_OPEN:
         (x0,y0),(x1,y1),L,d = G.edge(a,b); n = G.inward(a,b)
         cx, cy = (x0+x1)/2 - n[0]*0.4, (y0+y1)/2 - n[1]*0.4
         ang = math.atan2(d[1], d[0])
@@ -102,30 +110,74 @@ def build():
         ob = box(f"Skin {a}-{b}", (cx, cy, KNEE_TOTAL/2), L, 0.75, KNEE_TOTAL, R, MATS["moss"], sk)
         ob["stock"] = '3/4" ext ply / T1-11'
         # guard skirt above deck on the netless faces is handled by rope
-    # hobbit door slab
+    # ---- ROUND hobbit door -------------------------------------------
     mid, d, n = G.HDOOR_MID, G.HDOOR_DIR, G.HDOOR_NRM
     ang = math.atan2(d[1], d[0]); R = Matrix.Rotation(ang, 4, 'Z')
-    dz = HDOOR_SLAB_H - HDOOR_ARCH_R
-    dx, dy = mid[0]-n[0]*1.2, mid[1]-n[1]*1.2
     door = coll("22_Doors", root)
-    box("Hobbit door slab (loft)", (dx, dy, T_2X + dz/2), HDOOR_SLAB_W, 1.25, dz, R, MATS["moss"], door)
-    me = bpy.data.meshes.new("LoftDoorArch"); ah = bpy.data.objects.new("Hobbit door arch (loft)", me); door.objects.link(ah)
-    bm = bmesh.new()
-    prof = [(0,0)] + [(HDOOR_ARCH_R*math.cos(math.pi*t/24), HDOOR_ARCH_R*math.sin(math.pi*t/24)) for t in range(25)]
-    vs = [bm.verts.new((p[0]*IN, 0, p[1]*IN)) for p in prof]
-    bm.faces.new(vs); bmesh.ops.solidify(bm, geom=bm.faces[:], thickness=1.25*IN)
-    bm.to_mesh(me); bm.free(); me.materials.append(MATS["moss"])
-    ah.matrix_world = Matrix.Translation(Vector((dx, dy, T_2X+dz))*IN) @ R
-    # strap hinges + knob
-    for s in (-1, 1):
-        box(f"Strap hinge {'T' if s>0 else 'B'} (loft)",
-            (dx-n[0]*0.9, dy-n[1]*0.9, T_2X + dz/2 + s*dz*0.32),
-            HDOOR_SLAB_W*0.8, 0.35, 1.75, R, MATS["iron"], door)
-    kx = dx + d[0]*(HDOOR_SLAB_W/2-3.0); ky = dy + d[1]*(HDOOR_SLAB_W/2-3.0)
-    bpy.ops.mesh.primitive_uv_sphere_add(radius=1.4*IN, location=Vector((kx-n[0]*2.0, ky-n[1]*2.0, T_2X+dz*0.55))*IN)
-    kn = bpy.context.object; kn.name = "Door knob (loft)"; kn.data.materials.append(MATS["walnut"])
+
+    def disc(name, cen, rad, thick, rot, material, seg=64):
+        bpy.ops.mesh.primitive_cylinder_add(vertices=seg, radius=rad*IN, depth=thick*IN,
+                                            location=(0, 0, 0))
+        ob = bpy.context.object; ob.name = name
+        ob.data.materials.clear(); ob.data.materials.append(material)
+        ob.matrix_world = (Matrix.Translation(Vector(cen)*IN) @ rot
+                           @ Matrix.Rotation(math.radians(90), 4, 'X'))
+        for cl in ob.users_collection: cl.objects.unlink(ob)
+        door.objects.link(ob)
+        return ob
+
+    def ring(name, cen, r_out, r_in, thick, rot, material, seg=64):
+        me = bpy.data.meshes.new(name); ob = bpy.data.objects.new(name, me)
+        door.objects.link(ob)
+        vs, fs = [], []
+        for zz in (-thick/2, thick/2):
+            for r in (r_out, r_in):
+                for i in range(seg):
+                    a = 2*math.pi*i/seg
+                    vs.append((r*math.cos(a)*IN, zz*IN, r*math.sin(a)*IN))
+        O0, I0, O1, I1 = 0, seg, 2*seg, 3*seg
+        for i in range(seg):
+            j = (i+1) % seg
+            fs.append([O0+i, O0+j, I0+j, I0+i])       # back annulus
+            fs.append([I1+i, I1+j, O1+j, O1+i])       # front annulus
+            fs.append([O1+i, O1+j, O0+j, O0+i])       # outer wall
+            fs.append([I0+i, I0+j, I1+j, I1+i])       # inner wall
+        me.from_pydata(vs, [], fs); me.validate(); me.update()
+        me.materials.append(material)
+        ob.matrix_world = Matrix.Translation(Vector(cen)*IN) @ rot
+        return ob
+
+    # ply ring that turns the square R.O. into a circle
+    ring("Round door ring (3/4 ply)",
+         (mid[0]-n[0]*0.4, mid[1]-n[1]*0.4, HDOOR_CZ),
+         HDOOR_RO_W/2*1.02, HDOOR_OPEN_D/2, PLY, R, MATS["oak"])
+    # the door slab itself, swung open
+    swing = math.radians(34.0)
+    hinge_off = HDOOR_SLAB_D/2
+    hx = mid[0] + d[0]*hinge_off; hy = mid[1] + d[1]*hinge_off
+    Rs = Matrix.Rotation(ang - swing, 4, 'Z')
+    cx2 = hx - (d[0]*math.cos(swing) - (-n[0])*math.sin(swing))*hinge_off
+    cy2 = hy - (d[1]*math.cos(swing) - (-n[1])*math.sin(swing))*hinge_off
+    slab = disc("Round hobbit door slab", (cx2, cy2, HDOOR_CZ), HDOOR_SLAB_D/2, HDOOR_SLAB_T, Rs, MATS["moss"])
+    slab["stock"] = '3/4" ply, 27" dia'; slab["note"] = "~9 lb - do not build it thicker"
+    # black iron strap hinges, following the swung leaf
+    for sgn in (-1, 1):
+        box(f"Strap hinge {'T' if sgn>0 else 'B'}",
+            (cx2 - (-n[0])*0.9 + 0, cy2 - (-n[1])*0.9, HDOOR_CZ + sgn*HDOOR_SLAB_D*0.26),
+            HDOOR_SLAB_D*0.78, 0.4, 1.9, Rs, MATS["iron"], door)
+    # round knob near the leading edge
+    kr = HDOOR_SLAB_D/2 - 3.2
+    kx = cx2 - (d[0]*math.cos(swing) - (-n[0])*math.sin(swing))*kr
+    ky = cy2 - (d[1]*math.cos(swing) - (-n[1])*math.sin(swing))*kr
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=1.5*IN,
+        location=Vector((kx - (-n[0])*1.4, ky - (-n[1])*1.4, HDOOR_CZ))*IN)
+    kn = bpy.context.object; kn.name = "Door knob"; kn.data.materials.append(MATS["walnut"])
     for c in kn.users_collection: c.objects.unlink(kn)
     door.objects.link(kn)
+    # curved sill
+    box("Door sill (curved)", (mid[0]-n[0]*0.9, mid[1]-n[1]*0.9, HDOOR_SILL/2),
+        HDOOR_OPEN_D*0.7, 1.2, HDOOR_SILL, R, MATS["walnut"], door)
+
     # porthole
     a, b = PORTHOLE_FACE
     (x0,y0),(x1,y1),L,dd = G.edge(a,b); nn = G.inward(a,b)
@@ -134,10 +186,18 @@ def build():
         location=Vector((px, py, PORTHOLE_Z))*IN, rotation=(math.pi/2, 0, math.atan2(dd[1], dd[0])))
     ph = bpy.context.object; ph.name = f'Porthole {PORTHOLE_D:.0f}" acrylic'
     ph.data.materials.append(MATS["glass"])
-    for c in ph.users_collection: c.objects.unlink(c and ph)
+    for c in ph.users_collection: c.objects.unlink(ph)
     door.objects.link(ph)
+    bpy.ops.mesh.primitive_torus_add(major_radius=(PORTHOLE_D/2+0.9)*IN, minor_radius=0.5*IN,
+        location=Vector((px, py, PORTHOLE_Z))*IN,
+        rotation=(math.pi/2, 0, math.atan2(dd[1], dd[0])))
+    tr = bpy.context.object; tr.name = "Porthole ring"; tr.data.materials.append(MATS["iron"])
+    for c in tr.users_collection: c.objects.unlink(tr)
+    door.objects.link(tr)
 
     # ---- playhouse skin, roof deck, door, window --------------------
+    if not BUILD_PLAYHOUSE:
+        return root, MATS
     ps = coll("30_PlayhouseSkin", root)
     box("PH skin W (lower)", (PH_X0+0.4, (PH_Y0+ROOM_D)/2, PH_WALL_H/2), 0.75, PH_SIZE, PH_WALL_H,
         None, MATS["oak"], ps)["stock"] = '3/4" ply'
@@ -161,6 +221,7 @@ def build():
     for p in [(PH_X0, PH_WALL_H), (ROOM_W, PH_WALL_H), (PH_X0+PH_SIZE/2, PH_RIDGE-2.75)]:
         bm.verts.new((p[0]*IN, PH_Y0*IN, p[1]*IN))
     bm.faces.new(bm.verts); bmesh.ops.solidify(bm, geom=bm.faces[:], thickness=0.75*IN)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
     bm.to_mesh(me); bm.free(); me.materials.append(MATS["oak"])
     # playhouse door
     pdz = PH_DOOR_SLAB_H - PH_DOOR_RO_W/2
@@ -208,8 +269,9 @@ def add_ropes(root, MATS):
             pts.append((cx + r*math.cos(a), cy + r*math.sin(a), z0 + (z1-z0)*t))
         return rope(name, pts, 0.45)
     # playhouse exposed corner post - full-height tight wrap
-    sx, sy = G.PH_POSTS["SW"]
-    wrap("PH post rope wrap", sx, sy, 4.0, PH_WALL_H-4.0, POST/2*1.10)
+    if BUILD_PLAYHOUSE:
+        sx, sy = G.PH_POSTS["SW"]
+        wrap("PH post rope wrap", sx, sy, 4.0, PH_WALL_H-4.0, POST/2*1.10)
     # loft post D (the 45-deg feature post) - wrap the guard zone only
     for m in G.MEMBERS:
         if m["group"] == "Loft / Posts" and m["label"] == "Post D":

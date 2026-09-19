@@ -1,15 +1,23 @@
 # Kids' Playroom Build — project context
 
-Parametric 3D model + construction plan set for two indoor play structures in a
-13'6" x 13'5" playroom with 8-foot ceilings. Hobbit-hole / woodland theme.
-Dimensional lumber and stock hardware only.
+Parametric 3D model + construction documents for a corner loft in a 13'6" x 13'5"
+playroom with 8-foot ceilings. Hobbit-hole / woodland theme. Dimensional lumber and
+stock hardware only.
+
+**Phase 1 is the LOFT ONLY.** `BUILD_PLAYHOUSE = False` and `BRIDGE_BUILD = False`
+in params.py. The playhouse and bridge code is intact and switched off, not deleted.
+
+Two documents come out of this repo:
+- `Playroom_Loft_Build_Manual.pdf` - LEGO-style, 14 steps, letter landscape. The one
+  you build from. Amber = install this step, grey = already built.
+- `Playroom_Build_Plans.pdf` - the dimensioned drawing set. The one you check against.
 
 ## The one rule
 
 **`params.py` is the single source of truth. Never hard-code a dimension anywhere else.**
 
 Change a number there and the Blender model, every drawing, every dimension string and
-the cut list all move together. `geometry.py` derives all 112 framing members from it;
+the cut list all move together. `geometry.py` derives all 84 framing members from it;
 the Blender scene and the PDF both read that same member list. If a number appears in
 two places, that is a bug.
 
@@ -23,14 +31,18 @@ params.py  ->  geometry.py  ->  blender/build_model.py   -> .blend / .glb
 ```bash
 ./setup.sh                          # installs bpy 4.2 + reportlab (bpy is a 500 MB wheel)
 python3 blender/build_model.py      # .blend + .glb
-python3 blender/render_views.py 64 1700   # [samples] [width] - 6 perspective + 4 ortho
-python3 blender/render_fix.py       # true plan + playhouse framing view
+python3 blender/render_steps.py 1500 28   # [width] [samples] - the 14 manual steps
+python3 blender/render_views.py 64 1700   # photoreal-ish views for reference
 python3 blender/export_mobile.py    # USDZ for iPhone AR, mobile GLB
-python3 plans/generate_plans.py     # the 13-sheet PDF
+python3 plans/assembly_manual.py    # the LEGO-style build manual
+python3 plans/generate_plans.py     # the dimensioned drawing set
 ```
 
-Renders take roughly 8 minutes for the full set on 4 CPU cores. Blender runs headless as
-the `bpy` Python module; there is no GUI step in the pipeline.
+`ONLY_STEP=6 python3 blender/render_steps.py 1100 18` re-renders a single step while
+iterating. Freestyle outlines are what make the step images read as a manual, and they
+are also why a full set takes ~35 minutes on 4 cores.
+
+Blender runs headless as the `bpy` Python module. There is no GUI step in the pipeline.
 
 ## Design decisions that must not be quietly undone
 
@@ -48,16 +60,23 @@ them without saying why.
   18-month-old off a 44" platform (CPSC caps toddler platforms at 32").
 - **The bridge is deferred to phase 3.** Provisions install now; `BRIDGE_BUILD = False`.
   Strength was never the problem (8-11x margin). Width and mesh size were.
-- **Hobbit door R.O. is 26" x 32".** It cannot be taller: 44" deck minus 3/4" ply minus
-  a 5-1/2" joist leaves 37-3/4" of wall, and plates plus a header plus a cripple eat
-  the rest.
+- **The round door is framed in a SQUARE rough opening.** 30" x 30" R.O., with four
+  router-cut plywood quadrants forming the 28" circle inside it. You never cut a curved
+  stud. The 27" slab is 3/4" ply (~9 lb) - do not build it thicker, a toddler swings it.
+- **The knee wall caps the door at 30".** 44" deck minus 3/4" ply minus a 5-1/2" joist
+  leaves 37-3/4" of wall; plates, a header and a cripple eat the rest.
 
 ## Geometry note
 
-The loft deck is a true hexagon, not a chamfered square. A 45-degree chamfer of one
-corner produces a pentagon — the two cut edges come out collinear. Two 22.5-degree
-joints flank one 45-degree joint, giving interior angles 90/90/157.5/135/157.5/90.
-Every miter is 11.25 or 22.5 degrees, both saw detents.
+The deck is a PENTAGON: two wall edges, then straight off the north wall, one 45-degree
+diagonal, straight off the west wall. Interior angles 90/90/135/135/90.
+
+That means exactly **two saw settings for the whole deck: 45 and 22.5 degrees**.
+Faces are 30" / 42-7/16" / 30". Four tall posts plus one corner stub. 21.88 sq ft.
+
+An earlier version used a true hexagon (six sides, 11.25-degree cuts, six posts). It
+bought 0.5 sq ft and cost a third saw setting and a whole extra post. Simplicity won.
+Do not "improve" it back into a hexagon.
 
 ## Layout
 
@@ -65,12 +84,15 @@ Every miter is 11.25 or 22.5 degrees, both saw detents.
 params.py                   every dimension
 geometry.py                 member list + cut list
 blender/build_model.py      builds the scene from geometry.MEMBERS
-blender/render_views.py     6 perspective + 4 orthographic views
-blender/render_fix.py       true plan + playhouse framing view
+blender/render_views.py     photoreal-ish reference views
+blender/render_steps.py     the 14 LEGO-style step renders (Freestyle outlines)
+blender/render_fix.py       true plan + framing-only views
 blender/export_mobile.py    USDZ + mobile GLB
 plans/drawkit.py            drafting primitives (dimensions, leaders, fitted blocks)
-plans/sheets_a|b|c|d|e.py   sheets A0-A12
-plans/generate_plans.py     assembles the PDF
+plans/sheets_a|b|c|d|e.py   sheets A0-A12 of the drawing set
+plans/generate_plans.py     assembles the drawing set
+assembly.py                 the 14-step build sequence + per-step copy
+plans/assembly_manual.py    assembles the LEGO-style manual
 docs/higgsfield_prompts.md  photoreal render prompt library
 exports/                    .blend .glb .usdz, the PDF, renders
 ```
@@ -79,7 +101,7 @@ exports/                    .blend .glb .usdz, the PDF, renders
 
 - Inches everywhere. `frac()` in `plans/drawkit.py` formats to feet/inch/sixteenths.
 - Room frame: X west->east, Y south->north, Z up. Origin at the southwest floor corner.
-- The loft is in the northwest corner, the playhouse in the northeast.
+- The loft is in the northwest corner. The playhouse (off) would be northeast.
 - Members are defined by start point, end point, cross-section and an up vector.
 - Blender objects carry `stock`, `cut_length_in`, `end_cuts` and `note` as custom
   properties, so a part clicked in the viewport reports its own cut data.

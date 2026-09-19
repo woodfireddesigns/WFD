@@ -45,8 +45,8 @@ def inward(a, b):
     """Unit vector pointing from edge a-b toward the deck interior."""
     (x0, y0), (x1, y1), L, d = edge(a, b)
     n1 = (-d[1], d[0])
-    cx = sum(RM[k][0] for k in ORDER)/6.0
-    cy = sum(RM[k][1] for k in ORDER)/6.0
+    cx = sum(RM[k][0] for k in ORDER)/len(ORDER)
+    cy = sum(RM[k][1] for k in ORDER)/len(ORDER)
     mx, my = (x0+x1)/2, (y0+y1)/2
     return n1 if ((cx-mx)*n1[0] + (cy-my)*n1[1]) > 0 else (-n1[0], -n1[1])
 
@@ -87,25 +87,22 @@ def build_loft():
       T_2X, W_2X6, mat="honey", stock="2x6 PT", note="lag to studs @16 O.C.")
 
     # --- rim joists around the hexagon ---------------------------------
-    for a, b in [("B","C"), ("C","D"), ("D","Cp"), ("Cp","Bp")]:
+    for a, b in FACES_OPEN:
         (x0, y0), (x1, y1), L, d = edge(a, b)
         n_in = inward(a, b)
         ox, oy = n_in[0]*T_2X/2, n_in[1]*T_2X/2
-        ang = {("B","C"):(90.0,78.75), ("C","D"):(78.75,67.5),
-               ("D","Cp"):(67.5,78.75), ("Cp","Bp"):(78.75,90.0)}[(a,b)]
+        ang = {("B","C"):(45.0, 22.5), ("C","D"):(22.5, 22.5),
+               ("D","E"):(22.5, 45.0)}[(a,b)]
         M("Loft / Rim", f"Rim {a}-{b}", (x0+ox, y0+oy, zc), (x1+ox, y1+oy, zc),
           T_2X, W_2X6, mat="honey", stock="2x6",
           ends=ang, note=f"outside face length {L:.3f}\"")
 
     # --- field joists: run E-W, hung off the west-wall ledger -----------
     def east_edge(v):
-        """u at the hexagon boundary for a given local v."""
-        if v <= HEX_H: return LOFT_SIZE
-        if v <= PTS["D"][1]:
-            s = (v - HEX_H) / math.cos(math.radians(22.5))
-            return LOFT_SIZE - math.sin(math.radians(22.5))*s
-        u = (v - PTS["D"][1]) / math.sin(math.radians(22.5))
-        return PTS["D"][0] - math.cos(math.radians(22.5))*u
+        """u at the pentagon boundary for a given local v."""
+        if v <= PENT_H:
+            return LOFT_SIZE
+        return LOFT_SIZE - (v - PENT_H)     # the 45-deg diagonal
 
     joists = []
     v = JOIST_OC
@@ -115,19 +112,20 @@ def build_loft():
         v += JOIST_OC
     for i, (v, u_end) in enumerate(joists, 1):
         y = ROOM_D - v
-        skew = v > HEX_H
+        skew = v > PENT_H
         M("Loft / Joists", f"Joist J{i}", (T_2X, y, zc), (u_end - T_2X, y, zc),
           W_2X6, T_2X, up=(0, 1, 0), mat="honey", stock="2x6",
-          ends=(90.0, 67.5 if v > PTS["D"][1] else (78.75 if skew else 90.0)),
+          ends=(90.0, 45.0 if skew else 90.0),
           note=("skew-cut; Simpson LSU26 skewable hanger" if skew else "LUS26 hanger both ends"))
     # blocking behind the D corner
-    M("Loft / Joists", "Blocking BLK1",
-      (PTS["D"][0]-14, ROOM_D-PTS["D"][1]-2, zc), (PTS["D"][0]-2, ROOM_D-PTS["D"][1]-14, zc),
-      W_2X6, T_2X, up=(0,1,0), mat="honey", stock="2x6", ends=(45.0,45.0),
-      note="decking support at 135-deg corner")
+    for k, (uu, vv) in enumerate([(LOFT_SIZE-10, PENT_H+10), (LOFT_SIZE-26, PENT_H+26)], 1):
+        M("Loft / Joists", f"Diagonal blocking BLK{k}",
+          (uu-9, ROOM_D-vv+9, zc), (uu+9, ROOM_D-vv-9, zc),
+          W_2X6, T_2X, up=(0,1,0), mat="honey", stock="2x6", ends=(45.0,45.0),
+          note="decking support behind the diagonal rim, 45 deg both ends")
 
     # --- knee wall -----------------------------------------------------
-    for a, b in [("B","C"), ("C","D"), ("D","Cp"), ("Cp","Bp")]:
+    for a, b in FACES_OPEN:
         (x0, y0), (x1, y1), L, d = edge(a, b)
         n_in = inward(a, b)
         ox, oy = n_in[0]*(W_2X4/2), n_in[1]*(W_2X4/2)
@@ -142,30 +140,40 @@ def build_loft():
               W_2X4, W_2X4, up=(0,1,0), mat="moss", stock="2x4",
               note=f"{KNEE_STUD:.2f}\" - NOT 40-42\"")
 
-    # --- hobbit door opening in the D-Cp face --------------------------
+    # --- ROUND hobbit door: SQUARE rough opening, circle formed by a ply ring ---
     a, b = HDOOR_FACE
     (x0, y0), (x1, y1), L, d = edge(a, b)
     n_in = inward(a, b)
     mid = ((x0+x1)/2 + n_in[0]*W_2X4/2, (y0+y1)/2 + n_in[1]*W_2X4/2)
     half = HDOOR_RO_W/2
-    for s in (-1, 1):
-        jx, jy = mid[0]+d[0]*s*(half+W_2X4/2), mid[1]+d[1]*s*(half+W_2X4/2)
-        M("Loft / Hobbit door", f"Jack stud {'L' if s<0 else 'R'}", (jx, jy, T_2X), (jx, jy, T_2X+HDOOR_RO_H),
-          W_2X4, W_2X4, up=(0,1,0), mat="moss", stock="2x4", note=f"{HDOOR_RO_H:.2f}\" jack")
-        kx, ky = mid[0]+d[0]*s*(half+W_2X4*1.5), mid[1]+d[1]*s*(half+W_2X4*1.5)
-        M("Loft / Hobbit door", f"King stud {'L' if s<0 else 'R'}", (kx, ky, T_2X), (kx, ky, KNEE_TOTAL-T_2X),
-          W_2X4, W_2X4, up=(0,1,0), mat="moss", stock="2x4", note=f"{KNEE_STUD:.2f}\" king")
+    for s_ in (-1, 1):
+        jx, jy = mid[0]+d[0]*s_*(half+W_2X4/2), mid[1]+d[1]*s_*(half+W_2X4/2)
+        M("Loft / Round door", f"Jack stud {'L' if s_<0 else 'R'}", (jx, jy, T_2X), (jx, jy, T_2X+HDOOR_RO_H),
+          W_2X4, W_2X4, up=(0,1,0), mat="moss", stock="2x4", note=f'{HDOOR_RO_H:.0f}" jack')
+        kx, ky = mid[0]+d[0]*s_*(half+W_2X4*1.5), mid[1]+d[1]*s_*(half+W_2X4*1.5)
+        M("Loft / Round door", f"King stud {'L' if s_<0 else 'R'}", (kx, ky, T_2X), (kx, ky, KNEE_TOTAL-T_2X),
+          W_2X4, W_2X4, up=(0,1,0), mat="moss", stock="2x4", note=f'{KNEE_STUD:.2f}" king')
     hz = T_2X + HDOOR_RO_H + HDOOR_HDR/2
-    M("Loft / Hobbit door", "Header (2x4 flat)",
+    M("Loft / Round door", "Header (2x4 flat)",
       (mid[0]-d[0]*(half+W_2X4), mid[1]-d[1]*(half+W_2X4), hz),
       (mid[0]+d[0]*(half+W_2X4), mid[1]+d[1]*(half+W_2X4), hz),
       W_2X4, HDOOR_HDR, mat="moss", stock="2x4", note="flat - deck load bypasses this wall")
-    cz = T_2X + HDOOR_RO_H + HDOOR_HDR
-    for s in (-1, 0, 1):
-        cx, cy = mid[0]+d[0]*s*half*0.9, mid[1]+d[1]*s*half*0.9
-        M("Loft / Hobbit door", f"Cripple {s+2}", (cx, cy, cz), (cx, cy, cz+HDOOR_CRIPPLE),
-          W_2X4, W_2X4, up=(0,1,0), mat="moss", stock="2x4", note=f"{HDOOR_CRIPPLE:.2f}\"")
+    cz2 = T_2X + HDOOR_RO_H + HDOOR_HDR
+    for s_ in (-1, 0, 1):
+        cx2, cy2 = mid[0]+d[0]*s_*half*0.8, mid[1]+d[1]*s_*half*0.8
+        M("Loft / Round door", f"Cripple {s_+2}", (cx2, cy2, cz2), (cx2, cy2, cz2+HDOOR_CRIPPLE),
+          W_2X4, W_2X4, up=(0,1,0), mat="moss", stock="2x4", note=f'{HDOOR_CRIPPLE:.2f}"')
+    # the four ply gussets that turn the square R.O. into a circle
+    for q, (sx, sz) in enumerate([(-1,-1),(1,-1),(-1,1),(1,1)], 1):
+        gx = mid[0] + d[0]*sx*(half - HDOOR_RING*2)
+        gy = mid[1] + d[1]*sx*(half - HDOOR_RING*2)
+        M("Loft / Round door", f"Circle gusset {q}",
+          (gx - d[0]*4, gy - d[1]*4, HDOOR_CZ + sz*(half - 4)),
+          (gx + d[0]*4, gy + d[1]*4, HDOOR_CZ + sz*(half - 4)),
+          8.0, PLY, mat="moss", stock='3/4" ply',
+          note="router-cut quadrant; four make the 28\" circle inside the 30\" R.O.")
     return anchors, mid, d, n_in, east_edge
+
 
 ANCHORS, HDOOR_MID, HDOOR_DIR, HDOOR_NRM, east_edge = build_loft()
 
@@ -220,7 +228,7 @@ LADDER_BOT, LADDER_TOP, LADDER_DIR, LADDER_OUT = build_ladder()
 # ======================================================================
 GUARD_INFO = {}
 def build_guards():
-    for a, b in [("B","C"), ("C","D"), ("D","Cp"), ("Cp","Bp")]:
+    for a, b in FACES_OPEN:
         (x0, y0), (x1, y1), L, d = edge(a, b)
         n_in = inward(a, b)
         ins = POST/2 + 0.5
@@ -336,7 +344,8 @@ def build_playhouse():
       (PH_X0+PH_SIZE/2-PH_DOOR_RO_W/2-W_2X4, PH_Y0+W_2X4/2, PH_DOOR_RO_H+W_2X6/2),
       (PH_X0+PH_SIZE/2+PH_DOOR_RO_W/2+W_2X4, PH_Y0+W_2X4/2, PH_DOOR_RO_H+W_2X6/2),
       3.0, W_2X6, mat="moss", stock="2x6", note="double 2x6 header over 26\" R.O.")
-build_playhouse()
+if BUILD_PLAYHOUSE:
+    build_playhouse()
 
 # ======================================================================
 # 5. BRIDGE PROVISIONS ONLY  -  the bridge itself is NOT built in phase 1
@@ -356,7 +365,7 @@ def build_bridge():
           T_2X, W_2X6, mat="honey", stock="2x6",
           note="INSTALL NOW as blocking. Drill for 4x 3/8 eye bolts when the bridge goes in.")
     return y0, y1, yc
-BR_Y0, BR_Y1, BR_YC = build_bridge()
+BR_Y0, BR_Y1, BR_YC = build_bridge() if BUILD_PLAYHOUSE else (0.0, 0.0, 0.0)
 
 # ======================================================================
 # CUT LIST

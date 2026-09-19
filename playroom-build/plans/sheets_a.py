@@ -245,7 +245,7 @@ def loft_framing_plan(sh):
     sh.txt((LOFT_SIZE*0.33, LOFT_SIZE-4.6), 'LEDGER N — 2x6 PT x 60"', 5.6, HexColor("#4a3520"), "c", True)
     sh.txt((4.6, LOFT_SIZE*0.30), 'LEDGER W — 2x6 PT x 58-1/2"', 5.6, HexColor("#4a3520"), "c", True, rot=90)
     # rim joists
-    for a, b in [("B","C"),("C","D"),("D","Cp"),("Cp","Bp")]:
+    for a, b in FACES_OPEN:
         band(a, b, T_2X, HexColor("#c4a874"))
     # field joists
     v = JOIST_OC; i = 1
@@ -273,11 +273,10 @@ def loft_framing_plan(sh):
         sh.txt((lx, ly), n, 8.5, RED, "l" if x < LOFT_SIZE*0.55 else "r", True)
     # dimension strings
     sh.dim(P["A"], P["B"], 22, frac(LOFT_SIZE))
-    sh.dim(P["Bp"], P["A"], 22, frac(LOFT_SIZE))
-    sh.dim(P["B"], P["C"], -13, frac(HEX_H))
-    sh.dim(P["C"], P["D"], -13, frac(HEX_T))
-    sh.dim(P["D"], P["Cp"], -13, frac(HEX_T))
-    sh.dim(P["Cp"], P["Bp"], -13, frac(HEX_H))
+    sh.dim(P["E"], P["A"], 22, frac(LOFT_SIZE))
+    sh.dim(P["B"], P["C"], -13, frac(PENT_H))
+    sh.dim(P["C"], P["D"], -13, frac(DIAG_LEN))
+    
     # joist spacing string
     yv = LOFT_SIZE
     for k in range(3):
@@ -287,21 +286,21 @@ def loft_framing_plan(sh):
     sh.line((LOFT_SIZE, LOFT_SIZE), (LOFT_SIZE, 0), THIN, 0.5, (2,2))
     sh.line((0, 0), (LOFT_SIZE, 0), THIN, 0.5, (2,2))
     sh.line((LOFT_SIZE, 0), P["D"], RED, 0.8, (3,2))
-    sh.txt((LOFT_SIZE-5, 5.5), f'{frac(math.hypot(LOFT_SIZE-P["D"][0], P["D"][1]))} CUT-BACK', 5.8, RED, "r", True)
+    sh.txt((LOFT_SIZE-5, 5.5), f'{frac(CORNER_CUT)} CUT-BACK', 5.8, RED, "r", True)
     # annotations
-    sh.leader(P["C"], (46, 30), "157-1/2 deg   miter 11-1/4 deg each side", 6.0)
-    sh.leader(P["D"], (50, -6), "135 deg   miter 22-1/2 deg each side", 6.0)
-    sh.leader(P["Cp"], (-16, -48), "157-1/2 deg   miter 11-1/4 deg each side", 6.0, anchor="r")
+    sh.leader(P["C"], (46, 30), "135 deg   miter 22-1/2 deg each side", 6.0)
+    sh.leader(P["D"], (34, -34), "135 deg   miter 22-1/2 deg each side", 6.0)
+    sh.leader(P["E"], (-20, -44), "90 deg   miter 45 deg", 6.0, anchor="r")
     mid = lambda a, b: ((P[a][0]+P[b][0])/2, (P[a][1]+P[b][1])/2)
-    sh.leader(mid("B","C"), (52, 14), "REMOVABLE PANEL — future bridge, 24\" wide", 6.2)
-    sh.leader(mid("Cp","Bp"), (-30, -34), "SELF-CLOSING GATE + removable ladder", 6.2, anchor="r")
-    sh.leader(mid("C","D"), (54, -34), "BALUSTER GUARD — 5 @ 2.59\" clear", 6.2)
-    sh.leader(mid("D","Cp"), (10, -50), "BALUSTER GUARD  ·  HOBBIT DOOR BELOW  (A3/A4)", 6.2)
+    sh.leader(mid("B","C"), (52, 14), "REMOVABLE PANEL — future bridge, 30\" wide", 6.2)
+    sh.leader(mid("D","E"), (-30, -34), "SELF-CLOSING GATE + removable ladder", 6.2, anchor="r")
+    sh.leader(mid("C","D"), (54, -34), "DIAGONAL — baluster guard, ROUND DOOR below", 6.2)
+    
     sh.leader((LOFT_SIZE*0.55, LOFT_SIZE-JOIST_OC), (34, 40), 'JOISTS 2x6 @ 16" O.C. — hung off LEDGER W', 6.0)
 
     # side panel
     c = sh.c; x = sh.W-346; y = sh.H-120
-    c.setFont("Helvetica-Bold", 11); c.setFillColor(INK); c.drawString(x, y, "HEXAGON GEOMETRY — RESOLVED")
+    c.setFont("Helvetica-Bold", 11); c.setFillColor(INK); c.drawString(x, y, "PENTAGON GEOMETRY")
     c.setLineWidth(1); c.setStrokeColor(INK); c.line(x, y-7, sh.W-64, y-7)
     hdr = ("VERTEX", "u (in)", "v (in)", "POST CUT")
     yy = y-22
@@ -316,34 +315,28 @@ def loft_framing_plan(sh):
         yy -= 13
     yy -= 14
     for s in ["WHY THIS SHAPE",
-              "A 45-degree chamfer of one corner gives a PENTAGON,",
-              "not a hexagon — the two cut edges come out collinear,",
-              "so the middle vertex is not a corner at all.",
+              "Three exposed faces: straight off the north wall,",
+              "one 45-degree diagonal across the corner, straight",
+              "off the west wall. Interior angles 90/90/135/135/90.",
               "",
-              "A true 6-sided deck inside a 60 x 60 corner needs two",
-              "22-1/2 degree joints flanking one 45 degree joint.",
-              "Interior angles: 90 / 90 / 157-1/2 / 135 / 157-1/2 / 90.",
-              "They sum to 720, as a hexagon must.",
+              "That gives exactly TWO saw settings for the whole",
+              "deck: 45 degrees where a rim meets a wall, and",
+              "22-1/2 degrees at the two diagonal corners.",
+              "Nothing else in this build needs an angle cut.",
               "",
-              "Every miter is therefore 11-1/4 or 22-1/2 degrees.",
-              "Both are detents on any 10-inch miter saw. Nothing",
-              "in this deck needs a custom angle or a bevel gauge.",
+              "FACES   30\"  /  42-7/16\"  /  30\"",
+              "DECK AREA   21.88 SQ FT",
+              "POSTS   4 tall + 1 corner stub",
               "",
-              "DECK AREA   21.75 SQ FT",
-              "Both 60-inch wall runs stay full length, so both ledgers",
-              "get maximum stud engagement. That is the whole point",
-              "of cutting the outer corner instead of the wall corners.",
+              "Both 60-inch wall runs stay full length, so both",
+              "ledgers get maximum stud engagement.",
               "",
               "JOIST NOTES",
-              "J1 is square both ends — Simpson LUS26 hangers.",
-              "J2 and J3 die into an angled rim. Use Simpson LSU26",
-              "adjustable skewable U hangers (Internet # 100375129),",
-              "field-bent to the angle shown. Alternatively bevel the",
-              "joist end and add a 2x6 cleat underneath.",
-              "Do not toe-nail either one.",
-              "",
-              "POST D sits at 45 degrees so its faces meet both",
-              "angled rims squarely. Cut its notches before standing."]:
+              "J1 is square both ends - Simpson LUS26 hangers.",
+              "J2 and J3 die into the diagonal at 45 degrees. Use",
+              "Simpson LSU26 adjustable skewable hangers, bent to",
+              "the angle. Two short blocks behind the diagonal",
+              "carry the deck edge. Do not toe-nail either one."]:
         up = s.isupper() and s
         c.setFont("Helvetica-Bold" if up else "Helvetica", 7.5)
         c.setFillColor(ACCENT if up else INK)

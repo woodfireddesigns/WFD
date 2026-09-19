@@ -40,51 +40,55 @@ POST_TOP      = DECK_TOP + GUARD_H       # 80.0
 POST_LEN_TALL = POST_TOP                 # 4x4 cut length for the 5 perimeter posts
 POST_LEN_CORNER = JOIST_BOT              # stub post in the room corner (37.75)
 
-# Hexagon: symmetric about the 45-deg diagonal.
-# Interior angles: 90 (corner A), 90 (B), 157.5 (C), 135 (D), 157.5 (C'), 90 (B')
-# -> miters are 11.25 deg (22.5 joint) and 22.5 deg (45 joint). Both are saw detents.
-HEX_H         = 24.0         # short faces B-C and C'-B'. 24 so a FUTURE bridge can be 24" wide, not 18".
-_A22          = math.radians(22.5)
-_RUN_PER_LEN  = math.sin(_A22) + math.cos(_A22)   # 1.3065630
-HEX_T         = (LOFT_SIZE - HEX_H) / _RUN_PER_LEN  # length of each angled face
-_DX           = math.sin(_A22) * HEX_T
-_DY           = math.cos(_A22) * HEX_T
+# PENTAGON - three exposed faces: straight off the north wall, one 45-deg
+# diagonal, straight off the west wall. Interior angles 90/90/135/135/90.
+# That is only TWO saw settings for the whole deck: 45 deg and 22.5 deg.
+#
+# (The earlier hexagon needed 11.25 deg cuts and a sixth post. This is simpler
+#  to build, costs 0.5 sq ft of deck, and reads cleaner in the room.)
+PENT_H        = 30.0         # straight run off each wall
+DIAG_LEN      = (LOFT_SIZE - PENT_H) * math.sqrt(2)   # 42.426"
+CORNER_CUT    = LOFT_SIZE - PENT_H                    # 30" off each wall direction
 
 # Loft deck outline in LOCAL (u,v) inches
 LOFT_POLY = [
-    ("A",  0.0,                0.0),               # room corner (wall/wall)
-    ("B",  LOFT_SIZE,          0.0),               # north wall, outer end  -> BRIDGE post
-    ("C",  LOFT_SIZE,          HEX_H),             # 22.5 deg joint
-    ("D",  LOFT_SIZE - _DX,    HEX_H + _DY),       # 45 deg joint, on the diagonal
-    ("Cp", HEX_H,              LOFT_SIZE),         # 22.5 deg joint
-    ("Bp", 0.0,                LOFT_SIZE),         # west wall, outer end   -> LADDER post
+    ("A",  0.0,       0.0),        # room corner (wall/wall)
+    ("B",  LOFT_SIZE, 0.0),        # north wall, outer end  -> future BRIDGE post
+    ("C",  LOFT_SIZE, PENT_H),     # 135 deg
+    ("D",  PENT_H,    LOFT_SIZE),  # 135 deg
+    ("E",  0.0,       LOFT_SIZE),  # west wall, outer end   -> LADDER post
 ]
-LOFT_TALL_POSTS = ["B", "C", "D", "Cp", "Bp"]      # 5 tall + 1 corner stub = 6 posts
+LOFT_TALL_POSTS = ["B", "C", "D", "E"]             # 4 tall + 1 corner stub = 5 posts
 
 # Face assignments
-FACE_BRIDGE   = ("B",  "C")    # 20" - bridge gate
-FACE_SHELF    = ("C",  "D")    # angled - integrated bookshelf guard
-FACE_NET      = ("D",  "Cp")   # angled - rope net guard
-FACE_LADDER   = ("Cp", "Bp")   # 20" - ladder entry
+FACE_BRIDGE   = ("B", "C")    # 30" straight  - future bridge gate, removable panel
+FACE_DIAG     = ("C", "D")    # 42-7/16" diagonal - the hero face, ROUND DOOR below
+FACE_LADDER   = ("D", "E")    # 30" straight  - ladder entry, self-closing gate
+FACES_OPEN    = [FACE_BRIDGE, FACE_DIAG, FACE_LADDER]
 
 # --- enclosed knee wall under the loft -------------------------------
 KNEE_TOTAL    = JOIST_BOT                # 37.75 floor to underside of joists
 KNEE_STUD     = KNEE_TOTAL - 2 * T_2X    # 34.75  (NOT the 40-42" in the brief)
 KNEE_OC       = 16.0
 
-# Hobbit door in the knee wall (loft ground level)
-HDOOR_RO_W    = 26.0
-HDOOR_RO_H    = 32.0                     # capped by KNEE_TOTAL, not the 36-38" in the brief
-HDOOR_HDR     = T_2X                     # single 2x4 laid flat
-HDOOR_CRIPPLE = KNEE_TOTAL - HDOOR_RO_H - HDOOR_HDR - T_2X   # 2.75
-HDOOR_SLAB_W  = 24.0
-HDOOR_SLAB_H  = 30.75
-HDOOR_ARCH_R  = HDOOR_SLAB_W / 2.0       # true semicircular head, r = 12
-HDOOR_FACE    = FACE_NET                 # centered on the D-C' angled face
+# ROUND HOBBIT DOOR - a true circle, Bag End style.
+# Framed as a square rough opening; the circle is a plywood ring inside it.
+# You never cut a curved stud.
+HDOOR_RO_W    = 30.0          # square R.O. - the circle lives inside this
+HDOOR_RO_H    = 30.0
+HDOOR_HDR     = T_2X
+HDOOR_CRIPPLE = KNEE_TOTAL - HDOOR_RO_H - HDOOR_HDR - T_2X   # 3.25"
+HDOOR_OPEN_D  = 28.0          # finished circular opening
+HDOOR_SLAB_D  = 27.0          # door slab diameter
+HDOOR_RING    = (HDOOR_RO_W - HDOOR_OPEN_D) / 2.0            # 1" ply ring
+HDOOR_CZ      = T_2X + HDOOR_RO_H / 2.0                      # 16.5" centre AFF
+HDOOR_SILL    = HDOOR_CZ - HDOOR_OPEN_D / 2.0                # 2.5" step-over
+HDOOR_SLAB_T  = 0.75          # 3/4" ply -> ~9 lb. Do not go thicker; a toddler swings it.
+HDOOR_FACE    = FACE_DIAG     # centred on the diagonal
 
 PORTHOLE_D    = 8.0                      # acrylic disc
 PORTHOLE_Z    = 24.0                     # center height off floor
-PORTHOLE_FACE = FACE_SHELF
+PORTHOLE_FACE = FACE_BRIDGE
 
 # --- age staging ------------------------------------------------------
 # 18 mo - 3 yr : ground den + playhouse only. Ladder stored off the structure.
@@ -115,12 +119,12 @@ BAL_BOT       = DECK_TOP + TOE_H
 BAL_TOP       = POST_TOP - RAIL_T
 BAL_LEN       = BAL_TOP - BAL_BOT
 
-GATE_FACE     = ("Cp", "Bp")   # ladder entry - self-closing swing gate
-PANEL_FACE    = ("B",  "C")    # future bridge gate - REMOVABLE baluster panel
+GATE_FACE     = ("D", "E")    # ladder entry - self-closing swing gate
+PANEL_FACE    = ("B", "C")    # future bridge gate - REMOVABLE baluster panel
 
 # --- ground-level den shelf (the apothecary moved down here) -----------
 # Shelves in a guardrail are a climbing aid. At floor level they are just shelves.
-DEN_SHELF_FACE  = ("B", "C")
+DEN_SHELF_FACE  = FACE_BRIDGE
 DEN_SHELF_D     = 7.25
 DEN_SHELF_Z     = (9.0, 19.0)
 
@@ -150,10 +154,11 @@ PH_WINDOW_Z   = 62.0
 # panel, drill 4 holes, bolt 4 eye bolts. No opening up of finished work.
 # ----------------------------------------------------------------------
 BRIDGE_BUILD  = False
+BUILD_PLAYHOUSE = False       # phase 1 is the LOFT ONLY. Playhouse code kept, not built.
 BRIDGE_X0     = LOFT_SIZE                # 60  - loft east rim
 BRIDGE_X1     = PH_X0                    # 114 - playhouse west face
 BRIDGE_SPAN   = BRIDGE_X1 - BRIDGE_X0    # 54  (brief said ~42 - see plan note 3)
-BRIDGE_W      = HEX_H                    # 24" - was 18", too narrow to walk
+BRIDGE_W      = PENT_H                   # 30" - the straight face off the north wall
 BRIDGE_DECK_Z = DECK_TOP
 BRIDGE_TOP_Z  = DECK_TOP + GUARD_H       # 80
 BRIDGE_SAG    = 7.0                      # expected free-hang sag at this span

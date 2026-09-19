@@ -90,18 +90,19 @@ def main():
     sheet(c, "A10", "REFERENCE VIEWS — MODEL", "rendered from the Blender model, dimensionally accurate", "n.t.s.",
           lambda sh: D.plate(sh,
             [R("01_hero_iso.png"), R("06_from_doorway.png"), R("02_loft_three_qtr.png"), R("03_playhouse_front.png")],
-            "MODEL VIEWS — these are the geometry, not a mood board. Use them to check that what you build matches what was drawn.",
+            "MODEL VIEWS — the geometry, not a mood board. Photoreal 2K versions of all four exist in Higgsfield: exports/higgsfield/MANIFEST.md",
             ["01  Isometric overview — both structures and the crossing",
              "02  From the room doorway — what a kid sees walking in",
              "03  Loft three-quarter — hex deck, rope guard, bookshelf",
              "04  Playhouse front — hobbit door, round window, peaked roof"]))
-    sheet(c, "A11", "TECHNICAL MODEL VIEWS", "orthographic + framing-only", "n.t.s.",
+    sheet(c, "A11", "TECHNICAL MODEL VIEWS", "true plan, north elevation, framing-only", "n.t.s.",
           lambda sh: D.plate(sh,
-            [R("T1_plan.png"), R("T4_loft_frame.png"), R("T2_elev_north.png"), R("T3_elev_west.png")],
+            [R("T1_plan.png"), R("T2_elev_north.png"), R("T4_loft_frame.png"), R("T5_playhouse_frame.png")],
             "ORTHOGRAPHIC + FRAMING-ONLY VIEWS",
-            ["T1  True plan — room shell removed",
-             "T2  Loft framing only — skins, deck and rope hidden",
-             "T3  North elevation", "T4  West elevation"]))
+            ["T1  True plan — walls and ceiling removed, floor retained",
+             "T2  North elevation — the wall both structures anchor to",
+             "T3  Loft framing only — skins, decking and all rope hidden",
+             "T4  Playhouse framing only — posts, plates, rafters, door bucks"]))
     c.save()
     print("PDF:", OUT, f"{os.path.getsize(OUT)/1024:.0f} KB")
 

@@ -1,0 +1,14 @@
+{
+  "name": "wfd-upwork-lead-scraper",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Firecrawl-powered Upwork job scraper + ICP scorer for Wood Fired Designs lead flow.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "scrape": "node src/index.js run",
+    "dry": "node src/index.js run --dry-run",
+    "smoke": "node src/index.js smoke",
+    "report": "node src/index.js report"
+  }
+}

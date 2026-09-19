@@ -1,0 +1,43 @@
+# Copy to .github/workflows/upwork-scraper.yml to activate.
+# Requires repo secret: FIRECRAWL_API_KEY
+name: Upwork lead scraper
+
+on:
+  schedule:
+    - cron: '0 11,15,19,23 * * 1-5'   # 7am/11am/3pm/7pm ET, weekdays
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Restore the dedupe memory from the last run so you don't re-surface old jobs.
+      - name: Restore job cache
+        uses: actions/cache@v4
+        with:
+          path: tools/upwork-lead-scraper/data/jobs.json
+          key: upwork-jobs-${{ github.run_id }}
+          restore-keys: upwork-jobs-
+
+      - name: Run scraper
+        working-directory: tools/upwork-lead-scraper
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+          FIRECRAWL_PROXY: stealth
+          WEBHOOK_URL: ${{ secrets.UPWORK_WEBHOOK_URL }}
+        run: node src/index.js run
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: upwork-leads
+          path: |
+            tools/upwork-lead-scraper/data/*.csv
+            tools/upwork-lead-scraper/data/*.md
+          retention-days: 30

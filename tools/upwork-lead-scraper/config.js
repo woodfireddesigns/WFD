@@ -15,6 +15,15 @@
  */
 export const gates = {
   requirePaymentVerified: true,
+
+  // Client country whitelist. Matched against aliases in src/score.js, so
+  // "US", "USA", "England", "Scotland" etc. all resolve correctly.
+  allowedCountries: ['United States', 'United Kingdom', 'Canada'],
+  // Search cards sometimes omit the client's country. Keep those and let
+  // enrichment recover it - the digest flags any that stay unknown.
+  // Flip to false to drop anything that can't be confirmed US/UK/CA.
+  allowUnknownCountry: true,
+
   minFixedBudget: 2000,
   minHourlyRate: 45,
   // Search cards often omit the budget entirely. Keep those - enrichment usually
@@ -26,31 +35,34 @@ export const gates = {
   maxProposals: 0,
 };
 
+/** Applied as the client-location filter on every search URL. */
+const COUNTRIES = ['United States', 'United Kingdom', 'Canada'];
+
 export const searches = [
   // --- Ecommerce management: structurally ongoing work ---
   {
     id: 'shopify-store-management',
     q: 'Shopify store management ongoing',
     pages: 2,
-    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 45, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 45, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
   {
     id: 'ecommerce-manager',
     q: 'ecommerce manager brand',
     pages: 2,
-    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 45, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 45, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
   {
     id: 'klaviyo-email-design',
     q: 'Klaviyo email design ecommerce',
     pages: 1,
-    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 45, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 45, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
   {
     id: 'shopify-cro-product-pages',
     q: 'Shopify product page design conversion',
     pages: 1,
-    filters: { paymentVerified: true, fixedMin: 2500, hourlyMin: 50, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 2500, hourlyMin: 50, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
 
   // --- Brand identity and strategy at real budgets ---
@@ -58,25 +70,25 @@ export const searches = [
     id: 'brand-identity',
     q: 'brand identity designer',
     pages: 2,
-    filters: { paymentVerified: true, fixedMin: 3000, hourlyMin: 50, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 3000, hourlyMin: 50, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
   {
     id: 'brand-strategist',
     q: 'brand strategist positioning',
     pages: 1,
-    filters: { paymentVerified: true, fixedMin: 3000, hourlyMin: 55, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 3000, hourlyMin: 55, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
   {
     id: 'dtc-brand-designer',
     q: 'DTC brand designer ecommerce',
     pages: 2,
-    filters: { paymentVerified: true, fixedMin: 2500, hourlyMin: 50, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 2500, hourlyMin: 50, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
   {
     id: 'rebrand',
     q: 'rebrand brand refresh company',
     pages: 1,
-    filters: { paymentVerified: true, fixedMin: 3000, hourlyMin: 55, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 3000, hourlyMin: 55, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
 
   // --- Explicitly ongoing / partner-shaped ---
@@ -84,13 +96,13 @@ export const searches = [
     id: 'ongoing-design-partner',
     q: 'ongoing design support brand',
     pages: 2,
-    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 50, tiers: ['intermediate', 'expert'] },
+    filters: { paymentVerified: true, fixedMin: 2000, hourlyMin: 50, tiers: ['intermediate', 'expert'], location: COUNTRIES },
   },
   {
     id: 'creative-director-part-time',
     q: 'part time creative director brand',
     pages: 1,
-    filters: { paymentVerified: true, fixedMin: 2500, hourlyMin: 60, tiers: ['expert'] },
+    filters: { paymentVerified: true, fixedMin: 2500, hourlyMin: 60, tiers: ['expert'], location: COUNTRIES },
   },
 ];
 
@@ -172,7 +184,9 @@ export const scoring = {
       { max: Infinity, points: -16 },
     ],
     ratingAtLeast45: 6,
-    usClient: 8,
+    // Per-country fit. US pays best and shares your timezone; UK and Canada
+    // are close behind. Anything outside the gate never reaches this.
+    countryPoints: { 'United States': 8, 'United Kingdom': 6, 'Canada': 6 },
     freshnessBands: [
       { maxHours: 6, points: 12 },
       { maxHours: 24, points: 8 },

@@ -9,7 +9,7 @@ import { DATA_DIR } from './store.js';
 const CSV_COLUMNS = [
   'retainerLevel', 'retainerScore', 'score', 'tier', 'title', 'url',
   'contractType', 'fixedBudget', 'hourlyMin', 'hourlyMax', 'estimatedDuration', 'durationMonths', 'workload',
-  'proposals', 'paymentVerified', 'clientSpend', 'clientHires', 'clientHireRate', 'clientRating', 'clientCountry',
+  'proposals', 'paymentVerified', 'clientSpend', 'clientHires', 'clientHireRate', 'clientRating', 'clientCountry', 'country',
   'postedRelative', 'experienceLevel', 'connectsRequired', 'skills', 'sourceId', 'firstSeenAt',
 ];
 
@@ -42,7 +42,7 @@ function clientLine(job) {
   if (job.clientHires != null) bits.push(`${job.clientHires} hires`);
   if (job.clientHireRate) bits.push(`${job.clientHireRate} hire rate`);
   if (job.clientRating != null) bits.push(`${job.clientRating}★`);
-  if (job.clientCountry) bits.push(job.clientCountry);
+  bits.push(job.clientCountry ? `${job.clientCountry}${job.country ? '' : ' (unrecognized)'}` : 'COUNTRY UNKNOWN — verify before bidding');
   return bits.join(' · ') || 'client history not shown';
 }
 

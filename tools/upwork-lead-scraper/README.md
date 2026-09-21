@@ -71,12 +71,27 @@ how well it reads. This is what keeps the digest short.
 
 ```js
 requirePaymentVerified: true,
+allowedCountries: ['United States', 'United Kingdom', 'Canada'],
+allowUnknownCountry: true,  // keep jobs whose card omits country; enrichment recovers it
 minFixedBudget: 2000,
 minHourlyRate: 45,
 allowUnknownBudget: true,   // search cards often omit budget; enrichment recovers it
 minClientSpend: 0,          // set to 5000 once volume is healthy
 maxProposals: 0,            // 0 = off
 ```
+
+**Country is enforced twice, on purpose.** Every search URL carries
+`&location=United States,United Kingdom,Canada`, and the gate re-checks the extracted
+client country after the fact. The URL filter saves credits; the gate is what actually
+guarantees correctness if Upwork changes or ignores that param.
+
+Matching handles aliases: "USA", "U.S.", "England", "Scotland", "Britain" all resolve.
+Bare "CA" is deliberately NOT treated as Canada — it reads as California far more often.
+
+A country that is **present but not on the list** is always dropped. A **missing** country
+is governed by `allowUnknownCountry`. Set it to `false` to drop anything you can't confirm,
+at the cost of losing real US jobs whose cards hide the field. Jobs that stay unknown through
+enrichment are flagged `COUNTRY UNKNOWN — verify before bidding` in the digest.
 
 Raise `minFixedBudget` to 3500 and `minHourlyRate` to 60 after a week if too much junk gets through.
 Set `allowUnknownBudget: false` to be ruthless, at the cost of missing real jobs whose cards hide

@@ -20,7 +20,10 @@ export function buildSearchUrl(searchCfg, page = 1) {
   params.set('t', f.contractType === 'hourly' ? '0' : f.contractType === 'fixed' ? '1' : '0,1');
   if (f.fixedMin) params.set('amount', `${f.fixedMin}-`);
   if (f.hourlyMin) params.set('hourly_rate', `${f.hourlyMin}-`);
-  if (f.location) params.set('location', f.location);
+  // Client location filter. Upwork accepts a comma-separated country list here.
+  if (f.location) {
+    params.set('location', Array.isArray(f.location) ? f.location.join(',') : f.location);
+  }
   if (page > 1) params.set('page', String(page));
   return `https://www.upwork.com/nx/search/jobs/?${params.toString()}`;
 }

@@ -11,6 +11,28 @@
 
 import { gates, scoring, retainer } from '../config.js';
 
+/**
+ * Country aliases. Upwork prints the client's country in a few forms, and the
+ * digest should not drop a real US job because the card said "USA".
+ * Deliberately excludes bare "CA" - that reads as California far more often
+ * than Canada.
+ */
+const COUNTRY_ALIASES = {
+  'United States': ['united states', 'united states of america', 'usa', 'u.s.a', 'u.s.', ' us ', 'america'],
+  'United Kingdom': ['united kingdom', 'uk', 'u.k.', 'great britain', 'britain', 'england', 'scotland', 'wales', 'northern ireland'],
+  Canada: ['canada', 'canadian'],
+};
+
+/** Resolve a raw country string to a canonical name, or null if unrecognized. */
+export function canonicalCountry(raw) {
+  if (!raw) return null;
+  const s = ` ${String(raw).toLowerCase().trim()} `;
+  for (const [canonical, aliases] of Object.entries(COUNTRY_ALIASES)) {
+    if (aliases.some((a) => s.includes(a))) return canonical;
+  }
+  return null;
+}
+
 function band(bands, value, key = 'min') {
   if (value == null) return null;
   for (const b of bands) {
@@ -32,6 +54,22 @@ function budgetOf(job) {
 /** Returns null if the job passes, or a string reason if it's disqualified. */
 export function checkGates(job) {
   if (gates.requirePaymentVerified && job.paymentVerified === false) return 'payment not verified';
+
+  // Country whitelist. US, UK, Canada only.
+  // A MISSING country is "unknown" and governed by allowUnknownCountry.
+  // A country that is present but not on the list is always a drop - an
+  // unrecognized name means it isn't US, UK, or Canada, not that it's a mystery.
+  if (gates.allowedCountries?.length) {
+    const raw = (job.clientCountry || '').trim();
+    if (!raw) {
+      if (!gates.allowUnknownCountry) return 'client country not listed';
+    } else {
+      const country = canonicalCountry(raw);
+      if (!country || !gates.allowedCountries.includes(country)) {
+        return `client in ${raw}, outside ${gates.allowedCountries.join('/')}`;
+      }
+    }
+  }
 
   const budget = budgetOf(job);
   if (budget.value == null) {
@@ -114,7 +152,8 @@ export function scoreJob(job) {
   if (propBand && job.proposals != null) add(propBand.points, `${job.proposals} proposals`);
 
   if (job.clientRating != null && job.clientRating >= 4.5) add(s.ratingAtLeast45, `rating ${job.clientRating}`);
-  if (/united states|usa|^us$/i.test(job.clientCountry || '')) add(s.usClient, 'US client');
+  const country = canonicalCountry(job.clientCountry);
+  if (country && s.countryPoints?.[country]) add(s.countryPoints[country], `${country} client`);
 
   if (job.postedHoursAgo != null) {
     const fresh = s.freshnessBands.find((b) => job.postedHoursAgo <= b.maxHours);
@@ -138,6 +177,7 @@ export function scoreJob(job) {
     retainerLevel: r.level,
     retainerReasons: r.reasons,
     durationMonths: durationToMonths(job.estimatedDuration),
+    country: canonicalCountry(job.clientCountry),
     reasons,
     disqualified: Boolean(disqualifiedReason),
     disqualifiedReason: disqualifiedReason || '',

@@ -19,3 +19,7 @@ Icon?
 
 # transient Google Drive sync artifacts
 .tmp.driveupload/
+
+# showreel render intermediates
+WFD-WEBSITE/showreel/frames/
+WFD-WEBSITE/showreel/stills/

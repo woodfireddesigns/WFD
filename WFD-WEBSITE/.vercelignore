@@ -8,3 +8,5 @@ assets/video/Hero-desktop-2.mp4
 assets/video/hero-desktop.mp4
 .DS_Store
 *.md
+showreel/render.mjs
+showreel/audio.py

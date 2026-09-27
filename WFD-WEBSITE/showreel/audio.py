@@ -172,6 +172,30 @@ put(pad(1.5, [110, 164.81, 220, 261.63, 329.63]), 13.52, .09, verb=.5)
 put(bell([880, 1318.5, 1760], 1.4), 13.55, .1, verb=.8)
 for i in range(3): put(tick(3000, .03), 14.1 + i * .2, .12, pan=-.3 + i * .3, verb=.5)
 
+# ---------------------------------------------------------------- fire foley
+def roar(len_s, rise, fall):
+    """Flame whoosh: filtered noise that swells with the wall of fire, plus crackle."""
+    n = int(len_s * SR); t = np.arange(n) / SR
+    shape = np.clip(t / rise, 0, 1) ** 2 * np.where(t > len_s - fall, np.clip((len_s - t) / fall, 0, 1), 1)
+    body = onepole(rng.standard_normal(n), 250 + 3200 * shape) * 1.4
+    rumble = onepole(rng.standard_normal(n), 90) * 3.0
+    return (body + rumble) * shape + crackle(len_s, 60) * shape
+
+
+def crackle(len_s, rate):
+    n = int(len_s * SR); out = np.zeros(n)
+    for _ in range(int(len_s * rate)):
+        i = int(rng.random() * (n - 800)); m = int(80 + rng.random() * 600)
+        out[i:i + m] += rng.standard_normal(m) * np.exp(-np.arange(m) / (m / 5)) * (0.3 + rng.random())
+    return out - onepole(out, 1500)
+
+
+put(crackle(1.9, 25) * np.linspace(0, 1, int(1.9 * SR)) ** 2, .15, .35, pan=.1)
+put(roar(.62, .06, .4), 1.95, .75, verb=.3)
+put(roar(.85, .36, .38), 5.6, .7, pan=-.1, verb=.3)
+put(roar(.85, .28, .42), 13.18, .75, pan=.1, verb=.4)
+put(crackle(1.25, 18), 13.75, .25, pan=-.15, verb=.3)
+
 # ---------------------------------------------------------------- reverb + master
 ir_n = int(1.9 * SR); ir_t = np.arange(ir_n) / SR
 ir = rng.standard_normal(ir_n) * np.exp(-ir_t * 3.2)

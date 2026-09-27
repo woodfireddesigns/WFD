@@ -32,7 +32,9 @@ if (stillsArg > -1) {
   for (const s of process.argv[stillsArg + 1].split(',')) await shot(+s, path.join(dir, `t${(+s).toFixed(2)}.png`), 'png');
 } else {
   const dir = path.join(here, 'frames'); mkdirSync(dir, { recursive: true });
-  for (let f = 0; f < FPS * DUR; f++) {
+  // FRAMES=a-b re-renders only that range (inclusive), e.g. after a local fix
+  const [fa, fb] = (process.env.FRAMES || `0-${FPS * DUR - 1}`).split('-').map(Number);
+  for (let f = fa; f <= fb; f++) {
     await shot(f / FPS, path.join(dir, `f${String(f).padStart(4, '0')}.jpg`), 'jpeg');
     if (f % 60 === 0) console.log(`frame ${f}/${FPS * DUR}`);
   }

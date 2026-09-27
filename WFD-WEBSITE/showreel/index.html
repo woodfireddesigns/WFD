@@ -45,7 +45,7 @@
             color: transparent; -webkit-text-stroke: 3px var(--bone); }
   #s1 .strike { position: absolute; left: 470px; width: 980px; top: 590px; height: 30px; background: var(--ember);
                 transform-origin: 0 50%; }
-  #s1 .tag { position: absolute; left: 0; right: 0; top: 890px; text-align: center; font-size: 20px; color: rgba(245,242,236,.6); }
+  #s1 .tag { position: absolute; left: 0; right: 0; top: 170px; text-align: center; font-size: 20px; color: rgba(245,242,236,.6); }
   #s1 .tag .cur { display: inline-block; width: 12px; height: 22px; background: var(--ember); vertical-align: -4px; margin-left: 6px; }
 
   /* ---------- S2 impact ---------- */
@@ -152,15 +152,16 @@
 
   /* ---------- S8 end card ---------- */
   #s8 { background: radial-gradient(ellipse 90% 70% at 50% 110%, #3A1A0A 0%, #1A1110 45%, var(--deep) 80%); }
-  #s8 .logoWrap { position: absolute; left: 520px; top: 150px; width: 880px; height: 511px; }
+  #s8 .logoWrap { position: absolute; left: 520px; top: 110px; width: 880px; height: 511px; }
   #s8 .logoWrap img { width: 100%; }
   #s8 .sheen { position: absolute; inset: 0; -webkit-mask: url(img/wfd-slab.png) center / 100% 100% no-repeat; mask: url(img/wfd-slab.png) center / 100% 100% no-repeat; }
-  #s8 .svc { position: absolute; left: 0; right: 0; top: 730px; text-align: center; font-size: 18px; color: rgba(245,242,236,.6); letter-spacing: .32em; }
-  #s8 .cta { position: absolute; left: 0; right: 0; top: 790px; text-align: center; font-family: var(--serif); font-style: italic; font-size: 60px; }
-  #s8 .url { position: absolute; left: 0; right: 0; top: 915px; text-align: center; font-size: 22px; color: var(--ember); letter-spacing: .3em; }
+  #s8 .svc { position: absolute; left: 0; right: 0; top: 675px; text-align: center; font-size: 18px; color: rgba(245,242,236,.6); letter-spacing: .32em; }
+  #s8 .cta { position: absolute; left: 0; right: 0; top: 725px; text-align: center; font-family: var(--serif); font-style: italic; font-size: 60px; }
+  #s8 .url { position: absolute; left: 0; right: 0; top: 835px; text-align: center; font-size: 22px; color: var(--ember); letter-spacing: .3em; }
   #s8 .url b { display: inline-block; width: 60px; height: 2px; background: var(--ember); vertical-align: middle; margin: 0 24px; }
 
   /* ---------- overlays ---------- */
+  #fire { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; display: none; }
   #fx, #grain { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; }
   #grain { mix-blend-mode: overlay; opacity: .22; image-rendering: pixelated; }
   #flash { position: absolute; inset: 0; background: var(--bone); opacity: 0; pointer-events: none; }
@@ -296,6 +297,7 @@
   </div>
 
   <div id="bars"></div>
+  <canvas id="fire" width="960" height="540"></canvas>
   <canvas id="fx" width="1920" height="1080"></canvas>
   <div id="flash"></div>
   <div id="vignette"></div>
@@ -423,36 +425,145 @@ function makeEmbers(seed, t0, t1, n, spread) {
   }));
 }
 const BURSTS = [makeBurst(11, 2.0, 170, 960, 560, 1900), makeBurst(12, 6.0, 60, 960, 540, 1300), makeBurst(13, 13.5, 120, 960, 400, 1500)];
-const EMBERS = [makeEmbers(21, 0, 2.0, 26, 900), makeEmbers(22, 13.3, 15.5, 110, 1900)];
+const EMBERS = [makeEmbers(21, 0, 2.0, 60, 1800), makeEmbers(22, 13.3, 15.5, 110, 1900)];
+
+// ---------- anime fire: posterized noise field, cel-shaded, animated on twos ----------
+// Hard-edged bands (no gradients) + 12fps drawing holds = hand-drawn anime flame.
+const FIRE_BANDS = [[1.02, [255, 246, 222]], [.74, [255, 204, 64]], [.47, [255, 138, 31]], [.13, [212, 88, 26]], [0, [122, 26, 6]]];
+const NOISE = (() => {
+  const r = rng(99), p = [...Array(256).keys()];
+  for (let i = 255; i > 0; i--) { const j = r() * (i + 1) | 0; [p[i], p[j]] = [p[j], p[i]]; }
+  const vals = Float32Array.from({ length: 256 }, () => r());
+  return { p: Uint8Array.from([...p, ...p]), v: vals };
+})();
+function vnoise(x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+  const u = xf * xf * (3 - 2 * xf), w = yf * yf * (3 - 2 * yf);
+  const P = NOISE.p, V = NOISE.v, X = xi & 255, Y = yi & 255;
+  const a = V[P[P[X] + Y]], b = V[P[P[X + 1] + Y]], c = V[P[P[X] + Y + 1]], d = V[P[P[X + 1] + Y + 1]];
+  return a + (b - a) * u + (c - a) * w + (a - b - c + d) * u * w;
+}
+
+// which fires burn at time t: each is a flame wall that rises (up) and collapses back down (down)
+const wall = (t, peak, u0, u1, d0, d1, upEase = E.inCubic) => peak * upEase(prog(t, u0, u1)) * (1 - E.inOutCubic(prog(t, d0, d1)));
+function fireSources(t) {
+  const H = [];
+  if (t < 2.0) H.push(270 * E.inCubic(prog(t, .2, 1.98)));                  // builds with the riser
+  if (t >= 1.95 && t < 2.55) H.push(wall(t, 1900, 1.95, 2.05, 2.1, 2.5, E.outExpo)); // eruption behind POWER.
+  if (t >= 2.2 && t < 3.06) H.push(wall(t, 170, 2.2, 2.6, 2.72, 3.0, E.outCubic));   // simmer
+  if (t >= 5.6 && t < 6.42) H.push(wall(t, 1900, 5.6, 5.97, 6.02, 6.38));            // fire wipe into the work
+  if (t >= 13.18 && t < 13.98) H.push(wall(t, 1900, 13.18, 13.47, 13.55, 13.95));    // engulf, collapse to reveal logo
+  if (t >= 13.75) H.push(105 * E.outCubic(prog(t, 13.75, 14.3)));            // hearth under the end card
+  return H.filter(h => h > 2);
+}
+// ridged noise: sharp crests become pointed flame tongues, and every cel band traces a nested tongue
+const ridge = (x, y) => 1 - Math.abs(2 * vnoise(x, y) - 1);
+
+const FW = 481, FH = 271, FSTEP = 4;               // field grid (stage px per cell)
+const field = new Float32Array(FW * FH);
+const fireCv = $('#fire'), fire = fireCv.getContext('2d'), fireImg = fire.createImageData(960, 540);
+function drawFire(t) {
+  const S = fireSources(t);
+  fireCv.style.display = S.length ? 'block' : 'none';
+  if (!S.length) return;
+  const tq = Math.floor(t * 12) / 12;               // on twos: new drawing every 5 frames at 60fps
+  field.fill(-1);
+  const hmax = Math.max(...S), y0 = Math.max(0, Math.floor((1080 - hmax * 2.1) / FSTEP));
+  for (let gy = y0; gy < FH; gy++) {
+    const y = gy * FSTEP, row = gy * FW, d = 1080 - y;
+    for (let gx = 0; gx < FW; gx++) {
+      const x = gx * FSTEP;
+      const warp = (vnoise(x * .004, y * .003 - tq * 1.2) - .5) * 2.6;
+      const r = ridge(x * .0105 + warp, y * .0027 + tq * 3.2) * .68 + ridge(x * .023 + 7 + warp * .5, y * .0062 + tq * 4.6) * .32;
+      const sway = .8 + .4 * vnoise(x * .003 + 3.1, tq * .9);
+      let v = -1;
+      // the cap keeps white-hot to the tongue crests instead of flooding the interior
+      for (const h of S) { const w = Math.min(1.15 - d / (h * sway), .62) + (r - .55) * 1.3; if (w > v) v = w; }
+      field[row + gx] = v;
+    }
+  }
+  // bilinear upsample the field to 960x540 and threshold into flat cel bands
+  const D = fireImg.data;
+  for (let oy = 0; oy < 540; oy++) {
+    const fy = oy * .5, iy = fy | 0, ty = fy - iy, r0 = iy * FW, r1 = Math.min(iy + 1, FH - 1) * FW;
+    for (let ox = 0; ox < 960; ox++) {
+      const fx_ = ox * .5, ix = fx_ | 0, tx = fx_ - ix, ix1 = Math.min(ix + 1, FW - 1);
+      const top = field[r0 + ix] + (field[r0 + ix1] - field[r0 + ix]) * tx;
+      const bot = field[r1 + ix] + (field[r1 + ix1] - field[r1 + ix]) * tx;
+      const v = top + (bot - top) * ty, o = (oy * 960 + ox) * 4;
+      if (v <= 0) { D[o + 3] = 0; continue; }
+      let c = FIRE_BANDS[4][1];
+      for (const [th, col] of FIRE_BANDS) if (v > th) { c = col; break; }
+      D[o] = c[0]; D[o + 1] = c[1]; D[o + 2] = c[2]; D[o + 3] = 255;
+    }
+  }
+  fire.putImageData(fireImg, 0, 0);
+}
+
+// manga speed lines: thin ink wedges converging on the center, redrawn on twos
+function speedLines(t, t0, dur, color) {
+  const g = t - t0; if (g < 0 || g > dur) return;
+  const r = rng(500 + Math.floor(t * 12)), a = 1 - E.inCubic(g / dur);
+  fx.fillStyle = color; fx.globalAlpha = a;
+  for (let i = 0; i < 110; i++) {
+    const ang = r() * Math.PI * 2, w = .004 + r() * .012, rin = 420 + r() * 260 + g * 500;
+    const ca = Math.cos(ang), sa = Math.sin(ang);
+    fx.beginPath();
+    fx.moveTo(960 + ca * rin * 1.7, 540 + sa * rin);
+    fx.lineTo(960 + Math.cos(ang - w) * 2400, 540 + Math.sin(ang - w) * 2400);
+    fx.lineTo(960 + Math.cos(ang + w) * 2400, 540 + Math.sin(ang + w) * 2400);
+    fx.fill();
+  }
+  fx.globalAlpha = 1;
+}
 
 const fx = $('#fx').getContext('2d');
+const SPARK = ['#FFF6DE', '#FFCC40', '#FFCC40', '#FF8A1F'];
 function drawFX(t) {
   fx.clearRect(0, 0, 1920, 1080);
-  fx.globalCompositeOperation = 'lighter';
+  speedLines(t, 1.99, .42, '#1A1713');
+  speedLines(t, 5.9, .3, '#1A1713');
+  speedLines(t, 13.44, .5, '#1A1713');
+  // embers: solid cel dots with a hot core, flickering by size (on twos)
+  const tq = Math.floor(t * 12) / 12;
   for (const set of EMBERS) for (const p of set) {
-    const age = t - p.t0; if (age < 0 || age > p.life || p.t0 > p.until) continue;
-    const k = age / p.life, a = Math.sin(Math.PI * k) * (0.5 + 0.5 * Math.sin(age * 22 + p.ph));
+    const age = tq - p.t0; if (age < 0 || age > p.life || p.t0 > p.until) continue;
+    const k = age / p.life, s = p.s * Math.sin(Math.PI * k) * (.7 + .3 * Math.sin(age * 40 + p.ph));
+    if (s < .4) continue;
     const x = p.x + Math.sin(age * p.f + p.ph) * p.amp, y = p.y - p.vy * age;
-    const g = fx.createRadialGradient(x, y, 0, x, y, p.s * 5);
-    g.addColorStop(0, `rgba(255,${190 + p.hot * 50 | 0},120,${a})`); g.addColorStop(.25, `rgba(232,99,42,${a * .6})`); g.addColorStop(1, 'rgba(212,88,26,0)');
-    fx.fillStyle = g; fx.beginPath(); fx.arc(x, y, p.s * 5, 0, 7); fx.fill();
+    if (p.hot > .82) {                               // 4-point twinkle star
+      const R = s * 4.2, q = s * .9;
+      fx.fillStyle = '#FFE8A8'; fx.beginPath();
+      fx.moveTo(x, y - R); fx.lineTo(x + q, y - q); fx.lineTo(x + R, y); fx.lineTo(x + q, y + q);
+      fx.lineTo(x, y + R); fx.lineTo(x - q, y + q); fx.lineTo(x - R, y); fx.lineTo(x - q, y - q); fx.fill();
+    } else {
+      fx.fillStyle = '#E8632A'; fx.beginPath(); fx.arc(x, y, s * 1.7, 0, 7); fx.fill();
+      fx.fillStyle = '#FFE08A'; fx.beginPath(); fx.arc(x, y, s * .8, 0, 7); fx.fill();
+    }
   }
+  // burst sparks: hard-edged diamonds stretched along their velocity
   const drag = 4.2;
   for (const set of BURSTS) for (const p of set) {
     const age = t - p.t0; if (age < 0 || age > p.life) continue;
     const k = age / p.life, m = (1 - Math.exp(-drag * age)) / drag;
     const x = p.x + p.vx * m, y = p.y + p.vy * m + 520 * age * age;
-    const sv = Math.exp(-drag * age), dx = p.vx * sv * .03, dy = (p.vy * sv + 1040 * age) * .03;
-    fx.strokeStyle = `rgba(255,${160 + p.hot * 80 | 0},${80 + p.hot * 60 | 0},${(1 - k) * 0.95})`;
-    fx.lineWidth = p.w * (1 - k * .6); fx.lineCap = 'round';
-    fx.beginPath(); fx.moveTo(x, y); fx.lineTo(x - dx, y - dy); fx.stroke();
+    const sv = Math.exp(-drag * age), vx = p.vx * sv, vy = p.vy * sv + 1040 * age;
+    const sp = Math.hypot(vx, vy) + 1e-3, ux = vx / sp, uy = vy / sp;
+    const len = 10 + sp * .045, wd = p.w * 1.6 * (1 - k * .7);
+    fx.fillStyle = SPARK[(p.hot * 4) | 0];
+    fx.beginPath();
+    fx.moveTo(x + ux * len * .35, y + uy * len * .35);
+    fx.lineTo(x - uy * wd, y + ux * wd);
+    fx.lineTo(x - ux * len, y - uy * len);
+    fx.lineTo(x + uy * wd, y - ux * wd);
+    fx.fill();
   }
-  fx.globalCompositeOperation = 'source-over';
 }
 
 // ---------- global camera shake + flashes ----------
 const IMPACTS = [[2.0, 22], [6.0, 10], [8.5, 6], [10.5, 5], [12.5, 12], [13.5, 14]];
-const FLASHES = [[2.0, .95], [6.0, .75], [12.5, .6], [13.5, .85]];
+const FLASHES = [[12.5, .6]];
+const IMPACT_FRAMES = [[2.0, .05], [13.47, .05]];   // anime black-and-white impact frames
 function shake(t) {
   let x = 0, y = 0;
   for (const [t0, a] of IMPACTS) { const g = t - t0; if (g < 0 || g > .5) continue; const d = a * Math.exp(-g * 11); x += d * Math.sin(g * 95); y += d * Math.cos(g * 77 + 1); }
@@ -653,7 +764,11 @@ function render(t) {
   $('#world').style.transform = `translate(${sx}px,${sy}px)`;
   let fl = 0; for (const [t0, a] of FLASHES) { const g = t - t0; if (g >= 0 && g < .2) fl = Math.max(fl, a * (1 - g / .2) ** 2); }
   $('#flash').style.opacity = fl;
+  drawFire(t);
   drawFX(t);
+  const inv = IMPACT_FRAMES.some(([t0, d]) => t >= t0 && t < t0 + d);
+  $('#stage').style.filter = inv ? 'grayscale(1) invert(1) contrast(4)' : 'none';
+  $('#grain').style.visibility = inv ? 'hidden' : 'visible';
   const gctx = $('#grain').getContext('2d'); gctx.drawImage(grainFrames[Math.floor(t * FPS) % 8], 0, 0);
   hud(t);
 }

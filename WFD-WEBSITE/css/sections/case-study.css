@@ -205,6 +205,10 @@
   .cs-gallery {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .cs-gallery__item--wide {
+    grid-column: 1 / -1;
+  }
 }
 
 .cs-gallery__item {

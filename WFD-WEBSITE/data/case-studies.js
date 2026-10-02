@@ -59,11 +59,16 @@ window.CASE_STUDIES = [
     blurb: "A comic-book-loud identity and fleet wrap for a septic service company that wanted to be impossible to ignore on the road. Bold type, a mascot-driven mark, and a wrap system built to read at 45 mph.",
     cover: { type: "video", src: "assets/portfolio/videos/Epic Septic.mp4", poster: "assets/portfolio/epic-septic-thumb.jpg" },
     gallery: [
-      { type: "image", src: "assets/portfolio/epic-septic-thumb.jpg", alt: "Epic Septic truck fleet wrap in traffic" },
-      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-badge.jpg", alt: "Epic Septic logo badge" },
-      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-worker.jpg", alt: "Epic Septic branded uniform on a technician" },
-      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-cap.jpg", alt: "Epic Septic snapback cap product shot" },
-      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-mug.jpg", alt: "Epic Septic branded travel mug" }
+      { type: "image", wide: true, src: "assets/portfolio/epic-septic-extra/epic-low-angle-truck-dust.jpg", alt: "Epic Septic wrapped vac truck, low angle, dust kicking up" },
+      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-tank-wrap-side.jpg", alt: "Epic Septic comic-style tank wrap in Texas daylight" },
+      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-mack-front-dirt-road.jpg", alt: "Epic Septic Mack truck on a dirt road at golden hour" },
+      { type: "image", wide: true, src: "assets/portfolio/epic-septic-extra/epic-founders-flight-suits.jpg", alt: "Epic Septic founders in flight suits in front of the wrapped truck" },
+      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-driver-cab-window.jpg", alt: "Epic Septic driver in the cab window, door logo below" },
+      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-podcast-founder.jpg", alt: "Epic Septic founder in branded cap and polo on a podcast mic" },
+      { type: "image", wide: true, src: "assets/portfolio/epic-septic-extra/epic-door-logo-wash.jpg", alt: "Epic Septic door logo during a truck wash" },
+      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-trade-show-tank-booth.jpg", alt: "Epic Septic trade-show booth podcast in front of the tank" },
+      { type: "image", src: "assets/portfolio/epic-septic-extra/epic-logo-card.jpg", alt: "Epic Septic & Service logo lockup" },
+      { type: "image", wide: true, src: "assets/portfolio/epic-septic-extra/epic-rear-bumper-chocolate-milk.jpg", alt: "Epic Septic rear bumper: We Ain't Haulin' Chocolate Milk" }
     ]
   },
 

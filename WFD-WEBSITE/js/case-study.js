@@ -71,7 +71,7 @@
   var galleryWrap = document.getElementById('cs-gallery');
   (study.gallery || []).forEach(function (item) {
     var fig = document.createElement('figure');
-    fig.className = 'cs-gallery__item';
+    fig.className = 'cs-gallery__item' + (item.wide ? ' cs-gallery__item--wide' : '');
     fig.innerHTML = mediaMarkup(item, { alt: item.alt || study.title });
     galleryWrap.appendChild(fig);
   });

@@ -1,0 +1,6 @@
+risk_per_trade: 150
+daily_stop: 400
+max_entries_per_day: 3
+floor_buffer: 300
+contract_cap: 5
+sizing_grid: [100, 150, 200, 300]

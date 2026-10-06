@@ -1,0 +1,13 @@
+# Fixed settings from the paper. Not tuned.
+lookback_days: 14
+check_interval_min: 30
+band_mult: 1.0
+first_check_offset: 30     # minutes after 9:30 AM ET, so 10:00
+last_check_offset: 360     # 3:30 PM ET
+neighbors:                 # stress only, one change at a time
+  - {lookback_days: 10}
+  - {lookback_days: 20}
+  - {check_interval_min: 15}
+  - {check_interval_min: 60}
+  - {band_mult: 0.8}
+  - {band_mult: 1.2}

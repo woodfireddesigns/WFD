@@ -1,0 +1,7 @@
+# PROTECTED. Michael edits this file. Claude Code does not.
+instrument:
+  symbol: MES
+  point_value: 5.0        # dollars per index point
+  tick_size: 0.25
+commission_round_turn: 1.50   # VERIFY against Tradeify or Topstep schedule
+slippage_ticks_per_side: 1

@@ -1,0 +1,16 @@
+name: tradeify_select_50k_eval
+firm: Tradeify
+stage: evaluation
+source: https://help.tradeify.co/en/articles/12853921-select-evaluation-accounts
+verified_on: "2026-10-05"
+start_balance: 50000
+profit_target: 3000
+trailing_drawdown: 2000          # trails highest end-of-day balance, enforced in real time
+daily_loss_limit: null
+consistency_max_day_share: 0.40  # evaluation only
+min_trading_days: 3
+max_micros: 40
+flat_deadline_et: "16:45"
+unverified:
+  - price, billing terms, reset fee, time limit
+  - whether the target must be held at end of day

@@ -1,0 +1,33 @@
+# PROTECTED. Michael edits this file. Claude Code does not.
+# Never change a value here after a result is known.
+data_split:
+  development_end: "2024-04-30"   # last day of the paper's sample
+  holdout_start: "2024-05-01"     # vault: one run per finalist
+
+pass_marks:                        # development data, after costs
+  min_trades: 200
+  profit_factor: 1.3
+  sharpe: 1.0
+  deflated_sharpe: 0.95
+  max_drawdown_share_of_trailing: 0.5
+  min_profitable_year_share: 0.6
+  max_single_year_profit_share: 0.4
+
+stress:                            # run only on configs that passed
+  cost_multiplier: 2.0
+  cost_stress_profit_factor: 1.1
+  neighbors_total: 6
+  neighbors_required: 4
+  entry_delay_bars: 1
+  entry_delay_profit_factor: 1.1
+
+prop:
+  min_pass_probability: 0.5
+  monte_carlo:
+    paths: 10000
+    block_days: 5
+    max_days: 250                  # ASSUMPTION: one trading year horizon. Confirm.
+
+holdout:
+  profit_factor: 1.15
+  sharpe_share_of_development: 0.5

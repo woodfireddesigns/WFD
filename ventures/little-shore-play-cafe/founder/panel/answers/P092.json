@@ -1,0 +1,13 @@
+{
+  "id": "P092",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot when library storytime and the parks are free, and with a 10-month-old I'd also be paying for a kid who is too small to use most of it. I'd maybe try one drop-in once it opens, but I wouldn't commit to a membership sight unseen.",
+  "objection": "$59 a month for something I might use twice a month, when free options already fill the week. I can afford it, but I can't see paying it every month.",
+  "would_change_my_mind": "A free or cheap trial visit, or a real quiet work-friendly setup (good Wi-Fi, a spot where I can see the toddler) that I've tried and found I'd use weekly. Then $49 founding would be fine.",
+  "price_too_cheap": 15,
+  "price_cheap": 30,
+  "price_expensive": 55,
+  "price_too_expensive": 80
+}

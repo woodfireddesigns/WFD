@@ -1,0 +1,23 @@
+# Little Shore Play Cafe
+
+- What it is: a Montessori-inspired indoor play cafe in Salisbury, MD where kids play in a clean, designed "play village" while parents stay on site, sit, work and connect over coffee.
+- Who it is for: parents (and the caregivers they bring) of children 8 months to 5 years in Salisbury and greater Wicomico County, MD; pretend-play zones keep kids engaged up to about 8 to 10. Parents stay on site at all times; there is no drop-off care.
+- What it sells, at what price:
+  - Unlimited monthly membership, parents included: $59 first child, +$15 each additional child (up to 3). Founding rate $49/month for 12 months, first 40 families. 15% off annual prepay.
+  - Drop-in: $12 first child, $8 each sibling, under 1 free. One drink minimum per adult.
+  - Birthday parties (2 hours, glass-walled party room): Basic $275 (up to 12 kids), Premium $375 (up to 20, cafe platter), Deluxe $475 (adds character or photographer). Group rentals $150 to $250.
+  - Cafe: coffee, drinks, light eats, Wi-Fi. No full kitchen. Possibly Rise Up Coffee Roasters coffee if that partnership happens.
+  - Programming: story time with craft, music hour, kid yoga, craft clubs, moms nights (wreaths, candles, coasters), holiday and summer activity days, character and Shorebirds visits, photo mini-sessions.
+  - Loyalty: every 8th visit earns a free drink; members get 10% off cafe and classes; a referral earns a free month.
+  - Local business sponsorship: each play zone is sponsored by a local business (Standard $3,000 for a 5x5 ft zone, 2-year placement; Mid-size about $6,000; Flagship $8,000 to $12,000 for a 12x10 ft two-level structure, 3-year placement). Targets to approach: Rise Up Coffee Roasters, Perdue Farms. None confirmed.
+- Where and how: a 2,000 to 2,500 sq ft leased retail space in Salisbury, MD (Wicomico County, Eastern Shore). Customers find it through Instagram/Pinterest/Facebook, local moms groups, churches, and sponsor cross-promotion. Walk-in and booked visits, memberships sold online and in store.
+- Budget and constraints:
+  - Stage: concept and pitch materials. No lease, no funding, no entity name locked.
+  - Rent quotes the founder has: about $2,700 to $3,000/month for 1,800 to 2,500 sq ft (CAM and NNN not yet confirmed).
+  - Startup need estimated earlier at $191k to $333k including a 4 to 6 month cash cushion; build-out alone about $151k to $273k.
+  - Funding sources under consideration: family investment or loan in writing, SBDC-guided microloan or CDFI loan, landlord tenant improvement allowance, refundable founding-member deposits, sponsorships. Not a personal-credit loan, not selling the house.
+  - Sequencing: pop-up tests with refundable founding deposits first; sign a lease (contingent on financing and permits) only after filings are current and funding is confirmed. Target: lease in 6 to 12 months, open about 12 months out.
+  - Team: family-run, led by Jordan (operator); Michael handles brand, design and marketing.
+  - Brand: Pinterest/Instagram-ready clean Montessori, upscale but not bougie, fun but not tacky; faith-valued but welcoming to everyone.
+  - Market (Census / Maryland Commerce summaries, to verify): Wicomico County about 104,000 people, median household income $72,861, poverty rate 14%, about 6,261 children under 5. Salisbury city (2020 Census) 33,050 people, 13,578 households, about 30% with someone under 18.
+  - Known local alternatives: CoCo's Funhouse (large entertainment center), Galaxy Gymnastics (classes), Wicomico Public Library storytime, Salisbury Zoo story time. No play cafe found in Salisbury. Regional: Ocean's Playhouse (Ocean City, ~30 mi), Be With Me Children's Playseum (Easton, ~50 mi), The Nest Play Cafe (Dover ~55 mi, Middletown ~85 mi).

@@ -1,0 +1,323 @@
+{
+ "business": "Little Shore Play Cafe (a Montessori-inspired play cafe in Salisbury, MD)",
+ "seed": 2026,
+ "dealt": 100,
+ "answered": 100,
+ "skipped": [],
+ "buys": 24,
+ "passes": 76,
+ "buy_rate": 0.24,
+ "by_segment": [
+  [
+   "Middle-income household",
+   40,
+   0.275
+  ],
+  [
+   "Upper-middle household",
+   24,
+   0.25
+  ],
+  [
+   "High-earning household",
+   8,
+   0.25
+  ],
+  [
+   "Budget-stretched household",
+   28,
+   0.17857142857142858
+  ]
+ ],
+ "by_behaviour": [
+  [
+   "Birthday party planner",
+   5,
+   0.6
+  ],
+  [
+   "Stay-at-home parent",
+   20,
+   0.55
+  ],
+  [
+   "Remote or hybrid worker",
+   10,
+   0.3
+  ],
+  [
+   "Working parent, weekends only",
+   20,
+   0.25
+  ],
+  [
+   "Moms-group organizer",
+   10,
+   0.2
+  ],
+  [
+   "Deal hunter",
+   10,
+   0.0
+  ],
+  [
+   "Free-activity loyalist",
+   15,
+   0.0
+  ],
+  [
+   "Cleanliness and safety first",
+   10,
+   0.0
+  ]
+ ],
+ "by_income": [
+  [
+   "$73,000 to $104,000",
+   32,
+   0.3125
+  ],
+  [
+   "$104,000 and up",
+   35,
+   0.2571428571428571
+  ],
+  [
+   "under $73,000",
+   33,
+   0.15151515151515152
+  ]
+ ],
+ "why_not": [
+  [
+   "price",
+   45,
+   [
+    "$59 a month is a lot on $37k, and the library storytime I already go to is free. If I came it would maybe be a drop-in once in a while, but I would not sign up for a membership.",
+    "I make $35k and the zoo, the park and library storytime are free, so $49 to $59 a month for somewhere to sit with my baby is a lot to ask. I would not pay when I already have places to go that cost nothing."
+   ],
+   [
+    "P002",
+    "P005"
+   ]
+  ],
+  [
+   "habit",
+   11,
+   [
+    "We do library storytime, parks, the zoo and church groups, and I almost never pay for kid activities. I'd still be chasing my kid around, so the coffee isn't really a perk for me.",
+    "We stick to free stuff like storytime, parks and church groups, and we'd maybe go once or twice a month. That doesn't come close to justifying $59 a month."
+   ],
+   [
+    "P004",
+    "P026"
+   ]
+  ],
+  [
+   "trust",
+   10,
+   [
+    "It's not open yet and I'm not paying $59 a month for a place I've never seen. I wait for a Groupon or a free trial day before I try anything new, and the page says nothing about how they clean.",
+    "It's not opening until next year and there are no reviews or photos of how clean it is, so I'm not paying a membership for something I can't check. With shift work and a drive, I wouldn't get my money's worth from a monthly plan anyway."
+   ],
+   [
+    "P001",
+    "P019"
+   ]
+  ],
+  [
+   "convenience",
+   7,
+   [
+    "I only really have Saturdays with my kid, so an unlimited membership would get maybe 4 uses a month, and at that rate drop-in at $12 is cheaper than $59. It's also a drive for us and gas adds up, so I wouldn't commit to it before seeing it in person.",
+    "I only have Saturdays with my kid, and the zoo is free. A monthly membership I'd use maybe 3 or 4 times doesn't beat that, and it's a drive on top of the fee."
+   ],
+   [
+    "P003",
+    "P010"
+   ]
+  ],
+  [
+   "need",
+   2,
+   [
+    "I'm a birthday planner, so I'd look at the $275 party price, but I'd compare it to CoCo's Funhouse first and I'm not signing up for a $59 a month membership for something I'd use a couple of times. Maybe I'd come once for a drink and a look when it opens.",
+    "We can only go on Saturdays, so $59 a month for maybe 4 visits doesn't pencil out on our budget, and I'd rather pay drop-in if I ever try it. With a baby, I don't want to pay to find out if it's crowded with 4 and 5 year olds."
+   ],
+   [
+    "P079",
+    "P100"
+   ]
+  ],
+  [
+   "timing",
+   1,
+   [
+    "I work full time and it's really just Saturdays, so we'd maybe go once or twice a month. At $12 a visit that's cheaper than a $59 membership, so I'd skip the membership and see how it goes."
+   ],
+   [
+    "P041"
+   ]
+  ]
+ ],
+ "why_yes": [
+  [
+   "need",
+   10,
+   [
+    "Indoor options for little kids around Salisbury are thin, and $12 a drop-in is nothing on our income. I'd try it on a Saturday or two, but I'd stay on drop-in rather than commit to a membership.",
+    "I'm home with the kids all week and there's almost nothing indoors around here, so $49-59 a month is easy money for me if it's a place we'd use twice a week. I'd probably do a drop-in first to check it out, then join if it feels good."
+   ],
+   [
+    "P007",
+    "P011"
+   ]
+  ],
+  [
+   "price",
+   6,
+   [
+    "I would try a $12 drop-in with the drink included to see if it is calm enough for my baby, but $59 a month is too much for our budget before I know we would go weekly. Free play at home or the library is my comparison.",
+    "I'd never do the $59 membership since we'd go once or twice a month, but a $12 drop-in with a coffee included is a fair price for a rainy-day outing with the kids. I'd try it once to see if it's actually calm and clean."
+   ],
+   [
+    "P009",
+    "P045"
+   ]
+  ],
+  [
+   "trust",
+   3,
+   [
+    "I'd try one Saturday drop-in for $12 since it's a rainy-day option and I'm not paying for a membership I'd only use 3 or 4 times. Whether I go back depends on how clean it looks when I walk in.",
+    "I'm always looking for somewhere indoors to burn a morning, and $12 with a coffee included is doable once or twice a month. I'd never commit to $59 a month on our budget until I've seen the place myself."
+   ],
+   [
+    "P014",
+    "P034"
+   ]
+  ],
+  [
+   "convenience",
+   2,
+   [
+    "A place where my toddler can play a few feet away while I get an hour of laptop work done with coffee and Wi-Fi is something I'd actually use, so I'd try it as a drop-in. I wouldn't sign up for the $59 membership until I know it works for me.",
+    "I'd try it on a Saturday as a drop-in. $12 for my 4-year-old, the baby is free, and I get a coffee out of it, which beats paying for another indoor place. I wouldn't sign up for the membership, since I can only come on weekends and $74 a month for maybe 4 visits doesn't pay off."
+   ],
+   [
+    "P085",
+    "P087"
+   ]
+  ],
+  [
+   "quality",
+   1,
+   [
+    "I work all week so it would only ever be a Saturday, and I'd pay $12 to try it once if the calm, designed space is really different from CoCo's. I would not sign up for a membership until I'd seen it myself."
+   ],
+   [
+    "P058"
+   ]
+  ],
+  [
+   "habit",
+   1,
+   [
+    "I'd try one drop-in since I'm always looking for somewhere to take the kids and the drink is included. We'd only go once or twice a month, so I wouldn't sign up for the membership."
+   ],
+   [
+    "P068"
+   ]
+  ],
+  [
+   "timing",
+   1,
+   [
+    "I work full time, so it would be a Saturday thing, maybe once or twice a month. Drop-in at $12 plus a coffee is fine to try, but I would not sign up for a membership."
+   ],
+   [
+    "P099"
+   ]
+  ]
+ ],
+ "flip": [
+  "A free or Groupon-priced first visit, plus a clear cleaning routine (toys sanitized between sessions, shoes-off, and a cap on how many kids are in at once).",
+  "A much cheaper way to try it, like a free first visit or a 5-visit pass around $30, and some proof it's close enough that I'd go weekly.",
+  "A weekend-only or 4-visit pass at about $30, or confirmation that it's a short drive from me and the first Saturday I try is good.",
+  "A free or very cheap trial visit that proved my toddler plays on their own while I sit, or a free community morning I could try with no commitment.",
+  "A free or very cheap trial visit, plus a separate baby-only area or hours, so I could see it is safe for my baby before paying anything.",
+  "Seeing it open with strong reviews and a visibly clean space, plus a cheap trial visit or a drop-in price around $8 to try first.",
+  "A free or cheap first visit, or a punch-card or drop-in pack where I only pay for visits I actually use, and it being close enough that gas isn't a factor.",
+  "A weekend-only or per-visit pass around $25 to $30 a month, or a location close enough that it isn't a real trip.",
+  "A free or cheap trial visit, or a membership around $25-30 a month that I could cancel anytime.",
+  "A cheap weekend-only pass, or drop-in of about $6 with no required drink, that I could use a couple of Saturdays a month.",
+  "A free trial day or a discounted first-visit deal (Groupon-style), and some proof it's busy and well run once it's open.",
+  "A separate, protected baby area or baby-only hours, plus a free first visit or a cheap drop-in so I can see it first.",
+  "A free or Groupon-style trial day, or a heavily discounted first visit, that lets me see it in person, plus some word from other moms in my church group that it's actually different and worth it.",
+  "A free or cheap trial visit, or a group meetup rate for my moms group, so I can see it first. A drop-in around $8 to $10 with no membership would get me in the door.",
+  "Solid reviews from other parents after it opens, a posted cleaning routine I can see for myself, and a one-time drop-in at $12 that lets me try it before any membership.",
+  "A cheap or free first visit to see if my kids actually like it, and a pay-per-visit pack or a lower membership (around $30) so I'm not locked in if we can't make the drive often.",
+  "A separate, gated baby area or set toddler-only hours, plus a no-commitment way to try it, like a free first visit or a drop-in around $8.",
+  "A free or very cheap first visit, or a drop-in of around $5 to $6 with no membership needed.",
+  "A weekend-only or per-visit pass for about $30 a month, or proof that it's a short drive and the Saturday mornings are calm instead of packed.",
+  "A separate, gated baby and toddler area, plus a free or cheap first visit so I can see how wild it gets before paying anything.",
+  "A free or very cheap trial day, or a drop-in around $5 for both kids, that lets me see whether my 4-year-old actually plays on her own while I sit.",
+  "A flat pay-as-you-go option with no monthly commitment, like a 10-visit pass around $60 that doesn't expire, or a free trial visit that proved my kid loved it.",
+  "A free trial day or a free first visit, plus a rainy-day pass that is only a few dollars. Even then I'd probably only go on bad-weather days.",
+  "A free or very cheap trial visit, or a drop-in price around $5 for a good rainy-day or hot-day option.",
+  "Open reviews from other moms saying it's spotless, a clear cleaning and sanitizing routine posted, and a free or cheap trial visit before I commit to a membership.",
+  "A cheaper tier for weekend-only or a few visits a month (a 4-visit pack around $30), or a free trial Saturday to see how crowded it gets.",
+  "A free or very cheap trial visit, or a free community story time there, that showed my kid really wanted to go back.",
+  "A separate, fenced baby/toddler area or set baby-only hours on Saturday mornings, plus a free or cheap first visit to try it.",
+  "A free trial day or a Groupon for a few drop-ins, or a cheap punch-card option with no monthly commitment, so I could test whether it's worth the drive.",
+  "A pay-as-you-go option with no commitment (like a 5-visit pass) and a free first visit to see if it's really better than CoCo's, once it has actually opened.",
+  "A cheap pay-per-visit pack or a low-commitment membership, around $25-30 a month, that I can pause or cancel any month.",
+  "A cheaper weekend-only or punch-card pass (around $30 a month or $8 a visit), or a free trial Saturday that shows it's clearly different from CoCo's.",
+  "A pay-as-you-go option I could try first, like a 5-visit pack around $40, or a work-friendly morning where I can really get some laptop time in.",
+  "Open for a while with lots of good reviews that mention cleanliness, plus a cheap or free trial visit before I commit to a membership.",
+  "A cheap 4 or 5 visit punch pass that doesn't expire quickly, or Saturday hours with a free first visit so I can try it.",
+  "A free or cheap trial visit, or a drop-in price closer to $8 to $10 that I could try once. If my moms group got a group rate or a free first visit, I would bring everyone.",
+  "A separate baby/toddler area or set baby-only hours, plus a free trial visit or a pay-per-visit option so I'm not locked into a monthly fee.",
+  "A free or very cheap first visit, plus a low-cost pay-per-visit option of about $5 to $6 with no monthly commitment.",
+  "A free trial visit, or a drop-in price around $5 that I could do once in a while on a rainy day.",
+  "A free trial visit or a cancel-anytime membership after it opens, plus seeing that other local parents actually use it.",
+  "A free or cheap trial visit where I can see how they clean and sanitize between kids, plus good reviews from local moms and a drop-in price closer to $6-8.",
+  "Weekend hours that are reliably open and not packed, and a cheaper weekends-only membership or a drop-in pass bundle that makes the drive worth it.",
+  "Once it's open: real reviews from local moms, a separate baby area, a posted cleaning schedule, and a pay-per-visit trial with no membership commitment.",
+  "A free or cheap group visit for my moms group, or a drop-in price low enough that one trip a month makes sense, or if it turns out to be close to us.",
+  "A free or discounted trial visit or Groupon, plus a clear baby-only zone or separate sessions for under-1s so I can see it's safe.",
+  "A clear, visible cleaning routine (toys sanitized between sessions, shoes-off rule), plus a cheaper weekend-only or 4-visit pass so I'm not paying for days I can't use.",
+  "A free trial day or a Groupon-type deal on a first visit or drop-in pass, with no monthly commitment.",
+  "A cheaper pay-per-visit option, like a punch card of 5 visits for about $40, or a location close enough that it's not a special trip.",
+  "A free trial day or a discounted first visit, plus a clear cleaning routine (toys wiped between uses, posted schedule) and a few reviews from other parents.",
+  "A free or cheap trial day for my moms group, or a clearly lower monthly price (about $30-35) and proof it's quieter and different from CoCo's.",
+  "A separate, gated baby area or a posted baby-only hour, plus a free trial visit to see how the room actually feels.",
+  "A cheap or free trial visit, plus a drop-in around $5 a kid or a group rate for my moms group.",
+  "A separate baby area or set baby-only hours, plus a visit after it opens (a free trial or a $12 drop-in) where I can see how the room really behaves. After that I'd probably start with drop-ins and look at the membership.",
+  "Pay-as-you-go drop-in with no commitment, or a cheaper membership that has a limited number of visits. A good review from a friend who had been there would help too.",
+  "A free or very cheap trial visit, or a drop-in price around $5 for the baby and me, plus proof it's really different from CoCo's.",
+  "A cheap drop-in or a small punch card I could use on Saturdays, or a free first visit through my church moms group so I can see if my kid likes it.",
+  "A free or cheap trial visit, plus Wi-Fi and seating good enough that I can get real work done, and a location that's an easy short drive from us.",
+  "A cheap or free trial visit where I can see the cleaning routine, plus drop-in at about $6-8 with no membership, so I only pay when I go.",
+  "A separate baby/toddler area or age-split sessions, a posted cleaning routine, a cap on how many kids are in at once, and a free or cheap trial visit once it's open with real reviews from other parents.",
+  "A free or cheap trial visit, plus proof the Wi-Fi and seating work for real work, and a monthly price nearer $30-35 or a punch-card option.",
+  "A cheaper pay-as-you-go option, like a punch card or a $5-8 drop-in with the drink included, and a separate safe baby area so I could actually sit down for a bit.",
+  "A cheap multi-visit pass (like 5 visits for about $45) that doesn't expire quickly, plus good reviews and visible cleaning routines after it opens.",
+  "A free or very cheap first visit, or a drop-in price around $5 with the drink included, so I could try it without committing.",
+  "A party package that is clearly cheaper or easier than CoCo's, with setup and cleanup handled, and a free trial visit so I could see it before paying.",
+  "A free or heavily discounted first visit, like a Groupon or free trial day, and proof there is a separate or protected baby area.",
+  "A cheaper drop-in or a 5 or 10 visit pack around $8 a visit that doesn't expire, plus proof it's a decent place to get some work done with the toddler playing.",
+  "A free trial day or a Groupon-style first-visit deal, or a punch card where visits do not expire, so I can try it before paying monthly.",
+  "A visible cleaning and sanitizing routine, plus a few weeks of good reviews from real parents after it opens. A free or cheap trial visit would also get me in the door.",
+  "Separate baby/toddler zone or set baby-only hours, plus a free trial visit so I can see how it actually feels before paying.",
+  "A free trial day or a Groupon-type first-visit deal, plus proof it's really different from CoCo's, like photos of the space and reviews from other parents.",
+  "A free or cheap trial visit, or a real quiet work-friendly setup (good Wi-Fi, a spot where I can see the toddler) that I've tried and found I'd use weekly. Then $49 founding would be fine.",
+  "A cheaper tier or a punch card (like 4 visits for around $35) that doesn't expire, or a group rate for my moms group meetups.",
+  "Seeing it open and getting good reviews from other moms in my group, plus a free trial visit or a group rate for the meetups I organize so I'm not paying alone.",
+  "A separate baby area or set baby-only hours, plus a free trial visit or a drop-in at $8 or less.",
+  "A free or cheap trial visit, plus a weekend-only membership around $30 a month.",
+  "A clearly separate, gated baby area, plus a way to try a Saturday drop-in with no membership commitment and limits on how many kids are in at once."
+ ],
+ "purchases_first_month_per_buyer": 1.625,
+ "price_answers": 100
+}

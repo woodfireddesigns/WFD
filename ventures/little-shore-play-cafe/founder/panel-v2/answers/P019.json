@@ -1,0 +1,13 @@
+{
+  "id": "P019",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I go to library storytime, parks and church groups because they're free, and I only paid for an indoor playground once when it rained all week. $14 plus $7 for a sibling is a lot for a regular week, and I wouldn't commit to $45 a month.",
+  "objection": "Is this really that different from CoCo's Funhouse with nicer decor? I can't see paying every visit for something my free options already cover.",
+  "would_change_my_mind": "A real rainy-day or heat-wave use for it, like a cheap drop-in on bad weather days, or a church or moms-group outing where the Group Morning $8 per kid is split and I'm just tagging along. The free first visit might get me in once, but I'd probably stop there.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 12,
+  "price_too_expensive": 18
+}

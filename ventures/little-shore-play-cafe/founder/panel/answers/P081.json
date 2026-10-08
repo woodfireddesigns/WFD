@@ -1,0 +1,13 @@
+{
+  "id": "P081",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$49 to $59 a month is a lot on my budget for something I haven't tried, and I'd only go for a Groupon or a free trial day. It also isn't open yet, so I'd just follow it on Instagram and wait.",
+  "objection": "Will bigger kids be running wild around my baby? With ages 8 months to 5 all in one room I need to see how they keep the little ones safe before I pay anything.",
+  "would_change_my_mind": "A free or heavily discounted first visit, like a Groupon or free trial day, and proof there is a separate or protected baby area.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 45,
+  "price_too_expensive": 65
+}

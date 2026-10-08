@@ -1,0 +1,13 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I only get Saturdays with my kid and the zoo is free, so $14 a visit is hard to justify when I'd be paying for a Saturday that's already covered. I'd maybe use the free first visit, but I can't see myself paying after that.",
+  "objection": "Will bigger kids be running wild around my baby? The Baby Nook helps, but a 5-year-old is still in the same room on a busy Saturday, and Saturday is the only day I can come.",
+  "would_change_my_mind": "Quiet, age-separated Saturday sessions for under-2s, or a lower drop-in price around $8 to $9 on weekends.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 12,
+  "price_too_expensive": 16
+}

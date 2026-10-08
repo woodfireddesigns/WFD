@@ -1,0 +1,13 @@
+{
+  "id": "P016",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "We do library storytime, parks and church groups because they're free, and $59 a month is a lot on $48k. My baby is little and I'd worry about bigger kids running around, so I'd stick with free stuff.",
+  "objection": "Will bigger kids be running wild around my baby? And I can't see paying $59 a month when the library and parks cost nothing.",
+  "would_change_my_mind": "A separate, protected baby area or baby-only hours, plus a free first visit or a cheap drop-in so I can see it first.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 25
+}

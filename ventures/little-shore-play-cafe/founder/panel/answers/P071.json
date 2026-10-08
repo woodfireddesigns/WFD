@@ -1,0 +1,13 @@
+{
+  "id": "P071",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot when library storytime and the parks are free, and I only get Saturdays with my kid. At that rate I'd maybe go twice a month, so a membership would cost more than it's worth.",
+  "objection": "I only have weekends, so I'd use a membership about twice a month. Paying $59 for that, when storytime and the parks cost nothing, doesn't add up.",
+  "would_change_my_mind": "A cheap drop-in or a small punch card I could use on Saturdays, or a free first visit through my church moms group so I can see if my kid likes it.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 40,
+  "price_too_expensive": 55
+}

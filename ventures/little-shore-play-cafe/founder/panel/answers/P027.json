@@ -1,0 +1,13 @@
+{
+  "id": "P027",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "need",
+  "reason": "I'm always looking for somewhere indoors to take the kids between naps, and $12 with a drink included is easy to try once. I would not commit to a monthly membership until I've seen how it actually is.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee, and with daycare costs up, $59 a month is hard to justify when I could just use the library or a park for free.",
+  "would_change_my_mind": "A free trial visit, or a membership that works out to cheaper than about 4 drop-ins, and proof that the little ones (under 2) have a safe separate area so I can actually sit down.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22
+}

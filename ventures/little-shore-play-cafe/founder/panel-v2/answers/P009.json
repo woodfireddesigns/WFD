@@ -1,0 +1,13 @@
+{
+  "id": "P009",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I only have Saturdays with my kid and the Salisbury Zoo is free, so paying $14 a visit for a cafe feels like a lot when we already have a go-to. I'd maybe take the free first visit, but I wouldn't spend money on it.",
+  "objection": "Sounds expensive and a bit Instagram for Salisbury. With weekends only, I'd be paying $14 a time (or $45 a month) for maybe 3 or 4 Saturdays, when the zoo costs nothing.",
+  "would_change_my_mind": "A weekend price closer to $8-10 a visit, or a drop-in that works out cheaper than a trip to the zoo on a rainy or hot Saturday.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 18
+}

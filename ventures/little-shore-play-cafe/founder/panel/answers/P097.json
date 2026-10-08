@@ -1,0 +1,13 @@
+{
+  "id": "P097",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "I'd never do the membership because we'd only go once or twice a month, but a $12 drop-in with a coffee included is fair for a rainy day between naps. I'd try it once and see if the kids like it.",
+  "objection": "We'd go once or twice a month, so $59 a month for unlimited doesn't pay off. I'd need to go about five times a month before it beat drop-in prices.",
+  "would_change_my_mind": "A multi-visit punch card or a lower-tier plan, like 4 visits a month for about $30, would make me commit.",
+  "price_too_cheap": 15,
+  "price_cheap": 30,
+  "price_expensive": 50,
+  "price_too_expensive": 70
+}

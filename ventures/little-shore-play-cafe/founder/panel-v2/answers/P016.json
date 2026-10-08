@@ -1,0 +1,13 @@
+{
+  "id": "P016",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "need",
+  "reason": "The free first visit means I can try it with no risk, and I'm home with the kids all week and always need somewhere indoors. I'd likely do the free visit and maybe one paid drop-in, but I wouldn't sign up for a monthly membership until I knew we'd really go.",
+  "objection": "$45 a month is a lot when library storytime and the parks are free. I'd only pay if my kids actually asked to go back, and I'd probably end up going less than I plan to.",
+  "would_change_my_mind": "A cheaper per-visit price or a membership under $30 that I could count on to pay for itself after about 3 visits.",
+  "price_too_cheap": 6,
+  "price_cheap": 10,
+  "price_expensive": 15,
+  "price_too_expensive": 22
+}

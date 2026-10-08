@@ -1,0 +1,13 @@
+{
+  "id": "P069",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "convenience",
+  "reason": "It's a drive for us and gas adds up, and with shift schedules at TidalHealth I couldn't count on getting there often enough to make $59 a month worth it. It isn't open yet either, so I'd wait and see.",
+  "objection": "I'd be paying a monthly fee plus gas for a place I can only get to a few times a month on our schedule. The free library and the park cost nothing.",
+  "would_change_my_mind": "Pay-as-you-go drop-in with no commitment, or a cheaper membership that has a limited number of visits. A good review from a friend who had been there would help too.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 55,
+  "price_too_expensive": 75
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot on $37k, and the library storytime I already go to is free. If I came it would maybe be a drop-in once in a while, but I would not sign up for a membership.",
+  "objection": "It's a drive for us and gas adds up, on top of $12 a visit or $59 a month. I can't tell I'd use it enough to make that worth it when the library is free.",
+  "would_change_my_mind": "A much cheaper way to try it, like a free first visit or a 5-visit pass around $30, and some proof it's close enough that I'd go weekly.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 40,
+  "price_too_expensive": 55
+}

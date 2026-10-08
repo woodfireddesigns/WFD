@@ -1,0 +1,13 @@
+{
+  "id": "P017",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd grab the free first visit for sure, but we'd only go once or twice a month, so a membership doesn't pay off and $14 a visit plus a sibling adds up fast when there are free library story times and parks. I'd wait and see if a Groupon shows up.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, and drop-in at $14 plus $7 for the second kid is a lot for an hour or two.",
+  "would_change_my_mind": "A Groupon or a 5-visit pack at around $35-40, or an off-peak shift-worker weekday rate that makes each visit about $8-9.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 14,
+  "price_too_expensive": 20
+}

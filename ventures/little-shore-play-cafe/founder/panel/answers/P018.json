@@ -1,0 +1,13 @@
+{
+  "id": "P018",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot when storytime and the parks are free, and daycare just went up on us. I would not sign up for a membership before I have seen the place and how my group likes it.",
+  "objection": "I can already get most of this for free at the library and parks, so a monthly fee feels hard to justify, and a membership locks me in before I know we will actually use it.",
+  "would_change_my_mind": "A free or cheap trial visit, or a group meetup rate for my moms group, so I can see it first. A drop-in around $8 to $10 with no membership would get me in the door.",
+  "price_too_cheap": 15,
+  "price_cheap": 29,
+  "price_expensive": 45,
+  "price_too_expensive": 59
+}

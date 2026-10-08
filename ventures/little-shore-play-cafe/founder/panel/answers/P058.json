@@ -1,0 +1,13 @@
+{
+  "id": "P058",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "quality",
+  "reason": "I work all week so it would only ever be a Saturday, and I'd pay $12 to try it once if the calm, designed space is really different from CoCo's. I would not sign up for a membership until I'd seen it myself.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? I only get Saturdays, so $59 a month is more than I'd use, and four drop-ins cost less.",
+  "would_change_my_mind": "A weekend-only or 4-visit pass around $35-40 a month, or a free trial visit or moms group event, so I can see it's actually calmer and cleaner than what we already go to.",
+  "price_too_cheap": 25,
+  "price_cheap": 39,
+  "price_expensive": 59,
+  "price_too_expensive": 80
+}

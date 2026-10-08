@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "convenience",
+  "reason": "The cleaning log and the 25-kid cap are exactly what I look for, and I'd probably use the free visit. But it's a drive for us, and with daycare costs up, $14 plus gas for a single outing is hard to justify. It also doesn't open until next year.",
+  "objection": "It's a drive for us and gas adds up. At $14 a visit plus gas, a trip costs more than a free library story time or park, so I can't see paying more than once in a while.",
+  "would_change_my_mind": "If it were close to home or my daycare route, or if the 5-visit pack came in under about $40. Seeing reviews from other parents saying it really stays clean would also help.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 14,
+  "price_too_expensive": 20
+}

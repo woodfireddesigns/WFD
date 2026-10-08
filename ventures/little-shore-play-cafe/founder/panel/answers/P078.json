@@ -1,0 +1,13 @@
+{
+  "id": "P078",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "We do free storytime at the Wicomico library most Tuesdays, plus parks and church groups. I'd maybe go once or twice a month, so $49-59 a month for a membership doesn't make sense on our budget.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, and $12 a visit for free-activity people like us adds up fast.",
+  "would_change_my_mind": "A free or very cheap first visit, or a drop-in price around $5 with the drink included, so I could try it without committing.",
+  "price_too_cheap": 3,
+  "price_cheap": 5,
+  "price_expensive": 9,
+  "price_too_expensive": 15
+}

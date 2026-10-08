@@ -1,0 +1,13 @@
+{
+  "id": "P022",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "Money is tight since daycare went up, and we do library storytime, parks and church groups for free. We'd maybe go once or twice a month, so $59 a month for a membership makes no sense for us.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership. And I'm not paying $12 plus a drink when the library and the park cost nothing.",
+  "would_change_my_mind": "A free or very cheap first visit, or a drop-in of around $5 to $6 with no membership needed.",
+  "price_too_cheap": 3,
+  "price_cheap": 5,
+  "price_expensive": 9,
+  "price_too_expensive": 12
+}

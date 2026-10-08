@@ -1,0 +1,132 @@
+{
+ "business": "Little Shore Play Cafe (as pitched)",
+ "unit": "family visit",
+ "price": 21.69,
+ "variable": [
+  {
+   "label": "Cafe cost of goods",
+   "cost": 1.64
+  },
+  {
+   "label": "Party direct costs",
+   "cost": 0.59
+  },
+  {
+   "label": "Program materials",
+   "cost": 0.3
+  },
+  {
+   "label": "Card processing",
+   "cost": 0.65
+  },
+  {
+   "label": "Per-visit supplies (sanitizer, wipes, toy wear)",
+   "cost": 0.5
+  }
+ ],
+ "fixed_monthly": [
+  {
+   "label": "Rent, base (founder quote midpoint)",
+   "cost": 2850
+  },
+  {
+   "label": "NNN / CAM (estimate)",
+   "cost": 700
+  },
+  {
+   "label": "Utilities and internet (estimate)",
+   "cost": 700
+  },
+  {
+   "label": "Hired staff, 63 hrs/wk at $15 + 12% burden (estimate)",
+   "cost": 4583
+  },
+  {
+   "label": "Insurance incl. abuse/molestation (estimate)",
+   "cost": 450
+  },
+  {
+   "label": "Software: POS, booking, waivers (estimate)",
+   "cost": 250
+  },
+  {
+   "label": "Cleaning, maintenance, repairs (estimate)",
+   "cost": 400
+  },
+  {
+   "label": "Marketing (estimate)",
+   "cost": 600
+  },
+  {
+   "label": "Bookkeeping and accounting (estimate)",
+   "cost": 250
+  },
+  {
+   "label": "Licenses and misc (estimate)",
+   "cost": 150
+  }
+ ],
+ "startup": [
+  {
+   "label": "Lease deposit + first month (estimate)",
+   "cost": 6000
+  },
+  {
+   "label": "Construction / TI net of allowance (estimate)",
+   "cost": 70000
+  },
+  {
+   "label": "Custom play village structures (estimate)",
+   "cost": 60000
+  },
+  {
+   "label": "Cafe equipment (estimate)",
+   "cost": 18000
+  },
+  {
+   "label": "Furniture, soft play, Montessori toys (estimate)",
+   "cost": 15000
+  },
+  {
+   "label": "Permits, architect, legal, entity (estimate)",
+   "cost": 9000
+  },
+  {
+   "label": "POS, Wi-Fi, cameras, check-in tablets (estimate)",
+   "cost": 5000
+  },
+  {
+   "label": "Signage and brand rollout (estimate)",
+   "cost": 6000
+  },
+  {
+   "label": "Opening inventory and supplies (estimate)",
+   "cost": 4000
+  },
+  {
+   "label": "Pre-opening payroll and training (estimate)",
+   "cost": 5000
+  },
+  {
+   "label": "Launch marketing (estimate)",
+   "cost": 4000
+  }
+ ],
+ "days_per_month": 26,
+ "capacity_per_day": 75,
+ "plan_per_day": 40,
+ "ramp_per_day": [
+  13,
+  17,
+  21,
+  24,
+  27,
+  29,
+  31,
+  33,
+  34,
+  35,
+  36,
+  37
+ ]
+}

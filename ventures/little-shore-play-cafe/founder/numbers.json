@@ -1,0 +1,148 @@
+{
+ "business": "Little Shore Play Cafe",
+ "unit": "family visit",
+ "price": 20.82,
+ "variable": [
+  {
+   "label": "Cafe cost of goods",
+   "cost": 1.07
+  },
+  {
+   "label": "Included drinks (drop-in/pack)",
+   "cost": 0.51
+  },
+  {
+   "label": "Party direct costs",
+   "cost": 0.64
+  },
+  {
+   "label": "Program materials",
+   "cost": 0.32
+  },
+  {
+   "label": "Card processing",
+   "cost": 0.73
+  },
+  {
+   "label": "Per-visit supplies (sanitizer, wipes, toy wear)",
+   "cost": 0.5
+  }
+ ],
+ "fixed_monthly": [
+  {
+   "label": "Rent, base (founder quote midpoint)",
+   "cost": 2850
+  },
+  {
+   "label": "NNN / CAM (estimate)",
+   "cost": 700
+  },
+  {
+   "label": "Utilities and internet (estimate)",
+   "cost": 700
+  },
+  {
+   "label": "Hired staff, ~84 hrs/wk at $15 + 12% burden (ops rota, estimate)",
+   "cost": 6110
+  },
+  {
+   "label": "Insurance incl. abuse/molestation (estimate)",
+   "cost": 450
+  },
+  {
+   "label": "Software: POS, booking, waivers (estimate)",
+   "cost": 250
+  },
+  {
+   "label": "Cleaning, maintenance, repairs (estimate)",
+   "cost": 400
+  },
+  {
+   "label": "Marketing incl. free first visits (estimate)",
+   "cost": 700
+  },
+  {
+   "label": "Bookkeeping and accounting (estimate)",
+   "cost": 250
+  },
+  {
+   "label": "Licenses and misc (estimate)",
+   "cost": 150
+  },
+  {
+   "label": "Membership 30-day guarantee refunds (estimate)",
+   "cost": 50
+  },
+  {
+   "label": "Admissions and amusement tax, ~4.5% of admissions (rate to confirm)",
+   "cost": 580
+  }
+ ],
+ "startup": [
+  {
+   "label": "Lease deposit + first month (estimate)",
+   "cost": 6000
+  },
+  {
+   "label": "Construction / TI net of allowance (estimate)",
+   "cost": 70000
+  },
+  {
+   "label": "Custom play village structures (estimate)",
+   "cost": 60000
+  },
+  {
+   "label": "Cafe equipment (estimate)",
+   "cost": 18000
+  },
+  {
+   "label": "Furniture, soft play, Montessori toys (estimate)",
+   "cost": 15000
+  },
+  {
+   "label": "Permits, architect, legal, entity (estimate)",
+   "cost": 9000
+  },
+  {
+   "label": "POS, Wi-Fi, cameras, check-in tablets (estimate)",
+   "cost": 5000
+  },
+  {
+   "label": "Signage and brand rollout (estimate)",
+   "cost": 6000
+  },
+  {
+   "label": "Opening inventory and supplies (estimate)",
+   "cost": 4000
+  },
+  {
+   "label": "Pre-opening payroll and training (estimate)",
+   "cost": 5000
+  },
+  {
+   "label": "Launch marketing (estimate)",
+   "cost": 4000
+  },
+  {
+   "label": "Build-out contingency, 15% of construction + play structures (ops)",
+   "cost": 19500
+  }
+ ],
+ "days_per_month": 26,
+ "capacity_per_day": 65,
+ "plan_per_day": 38,
+ "ramp_per_day": [
+  15,
+  19,
+  23,
+  26,
+  28,
+  30,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37
+ ]
+}

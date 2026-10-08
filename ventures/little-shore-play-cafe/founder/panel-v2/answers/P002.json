@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "The free first visit means I can try it with no risk, and I always need somewhere indoors to take the kids between naps. I'd go once and see if it's worth it, but I wouldn't pay $14 a visit regularly on our budget.",
+  "objection": "$14 plus $7 for a sibling is a lot when we're watching every dollar, and $45 a month is more than I'd spend on one outing habit. It also sounds a bit fancy for Salisbury, and I'm not sure my kids would play there more than a few times.",
+  "would_change_my_mind": "A cheaper drop-in around $8-10 for a parent with two kids, or a pack that brings the per-visit price down closer to $8.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 14,
+  "price_too_expensive": 20
+}

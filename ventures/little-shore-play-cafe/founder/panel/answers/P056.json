@@ -1,0 +1,13 @@
+{
+  "id": "P056",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "I would not take the membership, we would only go once or twice a month. But a $12 drop-in with a coffee included is easy to try once with the kids when I need somewhere indoors.",
+  "objection": "We'd go once or twice a month, not enough to justify a $59 membership. The drop-in only makes sense if it stays a casual thing.",
+  "would_change_my_mind": "A flexible pass, like a 5 or 10 visit punch card that doesn't expire quickly, would get me to pay up front.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 55,
+  "price_too_expensive": 75
+}

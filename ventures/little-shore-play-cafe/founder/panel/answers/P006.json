@@ -1,0 +1,13 @@
+{
+  "id": "P006",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot when library storytime and the parks are free, and I work remotely so I would not use it enough to justify unlimited. It looks nice, but it has not opened yet and I have no reviews to read.",
+  "objection": "I can't judge how clean it is or read a single review before paying monthly, and $59 is steep when free options exist.",
+  "would_change_my_mind": "Seeing it open with strong reviews and a visibly clean space, plus a cheap trial visit or a drop-in price around $8 to try first.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 45,
+  "price_too_expensive": 65
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P038",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I work full time and only get Saturdays, and our go-to is the free Salisbury Zoo. Paying $49-59 a month for a once-a-week outing doesn't add up, and it sounds like CoCo's Funhouse with nicer decor.",
+  "objection": "I'd only use it about four Saturdays a month, so the unlimited membership doesn't pay off. $12 a visit is more than the free zoo and I can't tell why it beats CoCo's.",
+  "would_change_my_mind": "A cheaper weekend-only or punch-card pass (around $30 a month or $8 a visit), or a free trial Saturday that shows it's clearly different from CoCo's.",
+  "price_too_cheap": 15,
+  "price_cheap": 30,
+  "price_expensive": 50,
+  "price_too_expensive": 75
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P077",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "We'd go once or twice a month at most, mostly on rainy days, so a $59 membership doesn't pay off. It isn't open yet and has no reviews, so I'd wait to see how clean it is before paying for anything.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership. I also can't judge cleanliness or safety until it's open and people have reviewed it.",
+  "would_change_my_mind": "A cheap multi-visit pass (like 5 visits for about $45) that doesn't expire quickly, plus good reviews and visible cleaning routines after it opens.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 22
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P076",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot on $41k with two kids, and I'd be chasing the baby the whole time so the coffee part doesn't really mean much to me. Free library story time and the park do most of the same job.",
+  "objection": "I'd pay for a membership and still spend the whole visit chasing my 10-month-old, so I'm not getting a break, and I can't tell if it's worth $59 plus $15 when free stuff exists.",
+  "would_change_my_mind": "A cheaper pay-as-you-go option, like a punch card or a $5-8 drop-in with the drink included, and a separate safe baby area so I could actually sit down for a bit.",
+  "price_too_cheap": 15,
+  "price_cheap": 30,
+  "price_expensive": 50,
+  "price_too_expensive": 70
+}

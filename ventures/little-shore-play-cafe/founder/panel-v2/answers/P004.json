@@ -1,0 +1,13 @@
+{
+  "id": "P004",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "I'd use the free visit, and if it's nice I'd bring my moms group for a Group Morning at $8 a kid, since that's the only price that works for us. I'm not paying $14 a visit or $45 a month on one household's shift-work budget.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? $14 a kid adds up fast when I've got more than one, and I can't tell why it's worth that much more.",
+  "would_change_my_mind": "A drop-in price closer to $8-10 for a first kid, or proof on the free visit that it's calmer and cleaner than CoCo's.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 12,
+  "price_too_expensive": 16
+}

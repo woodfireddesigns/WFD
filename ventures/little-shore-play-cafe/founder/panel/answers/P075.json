@@ -1,0 +1,13 @@
+{
+  "id": "P075",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot when library storytime on Tuesdays and the parks are free. I might try a drop-in once for a work-friendly afternoon, but I wouldn't commit to a membership.",
+  "objection": "I already have free options for my toddler, so $59 a month for something I'd use a few times is hard to justify, and I can't tell yet if the Wi-Fi and seating would let me actually get work done.",
+  "would_change_my_mind": "A free or cheap trial visit, plus proof the Wi-Fi and seating work for real work, and a monthly price nearer $30-35 or a punch-card option.",
+  "price_too_cheap": 15,
+  "price_cheap": 30,
+  "price_expensive": 50,
+  "price_too_expensive": 70
+}

@@ -1,0 +1,208 @@
+{
+ "business": "Little Shore Play Cafe (a Montessori-inspired play cafe in Salisbury, MD)",
+ "seed": 2026,
+ "dealt": 20,
+ "answered": 20,
+ "skipped": [],
+ "buys": 9,
+ "passes": 11,
+ "buy_rate": 0.45,
+ "by_segment": [
+  [
+   "High-earning household",
+   1,
+   1.0
+  ],
+  [
+   "Budget-stretched household",
+   6,
+   0.5
+  ],
+  [
+   "Middle-income household",
+   8,
+   0.5
+  ],
+  [
+   "Upper-middle household",
+   5,
+   0.2
+  ]
+ ],
+ "by_behaviour": [
+  [
+   "Moms-group organizer",
+   2,
+   1.0
+  ],
+  [
+   "Birthday party planner",
+   1,
+   1.0
+  ],
+  [
+   "Stay-at-home parent",
+   4,
+   0.75
+  ],
+  [
+   "Remote or hybrid worker",
+   2,
+   0.5
+  ],
+  [
+   "Cleanliness and safety first",
+   2,
+   0.5
+  ],
+  [
+   "Working parent, weekends only",
+   4,
+   0.25
+  ],
+  [
+   "Free-activity loyalist",
+   3,
+   0.0
+  ],
+  [
+   "Deal hunter",
+   2,
+   0.0
+  ]
+ ],
+ "by_income": [
+  [
+   "$62,000 to $99,000",
+   7,
+   0.5714285714285714
+  ],
+  [
+   "under $62,000",
+   6,
+   0.5
+  ],
+  [
+   "$99,000 and up",
+   7,
+   0.2857142857142857
+  ]
+ ],
+ "why_not": [
+  [
+   "price",
+   7,
+   [
+    "I'd probably use the free visit, but $14 a trip on top of everything else is a lot on our budget when the library and the park are free. I'm not paying for a pack or membership until I've seen it works for us.",
+    "We'd go once or twice a month at most, and $14 a visit is a lot when daycare just went up. The library and the park are free, so I'd rather keep my money."
+   ],
+   [
+    "P001",
+    "P006"
+   ]
+  ],
+  [
+   "habit",
+   2,
+   [
+    "I only have Saturdays with my kid and the Salisbury Zoo is free, so paying $14 a visit for a cafe feels like a lot when we already have a go-to. I'd maybe take the free first visit, but I wouldn't spend money on it.",
+    "We do library storytime, parks and church groups, and I almost never pay for kid activities. I'd maybe take the free first visit, but I wouldn't pay $14 to chase my kid around while a coffee goes cold."
+   ],
+   [
+    "P009",
+    "P014"
+   ]
+  ],
+  [
+   "convenience",
+   1,
+   [
+    "The cleaning log and the 25-kid cap are exactly what I look for, and I'd probably use the free visit. But it's a drive for us, and with daycare costs up, $14 plus gas for a single outing is hard to justify. It also doesn't open until next year."
+   ],
+   [
+    "P005"
+   ]
+  ],
+  [
+   "timing",
+   1,
+   [
+    "I only have Saturdays, and I'd take the free first visit but I probably wouldn't pay after that. Storytime at the library is free and I'm still chasing my kid, so I never really get to sit and drink the coffee."
+   ],
+   [
+    "P013"
+   ]
+  ]
+ ],
+ "why_yes": [
+  [
+   "price",
+   4,
+   [
+    "The free first visit means I can try it with no risk, and I always need somewhere indoors to take the kids between naps. I'd go once and see if it's worth it, but I wouldn't pay $14 a visit regularly on our budget.",
+    "The free first visit is a no-risk way to try it, and I could get some work done with coffee and Wi-Fi while my toddler plays. After that I'd only go once or twice a month on a $38k budget, so I'd use drop-in or the 5-pack, not a membership."
+   ],
+   [
+    "P002",
+    "P003"
+   ]
+  ],
+  [
+   "need",
+   2,
+   [
+    "I'm always hunting for somewhere indoors to take my toddler, and the Baby Nook, coffee and Wi-Fi mean I could get some work done while she plays. The free first visit and posted cleaning log make it easy to try. I'd probably do a couple of drop-ins and see, not commit to a membership yet.",
+    "The free first visit means I can try it with no risk, and I'm home with the kids all week and always need somewhere indoors. I'd likely do the free visit and maybe one paid drop-in, but I wouldn't sign up for a monthly membership until I knew we'd really go."
+   ],
+   [
+    "P007",
+    "P016"
+   ]
+  ],
+  [
+   "trust",
+   1,
+   [
+    "The posted daily cleaning log, shoes off, and the 25-kid cap are exactly what I look for, and a gated Baby Nook for my 10-month-old is rare. The first visit is free, so I'd go look at it myself, and if it's clean I'd pay for a couple of drop-ins."
+   ],
+   [
+    "P010"
+   ]
+  ],
+  [
+   "habit",
+   1,
+   [
+    "I'd use the free visit on a Saturday and probably pay for one drop-in if my kid liked it, since indoor options here are limited. We'd go once or twice a month at most, so the membership doesn't make sense for us."
+   ],
+   [
+    "P011"
+   ]
+  ],
+  [
+   "quality",
+   1,
+   [
+    "The free first visit makes it easy to try, and the Montessori setup, 25-kid cap, shoes off and posted cleaning log are what I'd want over a loud funhouse. If it's as calm as it looks, I'd bring my moms group for a Group Morning."
+   ],
+   [
+    "P012"
+   ]
+  ]
+ ],
+ "flip": [
+  "Dedicated quiet hours for under-2s or a separate baby-only session, and a drop-in closer to $8-10 so it fits when I need a work-from-home morning.",
+  "If it were close to home or my daycare route, or if the 5-visit pack came in under about $40. Seeing reviews from other parents saying it really stays clean would also help.",
+  "A drop-in price around $7 to $8 for me and the kids, or a free community day each month. Then I might try it once.",
+  "Quiet, age-separated Saturday sessions for under-2s, or a lower drop-in price around $8 to $9 on weekends.",
+  "A weekend price closer to $8-10 a visit, or a drop-in that works out cheaper than a trip to the zoo on a rainy or hot Saturday.",
+  "Weekend hours that are reliably open, and a drop-in closer to $10 or a pack price that makes a Saturday visit feel cheap.",
+  "A very cheap or free option, like free weekday hours or a church-group rate, or a rainy-day need the library can't cover.",
+  "A Groupon or similar deal, like a few visits for under $30, plus proof after the free visit that my 4-year-old and the baby both stay happy there.",
+  "A Groupon or a 5-visit pack at around $35-40, or an off-peak shift-worker weekday rate that makes each visit about $8-9.",
+  "A real rainy-day or heat-wave use for it, like a cheap drop-in on bad weather days, or a church or moms-group outing where the Group Morning $8 per kid is split and I'm just tagging along. The free first visit might get me in once, but I'd probably stop there.",
+  "A cheaper per-visit price for two kids (around $10 total), or a location close to me, so a visit costs less than the gas and the fee together."
+ ],
+ "purchases_first_month_per_buyer": 1.4444444444444444,
+ "price_answers": 20
+}

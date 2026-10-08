@@ -1,0 +1,13 @@
+{
+  "id": "P035",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "It looks lovely, but $49 to $59 a month plus the drive and gas is a lot for me when I can wait for a Groupon or a free trial day. I would rather go to the library story time or set up my own Montessori shelf at home for free.",
+  "objection": "It's a drive for us and gas adds up, so a monthly membership only pays off if I go several times a week, and I won't. Plus it's not even open yet.",
+  "would_change_my_mind": "A free trial day or a Groupon for a few drop-ins, or a cheap punch-card option with no monthly commitment, so I could test whether it's worth the drive.",
+  "price_too_cheap": 20,
+  "price_cheap": 30,
+  "price_expensive": 45,
+  "price_too_expensive": 65
+}

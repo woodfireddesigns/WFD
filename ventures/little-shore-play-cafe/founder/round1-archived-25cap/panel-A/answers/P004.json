@@ -1,0 +1,20 @@
+{
+  "id": "P004",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "I'd use the free first visit and, if it's good, bring my group on a weekday Group Morning at $8 a kid. I would not pay $15 a visit on my own.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? $15 a kid is a lot on $40k when we're already juggling shifts and bills.",
+  "would_change_my_mind": "Drop-in closer to $10, or the group rate also working for smaller groups of 3 families and on afternoons that fit around hospital shifts.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 11,
+  "price_too_expensive": 15,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 7,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

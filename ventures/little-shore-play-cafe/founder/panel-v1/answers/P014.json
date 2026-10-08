@@ -1,0 +1,13 @@
+{
+  "id": "P014",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "trust",
+  "reason": "I'd try one Saturday drop-in for $12 since it's a rainy-day option and I'm not paying for a membership I'd only use 3 or 4 times. Whether I go back depends on how clean it looks when I walk in.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth, and a bunch of kids touching the same toys all day worries me. It says nothing about how they clean.",
+  "would_change_my_mind": "Seeing or being told how toys get cleaned and swapped out during the day, like a posted cleaning schedule or a toy sanitizing routine, plus shoes-off. A free or cheap first visit would also get me in the door.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 20
+}

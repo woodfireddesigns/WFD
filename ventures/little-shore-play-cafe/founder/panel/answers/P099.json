@@ -1,13 +1,1 @@
-{
-  "id": "P099",
-  "buys": true,
-  "purchases_first_month": 1,
-  "reason_code": "timing",
-  "reason": "I work full time, so it would be a Saturday thing, maybe once or twice a month. Drop-in at $12 plus a coffee is fine to try, but I would not sign up for a membership.",
-  "objection": "We'd go once or twice a month, so a $59 membership would not pay for itself. I would only buy drop-in.",
-  "would_change_my_mind": "A membership under about $25 a month, or a pack of drop-in visits that I could use whenever I wanted.",
-  "price_too_cheap": 5,
-  "price_cheap": 8,
-  "price_expensive": 15,
-  "price_too_expensive": 22
-}
+{"id":"P099","buys":true,"purchases_first_month":1,"reason_code":"habit","reason":"I'd use the free first visit on a Saturday and probably pay for one more weekend drop-in if my kid liked it. We'd go once or twice a month at most, so no membership for me.","objection":"We'd only go once or twice a month, so unlimited never pays off and $15 a visit adds up fast on top of everything else we do on Saturdays.","would_change_my_mind":"A cheaper weekend drop-in rate, around $10 to $11, would make me go more often.","price_too_cheap":6,"price_cheap":10,"price_expensive":17,"price_too_expensive":24,"cafe_spend_per_visit":3,"would_take_class":false,"class_max_price":8,"party_next_birthday":"no","party_max_price":250,"monday_group_rental":false,"preferred_time":"weekend"}

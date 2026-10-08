@@ -1,0 +1,20 @@
+{
+  "id": "P017",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "I'd definitely use the free first visit, and if the kids like it I'd pay $13 once more, since the coffee is included and I get to sit. We'd go once or twice a month, so I'd never buy a membership, and I'd wait for a pack deal or coupon before spending more.",
+  "objection": "We'd only go once or twice a month, so unlimited isn't worth it. At $13 a kid it adds up fast with more than one child, and there are free play spots around here.",
+  "would_change_my_mind": "A Groupon or coupon deal, or a 5-visit pack that doesn't expire, would make me come back more often.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 3,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "not relevant",
+  "party_max_price": 0,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

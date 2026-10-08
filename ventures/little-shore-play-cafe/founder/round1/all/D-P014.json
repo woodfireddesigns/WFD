@@ -1,0 +1,20 @@
+{
+  "id": "P014",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "We do the library storytime, parks and the zoo, and I almost never pay for kid activities. I'd maybe take the free first visit, but I wouldn't pay $13 a time when the free options already work.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee. Paying $13 a visit for something the library and park give me for free doesn't add up.",
+  "would_change_my_mind": "A drop-in price around $5 or a clearly free weekday session during my shift-off hours. Even then I'd need to see it's actually calmer than the free places.",
+  "price_too_cheap": 3,
+  "price_cheap": 5,
+  "price_expensive": 9,
+  "price_too_expensive": 13,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 5,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday afternoon"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "P007",
+  "buys": true,
+  "purchases_first_month": 3,
+  "reason_code": "need",
+  "reason": "I'm home with a toddler all week and need somewhere calm to go that isn't a germy chain play place, and I can work on my laptop with coffee and Wi-Fi while she plays. The free first visit makes it easy to try, and the cleaning log speaks to my main worry.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth, and a posted log is only worth something if staff really follow it. Also it's not open yet, so I'm judging a promise.",
+  "would_change_my_mind": "Seeing the cleaning routine in person on the free first visit (toys wiped between kids, a real log, a clean Baby Nook). If it looked grubby I wouldn't come back.",
+  "price_too_cheap": 6,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 5,
+  "would_take_class": true,
+  "class_max_price": 12,
+  "party_next_birthday": "not relevant",
+  "party_max_price": 0,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

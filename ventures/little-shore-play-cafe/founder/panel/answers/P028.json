@@ -3,11 +3,18 @@
   "buys": false,
   "purchases_first_month": 0,
   "reason_code": "habit",
-  "reason": "We do the zoo, the library and church groups, and they're free. I'd still be chasing my kid around, so I wouldn't actually get to sit and drink coffee. I don't pay for kid activities and I can't see a monthly fee sticking.",
-  "objection": "I'd be paying $59 a month to chase my toddler around an indoor room when the zoo and park cost nothing. The coffee part doesn't really happen with a little one.",
-  "would_change_my_mind": "A free trial day or a free first visit, plus a rainy-day pass that is only a few dollars. Even then I'd probably only go on bad-weather days.",
+  "reason": "We have the zoo, storytime and the parks, and they're all free, so paying $13 a visit just doesn't fit how I do things. I might swing by for the free first visit, but I wouldn't pay after that.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee, and I'd be paying every time for something the zoo and library give us for free.",
+  "would_change_my_mind": "If it were free or a few dollars on weekday mornings, or if my toddler would actually stay in the Baby Nook so I could sit.",
   "price_too_cheap": 3,
-  "price_cheap": 5,
+  "price_cheap": 6,
   "price_expensive": 10,
-  "price_too_expensive": 20
+  "price_too_expensive": 15,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 5,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

@@ -1,0 +1,20 @@
+{
+  "id": "P010",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "trust",
+  "reason": "The posted daily cleaning log, shoes off and the cap on how many kids are in at once are exactly what I look for, and the free first visit lets me check it myself before I pay. My 10-month-old is free and there is a gated baby area, so it works for both kids.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth. A log is only paper until I see the toys get wiped and the place looks clean when I walk in.",
+  "would_change_my_mind": "Seeing it spotless on my free visit with staff actually cleaning during the session. If it looks grubby or the log looks filled in after the fact, I am out.",
+  "price_too_cheap": 6,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": false,
+  "class_max_price": 10,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

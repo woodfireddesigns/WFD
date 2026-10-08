@@ -1,0 +1,163 @@
+{
+ "business": "Little Shore Play Cafe",
+ "days_per_month": 26,
+ "capacity_per_day": 65,
+ "steady_state_month": {
+  "family_visits_per_day": 38,
+  "member_families": 25,
+  "visits_per_member_family": 6,
+  "avg_member_dues": 46.0,
+  "pack_visits": 300,
+  "pack_price_per_visit": 14.45,
+  "avg_dropin_admission": 17.45,
+  "cafe_spend_dropin_visit": 4.5,
+  "cafe_spend_member_visit": 5.0,
+  "cafe_spend_pack_visit": 4.5,
+  "parties_per_month": 10,
+  "avg_party_price": 380,
+  "programs_revenue": 900,
+  "extra_revenue": [
+   {
+    "label": "Private rentals (Mondays)",
+    "monthly": 800,
+    "cost_pct": 0.15
+   },
+   {
+    "label": "Instructor classes",
+    "monthly": 1200,
+    "cost_pct": 0.5
+   },
+   {
+    "label": "Retail shelf",
+    "monthly": 800,
+    "cost_pct": 0.5
+   }
+  ]
+ },
+ "cost_rates": {
+  "cafe_cogs_pct": 0.3,
+  "party_cost_pct": 0.3,
+  "program_cost_pct": 0.35,
+  "card_fee_pct": 0.035,
+  "supplies_per_visit": 0.5,
+  "included_drink_cost": 0.6
+ },
+ "fixed_monthly": [
+  {
+   "label": "Rent, base (founder quote midpoint)",
+   "cost": 2850
+  },
+  {
+   "label": "NNN / CAM (estimate)",
+   "cost": 700
+  },
+  {
+   "label": "Utilities and internet (estimate)",
+   "cost": 700
+  },
+  {
+   "label": "Hired staff, ~76 hrs/wk (estimate)",
+   "cost": 5530
+  },
+  {
+   "label": "Insurance incl. abuse/molestation (estimate)",
+   "cost": 450
+  },
+  {
+   "label": "Software: POS, booking, waivers (estimate)",
+   "cost": 250
+  },
+  {
+   "label": "Cleaning, maintenance, repairs (estimate)",
+   "cost": 400
+  },
+  {
+   "label": "Marketing incl. free first visits (estimate)",
+   "cost": 550
+  },
+  {
+   "label": "Bookkeeping and accounting (estimate)",
+   "cost": 250
+  },
+  {
+   "label": "Licenses and misc (estimate)",
+   "cost": 150
+  },
+  {
+   "label": "Membership 30-day guarantee refunds (estimate)",
+   "cost": 50
+  },
+  {
+   "label": "Admissions and amusement tax, ~4.5% of admissions (rate to confirm)",
+   "cost": 580
+  },
+  {
+   "label": "Rent abatement, 3 free months averaged over Y1 (to negotiate)",
+   "cost": -713
+  }
+ ],
+ "startup": [
+  {
+   "label": "Lease deposit + first month (estimate)",
+   "cost": 6000
+  },
+  {
+   "label": "Construction / TI net of allowance (estimate)",
+   "cost": 70000
+  },
+  {
+   "label": "Custom play village structures (estimate)",
+   "cost": 60000
+  },
+  {
+   "label": "Cafe equipment (estimate)",
+   "cost": 18000
+  },
+  {
+   "label": "Furniture, soft play, Montessori toys (estimate)",
+   "cost": 15000
+  },
+  {
+   "label": "Permits, architect, legal, entity (estimate)",
+   "cost": 9000
+  },
+  {
+   "label": "POS, Wi-Fi, cameras, check-in tablets (estimate)",
+   "cost": 5000
+  },
+  {
+   "label": "Signage and brand rollout (estimate)",
+   "cost": 6000
+  },
+  {
+   "label": "Opening inventory and supplies (estimate)",
+   "cost": 4000
+  },
+  {
+   "label": "Pre-opening payroll and training (estimate)",
+   "cost": 5000
+  },
+  {
+   "label": "Launch marketing (estimate)",
+   "cost": 4000
+  },
+  {
+   "label": "Build-out contingency, 15% of construction + play structures (ops)",
+   "cost": 19500
+  }
+ ],
+ "ramp_per_day": [
+  20,
+  24,
+  28,
+  26,
+  28,
+  30,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37
+ ]
+}

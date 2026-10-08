@@ -1,0 +1,13 @@
+{
+  "id": "P061",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot on my budget for something I'd maybe use a few rainy days a year, and it looks a bit fancy for Salisbury. I wait for a Groupon or a free trial day before I try anything new anyway.",
+  "objection": "I'd be paying a monthly fee for a place I'd only really need in bad weather, and I have no idea yet if it's actually good or just pretty photos.",
+  "would_change_my_mind": "A free trial day or a Groupon-type deal on a first visit or drop-in pass, with no monthly commitment.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 25
+}

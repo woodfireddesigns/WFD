@@ -1,0 +1,5 @@
+Little Shore Play Cafe, a new Montessori-inspired play cafe opening in Salisbury, MD next year, built for kids 8 months to 5.
+Kids play in a calm play village (pretend market, farm, mini gym, reading nook) plus a gated Baby Nook for under-2s, while you stay a few feet away with coffee and Wi-Fi. Parents stay on site and are always free; no drop-off. We limit how many kids are in at once so it never feels packed, shoes off, toys rotated out and cleaned after use, with a posted daily cleaning log.
+Your first visit is free. After that: drop-in $15 with house coffee or tea included, siblings $7, under 1 free. Or a 5-visit pack for $60. Unlimited membership: $45 a month (+$15 per sibling), month to month; founding families (first 50) pay $39, locked for 12 months.
+Cafe: real espresso drinks, kid smoothies, and $6 snack boxes (fruit, cheese, crackers). Weekly music, movement and art classes with local teachers, $12 a class. Weekday Group Mornings for moms groups ($8 a child for 4+ families).
+Birthday parties in our glass party room from $325, all-in, no surprise fees. On Mondays you can book the whole cafe privately for your group for $200.

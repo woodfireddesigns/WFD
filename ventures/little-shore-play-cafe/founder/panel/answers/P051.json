@@ -1,13 +1,20 @@
 {
   "id": "P051",
   "buys": true,
-  "purchases_first_month": 1,
+  "purchases_first_month": 3,
   "reason_code": "price",
-  "reason": "I would not sign up for $59 a month, since storytime at the library is free and we already do playdates through my group. But a $12 drop-in with a coffee included is fair, and I'd try it once on a cold or rainy day and bring a couple of moms from my group.",
-  "objection": "$59 a month sounds like a lot for Salisbury when the library, church and my own playdates cost nothing. I'd need to see it's actually busy and clean before I pay monthly.",
-  "would_change_my_mind": "A free or cheap trial visit, or a group rate for my moms' group, plus seeing other local families already going, would get me to consider the membership.",
-  "price_too_cheap": 6,
+  "reason": "I'd use the free visit for sure and probably come back a few times if it's actually clean, since I'm always looking for an indoor spot when it's hot or rainy. The moms-group $8 morning rate is what makes it work for me, I'd rather bring the group than pay $13 a visit on my own.",
+  "objection": "$13 a kid adds up fast when storytime at the library is free, and it sounds a bit Instagram for Salisbury. I need to see it's really clean and not just pretty.",
+  "would_change_my_mind": "A solid moms-group deal I can organize for my group, plus seeing the place and the cleaning log in person on the free first visit.",
+  "price_too_cheap": 5,
   "price_cheap": 9,
-  "price_expensive": 15,
-  "price_too_expensive": 20
+  "price_expensive": 13,
+  "price_too_expensive": 19,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": true,
+  "class_max_price": 12,
+  "party_next_birthday": "no",
+  "party_max_price": 275,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

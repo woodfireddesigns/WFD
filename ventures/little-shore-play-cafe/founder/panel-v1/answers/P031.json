@@ -1,0 +1,13 @@
+{
+  "id": "P031",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I work full time, so it's Saturdays only and maybe the odd day off. We'd go once or twice a month, and that doesn't justify a $59 membership. Drop-in at $12 plus $8 for the sibling is fine, but the baby is under 1 and free, so I'd only pay for my 4-year-old.",
+  "objection": "I can only go on weekends, so a monthly membership is money for days I won't use. Saturday is also when it's probably busiest and the calm village stops being calm.",
+  "would_change_my_mind": "A cheaper tier for weekend-only or a few visits a month (a 4-visit pack around $30), or a free trial Saturday to see how crowded it gets.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 55,
+  "price_too_expensive": 80
+}

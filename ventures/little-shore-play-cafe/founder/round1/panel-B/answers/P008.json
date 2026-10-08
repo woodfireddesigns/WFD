@@ -1,0 +1,20 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "We go to the Salisbury Zoo on Saturdays because it's free, and $16 for a weekend visit is a hard sell next to that. I might use the free first visit, but I wouldn't pay after it.",
+  "objection": "Weekends are the only time I can go, and that's the $16 price, plus I'd be worried bigger kids will be running wild around my baby even with limited numbers.",
+  "would_change_my_mind": "A weekend price around $10 to $12, or a clear way to see that the Baby Nook is kept separate from the 5-year-olds on Saturdays.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 0,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd probably use the free visit, but $15 a visit plus gas adds up fast on our budget, and I can take the kids to the library or a park for nothing. I can't see paying $45 a month when money is this tight.",
+  "objection": "It's a drive for us and gas adds up, on top of $15 each time. I'd be paying real money for something I can get free elsewhere.",
+  "would_change_my_mind": "A $39 founding rate or a drop-in closer to $8-10, and it being close enough that the drive isn't a big gas cost.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 12,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

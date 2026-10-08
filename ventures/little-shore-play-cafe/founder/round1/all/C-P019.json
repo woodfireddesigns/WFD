@@ -1,0 +1,20 @@
+{
+  "id": "P019",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd probably use the free first visit, but $15 a kid to sit in a nice room is a lot when the library, parks and church group cost nothing. I only pay for an indoor place on a week of rain, and that's rare.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? Fifteen dollars a visit adds up fast with more than one kid, and I already have free things that fill the week.",
+  "would_change_my_mind": "A drop-in around $8 to $10 per child, or proof that it's really cleaner and calmer than the other indoor places I've tried.",
+  "price_too_cheap": 3,
+  "price_cheap": 6,
+  "price_expensive": 10,
+  "price_too_expensive": 15,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 6,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

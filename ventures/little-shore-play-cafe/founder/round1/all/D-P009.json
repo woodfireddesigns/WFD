@@ -1,0 +1,20 @@
+{
+  "id": "P009",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I only have Saturdays with my kid and the zoo is free, so paying $16 plus whatever the kid wants to eat just to sit in a pretty room feels like a lot for Salisbury. I might use the free first visit out of curiosity, but I wouldn't pay after.",
+  "objection": "$16 every Saturday adds up fast when the zoo and the park cost nothing, and it looks more Instagram than actually useful.",
+  "would_change_my_mind": "A weekend price around $8 to $10, or a free-entry weekend deal that makes it comparable to the zoo.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 14,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

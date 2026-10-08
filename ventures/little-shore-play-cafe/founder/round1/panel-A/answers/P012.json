@@ -1,0 +1,20 @@
+{
+  "id": "P012",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "quality",
+  "reason": "The free first visit means I'd go check it out, and the capped numbers plus the posted cleaning log are what CoCo's doesn't give me. If it's actually calm and clean I'd bring my moms group, since the Group Mornings rate is built for us.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? $15 a kid plus siblings adds up fast, and I won't pay for a membership until I've seen that the capacity limit and cleaning really hold up.",
+  "would_change_my_mind": "If the first free visit felt just as crowded or grubby as CoCo's, I'd be done. A real preview of the capacity cap and cleaning log in action would make me a regular.",
+  "price_too_cheap": 6,
+  "price_cheap": 10,
+  "price_expensive": 17,
+  "price_too_expensive": 24,
+  "cafe_spend_per_visit": 6,
+  "would_take_class": true,
+  "class_max_price": 15,
+  "party_next_birthday": "yes",
+  "party_max_price": 375,
+  "monday_group_rental": true,
+  "preferred_time": "weekday morning"
+}

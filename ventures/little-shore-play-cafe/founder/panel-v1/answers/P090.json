@@ -1,0 +1,13 @@
+{
+  "id": "P090",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "need",
+  "reason": "The coffee, Wi-Fi and a toddler playing a few feet away fits my work-from-home days, and $12 drop-in is easy to try. I'd come on a rainy day, not sign up for a membership.",
+  "objection": "We'd go once or twice a month, so $49-59 a month for a membership doesn't pay off. I also don't know if it's actually quiet enough to get work done.",
+  "would_change_my_mind": "A cheaper punch card or 4-visit pass would make me commit more. A membership under about $30 would flip me to joining.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 22
+}

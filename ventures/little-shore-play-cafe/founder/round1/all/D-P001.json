@@ -1,0 +1,20 @@
+{
+  "id": "P001",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "trust",
+  "reason": "The gated Baby Nook and the cap on how many kids are in at once speak straight to my worry about big kids running over my baby. I'd use the free visit and probably pay for one more weekday trip if it feels calm, but money is tight so it won't become a habit fast.",
+  "objection": "Will bigger kids be running wild around my baby? A gate and a headcount limit sound good on paper, but I want to see it actually works, and $13 a trip adds up on our budget.",
+  "would_change_my_mind": "Seeing on the free visit that the Baby Nook is truly separate and the older kids stay calm; a lower weekday price, around $8 to $10, would make it a regular thing.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 14,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "not relevant",
+  "party_max_price": 0,
+  "monday_group_rental": false,
+  "preferred_time": "weekday afternoon"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "P019",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "We do library storytime, parks and the zoo, and I almost never pay for kid stuff. I'd take the free first visit to look, but $13 a kid plus a sibling on top is more than I'd spend when a rainy day at Ocean City's playground is a once-a-year thing.",
+  "objection": "It sounds like CoCo's Funhouse with nicer decor, and I can get the same hour free at the library or the park. Paying $20+ for two kids every time doesn't make sense for me.",
+  "would_change_my_mind": "A drop-in around $8 a kid, or a real reason it beats free options on bad-weather days, like a punch pass I could use only when it rains.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 11,
+  "price_too_expensive": 15,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 6,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

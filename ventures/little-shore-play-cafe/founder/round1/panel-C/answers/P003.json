@@ -1,0 +1,20 @@
+{
+  "id": "P003",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "I'd use the free first visit for sure, and maybe come back once if my toddler loved it and I got some work done. But we'd only go once or twice a month, so I'm not paying for a membership.",
+  "objection": "At $15 a visit it adds up on my budget, and I'd only go once or twice a month, so unlimited at $45 makes no sense for us. I'd rather pay for a visit now and then than commit.",
+  "would_change_my_mind": "A cheaper drop-in around $10, or a pack that doesn't expire so I can use it slowly.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 0,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

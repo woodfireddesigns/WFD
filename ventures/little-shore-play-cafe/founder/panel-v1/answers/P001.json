@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "It's not open yet and I'm not paying $59 a month for a place I've never seen. I wait for a Groupon or a free trial day before I try anything new, and the page says nothing about how they clean.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth, and nothing here says how toys and floors get cleaned or how often.",
+  "would_change_my_mind": "A free or Groupon-priced first visit, plus a clear cleaning routine (toys sanitized between sessions, shoes-off, and a cap on how many kids are in at once).",
+  "price_too_cheap": 25,
+  "price_cheap": 39,
+  "price_expensive": 65,
+  "price_too_expensive": 90
+}

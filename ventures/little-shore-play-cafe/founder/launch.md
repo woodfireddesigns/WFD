@@ -166,3 +166,9 @@ Free first visits by booked slot to hold the 25-kid cap. Offer: first visit free
 **Day 30 (Mon Dec 20, closed day):** Paying visits a day vs 15 and 18? Conversion, members, parties vs targets? Cash vs the CFO month-1 loss of $6,540? Change hours, price or channel, or hold? Report to the board.
 
 Next: `/founder-plan` compiles everything into the business plan.
+
+## Update after the Year 1 optimization (Oct 8, 2026)
+
+- **Party pre-sales move after the lease.** 8 of 10 simulated birthday planners would not book a venue without an opening date. Sell parties from the lease signing (target late May 2027) with a refundable deposit and a firm date; the 12+ pre-booked party line now applies to Aug 1, 2027, not May 14.
+- **The go/no-go stays at about 45 paying family visits a day.** With a $150k loan and $3,000/mo for Jordan, break-even is 40 a day (`cfo.md`).
+- **Pop-up pricing:** test weekday $13 / weekend $15 exactly as in `pitch.md`, so real buyers confirm the simulated result.

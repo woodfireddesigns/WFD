@@ -1,0 +1,20 @@
+{
+  "id": "P007",
+  "buys": true,
+  "purchases_first_month": 3,
+  "reason_code": "trust",
+  "reason": "The free first visit means I can check for myself if it's actually clean, and the limited headcount plus the daily cleaning log is the first pitch I've seen that speaks to my toddler-chews-everything worry. Options in Salisbury are thin and I need somewhere to go between naps, so if it holds up I'd come a few times a month.",
+  "objection": "I don't trust a cleaning log until I've seen it. If the toys look grubby or the place gets crowded on my first visit, I won't go back, and I won't pay for a pack up front.",
+  "would_change_my_mind": "",
+  "price_too_cheap": 6,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": true,
+  "class_max_price": 12,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

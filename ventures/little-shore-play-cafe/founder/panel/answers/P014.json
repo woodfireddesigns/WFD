@@ -1,13 +1,20 @@
 {
   "id": "P014",
   "buys": true,
-  "purchases_first_month": 1,
+  "purchases_first_month": 2,
   "reason_code": "trust",
-  "reason": "I'd try one Saturday drop-in for $12 since it's a rainy-day option and I'm not paying for a membership I'd only use 3 or 4 times. Whether I go back depends on how clean it looks when I walk in.",
-  "objection": "Is it actually clean? My toddler puts everything in her mouth, and a bunch of kids touching the same toys all day worries me. It says nothing about how they clean.",
-  "would_change_my_mind": "Seeing or being told how toys get cleaned and swapped out during the day, like a posted cleaning schedule or a toy sanitizing routine, plus shoes-off. A free or cheap first visit would also get me in the door.",
-  "price_too_cheap": 5,
+  "reason": "The posted daily cleaning log and shoes-off rule speak to my biggest worry, and the free first visit means I can check it out on a Saturday with no risk. If it's actually clean I'd come maybe a couple Saturdays a month.",
+  "objection": "Is it really clean, and is $15 every Saturday worth it on my budget when the library and park are free?",
+  "would_change_my_mind": "Seeing the place clean in person on my free visit; a weekend price closer to $10 would make me come more often.",
+  "price_too_cheap": 4,
   "price_cheap": 8,
   "price_expensive": 15,
-  "price_too_expensive": 20
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 2,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
 }

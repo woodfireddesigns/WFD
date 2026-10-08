@@ -1,0 +1,20 @@
+{
+  "id": "P017",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd grab the free first visit for sure, but we'd only go once or twice a month, so $15 a pop plus whatever the kid wants to eat adds up fast and a membership makes no sense for us. I wait for a Groupon or a deal before paying full price for something new.",
+  "objection": "With shift work we can't go on a steady schedule, so I'd be paying $15 a visit for something we use once or twice a month. The 5-pack is the only thing that might work, and I'd want to see it go on a deal first.",
+  "would_change_my_mind": "A Groupon or a launch deal like a 5-visit pack for around $40, or drop-in at $10 on weekday mornings.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 3,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

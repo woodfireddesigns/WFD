@@ -1,0 +1,20 @@
+{
+  "id": "P014",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "We do library storytime, parks and church groups, and I almost never pay for kid stuff. I'd take the free first visit maybe, but $15 a visit is hard to justify when I'm chasing my kid anyway and won't get to sit with the coffee.",
+  "objection": "$15 a visit for something I can get free at the library or a park, and I'll be up chasing my toddler instead of sitting and drinking coffee.",
+  "would_change_my_mind": "A drop-in price around $6 to $8 per child, or something that lets my kid play on their own while I actually sit.",
+  "price_too_cheap": 3,
+  "price_cheap": 6,
+  "price_expensive": 11,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 5,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

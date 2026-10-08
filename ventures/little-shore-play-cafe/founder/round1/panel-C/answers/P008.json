@@ -1,0 +1,20 @@
+{
+  "id": "P008",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "need",
+  "reason": "The zoo is free but it's no help when it's cold or raining, and a gated spot for my baby with a seat for me sounds good. Free first visit means I'll try it on a Saturday, and if it's calm I'd pay $15 once or twice, not a membership.",
+  "objection": "Will bigger kids be running wild around my baby? And $15 every Saturday adds up when the zoo costs nothing.",
+  "would_change_my_mind": "Seeing on my free visit that the Baby Nook really keeps the older kids out and it isn't crowded; a weekend-only price around $10 would make me come back more often.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 2,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

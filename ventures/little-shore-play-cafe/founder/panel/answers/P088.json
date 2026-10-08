@@ -1,13 +1,20 @@
 {
   "id": "P088",
   "buys": true,
-  "purchases_first_month": 2,
+  "purchases_first_month": 3,
   "reason_code": "need",
-  "reason": "A calm indoor place where both my 4-year-old and my 10-month-old fit, with me sitting right there with coffee, is what I'm short of on rainy days. Baby is free as a drop-in, so I'd try it twice at $12 before I think about a membership.",
-  "objection": "Will bigger kids be running wild around my baby? Ages go up to 5 and I can't tell if there's a separate baby area or any limit on how many kids are in at once.",
-  "would_change_my_mind": "A visibly separate, gated baby zone and a stated cap on how many kids are in at once.",
-  "price_too_cheap": 25,
-  "price_cheap": 40,
-  "price_expensive": 70,
-  "price_too_expensive": 95
+  "reason": "Somewhere indoors in Salisbury where my 4-year-old can play and my 10-month-old has her own gated spot, with me sitting down and a coffee, is something I'd actually use. The free first visit means I can see whether it's really calm before I pay.",
+  "objection": "Will the bigger kids be running wild around my baby? A gated Baby Nook and limited numbers sound good on paper, but I need to see it on a real morning.",
+  "would_change_my_mind": "If the free visit showed the Baby Nook was crowded or the older kids were loud and rough nearby, I'd drop it.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 5,
+  "would_take_class": true,
+  "class_max_price": 10,
+  "party_next_birthday": "yes",
+  "party_max_price": 350,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

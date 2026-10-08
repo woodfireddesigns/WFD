@@ -1,0 +1,13 @@
+{
+  "id": "P072",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "We already have the zoo for free, and a play cafe is a drive for us so gas adds up on top of $12 a visit. $59 a month only pays off if we go five or more times, and I can't promise that.",
+  "objection": "It's a drive for us and gas adds up, so the real cost per visit is well above the sticker price. I'd be paying monthly for a place I might only get to a couple of times.",
+  "would_change_my_mind": "A free or cheap trial visit, plus Wi-Fi and seating good enough that I can get real work done, and a location that's an easy short drive from us.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 55,
+  "price_too_expensive": 75
+}

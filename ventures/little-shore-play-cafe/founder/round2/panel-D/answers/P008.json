@@ -1,0 +1,20 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd take the free first visit to look, but $16 every Saturday adds up when the zoo is free and I only get weekends. I wouldn't be paying for it regularly.",
+  "objection": "Weekends are when it's busiest, so will bigger kids be running wild around my baby? The Baby Nook helps, but $16 on a Saturday for something I can swap for a free zoo trip is hard to justify.",
+  "would_change_my_mind": "A weekend price closer to $10, or seeing on a Saturday that the cap on kids really keeps it calm and the Baby Nook is actually separate from the big kids.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 0,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

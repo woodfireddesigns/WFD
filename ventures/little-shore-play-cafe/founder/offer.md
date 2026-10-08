@@ -108,3 +108,7 @@ Changes tested: membership stated as per child ($45 first child, +$20 per siblin
 - **Flipped to no:** P002, P004, P018, all budget-stretched or tight-money households. Their reasons centered on "$14 a kid plus the sibling adds up". Spelling out per-child pricing made the sibling cost more visible.
 - **Flipped to yes:** P015, but only for the free first visit.
 - **Read:** the perks did not register, and per-child framing cost a little with multi-kid families. With 20 buyers, 9 vs 7 is within noise. **Keep v2 as the recommended offer.** The monthly drink stays as a cheap retention perk for members (about $1.65 each), not a selling point. Keep the sibling add-on at $15 in the headline; test $20 quietly with real members later.
+
+## 7. Final offer (Year 1 optimization)
+
+The pitch buyers saw is `pitch.md` (also `pitch-v5.md`). It opens with **"They play. You sit. Right there."** and keeps the free first visit, the visible clean standard, the Baby Nook and the guarantee. Results and every tested variant: `optimization.md`. On the same 100 buyer cards: **71 buy vs 24 as first pitched**, 0 buyers lost.

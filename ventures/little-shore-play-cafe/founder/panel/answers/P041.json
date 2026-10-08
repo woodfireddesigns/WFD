@@ -1,13 +1,1 @@
-{
-  "id": "P041",
-  "buys": false,
-  "purchases_first_month": 0,
-  "reason_code": "timing",
-  "reason": "I work full time and it's really just Saturdays, so we'd maybe go once or twice a month. At $12 a visit that's cheaper than a $59 membership, so I'd skip the membership and see how it goes.",
-  "objection": "We'd go once or twice a month, which isn't enough to justify a membership. It's also new and unproven, so I'd want to see how the place actually is before paying anything up front.",
-  "would_change_my_mind": "A cheap 4 or 5 visit punch pass that doesn't expire quickly, or Saturday hours with a free first visit so I can try it.",
-  "price_too_cheap": 20,
-  "price_cheap": 30,
-  "price_expensive": 45,
-  "price_too_expensive": 65
-}
+{"id":"P041","buys":true,"purchases_first_month":1,"reason_code":"habit","reason":"The free first visit is an easy yes and the clean, never-packed setup is what I'd want on a rainy Saturday. After that I'd pay the weekend drop-in once, maybe twice a month, but I wouldn't commit to a membership.","objection":"We'd go once or twice a month, so unlimited at $45 doesn't pay off, and $15 a visit on a weekend adds up if it's only a few times. I also don't know if it will be fun enough to keep a toddler busy past the first visit.","would_change_my_mind":"A weekend drop-in closer to $10-12, or a 5-visit pack that doesn't expire for a few months.","price_too_cheap":5,"price_cheap":9,"price_expensive":15,"price_too_expensive":22,"cafe_spend_per_visit":4,"would_take_class":false,"class_max_price":8,"party_next_birthday":"no","party_max_price":0,"monday_group_rental":false,"preferred_time":"weekend"}

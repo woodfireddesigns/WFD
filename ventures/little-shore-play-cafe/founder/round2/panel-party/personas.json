@@ -1,0 +1,112 @@
+[
+ {
+  "id": "P001",
+  "name": "Iris",
+  "age": 36,
+  "segment": "Budget-stretched household",
+  "income": 56000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "Is 2 hours enough, and who does setup and cleanup?",
+  "habit": "you take your toddler to Wicomico library storytime most Tuesdays"
+ },
+ {
+  "id": "P002",
+  "name": "Anya",
+  "age": 31,
+  "segment": "Middle-income household",
+  "income": 101000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "Will there be hidden fees or a required tip?",
+  "habit": "you take your toddler to Wicomico library storytime most Tuesdays"
+ },
+ {
+  "id": "P003",
+  "name": "Dana",
+  "age": 29,
+  "segment": "Budget-stretched household",
+  "income": 53000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "Is 2 hours enough, and who does setup and cleanup?",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P004",
+  "name": "Priya",
+  "age": 37,
+  "segment": "Middle-income household",
+  "income": 101000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "CoCo's or the trampoline park is what everyone does",
+  "habit": "you live in Fruitland and drive about 15 minutes into Salisbury"
+ },
+ {
+  "id": "P005",
+  "name": "Isla",
+  "age": 37,
+  "segment": "Upper-middle household",
+  "income": 143000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "CoCo's or the trampoline park is what everyone does",
+  "habit": "you follow a lot of Montessori and play-room accounts on Instagram"
+ },
+ {
+  "id": "P006",
+  "name": "Caleb",
+  "age": 29,
+  "segment": "Middle-income household",
+  "income": 71000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "$325 is a lot for a toddler's party",
+  "habit": "you live in Fruitland and drive about 15 minutes into Salisbury"
+ },
+ {
+  "id": "P007",
+  "name": "Diego",
+  "age": 40,
+  "segment": "Upper-middle household",
+  "income": 167000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "Will the room fit our family and friends?",
+  "habit": "the Salisbury Zoo is your go-to free outing"
+ },
+ {
+  "id": "P008",
+  "name": "Freya",
+  "age": 27,
+  "segment": "High-earning household",
+  "income": 170000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "Will the room fit our family and friends?",
+  "habit": "you follow a lot of Montessori and play-room accounts on Instagram"
+ },
+ {
+  "id": "P009",
+  "name": "Ezra",
+  "age": 41,
+  "segment": "Middle-income household",
+  "income": 95000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "Is 2 hours enough, and who does setup and cleanup?",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P010",
+  "name": "Callum",
+  "age": 40,
+  "segment": "Budget-stretched household",
+  "income": 38000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "$325 is a lot for a toddler's party",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ }
+]

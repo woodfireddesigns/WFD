@@ -1,0 +1,20 @@
+{
+  "id": "P012",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "quality",
+  "reason": "My first thought was CoCo's with nicer decor, but the capped headcount, shoes off and a posted cleaning log are what CoCo's lacks. The free first visit costs me nothing, and the moms-group rate is useful since I'm the one who gets everyone to show up.",
+  "objection": "Is it really different from CoCo's once the novelty wears off, and will they actually keep the numbers capped? $13 a kid adds up fast with more than one child.",
+  "would_change_my_mind": "Seeing the cleaning log and a real headcount cap in action on my free visit, and hearing it's actually calm. If it's just another loud room with pretty shelves, I won't come back.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 5,
+  "would_take_class": true,
+  "class_max_price": 12,
+  "party_next_birthday": "yes",
+  "party_max_price": 350,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

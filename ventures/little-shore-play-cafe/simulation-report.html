@@ -93,145 +93,117 @@ ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
 @media (prefers-reduced-motion:no-preference){.stamp{transition:transform .3s}.stamp:hover{transform:rotate(0)}}
 </style>
 
+<style>
+.stamp.pass{color:var(--good);border-color:var(--good)}
+.delta{font-family:var(--display);font-size:2.4rem;line-height:1}
+</style>
 <div class="wrap">
 
 <header style="display:flex;flex-direction:column;gap:14px">
-  <span class="eyebrow">Founder pack simulation · run Oct 8, 2026 · Salisbury, MD</span>
+  <span class="eyebrow">Founder pack simulation · optimized Oct 8, 2026 · Salisbury, MD</span>
   <h1>Little Shore Play Cafe</h1>
-  <p class="lede">All eleven founder skills run end to end: a 3-lens board, live competitor research, 120 simulated buyers, price curves, an offer rebuild, the CFO tool, marketing, brand, ops and a dated launch plan.</p>
+  <p class="lede">All eleven founder skills, then an optimization loop: every lever modeled through the CFO tool, the customer-facing ones tested on simulated local parents, and the winners re-run on the original 100 buyers.</p>
 </header>
 
 <section aria-labelledby="v">
   <div class="verdict">
-    <div class="stamp" id="v">Not yet</div>
+    <div class="stamp pass" id="v">Profitable</div>
     <div style="display:flex;flex-direction:column;gap:12px">
-      <p><strong>Computed by the plan tool, not written by hand.</strong> The unit economics work. The volume does not, yet.</p>
+      <p><strong>Computed by the plan tool, not written by hand.</strong> On operations, every check passes. Paying a lender and Jordan still depends on demand the pop-ups have to prove.</p>
       <ul class="checks">
-        <li><span class="ok">✓</span><span>Each paying family visit leaves <b class="num">$17.05</b> after its own costs (82%).</span></li>
-        <li><span class="no">✗</span><span>Year 1 operating <b>loss of $4,012</b>, before any loan or owner pay.</span></li>
-        <li><span class="ok">✓</span><span>Break-even is <b class="num">30</b> family visits a day against capacity of about 65.</span></li>
-        <li><span class="no">✗</span><span><b class="num">24 of 100</b> simulated buyers buy. The bar is 25%.</span></li>
+        <li><span class="ok">✓</span><span>Each paying family visit leaves <b class="num">$16.28</b> after its own costs (80%).</span></li>
+        <li><span class="ok">✓</span><span>Year 1 operating profit <b class="num">$30,290</b> (was -$4,012).</span></li>
+        <li><span class="ok">✓</span><span>Break-even <b class="num">29</b> family visits a day against capacity of about 106.</span></li>
+        <li><span class="ok">✓</span><span><b class="num">71 of 100</b> simulated buyers buy (was 24 on the same cards).</span></li>
       </ul>
     </div>
   </div>
   <div class="tiles">
-    <div class="tile"><span>Break-even</span><b class="num">30/day</b><span>paying family visits</span></div>
-    <div class="tile"><span>Needed to pay a loan + Jordan</span><b class="num">~45/day</b><span>with every lever pulled</span></div>
-    <div class="tile"><span>Cash needed as designed</span><b class="num">$238k</b><span>$166k on lean build-out</span></div>
-    <div class="tile"><span>Buy rate, revised offer</span><b class="num">45%</b><span>up from 24% as pitched</span></div>
+    <div class="tile"><span>Year 1 operating profit</span><b class="num">$30.3k</b><span>$21.3k without rent abatement</span></div>
+    <div class="tile"><span>Break-even</span><b class="num">29/day</b><span>40/day with loan + Jordan</span></div>
+    <div class="tile"><span>Kids at once</span><b class="num">~39</b><span>2,500 sq ft, calm density</span></div>
+    <div class="tile"><span>Cash needed</span><b class="num">$230k</b><span>$158k lean + signed sponsors</span></div>
   </div>
 </section>
 
 <section>
-  <span class="eyebrow">The headline finding</span>
-  <h2>This is a visit business. The membership is not how families arrive.</h2>
-  <p>Out of 100 simulated Salisbury parents, about 1 leaned toward the $59 membership. On the revised offer, 0 of 20 took a membership before visiting. Every buyer started with a drop-in. The membership becomes a retention tool for families who already come weekly, so the model now runs on 25 member families at steady state and lets drop-ins and 5-packs carry the volume.</p>
-  <div class="callout">
-    <span class="eyebrow">Go / no-go number for the pop-ups</span>
-    <b class="big num">45 paying family visits a day</b>
-    <p>At the 38-a-day plan, the business covers its costs but cannot carry a $150k loan and pay Jordan $3,000 a month. At 45, it clears about $3,700 a month after both. The launch plan turns pop-up deposits into this forecast before anyone signs a lease.</p>
-  </div>
+  <span class="eyebrow">The essence, kept on purpose</span>
+  <h2>Clean, modern, enchanting. Then profitable.</h2>
+  <p>No lever was allowed to cost the experience: calm density (about 35 sq ft of play floor per child, never the fire-code max), two people on the floor at all times, a cleaning log parents can see, coffee in every visit, a gated Baby Nook, and a designed play village. Those details are what moved buyers from no to yes in every round.</p>
 </section>
 
 <section>
-  <span class="eyebrow">What each skill found</span>
-  <h2>The pipeline, in order</h2>
-  <ol class="steps">
-    <li data-skill="Board"><h3>3 FUND IF · avg 4.7/10</h3><p>Demand unproven, sponsors are not a moat, six businesses in one room. Nobody passed.</p></li>
-    <li data-skill="Competitors"><h3>No play cafe within 30 miles</h3><p>Local drop-ins $18 median. Top complaint at CoCo's and Altitude: big kids crowding toddlers.</p></li>
-    <li data-skill="Consumer panel"><h3>24 buy · 76 pass</h3><p>Price vs free storytime and parks drove 45 of the passes. Stay-at-home parents bought at 55%.</p></li>
-    <li data-skill="Pricing"><h3>$59 membership is above range</h3><p>Acceptable $20 to $55. Set to $45, $39 founding. Drop-in $14 with coffee included.</p></li>
-    <li data-skill="Offer"><h3>Re-test: 24% → 45%</h3><p>Free first visit, Baby Nook, visible clean standard, 5-pack, 30-day guarantee.</p></li>
-    <li data-skill="CFO"><h3>Year 1: -$4,012</h3><p>Break-even 30 visits/day. Startup $221.5k incl. 15% contingency.</p></li>
-    <li data-skill="Marketing"><h3>Max $27 per customer</h3><p>Facebook and moms-group organizers, Instagram + Meta ads, two local creators.</p></li>
-    <li data-skill="Brand"><h3>Keep the name</h3><p>"They play. You sit. Right there." Spartina, Sandbar, Oak. Domains showed available.</p></li>
-    <li data-skill="Ops"><h3>Change-of-use is the permit risk</h3><p>Staff is 84 hrs/week, not 63. Admissions tax was missing. Both now in the model.</p></li>
-    <li data-skill="Launch"><h3>Open Sat Nov 20, 2027</h3><p>Pop-ups Feb to May. Go decision May 15, gated on 42+ founding deposits.</p></li>
-    <li data-skill="Plan"><h3>Verdict: Not yet</h3><p>Two checks fail. The fix is proving demand, not polishing the pitch.</p></li>
-  </ol>
+  <span class="eyebrow">Offer tuning · same buyer cards every round</span>
+  <h2>Seven offers tested, one kept</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Round</th><th>Offer</th><th class="r">Buyers</th><th class="r">Buy</th><th class="r">Month-1 visits</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>As pitched: $59 membership, $12 + drink minimum</td><td class="r">100</td><td class="r">24</td><td class="r">39</td></tr>
+      <tr><td>1</td><td>Free first visit, $14 with coffee, 5-pack, $45 membership</td><td class="r">20</td><td class="r">9</td><td class="r">13</td></tr>
+      <tr><td>2</td><td>Per-child framing, monthly drink perk, $29 weekday tier</td><td class="r">20</td><td class="r">7</td><td class="r">9</td></tr>
+      <tr><td>3A</td><td>Full offer at $15, plain copy</td><td class="r">20</td><td class="r">8</td><td class="r">14</td></tr>
+      <tr><td>3B</td><td>Weekday $13 / weekend $16</td><td class="r">20</td><td class="r">11</td><td class="r">18</td></tr>
+      <tr><td>3C</td><td>$15 with experience-led copy</td><td class="r">20</td><td class="r">10</td><td class="r">17</td></tr>
+      <tr><td>4D</td><td>Experience copy + weekday $13 / weekend $16</td><td class="r">20</td><td class="r">11</td><td class="r">19</td></tr>
+      <tr><td><b>Final</b></td><td><b>Experience copy + weekday $13 / weekend $15, $60 pack, parties $325/$395</b></td><td class="r"><b>100</b></td><td class="r"><b>71</b></td><td class="r"><b>137</b></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--muted)">Many buyers counted the free first visit as a purchase. The stricter signal, paid month-one visits per 100 parents, rose from about 39 to about 66. The model assumes less lift than that.</p>
 </section>
 
 <section>
-  <span class="eyebrow">Consumer panel · 100 simulated buyers</span>
-  <h2>Who buys, who walks</h2>
+  <span class="eyebrow">Final panel · 100 simulated parents</span>
+  <h2>Who buys now</h2>
   <div class="two">
     <div class="card">
       <h3>Buy rate by buying behaviour</h3>
       <div class="bars">
-        <div class="bar"><span>Birthday party planner <small>(5, thin)</small></span><div class="track"><div class="fill" style="width:60%"></div></div><span class="v">60%</span></div>
-        <div class="bar"><span>Stay-at-home parent</span><div class="track"><div class="fill" style="width:55%"></div></div><span class="v">55%</span></div>
-        <div class="bar"><span>Remote or hybrid worker</span><div class="track"><div class="fill" style="width:30%"></div></div><span class="v">30%</span></div>
-        <div class="bar"><span>Working parent, weekends</span><div class="track"><div class="fill" style="width:25%"></div></div><span class="v">25%</span></div>
-        <div class="bar"><span>Moms-group organizer</span><div class="track"><div class="fill" style="width:20%"></div></div><span class="v">20%</span></div>
-        <div class="bar"><span>Deal hunter</span><div class="track"><div class="fill zero" style="width:0"></div></div><span class="v">0%</span></div>
+        <div class="bar"><span>Remote or hybrid worker</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="v">100%</span></div>
+        <div class="bar"><span>Cleanliness and safety first</span><div class="track"><div class="fill" style="width:90%"></div></div><span class="v">90%</span></div>
+        <div class="bar"><span>Stay-at-home parent</span><div class="track"><div class="fill" style="width:85%"></div></div><span class="v">85%</span></div>
+        <div class="bar"><span>Working parent, weekends</span><div class="track"><div class="fill" style="width:80%"></div></div><span class="v">80%</span></div>
+        <div class="bar"><span>Deal hunter</span><div class="track"><div class="fill" style="width:70%"></div></div><span class="v">70%</span></div>
+        <div class="bar"><span>Moms-group organizer</span><div class="track"><div class="fill" style="width:70%"></div></div><span class="v">70%</span></div>
         <div class="bar"><span>Free-activity loyalist</span><div class="track"><div class="fill zero" style="width:0"></div></div><span class="v">0%</span></div>
-        <div class="bar"><span>Cleanliness and safety first</span><div class="track"><div class="fill zero" style="width:0"></div></div><span class="v">0%</span></div>
       </div>
     </div>
     <div class="card">
-      <h3>What non-buyers named (of 76)</h3>
+      <h3>Add-ons they said they'd buy</h3>
       <div class="bars">
-        <div class="bar"><span>Free alternatives</span><div class="track"><div class="fill" style="width:78%;background:var(--oak)"></div></div><span class="v">59</span></div>
-        <div class="bar"><span>Wouldn't use a membership</span><div class="track"><div class="fill" style="width:57%;background:var(--oak)"></div></div><span class="v">43</span></div>
-        <div class="bar"><span>Not open, never seen it</span><div class="track"><div class="fill" style="width:29%;background:var(--oak)"></div></div><span class="v">22</span></div>
-        <div class="bar"><span>Drive and gas</span><div class="track"><div class="fill" style="width:26%;background:var(--oak)"></div></div><span class="v">20</span></div>
-        <div class="bar"><span>Big kids near my baby</span><div class="track"><div class="fill" style="width:24%;background:var(--oak)"></div></div><span class="v">18</span></div>
-        <div class="bar"><span>Weekends only</span><div class="track"><div class="fill" style="width:20%;background:var(--oak)"></div></div><span class="v">15</span></div>
-        <div class="bar"><span>Is it clean?</span><div class="track"><div class="fill" style="width:17%;background:var(--oak)"></div></div><span class="v">13</span></div>
+        <div class="bar"><span>Would consider a party here</span><div class="track"><div class="fill" style="width:13%;background:var(--oak)"></div></div><span class="v">13%</span></div>
+        <div class="bar"><span>Would take a $12 class</span><div class="track"><div class="fill" style="width:11%;background:var(--oak)"></div></div><span class="v">11%</span></div>
+        <div class="bar"><span>Monday private rental</span><div class="track"><div class="fill" style="width:2%;background:var(--oak)"></div></div><span class="v">2%</span></div>
       </div>
-      <p style="font-size:.85rem;color:var(--muted)">53 of 100 said a free or cheap trial would flip them. 27 asked for a visit pack.</p>
+      <p style="font-size:.9rem;color:var(--muted)">About $3 a visit in cafe spend beyond the included coffee. 65% prefer weekday mornings, 27% weekends.</p>
     </div>
-  </div>
-  <div class="card">
-    <h3>Offer re-test, same customer profile</h3>
-    <div class="compare"><b class="num">24%</b><span class="arrow">→</span><b class="num" style="color:var(--accent)">45%</b><span style="color:var(--muted)">buy rate, as pitched vs revised offer (20 buyers, thin)</span></div>
-    <p style="font-size:.92rem">Cleanliness objections fell from 13 of 76 to 1 of 11; "never seen it" from 22 to 0. Free alternatives remain the wall: all 11 remaining non-buyers named them. Simulated buyers lean agreeable, so read both numbers as upper bounds.</p>
   </div>
 </section>
 
 <section>
-  <span class="eyebrow">Pricing · Van Westendorp on panel answers</span>
-  <h2>The membership was priced above what parents accept</h2>
-  <div class="two">
-    <div class="card">
-      <h3>Monthly membership (69 answers)</h3>
-      <div class="range" role="img" aria-label="Acceptable range 20 to 55 dollars on a 0 to 80 scale, as-pitched 59 dollars sits above it">
-        <div class="axis"></div>
-        <div class="ok" style="left:25%;width:43.9%"></div>
-        <div class="mark" style="left:73.75%"></div><span class="mlbl" style="left:73.75%">$59</span>
-        <span class="lbl" style="left:25%">$20</span><span class="lbl" style="left:68.9%">$55</span><span class="lbl" style="left:56.25%;color:var(--accent);font-weight:700">$45 new</span>
-      </div>
-      <p style="font-size:.9rem;color:var(--muted)">Sweet spot (IPP) $35. Small-metro play-cafe median about $40. Local "unlimited" bounce passes run $15 to $20.</p>
-    </div>
-    <div class="card">
-      <h3>Drop-in, 1 child (31 answers)</h3>
-      <div class="range" role="img" aria-label="Acceptable range 5 to 15 dollars on a 0 to 25 scale; 12 plus drink is about 16.75 dollars, above it">
-        <div class="axis"></div>
-        <div class="ok" style="left:20%;width:40%"></div>
-        <div class="mark" style="left:67%"></div><span class="mlbl" style="left:67%">$16.75 real</span>
-        <span class="lbl" style="left:20%">$5</span><span class="lbl" style="left:60%">$15</span><span class="lbl" style="left:48%;color:var(--accent);font-weight:700">$12</span>
-      </div>
-      <p style="font-size:.9rem;color:var(--muted)">Buyers read "$12 plus one drink" as coffee included. The real ticket is about $16.75. New price: $14 with house coffee in.</p>
-    </div>
-  </div>
+  <span class="eyebrow">Every lever</span>
+  <h2>What stayed, what got cut</h2>
   <div class="tablewrap"><table>
-    <thead><tr><th>Item</th><th>As pitched</th><th>Recommended</th><th>Why</th></tr></thead>
+    <thead><tr><th>Lever</th><th>Evidence</th><th>Decision</th></tr></thead>
     <tbody>
-      <tr><td>First visit</td><td>Paid</td><td><b>Free</b></td><td>Top flip request (53 of 100)</td></tr>
-      <tr><td>Drop-in</td><td>$12 + drink minimum</td><td><b>$14, coffee included</b></td><td>Inside range, $4 under local median</td></tr>
-      <tr><td>5-visit pack</td><td>None</td><td><b>$55</b></td><td>Bridge for 1 to 2x a month families</td></tr>
-      <tr><td>Membership</td><td>$59 ($49 founding)</td><td><b>$45 ($39 founding, first 50)</b></td><td>$59 above acceptable range</td></tr>
-      <tr><td>Parties</td><td>$275 / $375 / $475</td><td><b>$295 / $395, all-in</b></td><td>Local median $475; no surprise fees</td></tr>
-      <tr><td>Group Mornings</td><td>None</td><td><b>$8 a child, 4+ families</b></td><td>Fills weak weekday mornings</td></tr>
+      <tr><td>Weekday $13 / weekend $15 / $60 pack</td><td>Price ceiling $14.99 across 180 answers; weekday price lifts buyers</td><td><span class="pill good">Kept</span></td></tr>
+      <tr><td>Experience-led copy</td><td>More buyers at the same price; double the party interest</td><td><span class="pill good">Kept</span></td></tr>
+      <tr><td>Parties at $325 / $395, 8 a month</td><td>Party panel range $151 to $400; 13% would consider</td><td><span class="pill good">Kept</span></td></tr>
+      <tr><td>Teacher-led classes, 50% share</td><td>11% would take one</td><td><span class="pill good">Kept</span></td></tr>
+      <tr><td>Staff 84 → 76 hired hours, 2 on floor always</td><td>Ops rota; guardrail kept</td><td><span class="pill good">Kept</span></td></tr>
+      <tr><td>3 months free rent on a 5-year lease</td><td>Negotiation target; Year 1 still +$21.3k without it</td><td><span class="pill warn">Negotiate</span></td></tr>
+      <tr><td>Monday private rentals, 4 a month</td><td>2 of 100 interested</td><td><span class="pill warn">Cut to 1</span></td></tr>
+      <tr><td>$29 weekday tier, monthly drink perk</td><td>Nobody chose either</td><td><span class="pill bad">Cut</span></td></tr>
+      <tr><td>3,500 or 4,500 sq ft</td><td>-$47k and -$93k of Year 1 at the same demand</td><td><span class="pill bad">Rejected</span></td></tr>
+      <tr><td>Lean build-out + $15k signed sponsors</td><td>Designed catalog houses; sponsor wall, no logos on play</td><td><span class="pill good">Kept for cash</span></td></tr>
     </tbody>
   </table></div>
 </section>
 
 <section>
   <span class="eyebrow">CFO · paying family visit as the unit</span>
-  <h2>Year 1 climbs out of the hole in month 6</h2>
+  <h2>Profitable from month 4</h2>
   <div class="chart">
-    <svg viewBox="0 0 640 236" width="100%" role="img" aria-label="Monthly operating profit, year 1: losses months 1 to 5, from minus 6540 dollars, positive from month 6, reaching 3212 dollars in month 12">
+    <svg viewBox="0 0 640 236" width="100%" role="img" aria-label="Monthly operating profit, year 1: losses in months 1 to 3 starting at minus 4478 dollars, positive from month 4, reaching 6528 dollars in month 12">
       <line x1="44" y1="130" x2="630" y2="130" stroke="var(--line)" stroke-width="1"/>
       <line x1="44" y1="69" x2="630" y2="69" stroke="var(--line)" stroke-dasharray="3 4"/>
       <line x1="44" y1="191" x2="630" y2="191" stroke="var(--line)" stroke-dasharray="3 4"/>
@@ -242,66 +214,47 @@ ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
   <div class="tablewrap"><table>
     <thead><tr><th>Scenario (tool runs)</th><th class="r">Break-even/day</th><th class="r">Year 1</th><th class="r">Steady month</th></tr></thead>
     <tbody>
-      <tr><td>Base: 38 visits/day at steady state</td><td class="r">30</td><td class="r">-$4,012</td><td class="r">$3,655</td></tr>
-      <tr><td>Visits -20%</td><td class="r">30</td><td class="r">-$35,082</td><td class="r">$263</td></tr>
-      <tr><td>+ $200k loan payment</td><td class="r">36</td><td class="r">-$35,068</td><td class="r">$1,067</td></tr>
-      <tr><td>+ loan + $3k/mo for Jordan</td><td class="r">42</td><td class="r">-$71,068</td><td class="r">-$1,933</td></tr>
-      <tr><td>Drop-in $15, pack $60</td><td class="r">29</td><td class="r">$3,408</td><td class="r">$4,466</td></tr>
-      <tr><td>Parties 6 → 10 a month</td><td class="r">28</td><td class="r">$4,494</td><td class="r">$4,584</td></tr>
-      <tr><td><b>All levers + lean build-out + $150k loan + Jordan, at 45/day</b></td><td class="r">37</td><td class="r">-$17,314</td><td class="r"><b>$3,736</b></td></tr>
+      <tr><td><b>Final plan, 45 visits/day at steady state</b></td><td class="r">29</td><td class="r"><b>$30,290</b></td><td class="r">$7,036</td></tr>
+      <tr><td>Without rent abatement</td><td class="r">30</td><td class="r">$21,290</td><td class="r">$6,286</td></tr>
+      <tr><td>Demand only 38/day</td><td class="r">29</td><td class="r">$2,975</td><td class="r">$4,053</td></tr>
+      <tr><td>Demand 55/day</td><td class="r">29</td><td class="r">$69,446</td><td class="r">$11,311</td></tr>
+      <tr><td>+ $150k loan + $3k/mo for Jordan</td><td class="r">40</td><td class="r">-$29,002</td><td class="r">$2,095</td></tr>
+      <tr><td>+ loan + Jordan at 55/day</td><td class="r">40</td><td class="r">$10,154</td><td class="r">$6,370</td></tr>
     </tbody>
   </table></div>
-  <div class="callout oak">
-    <h3>The biggest lever is the startup bill</h3>
-    <p>Catalog play houses instead of custom builds, a tighter construction scope and $15k in signed sponsorships cut cash needed from <b>$238k to $166k</b> with no change to operations.</p>
-  </div>
 </section>
 
 <section>
-  <span class="eyebrow">Launch</span>
-  <h2>Test with real money before a lease</h2>
-  <div class="two">
-    <ol class="timeline">
-      <li class="key"><time>Fri Oct 9, 2026</time><span>Email MSDE Office of Child Care for a written answer. Register domains, claim handles.</span></li>
-      <li><time>Oct 30</time><span>LLC formed, deposit terms to the attorney</span></li>
-      <li><time>Sat Feb 20, 2027</time><span>Winter pilot pop-up</span></li>
-      <li><time>Apr 10 · Apr 22 · May 1 · May 6</time><span>Pop-ups: free RSVP, weekday, then paid drop-ins</span></li>
-      <li class="key"><time>Sat May 15</time><span>Go / pivot / stop decision</span></li>
-      <li><time>Fri May 28</time><span>Lease signed (contingent on permits and financing)</span></li>
-      <li><time>Jul 9 · Aug 20</time><span>Permits submitted, then issued</span></li>
-      <li class="key"><time>Sat Nov 20, 2027</time><span>Opening day</span></li>
-    </ol>
-    <div class="tablewrap"><table>
-      <thead><tr><th>By Fri May 14</th><th class="r">Go</th><th class="r">Stop</th></tr></thead>
-      <tbody>
-        <tr><td>Founding deposits ($39)</td><td class="r">42+ (target 50)</td><td class="r">under 25</td></tr>
-        <tr><td>Free-visit families who pay in 30 days</td><td class="r">35%+</td><td class="r">under 20%</td></tr>
-        <tr><td>Parties pre-booked</td><td class="r">12+</td><td class="r">-</td></tr>
-        <tr><td>Between the lines</td><td colspan="2" class="r"><span class="pill warn">Pivot: smaller or shared space</span></td></tr>
-      </tbody>
-    </table></div>
-  </div>
+  <span class="eyebrow">What is still not solved</span>
+  <h2>Demand decides the rest</h2>
+  <ul class="plain">
+    <li><b>Debt and owner pay:</b> with a $150k loan and $3,000 a month for Jordan, break-even is 40 visits a day. Year 1 is negative at 45 a day and positive at 55.</li>
+    <li><b>Simulated buyers are an upper bound.</b> The pop-ups (Feb to May 2027, weekday $13 / weekend $15 exactly as tested) are the real test.</li>
+    <li><b>Party pre-sales move after the lease:</b> 8 of 10 birthday planners would not book without an opening date.</li>
+    <li><b>Free-activity loyalists bought at 0% in every round.</b> Do not market to them.</li>
+    <li><b>Costs are estimates</b> except the rent quote. Get real quotes before lenders see this.</li>
+  </ul>
 </section>
 
 <section>
   <span class="eyebrow">Do this week</span>
-  <h2>One move gates everything else</h2>
+  <h2>One move still gates everything</h2>
   <ul class="plain">
-    <li><b>Jordan, by Fri Oct 9:</b> email the MSDE Office of Child Care for a written determination that parent-on-site play is not child care. It has the longest unknown wait and blocks both pop-ups and the lease.</li>
-    <li><b>Michael, same day:</b> register littleshoreplaycafe.com and littleshoreplay.com (showed available at $16 each in a registry check, not held), claim the Instagram, Facebook and TikTok handles.</li>
-    <li><b>Before pitching family:</b> swap the $59 membership out of the decks. Lead with the free first visit and the $14 drop-in.</li>
+    <li><b>Jordan, by Fri Oct 9:</b> email the MSDE Office of Child Care for a written answer that parent-on-site play is not child care.</li>
+    <li><b>Michael, same day:</b> register littleshoreplaycafe.com and littleshoreplay.com and claim the handles.</li>
+    <li><b>Before the family pitch:</b> swap the decks to the final price page and the "They play. You sit. Right there." pitch.</li>
   </ul>
 </section>
 
 <footer class="fine">
-  <p>Buyers are simulated agents, not customers; language models lean agreeable, so buy rates are upper bounds and panel answers are never testimonials. Competitor facts come from linked search excerpts because the network blocked direct page reads; re-check before pricing decisions. Most costs are estimates marked in the source files; replace them with real quotes. Not financial, legal or tax advice.</p>
-  <p>Full pack: business plan, every skill's output, 120 buyer answers and the model live on the <code>claude/quirky-heisenberg-2r45w8</code> branch under <code>ventures/little-shore-play-cafe/</code>.</p>
+  <p>Buyers are simulated agents, not customers; they lean agreeable, so buy rates are upper bounds and panel answers are never testimonials. Competitor facts come from linked search excerpts. Most costs are estimates marked in the source files. Not financial, legal or tax advice.</p>
+  <p>Full pack, every panel answer and the model: <code>claude/quirky-heisenberg-2r45w8</code> branch, <code>ventures/little-shore-play-cafe/</code>. Start with <code>founder/summary.md</code> and <code>founder/optimization.md</code>.</p>
 </footer>
 </div>
 
 <script>
 (function(){
-  var p=[-6540,-4767,-2994,-1664,-778,109,996,1439,1882,2326,2769,3212];
+  var p=[-4478,-2488,-499,1025,2041,3014,4030,4538,5046,5512,6020,6528];
   var g=document.getElementById('bars'),ns='http://www.w3.org/2000/svg';
   var x0=56,w=36,step=47.5,zero=130,scale=86/7000;
   p.forEach(function(v,i){

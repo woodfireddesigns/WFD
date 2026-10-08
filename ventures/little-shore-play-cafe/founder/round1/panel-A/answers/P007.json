@@ -1,0 +1,20 @@
+{
+  "id": "P007",
+  "buys": true,
+  "purchases_first_month": 3,
+  "reason_code": "need",
+  "reason": "I'm home with the kids all week and there is basically nowhere indoors around Salisbury to go between naps, so a calm place where I can sit with coffee and Wi-Fi for a work email or two is genuinely useful. The free first visit and the cleaning log get me in the door.",
+  "objection": "Is it actually clean? My toddler licks everything. A posted log is nice, but I'd want to see the toys really being wiped down when I'm there. And $15 each time adds up fast if I go weekly.",
+  "would_change_my_mind": "Seeing the cleaning actually happen on my free first visit. If it looked grubby I'd not come back, and a lower per-visit price or a pack that makes it about $10 would make me go more often.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 5,
+  "would_take_class": true,
+  "class_max_price": 12,
+  "party_next_birthday": "no",
+  "party_max_price": 300,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

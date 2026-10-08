@@ -1,13 +1,20 @@
 {
   "id": "P083",
-  "buys": false,
-  "purchases_first_month": 0,
+  "buys": true,
+  "purchases_first_month": 1,
   "reason_code": "price",
-  "reason": "We'd maybe go once or twice a month, so $49-59 a month for unlimited is way more than I'd use. At $12 a visit it's still a stretch on our budget when the library and park are free.",
-  "objection": "We'd go once or twice a month, not enough to justify a membership, and it's a 15 minute drive from Fruitland each way. Drop-in at $12 plus gas adds up for what is basically a coffee and a play area.",
-  "would_change_my_mind": "A cheaper drop-in or a 5 or 10 visit pack around $8 a visit that doesn't expire, plus proof it's a decent place to get some work done with the toddler playing.",
+  "reason": "The free first visit is a no-brainer and I'd try it with my toddler on a work-from-home day. After that we'd maybe go once or twice a month, so I'd pay the $13 drop-in. A membership doesn't pay off for us.",
+  "objection": "We'd go once or twice a month, which isn't enough to justify a membership. On $50k, $13 a visit adds up fast if it's not special, and it's a 15-minute drive from Fruitland.",
+  "would_change_my_mind": "A drop-in price closer to $8-10, or a pack that doesn't expire and works out well under $10 a visit.",
   "price_too_cheap": 4,
-  "price_cheap": 7,
-  "price_expensive": 12,
-  "price_too_expensive": 18
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 3,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday afternoon"
 }

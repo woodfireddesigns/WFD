@@ -1,0 +1,20 @@
+{
+  "id": "P011",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "habit",
+  "reason": "I'd use the free visit on a Saturday and probably pay for a drop-in once after that, since we're out on weekends anyway and a calm, capped-attendance place sounds nice. But we'd only go once or twice a month, so it's drop-in only, never a membership.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, and $16 on a weekend adds up when there are free parks and library story times. I also need to see that it's actually not crowded on Saturdays.",
+  "would_change_my_mind": "A weekend drop-in closer to $12 or a 5-visit pack that doesn't expire quickly would make me go more often.",
+  "price_too_cheap": 6,
+  "price_cheap": 10,
+  "price_expensive": 18,
+  "price_too_expensive": 24,
+  "cafe_spend_per_visit": 5,
+  "would_take_class": false,
+  "class_max_price": 10,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

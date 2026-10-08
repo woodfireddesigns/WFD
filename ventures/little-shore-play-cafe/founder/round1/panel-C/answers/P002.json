@@ -1,0 +1,20 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd take the free first visit because free is free, but $15 a kid adds up fast on one income and I can take my kids to the library or the park for nothing. It sounds nice but a bit fancy for Salisbury.",
+  "objection": "$15 a visit for each kid, and that's before siblings and snacks. With two little ones that's more than I'd spend on a whole afternoon out, and the monthly plan only makes sense if I go constantly.",
+  "would_change_my_mind": "A visit price around $8 per kid, or a monthly plan under $30 that covers siblings, after I see the first free visit is actually clean and not crowded.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 11,
+  "price_too_expensive": 16,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 6,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P003",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "convenience",
+  "reason": "I only really have Saturdays with my kid, so an unlimited membership would get maybe 4 uses a month, and at that rate drop-in at $12 is cheaper than $59. It's also a drive for us and gas adds up, so I wouldn't commit to it before seeing it in person.",
+  "objection": "Weekends only means I'd use it 3 or 4 times a month at most, so a membership doesn't pay off, and the drive plus gas makes each visit cost more than the ticket. It's also not open yet.",
+  "would_change_my_mind": "A weekend-only or 4-visit pass at about $30, or confirmation that it's a short drive from me and the first Saturday I try is good.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 55,
+  "price_too_expensive": 80
+}

@@ -1,13 +1,1 @@
-{
-  "id": "P050",
-  "buys": false,
-  "purchases_first_month": 0,
-  "reason_code": "convenience",
-  "reason": "I only have Saturdays with my toddler, so an unlimited membership would get maybe 3 or 4 visits a month at best, and it's a drive for us and gas adds up. The free library storytime already covers my weekday outing.",
-  "objection": "I work full time and only get weekends, so I'd be paying $59 a month for a handful of Saturday visits plus the drive. I can't tell it beats the free stuff I already do.",
-  "would_change_my_mind": "Weekend hours that are reliably open and not packed, and a cheaper weekends-only membership or a drop-in pass bundle that makes the drive worth it.",
-  "price_too_cheap": 20,
-  "price_cheap": 35,
-  "price_expensive": 55,
-  "price_too_expensive": 80
-}
+{"id":"P050","buys":true,"purchases_first_month":2,"reason_code":"convenience","reason":"Saturdays are my kid time and a clean, calm place where I can actually sit with a coffee beats a germy loud play place. I'd use the free visit and probably pay for one or two weekend visits, not a membership.","objection":"It's a drive for us and gas adds up, and I only get weekends, so $15 plus gas for a Saturday outing has to beat the free library and park.","would_change_my_mind":"A weekend price nearer $10-12, or a pack I can use on Saturdays that brings the per-visit cost down.","price_too_cheap":6,"price_cheap":10,"price_expensive":16,"price_too_expensive":22,"cafe_spend_per_visit":4,"would_take_class":false,"class_max_price":10,"party_next_birthday":"yes","party_max_price":300,"monday_group_rental":false,"preferred_time":"weekend"}

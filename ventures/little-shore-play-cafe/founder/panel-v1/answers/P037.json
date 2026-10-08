@@ -1,0 +1,13 @@
+{
+  "id": "P037",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I work full time, so it's Saturdays only and we'd maybe go once or twice a month. That doesn't justify a $59 membership, and money is tight since daycare went up. It also isn't open yet, so I'm not committing to anything.",
+  "objection": "We'd go once or twice a month, so $49-59 a month for unlimited visits is paying for use I won't get. Drop-in at $12 is okay, but I'd rather wait and see if it's any good first.",
+  "would_change_my_mind": "A cheap pay-per-visit pack or a low-commitment membership, around $25-30 a month, that I can pause or cancel any month.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 40,
+  "price_too_expensive": 55
+}

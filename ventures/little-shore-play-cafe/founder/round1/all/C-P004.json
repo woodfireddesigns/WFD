@@ -1,0 +1,20 @@
+{
+  "id": "P004",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd take the free visit to see it, but $15 a kid adds up fast on one paycheck and CoCo's is cheaper. I'm not paying that every week with two kids.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? $15 a visit per kid, plus a sibling, is a real chunk of my grocery money for a play room.",
+  "would_change_my_mind": "A drop-in price around $8-10 per kid, or the moms group $8 rate working on evenings and weekends around my shifts.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 12,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

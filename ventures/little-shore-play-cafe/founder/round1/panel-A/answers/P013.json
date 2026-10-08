@@ -1,0 +1,20 @@
+{
+  "id": "P013",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "need",
+  "reason": "Saturdays are my only real window and indoor options in Salisbury are thin when it's hot or rainy, so I'd use the free first visit and probably pay for one more Saturday if my toddler took to it. I wouldn't sign up for a membership until I knew we'd go most weekends.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee. $15 a visit for something I could partly get free at the library or a park feels like a lot if it's just a rainy-day thing.",
+  "would_change_my_mind": "A weekend-friendly pack price, like 5 visits for $50 or less, and a Saturday setup where my toddler plays on their own enough that I actually sit down for a bit.",
+  "price_too_cheap": 6,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

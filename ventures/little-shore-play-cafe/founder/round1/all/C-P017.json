@@ -1,0 +1,20 @@
+{
+  "id": "P017",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd use the free first visit for sure, but we'd only go once or twice a month, so unlimited makes no sense and $15 a kid adds up fast. I wait for a Groupon or a coupon before paying full price on something new.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, and $15 a visit per child with shift schedules is steep for what it is.",
+  "would_change_my_mind": "A Groupon or a first-month deal, like 5 visits for $40 or less that doesn't expire quickly.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 3,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

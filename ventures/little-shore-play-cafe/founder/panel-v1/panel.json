@@ -1,0 +1,112 @@
+{
+ "n": 100,
+ "seed": 2026,
+ "customer": {
+  "business": "Little Shore Play Cafe (a Montessori-inspired play cafe in Salisbury, MD)",
+  "target": "Parents of children 8 months to 5 years who live in or near Salisbury, MD (Wicomico County, Eastern Shore) and look for indoor places to take their kids",
+  "where": "Salisbury, MD and surrounding towns (Fruitland, Delmar, Hebron, Princess Anne, Berlin)",
+  "age": [
+   23,
+   42
+  ],
+  "segments": [
+   {
+    "name": "Budget-stretched household",
+    "share": 0.28,
+    "income": [
+     32000,
+     60000
+    ]
+   },
+   {
+    "name": "Middle-income household",
+    "share": 0.4,
+    "income": [
+     60000,
+     105000
+    ]
+   },
+   {
+    "name": "Upper-middle household",
+    "share": 0.24,
+    "income": [
+     105000,
+     170000
+    ]
+   },
+   {
+    "name": "High-earning household",
+    "share": 0.08,
+    "income": [
+     170000,
+     260000
+    ]
+   }
+  ],
+  "behaviours": [
+   {
+    "name": "Stay-at-home parent",
+    "share": 0.2,
+    "how": "Home with the kids on weekdays and always hunting for somewhere to go between naps."
+   },
+   {
+    "name": "Working parent, weekends only",
+    "share": 0.2,
+    "how": "Works full time; kid outings happen on Saturdays and the odd day off."
+   },
+   {
+    "name": "Free-activity loyalist",
+    "share": 0.15,
+    "how": "Library storytime, parks, the zoo and church groups; rarely pays for kid activities."
+   },
+   {
+    "name": "Remote or hybrid worker",
+    "share": 0.1,
+    "how": "Works from home some days with a toddler around and wants somewhere to get a little done."
+   },
+   {
+    "name": "Deal hunter",
+    "share": 0.1,
+    "how": "Waits for Groupons, free trial days and coupons before trying anything new."
+   },
+   {
+    "name": "Moms-group organizer",
+    "share": 0.1,
+    "how": "Plans playdates and meetups for a group of other parents through Facebook and church."
+   },
+   {
+    "name": "Cleanliness and safety first",
+    "share": 0.1,
+    "how": "Reads every review and checks how clean a place is before letting the kids touch anything."
+   },
+   {
+    "name": "Birthday party planner",
+    "share": 0.05,
+    "how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember."
+   }
+  ],
+  "objections": [
+   "$59 a month is a lot when library storytime and the parks are free",
+   "Is it actually clean? My toddler puts everything in her mouth",
+   "We'd go once or twice a month, not enough to justify a membership",
+   "I'll still be chasing my kid, so I won't really get to sit and drink coffee",
+   "It's a drive for us and gas adds up",
+   "Will bigger kids be running wild around my baby?",
+   "Isn't this just CoCo's Funhouse with nicer decor?",
+   "Sounds expensive and a bit Instagram for Salisbury"
+  ],
+  "habits": [
+   "you live in Fruitland and drive about 15 minutes into Salisbury",
+   "you take your toddler to Wicomico library storytime most Tuesdays",
+   "you or your partner work shifts at TidalHealth Peninsula Regional",
+   "your church runs a moms group that meets twice a month",
+   "you drove to an indoor playground in Ocean City last winter when it rained for a week",
+   "the Salisbury Zoo is your go-to free outing",
+   "you work remotely for a company based in DC or Baltimore",
+   "you have a 4-year-old and a 10-month-old",
+   "money is tight this year after daycare costs went up",
+   "you follow a lot of Montessori and play-room accounts on Instagram"
+  ]
+ },
+ "pitch": "Little Shore Play Cafe, a new Montessori-inspired play cafe opening in Salisbury, MD next year.\nKids 8 months to 5 play in a calm, designed play village (pretend market, farm, mini gym, reading nook) while you stay a few feet away with coffee, light snacks and Wi-Fi. Parents stay on site; no drop-off.\nUnlimited monthly membership (the main way to join): $59 a month for your first child, +$15 for each additional child. Founding families (first 40 only): $49 a month, locked for 12 months.\nDrop-in: $12 first child, $8 each sibling, under 1 free, plus one drink per adult.\nAlso: story time, music hour, kid yoga, moms nights, and 2-hour birthday parties from $275."
+}

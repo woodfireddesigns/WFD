@@ -1,0 +1,20 @@
+{
+  "id": "P017",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I'd use the free first visit for sure, but we'd only go once or twice a month, so a membership or pack doesn't pay off and I'd wait for a coupon or Groupon before paying $13 a kid. With shift work, we can't count on being free on the right days.",
+  "objection": "We'd go once or twice a month, which is not enough to justify a membership, and $13 a visit with no deal feels like full price for a place I'm unsure we'd return to.",
+  "would_change_my_mind": "A Groupon or intro deal bringing a visit to about $8 to $9, or a pack that doesn't expire and works on any day including weekday mornings after a night shift.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

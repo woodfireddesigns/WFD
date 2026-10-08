@@ -1,0 +1,13 @@
+{
+  "id": "P009",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "timing",
+  "reason": "The setup and cleanup being included is a real plus and $325 is fair, but it's not open yet and my kid's birthday is coming up soon. I'm not putting a deposit on a place that doesn't exist yet.",
+  "objection": "It opens 'next year' and I have a birthday in the next few months. I can't book something I haven't seen, and 2 hours goes fast with 12 kids and cake.",
+  "would_change_my_mind": "An open date before my kid's birthday, plus a chance to see the room first, or a refundable deposit.",
+  "price_too_cheap": 150,
+  "price_cheap": 225,
+  "price_expensive": 350,
+  "price_too_expensive": 450
+}

@@ -1,0 +1,20 @@
+{
+  "id": "P016",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "need",
+  "reason": "I'm home with the kids all week and need somewhere indoor between naps, and a free first visit with a real coffee and a seat is easy to say yes to. We can afford it, but I'd pay per visit rather than commit to a membership.",
+  "objection": "$45 to $59 a month is a lot when library storytime and the parks are free. I'd only pay if it's clearly cleaner and calmer than the free options, and I don't know that yet.",
+  "would_change_my_mind": "Seeing in person that it's actually uncrowded and clean, and a pack or membership price low enough that I'd go twice a week.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": true,
+  "class_max_price": 12,
+  "party_next_birthday": "yes",
+  "party_max_price": 350,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

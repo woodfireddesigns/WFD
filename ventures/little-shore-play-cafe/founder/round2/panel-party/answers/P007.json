@@ -1,0 +1,13 @@
+{
+  "id": "P007",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "timing",
+  "reason": "My kid's birthday is in the next few months and this place doesn't open until next year, so I can't book it for this one. The price is fair for hosted setup and cleanup, but I can't commit to a venue that isn't open yet.",
+  "objection": "It isn't open yet, and I can't tell if the glass room fits our family and friends. Up to 12 kids doesn't say how many parents and grandparents can be in there too.",
+  "would_change_my_mind": "An open date before my party and a stated room capacity that includes adults, ideally with a chance to see the room first.",
+  "price_too_cheap": 150,
+  "price_cheap": 250,
+  "price_expensive": 400,
+  "price_too_expensive": 550
+}

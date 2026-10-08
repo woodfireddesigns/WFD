@@ -1,0 +1,20 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd probably use the free visit, but $15 a visit adds up fast on our budget when there are free parks and the library. The gated baby nook is a good sign, but I'm not paying that regularly.",
+  "objection": "Even with a baby area, will bigger kids be running wild around my toddler, and is it worth $15 every time when money is tight?",
+  "would_change_my_mind": "A drop-in price around $8-10, or a baby-only time slot so I know the older kids aren't there.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekday afternoon"
+}

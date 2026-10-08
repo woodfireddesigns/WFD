@@ -1,43 +1,39 @@
 # Summary
 
-**Verdict: Not yet.** Two checks fail: Year 1 loses $4,012 on operations, and 24 of 100 simulated buyers buy (the bar is 25%). Unit economics and capacity pass.
+**Verdict: Profitable** (computed by the plan tool). Every check passes: $16.28 contribution per paying family visit, **$30,290 Year 1 operating profit**, break-even at 29 visits a day against capacity of 106, and 71 of 100 simulated buyers buy.
 
-**What has to change, and which skill changes it:**
-
-1. **Prove demand of ~45 paying family visits a day before signing a lease** (`/founder-launch`). At the 38-a-day plan the business cannot carry a loan plus pay Jordan. The pop-ups are the test, not a formality.
-2. **Cut the startup bill** (`/founder-cfo`, `/founder-ops`): lean build-out with catalog play houses plus signed sponsorships takes cash needed from about $238k to $166k.
-3. **Sell visits, not memberships** (`/founder-offer`, `/founder-pricing`): free first visit, $14 drop-in with coffee included, $55 five-pack, $45 membership ($39 founding). This took the simulated buy rate from 24% to 45%.
+That verdict is on operations. With a $150k loan and $3,000 a month for Jordan, break-even rises to 40 visits a day and Year 1 is -$29,002. **The pop-ups must prove 45+ paying family visits a day before a lease.**
 
 ## The business
 
-A Montessori-inspired play cafe in Salisbury, MD for kids 8 months to 5, where the parent stays and actually sits down with a coffee. For parents home with an under-5 all week who are out of indoor places to go; no play cafe exists within 30 miles.
+A clean, modern, Montessori-inspired play cafe in Salisbury, MD for kids 8 months to 5, where the parent stays and actually sits down with a real coffee. 2,500 sq ft, about 39 kids at once, no play cafe within 30 miles.
 
-## The three numbers behind the verdict
+## What changed to get here (full record in `optimization.md`)
 
-| | |
-| --- | --- |
-| Margin | Each paying family visit leaves $17.05 (82%); 18% profit margin at 38 visits a day |
-| Break-even | 30 paying family visits a day (capacity ~65) |
-| Year 1 | $188k revenue, -$4,012 operating loss, before any loan or owner pay |
+- **Pitch rewritten around the experience:** "They play. You sit. Right there." Same price, more buyers, double the party interest.
+- **Price ladder buyers accept:** first visit free; weekdays $13, weekends $15, coffee included; 5-visit pack $60; unlimited $45 ($39 founding, first 50).
+- **Revenue that does not crowd the room:** parties ($325 / $395, 8 a month), teacher-run classes, cafe add-ons, one Monday rental a month, a small retail shelf.
+- **Overhead tuned without touching the experience:** 76 hired hours with two on the floor always; 3 free months of rent to negotiate.
+- **Space right-sized:** 2,500 sq ft. Bigger spaces lose $47k to $93k of Year 1 at the same demand.
+- **Cut:** the $59 membership, the drink-minimum pricing, the $29 weekday tier, the $425 party tier, four Monday rentals a month.
 
-## Where the panel and the board agreed, and where they did not
+## Panel and board
 
-- **Agreed:** demand is unproven; the $59 membership does not sell; sponsors should not be counted until signed; the offer needed to be simpler and safer to try.
-- **The panel overruled one board idea:** the Offers lens asked whether membership could go *up* to ~$79 with a stack. The panel put the acceptable membership range at $20 to $55. The price went down to $45.
-- **The panel surprised everyone:** almost nobody (about 1 in 100) would join a membership before visiting, at any tested price. The membership is a retention tool, not how families arrive.
-- **Free alternatives remain the wall:** 59 of 76 non-buyers named library storytime, parks or the zoo. Free-activity loyalists and deal hunters bought at 0% in both panels.
+- **Panel (same 100 cards):** 24% buy as pitched, 71% on the final offer; paid first-month visits per 100 parents roughly 39 → 66.
+- **Board conditions now met on paper:** one clear offer, one simple price page, a guarantee, no reliance on sponsors. Still open: 40+ founding deposits, party pre-sales, lease protections.
+- **Still not customers:** free-activity loyalists (0% in every round).
 
-## The biggest risk and what is done about it
+## The biggest risk
 
-Demand at the plan volume is a job that does not pay its operator. The answer is a pre-lease test with numbers set in advance: 50 founding deposits (go at 42, stop under 25), 35%+ of free-visit families paying within 30 days, 12+ parties pre-booked, all by Fri May 14, 2027. Between the go and stop lines, the plan pivots to a smaller or shared space instead of a full build-out.
+Demand. Year 1 swings from +$3k at 38 visits a day to +$69k at 55. Simulated buyers are an upper bound. The pop-ups (Feb to May 2027) are the real test, with go/stop lines set in `launch.md`.
 
-## What the founders need to start
+## What the founders need
 
-- Now: about $2,000 for the pop-up campaign (estimate), a venue for 4 pop-ups, and attorney-reviewed deposit terms.
-- If go: about $238k as designed, or about $166k on the lean build-out with $15k signed sponsorships (cash before it pays for itself, before owner pay).
+- Now: ~$2,000 for the pop-up campaign (estimate) and attorney-reviewed deposit terms.
+- If go: about $230k as designed, or about $158k on the lean build-out with $15k signed sponsorships.
 
 ## The one thing to do this week
 
-By Fri Oct 9: Jordan emails the MSDE Office of Child Care for a written answer that parent-on-site play is not child care. Same day: register littleshoreplaycafe.com and littleshoreplay.com and claim the Instagram handle.
+Jordan emails the MSDE Office of Child Care for a written answer that parent-on-site play is not child care. Michael registers littleshoreplaycafe.com and littleshoreplay.com and claims the handles.
 
 _The panel is simulated buyers and the numbers are projections from estimates; real customers and real quotes confirm them. Not financial, legal or tax advice._

@@ -1,13 +1,20 @@
 {
   "id": "P068",
   "buys": true,
-  "purchases_first_month": 1,
-  "reason_code": "habit",
-  "reason": "I'd try one drop-in since I'm always looking for somewhere to take the kids and the drink is included. We'd only go once or twice a month, so I wouldn't sign up for the membership.",
-  "objection": "Once or twice a month isn't enough to justify $59 a month, and I don't know yet if the place is any good or if the kids would stay interested.",
-  "would_change_my_mind": "A cheaper flexible option, like a 5 or 10 visit pack that doesn't expire, or a membership under about $30 a month.",
-  "price_too_cheap": 4,
-  "price_cheap": 8,
+  "purchases_first_month": 2,
+  "reason_code": "need",
+  "reason": "I'm home with the kids all week and always need somewhere new to go, so I'd use the free visit and probably pay for a couple more drop-ins. Clean and not packed matters to me.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, so it only works for me if the per-visit price stays low and it's worth the drive from Fruitland.",
+  "would_change_my_mind": "A lower per-child weekday price, or a pack that doesn't push me to commit to more visits than I'd really use.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
   "price_expensive": 15,
-  "price_too_expensive": 20
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

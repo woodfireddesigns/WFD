@@ -1,0 +1,20 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$15 a visit is a lot on our budget when the library, parks and free story times are right there. I'd take the free first visit, but I wouldn't pay after that.",
+  "objection": "Fifteen dollars every time I want to get out of the house adds up fast, and with a baby and a toddler it's more once I count a sibling and snacks. It feels pricey for Salisbury.",
+  "would_change_my_mind": "A drop-in around $8 to $10, or a free or cheap weekday morning session for families on a tight budget.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 11,
+  "price_too_expensive": 15,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 6,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

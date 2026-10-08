@@ -1,13 +1,20 @@
 {
   "id": "P030",
-  "buys": false,
-  "purchases_first_month": 0,
+  "buys": true,
+  "purchases_first_month": 2,
   "reason_code": "trust",
-  "reason": "It isn't open yet, so there are no reviews and I can't see how clean it is, and I won't commit to a membership for a place my kids haven't touched. With the drive and gas, $59 a month only makes sense if we'd go a lot, and I don't know that yet.",
-  "objection": "I can't tell how clean it will be. Babies and toddlers are mouthing everything, and I need reviews and to see it myself before I pay. The drive and gas also make a monthly membership hard to justify.",
-  "would_change_my_mind": "Open reviews from other moms saying it's spotless, a clear cleaning and sanitizing routine posted, and a free or cheap trial visit before I commit to a membership.",
+  "reason": "The posted daily cleaning log, shoes off and the cap on how many kids are in at once are exactly what I look for, and the free first visit lets me check it myself before paying. I'd probably do the free visit and one paid one, maybe with my moms group.",
+  "objection": "It's a drive for us and gas adds up, so I'm not coming every week unless it's really as clean as they say. I'd also want to see reviews from other parents first.",
+  "would_change_my_mind": "Seeing the place spotless in person on the free visit and good reviews from other moms. If it looked crowded or sticky I'd drop it.",
   "price_too_cheap": 5,
-  "price_cheap": 8,
+  "price_cheap": 9,
   "price_expensive": 15,
-  "price_too_expensive": 22
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

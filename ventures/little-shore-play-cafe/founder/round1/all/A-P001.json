@@ -1,0 +1,20 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd use the free first visit to check it out, but $15 a visit for a toddler is a lot on our budget when the library and the park cost nothing. With shifts at the hospital, I can't count on getting there often enough to make a pack or membership worth it.",
+  "objection": "Will bigger kids be running wild around my baby? The Baby Nook sounds good, but I'd need to see it myself, and $15 a visit is hard to justify when we're stretching every paycheck.",
+  "would_change_my_mind": "A drop-in around $8-10 or a 5-visit pack closer to $40, plus seeing on the free visit that the Baby Nook really keeps the little ones safe from the bigger kids.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

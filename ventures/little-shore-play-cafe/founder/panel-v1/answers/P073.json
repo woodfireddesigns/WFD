@@ -1,0 +1,13 @@
+{
+  "id": "P073",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "Money is tight since daycare went up, and $49-59 a month is a real bill for something I might use a few times. The playground and library are free, so this feels like a nice-to-have.",
+  "objection": "I can't tell how clean it is or how often they sanitize the toys. And I'd be locked into a monthly cost I can't really afford right now.",
+  "would_change_my_mind": "A cheap or free trial visit where I can see the cleaning routine, plus drop-in at about $6-8 with no membership, so I only pay when I go.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 40,
+  "price_too_expensive": 60
+}

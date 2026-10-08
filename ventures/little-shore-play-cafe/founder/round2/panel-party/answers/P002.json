@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "timing",
+  "reason": "My kid's birthday is coming up in the next few months and this place doesn't open until next year, so I can't book it. The all-in price is nice, but I'm not putting a deposit on a venue that doesn't exist yet.",
+  "objection": "It isn't open yet, and I have no idea if it will open on time or be any good. I can't plan a party around a promise.",
+  "would_change_my_mind": "If it were already open with a firm date before my party and I could read reviews or see a party in person, I'd look at it seriously.",
+  "price_too_cheap": 150,
+  "price_cheap": 250,
+  "price_expensive": 400,
+  "price_too_expensive": 550
+}

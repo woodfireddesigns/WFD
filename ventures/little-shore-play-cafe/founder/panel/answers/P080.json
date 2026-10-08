@@ -1,13 +1,20 @@
 {
   "id": "P080",
   "buys": true,
-  "purchases_first_month": 2,
+  "purchases_first_month": 1,
   "reason_code": "price",
-  "reason": "I would not do the $74 a month membership with two kids on my budget, but $12 for my 4-year-old with the baby free and a coffee included is an okay rainy-day outing. I would try it a couple of times and look at the party price when my birthday planning starts.",
-  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee, and with a crawling baby I'm paying for a break I won't get. $74 a month for both kids is too much when I only go when it's raining.",
-  "would_change_my_mind": "A cheaper multi-visit pass (like 5 visits for around $40) so I don't have to commit to a monthly membership.",
+  "reason": "I'd use the free visit for sure, and a safe gated spot for my 10-month-old is a real draw. After that I'd maybe pay for one weekday visit, but $13 plus $7 for the baby adds up fast on my budget.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee, and $20 a visit for two kids is a lot when the library and free playgrounds exist.",
+  "would_change_my_mind": "A cheaper two-kid price, like $15 total for both, or a bigger discount on the 5-visit pack for siblings.",
   "price_too_cheap": 5,
   "price_cheap": 8,
-  "price_expensive": 15,
-  "price_too_expensive": 22
+  "price_expensive": 13,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "yes",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

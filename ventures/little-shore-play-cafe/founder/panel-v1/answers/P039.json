@@ -1,0 +1,13 @@
+{
+  "id": "P039",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot when library storytime and the parks are free, and I would only go a couple of times a month. It looks lovely, but I would not commit to a membership before I have seen the place.",
+  "objection": "$59 a month for unlimited when I would use it maybe twice a month, and the free options already fill most of our week.",
+  "would_change_my_mind": "A pay-as-you-go option I could try first, like a 5-visit pack around $40, or a work-friendly morning where I can really get some laptop time in.",
+  "price_too_cheap": 15,
+  "price_cheap": 29,
+  "price_expensive": 49,
+  "price_too_expensive": 65
+}

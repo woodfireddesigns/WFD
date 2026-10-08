@@ -1,0 +1,20 @@
+{
+  "id": "P006",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "I'd use the free first visit for sure, and maybe come once more if my kid loved it. But $15 a visit is a lot when the library and the park are free, and we'd only go once or twice a month, so a membership makes no sense.",
+  "objection": "Money is tight since daycare went up. $15 for one kid, plus a sibling, adds up fast compared to free storytime and the park, and I'd never go often enough to make unlimited worth it.",
+  "would_change_my_mind": "A drop-in price around $8 to $10 per kid, or a free-with-purchase deal, would make me come regularly.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 12,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 6,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday afternoon"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "P003",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "The free first visit is a no-brainer, so I'd try it once with my toddler. After that, we'd maybe go once or twice a month, and $13 a visit plus a pack or membership doesn't add up for us on $38k.",
+  "objection": "We'd only go once or twice a month, so the $45 membership isn't worth it. $13 a kid every time adds up fast, and I don't know yet if it's actually calm enough for me to get any work done.",
+  "would_change_my_mind": "A cheaper weekday drop-in around $8-9, or a pack that doesn't expire so I can use it at my own pace.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 12,
+  "price_too_expensive": 17,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

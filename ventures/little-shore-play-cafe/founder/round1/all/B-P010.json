@@ -1,0 +1,20 @@
+{
+  "id": "P010",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "trust",
+  "reason": "The posted daily cleaning log, shoes off and toys cleaned after use are exactly what I look for with a baby who mouths everything, and the free first visit plus a free under-1 makes it easy to try. I'd go for the free visit and probably one paid drop-in, not a membership yet.",
+  "objection": "Is it actually clean? A log on the wall is easy to fill in, I'd want to see the toys and the Baby Nook myself, and read what other parents say, before I trust it with my 10-month-old.",
+  "would_change_my_mind": "Seeing it clean in person on the free visit and a few honest local parent reviews. If the Baby Nook looked grubby or crowded, I would not come back.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 5,
+  "would_take_class": true,
+  "class_max_price": 12,
+  "party_next_birthday": "yes",
+  "party_max_price": 350,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

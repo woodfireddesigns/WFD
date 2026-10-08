@@ -1,0 +1,222 @@
+[
+ {
+  "id": "P001",
+  "name": "Mason",
+  "age": 40,
+  "segment": "Budget-stretched household",
+  "income": 59000,
+  "behaviour": "Remote or hybrid worker",
+  "behaviour_how": "Works from home some days with a toddler around and wants somewhere to get a little done.",
+  "objection": "Will bigger kids be running wild around my baby?",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P002",
+  "name": "Elle",
+  "age": 23,
+  "segment": "Budget-stretched household",
+  "income": 41000,
+  "behaviour": "Stay-at-home parent",
+  "behaviour_how": "Home with the kids on weekdays and always hunting for somewhere to go between naps.",
+  "objection": "Sounds expensive and a bit Instagram for Salisbury",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P003",
+  "name": "Dana",
+  "age": 40,
+  "segment": "Budget-stretched household",
+  "income": 38000,
+  "behaviour": "Remote or hybrid worker",
+  "behaviour_how": "Works from home some days with a toddler around and wants somewhere to get a little done.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership",
+  "habit": "you follow a lot of Montessori and play-room accounts on Instagram"
+ },
+ {
+  "id": "P004",
+  "name": "Noah",
+  "age": 39,
+  "segment": "Budget-stretched household",
+  "income": 40000,
+  "behaviour": "Moms-group organizer",
+  "behaviour_how": "Plans playdates and meetups for a group of other parents through Facebook and church.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor?",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P005",
+  "name": "Ana",
+  "age": 27,
+  "segment": "Middle-income household",
+  "income": 95000,
+  "behaviour": "Cleanliness and safety first",
+  "behaviour_how": "Reads every review and checks how clean a place is before letting the kids touch anything.",
+  "objection": "It's a drive for us and gas adds up",
+  "habit": "money is tight this year after daycare costs went up"
+ },
+ {
+  "id": "P006",
+  "name": "Nadia",
+  "age": 36,
+  "segment": "Budget-stretched household",
+  "income": 43000,
+  "behaviour": "Free-activity loyalist",
+  "behaviour_how": "Library storytime, parks, the zoo and church groups; rarely pays for kid activities.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership",
+  "habit": "money is tight this year after daycare costs went up"
+ },
+ {
+  "id": "P007",
+  "name": "Isla",
+  "age": 29,
+  "segment": "Middle-income household",
+  "income": 77000,
+  "behaviour": "Stay-at-home parent",
+  "behaviour_how": "Home with the kids on weekdays and always hunting for somewhere to go between naps.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth",
+  "habit": "you work remotely for a company based in DC or Baltimore"
+ },
+ {
+  "id": "P008",
+  "name": "Tariq",
+  "age": 25,
+  "segment": "Middle-income household",
+  "income": 62000,
+  "behaviour": "Working parent, weekends only",
+  "behaviour_how": "Works full time; kid outings happen on Saturdays and the odd day off.",
+  "objection": "Will bigger kids be running wild around my baby?",
+  "habit": "the Salisbury Zoo is your go-to free outing"
+ },
+ {
+  "id": "P009",
+  "name": "Caleb",
+  "age": 23,
+  "segment": "Upper-middle household",
+  "income": 107000,
+  "behaviour": "Working parent, weekends only",
+  "behaviour_how": "Works full time; kid outings happen on Saturdays and the odd day off.",
+  "objection": "Sounds expensive and a bit Instagram for Salisbury",
+  "habit": "the Salisbury Zoo is your go-to free outing"
+ },
+ {
+  "id": "P010",
+  "name": "Freya",
+  "age": 32,
+  "segment": "Middle-income household",
+  "income": 80000,
+  "behaviour": "Cleanliness and safety first",
+  "behaviour_how": "Reads every review and checks how clean a place is before letting the kids touch anything.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth",
+  "habit": "you have a 4-year-old and a 10-month-old"
+ },
+ {
+  "id": "P011",
+  "name": "Sara",
+  "age": 37,
+  "segment": "Middle-income household",
+  "income": 86000,
+  "behaviour": "Working parent, weekends only",
+  "behaviour_how": "Works full time; kid outings happen on Saturdays and the odd day off.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P012",
+  "name": "Aria",
+  "age": 41,
+  "segment": "Middle-income household",
+  "income": 83000,
+  "behaviour": "Moms-group organizer",
+  "behaviour_how": "Plans playdates and meetups for a group of other parents through Facebook and church.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor?",
+  "habit": "you follow a lot of Montessori and play-room accounts on Instagram"
+ },
+ {
+  "id": "P013",
+  "name": "Jordan",
+  "age": 33,
+  "segment": "Middle-income household",
+  "income": 81000,
+  "behaviour": "Working parent, weekends only",
+  "behaviour_how": "Works full time; kid outings happen on Saturdays and the odd day off.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee",
+  "habit": "you take your toddler to Wicomico library storytime most Tuesdays"
+ },
+ {
+  "id": "P014",
+  "name": "Rafael",
+  "age": 40,
+  "segment": "Upper-middle household",
+  "income": 131000,
+  "behaviour": "Free-activity loyalist",
+  "behaviour_how": "Library storytime, parks, the zoo and church groups; rarely pays for kid activities.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P015",
+  "name": "Liam",
+  "age": 24,
+  "segment": "Upper-middle household",
+  "income": 147000,
+  "behaviour": "Deal hunter",
+  "behaviour_how": "Waits for Groupons, free trial days and coupons before trying anything new.",
+  "objection": "$59 a month is a lot when library storytime and the parks are free",
+  "habit": "you have a 4-year-old and a 10-month-old"
+ },
+ {
+  "id": "P016",
+  "name": "Sofia",
+  "age": 29,
+  "segment": "High-earning household",
+  "income": 214000,
+  "behaviour": "Stay-at-home parent",
+  "behaviour_how": "Home with the kids on weekdays and always hunting for somewhere to go between naps.",
+  "objection": "$59 a month is a lot when library storytime and the parks are free",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P017",
+  "name": "Poppy",
+  "age": 39,
+  "segment": "Upper-middle household",
+  "income": 119000,
+  "behaviour": "Deal hunter",
+  "behaviour_how": "Waits for Groupons, free trial days and coupons before trying anything new.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership",
+  "habit": "you or your partner work shifts at TidalHealth Peninsula Regional"
+ },
+ {
+  "id": "P018",
+  "name": "Yara",
+  "age": 28,
+  "segment": "Upper-middle household",
+  "income": 130000,
+  "behaviour": "Birthday party planner",
+  "behaviour_how": "Has a birthday coming up and is comparing venues by price, effort and what the kids will remember.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor?",
+  "habit": "money is tight this year after daycare costs went up"
+ },
+ {
+  "id": "P019",
+  "name": "Lena",
+  "age": 36,
+  "segment": "Middle-income household",
+  "income": 99000,
+  "behaviour": "Free-activity loyalist",
+  "behaviour_how": "Library storytime, parks, the zoo and church groups; rarely pays for kid activities.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor?",
+  "habit": "you drove to an indoor playground in Ocean City last winter when it rained for a week"
+ },
+ {
+  "id": "P020",
+  "name": "Pablo",
+  "age": 28,
+  "segment": "Budget-stretched household",
+  "income": 42000,
+  "behaviour": "Stay-at-home parent",
+  "behaviour_how": "Home with the kids on weekdays and always hunting for somewhere to go between naps.",
+  "objection": "It's a drive for us and gas adds up",
+  "habit": "you have a 4-year-old and a 10-month-old"
+ }
+]

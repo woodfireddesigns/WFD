@@ -1,13 +1,1 @@
-{
-  "id": "P059",
-  "buys": true,
-  "purchases_first_month": 2,
-  "reason_code": "need",
-  "reason": "I'm home with the kids all week and always need somewhere indoors to go, and a calm spot where I can have coffee and Wi-Fi sounds good. I'd try a drop-in or two, but I wouldn't commit to a membership.",
-  "objection": "We'd go once or twice a month, so $59 a month isn't worth it. Drop-in only makes sense if it stays calm and not crowded, and if the Wi-Fi is good enough that I can get some work done.",
-  "would_change_my_mind": "A multi-visit punch card, such as 5 visits for about $45 that doesn't expire, or a membership under about $30 a month would get me to join.",
-  "price_too_cheap": 15,
-  "price_cheap": 25,
-  "price_expensive": 45,
-  "price_too_expensive": 65
-}
+{"id":"P059","buys":true,"purchases_first_month":2,"reason_code":"price","reason":"The free first visit is an easy yes since I'm always looking for somewhere to take the kids between naps, and I'd probably pay for one more visit if they liked it. But we'd only go once or twice a month, so I'd pay per visit and skip any pack or membership.","objection":"We'd go once or twice a month, not enough to justify a membership, and $13 a kid adds up fast with more than one kid.","would_change_my_mind":"A cheaper per-visit price for siblings or a pack that doesn't feel like pressure to come more often.","price_too_cheap":5,"price_cheap":9,"price_expensive":15,"price_too_expensive":20,"cafe_spend_per_visit":4,"would_take_class":false,"class_max_price":8,"party_next_birthday":"yes","party_max_price":275,"monday_group_rental":false,"preferred_time":"weekday morning"}

@@ -1,0 +1,13 @@
+{
+  "id": "P013",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot on $38k when library storytime and the parks are free. I only get Saturdays, so I would never get my money's worth from unlimited.",
+  "objection": "I can only go on weekends, so a monthly membership makes no sense when storytime and parks cost nothing.",
+  "would_change_my_mind": "A cheap weekend-only pass, or drop-in of about $6 with no required drink, that I could use a couple of Saturdays a month.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 40,
+  "price_too_expensive": 55
+}

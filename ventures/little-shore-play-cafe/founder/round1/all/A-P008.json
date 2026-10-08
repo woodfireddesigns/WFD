@@ -1,0 +1,20 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd use the free first visit on a Saturday, but $15 a kid every weekend adds up fast when the zoo is free. I wouldn't pay for it as a regular thing.",
+  "objection": "Will bigger kids be running wild around my baby? Up to 5 is a big gap from a crawler, and I'm only free weekends, when it's probably the busiest.",
+  "would_change_my_mind": "A weekend session just for under-2s or a clear cap on numbers I can see on Saturdays, and a drop-in price closer to $10.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 22,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

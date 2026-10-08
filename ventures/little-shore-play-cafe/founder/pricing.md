@@ -61,3 +61,17 @@ Founding Family membership at $39, locked for 12 months, **first 50 families or 
 - "We stick to free stuff like storytime, parks and church groups, and we'd maybe go once or twice a month. That doesn't come close to justifying $59 a month." (P026)
 
 Panel quotes are research. Never use them as testimonials.
+
+## Final pricing (after the Year 1 optimization, Oct 8, 2026)
+
+This supersedes the table above. Evidence: rounds 1 to 4 and the final 100-buyer panel (`optimization.md`).
+
+| item | price | evidence |
+| --- | --- | --- |
+| First visit | Free | Top flip request in every round |
+| Drop-in | **Weekdays $13, weekends $15**, coffee included; siblings $7; under 1 free | Combined price ceiling across 180 answers is $14.99; weekday price lifted buyers (round 3B) and ~70% of visits are weekdays |
+| 5-visit pack | **$60**, any day | $12 a visit, below the weekday price so the step up is obvious |
+| Membership | $45 unlimited (+$15 sibling); $39 founding, first 50 | Unchanged; a retention product for weekly families |
+| Parties | **$325** (12 kids) / **$395** (20 kids), all-in | Party panel range $151 to $400 |
+| Classes | $12, teacher-led, 50% to the teacher | 11% would take one |
+| Monday private rental | $200 | 2% interested: offer it, do not count on it |

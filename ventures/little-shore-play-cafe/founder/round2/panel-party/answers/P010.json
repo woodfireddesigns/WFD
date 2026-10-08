@@ -1,0 +1,13 @@
+{
+  "id": "P010",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$325 is a lot for a toddler's party on $38k, and I still have to buy the cake. I can do a park pavilion or the house for under $100 and the kids won't know the difference.",
+  "objection": "$325 for two hours, plus the cake, when a toddler won't remember any of it and we're stretched already.",
+  "would_change_my_mind": "A basic party at around $175 to $200, or a weekday slot at a real discount.",
+  "price_too_cheap": 75,
+  "price_cheap": 150,
+  "price_expensive": 250,
+  "price_too_expensive": 325
+}

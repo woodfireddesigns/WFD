@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "timing",
+  "reason": "I like the calm Montessori feel and the all-in price, but it opens next year and my kid's birthday is in the next few months. I can't book a place that doesn't exist yet, so I'd go with CoCo's or a venue I can see.",
+  "objection": "It isn't open yet. I have a date to book now, and I'm not holding a Saturday for a new place with no reviews and no photos of real parties.",
+  "would_change_my_mind": "A firm opening date before my party, plus a refundable deposit and a few real parties or reviews I could check.",
+  "price_too_cheap": 150,
+  "price_cheap": 250,
+  "price_expensive": 375,
+  "price_too_expensive": 500
+}

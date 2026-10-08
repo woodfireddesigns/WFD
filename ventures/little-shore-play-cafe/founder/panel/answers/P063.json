@@ -1,13 +1,20 @@
 {
   "id": "P063",
-  "buys": false,
-  "purchases_first_month": 0,
+  "buys": true,
+  "purchases_first_month": 3,
   "reason_code": "trust",
-  "reason": "It sounds nice, but it's not open yet and I'd wait for a Groupon or a free trial day before paying anything. $59 a month is a lot for a place I've never seen, and I mostly go to indoor spots on rainy weeks.",
-  "objection": "Is it actually clean? My toddler puts everything in her mouth, and nothing here says how they clean the toys or the play village.",
-  "would_change_my_mind": "A free trial day or a discounted first visit, plus a clear cleaning routine (toys wiped between uses, posted schedule) and a few reviews from other parents.",
-  "price_too_cheap": 4,
-  "price_cheap": 8,
+  "reason": "Free first visit is exactly how I try things, and the posted cleaning log, shoes off and capped headcount hit my main worry about my toddler licking everything. If it checks out in person I'd probably grab the 5-pack or the founding $39 rather than pay drop-in.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth, and a log on a wall is only worth something if I see it being done.",
+  "would_change_my_mind": "Seeing toys actually get wiped down during my free visit, or a bad first visit where it's dirty or crowded would flip me to no.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
   "price_expensive": 15,
-  "price_too_expensive": 22
+  "price_too_expensive": 21,
+  "cafe_spend_per_visit": 3,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

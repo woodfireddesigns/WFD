@@ -1,22 +1,22 @@
 # Little Shore Play Cafe · Business plan
 
-**Verdict: Not yet**
+**Verdict: Profitable**
 
-- ✓ Each family visit earns $17.05 before fixed costs (82% contribution).
-- ✗ Year 1 operating LOSS: $4,012.
-- ✓ Break-even is 30 family visits a day against a capacity of 65.
-- ✗ 24 of 100 simulated buyers buy (24%, the bar is 25%).
+- ✓ Each family visit earns $16.28 before fixed costs (80% contribution).
+- ✓ Year 1 operating profit: $30,290.
+- ✓ Break-even is 29 family visits a day against a capacity of 106.
+- ✓ 71 of 100 simulated buyers buy (71%, the bar is 25%).
 
 | key number | |
 | --- | ---: |
-| Price | $20.82 a family visit |
-| Profit margin at plan | 18% per family visit |
-| Break-even | 30 family visits a day |
-| Year 1 operating profit | $-4,012 |
-| Startup spend | $221,500 |
-| Cash needed before it pays for itself | $238,244 |
+| Price | $20.23 a family visit |
+| Profit margin at plan | 30% per family visit |
+| Break-even | 29 family visits a day |
+| Year 1 operating profit | $30,290 |
+| Startup spend | $223,000 |
+| Cash needed before it pays for itself | $230,465 |
 | Startup money earned back | not in year 1 |
-| Buyer panel | 24 buy · 76 pass |
+| Buyer panel | 71 buy · 29 pass |
 
 ## The idea
 
@@ -44,45 +44,41 @@
 
 ## Summary
 
-**Verdict: Not yet.** Two checks fail: Year 1 loses $4,012 on operations, and 24 of 100 simulated buyers buy (the bar is 25%). Unit economics and capacity pass.
+**Verdict: Profitable** (computed by the plan tool). Every check passes: $16.28 contribution per paying family visit, **$30,290 Year 1 operating profit**, break-even at 29 visits a day against capacity of 106, and 71 of 100 simulated buyers buy.
 
-**What has to change, and which skill changes it:**
-
-1. **Prove demand of ~45 paying family visits a day before signing a lease** (`/founder-launch`). At the 38-a-day plan the business cannot carry a loan plus pay Jordan. The pop-ups are the test, not a formality.
-2. **Cut the startup bill** (`/founder-cfo`, `/founder-ops`): lean build-out with catalog play houses plus signed sponsorships takes cash needed from about $238k to $166k.
-3. **Sell visits, not memberships** (`/founder-offer`, `/founder-pricing`): free first visit, $14 drop-in with coffee included, $55 five-pack, $45 membership ($39 founding). This took the simulated buy rate from 24% to 45%.
+That verdict is on operations. With a $150k loan and $3,000 a month for Jordan, break-even rises to 40 visits a day and Year 1 is -$29,002. **The pop-ups must prove 45+ paying family visits a day before a lease.**
 
 ### The business
 
-A Montessori-inspired play cafe in Salisbury, MD for kids 8 months to 5, where the parent stays and actually sits down with a coffee. For parents home with an under-5 all week who are out of indoor places to go; no play cafe exists within 30 miles.
+A clean, modern, Montessori-inspired play cafe in Salisbury, MD for kids 8 months to 5, where the parent stays and actually sits down with a real coffee. 2,500 sq ft, about 39 kids at once, no play cafe within 30 miles.
 
-### The three numbers behind the verdict
+### What changed to get here (full record in `optimization.md`)
 
-| | |
-| --- | --- |
-| Margin | Each paying family visit leaves $17.05 (82%); 18% profit margin at 38 visits a day |
-| Break-even | 30 paying family visits a day (capacity ~65) |
-| Year 1 | $188k revenue, -$4,012 operating loss, before any loan or owner pay |
+- **Pitch rewritten around the experience:** "They play. You sit. Right there." Same price, more buyers, double the party interest.
+- **Price ladder buyers accept:** first visit free; weekdays $13, weekends $15, coffee included; 5-visit pack $60; unlimited $45 ($39 founding, first 50).
+- **Revenue that does not crowd the room:** parties ($325 / $395, 8 a month), teacher-run classes, cafe add-ons, one Monday rental a month, a small retail shelf.
+- **Overhead tuned without touching the experience:** 76 hired hours with two on the floor always; 3 free months of rent to negotiate.
+- **Space right-sized:** 2,500 sq ft. Bigger spaces lose $47k to $93k of Year 1 at the same demand.
+- **Cut:** the $59 membership, the drink-minimum pricing, the $29 weekday tier, the $425 party tier, four Monday rentals a month.
 
-### Where the panel and the board agreed, and where they did not
+### Panel and board
 
-- **Agreed:** demand is unproven; the $59 membership does not sell; sponsors should not be counted until signed; the offer needed to be simpler and safer to try.
-- **The panel overruled one board idea:** the Offers lens asked whether membership could go *up* to ~$79 with a stack. The panel put the acceptable membership range at $20 to $55. The price went down to $45.
-- **The panel surprised everyone:** almost nobody (about 1 in 100) would join a membership before visiting, at any tested price. The membership is a retention tool, not how families arrive.
-- **Free alternatives remain the wall:** 59 of 76 non-buyers named library storytime, parks or the zoo. Free-activity loyalists and deal hunters bought at 0% in both panels.
+- **Panel (same 100 cards):** 24% buy as pitched, 71% on the final offer; paid first-month visits per 100 parents roughly 39 → 66.
+- **Board conditions now met on paper:** one clear offer, one simple price page, a guarantee, no reliance on sponsors. Still open: 40+ founding deposits, party pre-sales, lease protections.
+- **Still not customers:** free-activity loyalists (0% in every round).
 
-### The biggest risk and what is done about it
+### The biggest risk
 
-Demand at the plan volume is a job that does not pay its operator. The answer is a pre-lease test with numbers set in advance: 50 founding deposits (go at 42, stop under 25), 35%+ of free-visit families paying within 30 days, 12+ parties pre-booked, all by Fri May 14, 2027. Between the go and stop lines, the plan pivots to a smaller or shared space instead of a full build-out.
+Demand. Year 1 swings from +$3k at 38 visits a day to +$69k at 55. Simulated buyers are an upper bound. The pop-ups (Feb to May 2027) are the real test, with go/stop lines set in `launch.md`.
 
-### What the founders need to start
+### What the founders need
 
-- Now: about $2,000 for the pop-up campaign (estimate), a venue for 4 pop-ups, and attorney-reviewed deposit terms.
-- If go: about $238k as designed, or about $166k on the lean build-out with $15k signed sponsorships (cash before it pays for itself, before owner pay).
+- Now: ~$2,000 for the pop-up campaign (estimate) and attorney-reviewed deposit terms.
+- If go: about $230k as designed, or about $158k on the lean build-out with $15k signed sponsorships.
 
 ### The one thing to do this week
 
-By Fri Oct 9: Jordan emails the MSDE Office of Child Care for a written answer that parent-on-site play is not child care. Same day: register littleshoreplaycafe.com and littleshoreplay.com and claim the Instagram handle.
+Jordan emails the MSDE Office of Child Care for a written answer that parent-on-site play is not child care. Michael registers littleshoreplaycafe.com and littleshoreplay.com and claims the handles.
 
 _The panel is simulated buyers and the numbers are projections from estimates; real customers and real quotes confirm them. Not financial, legal or tax advice._
 
@@ -238,7 +234,7 @@ A separate signal: Altitude Delmar sits at **2.4 stars on Yelp across 23 reviews
 
 ## The buyer panel
 
-**24 buy · 76 pass** (24% buy) out of 100 simulated buyers. Seed 2026, so the same cards can be dealt again.
+**71 buy · 29 pass** (71% buy) out of 100 simulated buyers. Seed 2026, so the same cards can be dealt again.
 
 These are simulated buyers, not customers. Use this to find objections and weak spots, then confirm the big ones with real people before you spend.
 
@@ -246,71 +242,67 @@ These are simulated buyers, not customers. Use this to find objections and weak 
 
 | group | buyers | buy rate |
 | --- | ---: | ---: |
-| Middle-income household | 40 | 28% |
-| Upper-middle household | 24 | 25% |
-| High-earning household | 8 | 25% |
-| Budget-stretched household | 28 | 18% |
+| Upper-middle household | 24 | 83% |
+| Middle-income household | 40 | 75% |
+| High-earning household | 8 | 75% |
+| Budget-stretched household | 28 | 54% |
 
 ### By buying behaviour
 
 | group | buyers | buy rate |
 | --- | ---: | ---: |
-| Birthday party planner | 5 | 60%  (thin) |
-| Stay-at-home parent | 20 | 55% |
-| Remote or hybrid worker | 10 | 30% |
-| Working parent, weekends only | 20 | 25% |
-| Moms-group organizer | 10 | 20% |
-| Deal hunter | 10 | 0% |
+| Birthday party planner | 5 | 100%  (thin) |
+| Remote or hybrid worker | 10 | 100% |
+| Cleanliness and safety first | 10 | 90% |
+| Stay-at-home parent | 20 | 85% |
+| Working parent, weekends only | 20 | 80% |
+| Deal hunter | 10 | 70% |
+| Moms-group organizer | 10 | 70% |
 | Free-activity loyalist | 15 | 0% |
-| Cleanliness and safety first | 10 | 0% |
 
 ### By income
 
 | group | buyers | buy rate |
 | --- | ---: | ---: |
-| $73,000 to $104,000 | 32 | 31% |
-| $104,000 and up | 35 | 26% |
-| under $73,000 | 33 | 15% |
+| $73,000 to $104,000 | 32 | 81% |
+| $104,000 and up | 35 | 80% |
+| under $73,000 | 33 | 52% |
 
 ### Why they pass
 
 | reason | buyers | in their words |
 | --- | ---: | --- |
-| price | 45 | "$59 a month is a lot on $37k, and the library storytime I already go to is free. If I came it would maybe be a drop-in once in a while, but I would not sign up for a membership." (P002) · "I make $35k and the zoo, the park and library storytime are free, so $49 to $59 a month for somewhere to sit with my baby is a lot to ask. I would not pay when I already have places to go that cost nothing." (P005) |
-| habit | 11 | "We do library storytime, parks, the zoo and church groups, and I almost never pay for kid activities. I'd still be chasing my kid around, so the coffee isn't really a perk for me." (P004) · "We stick to free stuff like storytime, parks and church groups, and we'd maybe go once or twice a month. That doesn't come close to justifying $59 a month." (P026) |
-| trust | 10 | "It's not open yet and I'm not paying $59 a month for a place I've never seen. I wait for a Groupon or a free trial day before I try anything new, and the page says nothing about how they clean." (P001) · "It's not opening until next year and there are no reviews or photos of how clean it is, so I'm not paying a membership for something I can't check. With shift work and a drive, I wouldn't get my money's worth from a monthly plan anyway." (P019) |
-| convenience | 7 | "I only really have Saturdays with my kid, so an unlimited membership would get maybe 4 uses a month, and at that rate drop-in at $12 is cheaper than $59. It's also a drive for us and gas adds up, so I wouldn't commit to it before seeing it in person." (P003) · "I only have Saturdays with my kid, and the zoo is free. A monthly membership I'd use maybe 3 or 4 times doesn't beat that, and it's a drive on top of the fee." (P010) |
-| need | 2 | "I'm a birthday planner, so I'd look at the $275 party price, but I'd compare it to CoCo's Funhouse first and I'm not signing up for a $59 a month membership for something I'd use a couple of times. Maybe I'd come once for a drink and a look when it opens." (P079) · "We can only go on Saturdays, so $59 a month for maybe 4 visits doesn't pencil out on our budget, and I'd rather pay drop-in if I ever try it. With a baby, I don't want to pay to find out if it's crowded with 4 and 5 year olds." (P100) |
-| timing | 1 | "I work full time and it's really just Saturdays, so we'd maybe go once or twice a month. At $12 a visit that's cheaper than a $59 membership, so I'd skip the membership and see how it goes." (P041) |
+| price | 22 | "I'd probably use the free visit just to see it, but $13 for one kid plus gas is too much when the library storytime is free and the park costs nothing. On $37k I can't pay that every week." (P002) · "We do the zoo, library storytime and church group for free, so $13 a kid is hard to justify on $35k. I might use the free first visit to look, but I wouldn't pay after that." (P005) |
+| habit | 5 | "We do library storytime, parks and church groups, and I don't pay for kid stuff. I'd take the free first visit, but I'd still be chasing my kid around so the coffee is wasted on me, and $13 a visit is hard to justify when the park is free." (P004) · "We use free stuff like library storytime and parks, and I'd maybe come once or twice a month, which doesn't justify a membership. The free first visit is tempting, but after that $13 a visit is more than I normally spend on kid activities." (P026) |
+| convenience | 2 | "It's a drive for us and gas adds up, and the Salisbury Zoo is free and already our Saturday thing. I'd maybe take the free first visit, but I wouldn't pay $15 every weekend when I only get Saturdays." (P023) · "It looks lovely, but it's a drive for us and gas plus $13 a kid adds up fast with more than one child. I'd use the free visit and then wait for a Groupon or a launch deal before paying anything." (P035) |
 
 ### Why they buy
 
 | reason | buyers | in their words |
 | --- | ---: | --- |
-| need | 10 | "Indoor options for little kids around Salisbury are thin, and $12 a drop-in is nothing on our income. I'd try it on a Saturday or two, but I'd stay on drop-in rather than commit to a membership." (P007) · "I'm home with the kids all week and there's almost nothing indoors around here, so $49-59 a month is easy money for me if it's a place we'd use twice a week. I'd probably do a drop-in first to check it out, then join if it feels good." (P011) |
-| price | 6 | "I would try a $12 drop-in with the drink included to see if it is calm enough for my baby, but $59 a month is too much for our budget before I know we would go weekly. Free play at home or the library is my comparison." (P009) · "I'd never do the $59 membership since we'd go once or twice a month, but a $12 drop-in with a coffee included is a fair price for a rainy-day outing with the kids. I'd try it once to see if it's actually calm and clean." (P045) |
-| trust | 3 | "I'd try one Saturday drop-in for $12 since it's a rainy-day option and I'm not paying for a membership I'd only use 3 or 4 times. Whether I go back depends on how clean it looks when I walk in." (P014) · "I'm always looking for somewhere indoors to burn a morning, and $12 with a coffee included is doable once or twice a month. I'd never commit to $59 a month on our budget until I've seen the place myself." (P034) |
-| convenience | 2 | "A place where my toddler can play a few feet away while I get an hour of laptop work done with coffee and Wi-Fi is something I'd actually use, so I'd try it as a drop-in. I wouldn't sign up for the $59 membership until I know it works for me." (P085) · "I'd try it on a Saturday as a drop-in. $12 for my 4-year-old, the baby is free, and I get a coffee out of it, which beats paying for another indoor place. I wouldn't sign up for the membership, since I can only come on weekends and $74 a month for maybe 4 visits doesn't pay off." (P087) |
-| quality | 1 | "I work all week so it would only ever be a Saturday, and I'd pay $12 to try it once if the calm, designed space is really different from CoCo's. I would not sign up for a membership until I'd seen it myself." (P058) |
-| habit | 1 | "I'd try one drop-in since I'm always looking for somewhere to take the kids and the drink is included. We'd only go once or twice a month, so I wouldn't sign up for the membership." (P068) |
-| timing | 1 | "I work full time, so it would be a Saturday thing, maybe once or twice a month. Drop-in at $12 plus a coffee is fine to try, but I would not sign up for a membership." (P099) |
+| trust | 20 | "The capped headcount, shoes off and the daily cleaning log are exactly what I check for, so I'd use the free first visit and probably pay for one more drop-in if it's as clean as claimed. I wouldn't commit to a membership until I'd seen it myself." (P006) · "The free first visit and the gated Baby Nook with a cap on how many kids are in at once speak to my worry. I'd try it, and if it's calm I'd come back a couple times a month on a weekday, since it's an easy drive in from Fruitland." (P009) |
+| need | 20 | "Free first visit costs me nothing, and Saturdays are the hard part with a toddler when it's too hot or rainy. A clean, not-packed place where I can sit with a real coffee is worth a few trips, though I'm not signing up for a membership before I've seen it." (P007) · "I'm home with the kids all week and the parks get old, especially when it's hot or rainy. I'd use the free visit, and if it's as clean and calm as they say I'd probably buy the 5-visit pack, not the monthly." (P012) |
+| price | 17 | "The free first visit gets me in the door, and the cleaning log and the cap on how many kids are in at once speak to my biggest worry. I'd go once free, then probably once more on a rainy weekday if she liked it. I'm not signing up for a monthly plan before I've seen how it actually looks." (P001) · "The free first visit costs me nothing but a Saturday and gas, so I'd try it once, especially with the clean and never-packed pitch. But I work full time and the zoo is free, so I wouldn't be a regular unless it really wins my kid over." (P010) |
+| convenience | 6 | "Saturdays are my only real kid time and a clean, never-crowded place where I can sit with a coffee beats the germy chaos of other options. I'd use the free visit, and if it's as calm as promised I'd pay for a couple of Saturdays." (P003) · "Saturdays are my kid time and a clean, calm place where I can actually sit with a coffee beats a germy loud play place. I'd use the free visit and probably pay for one or two weekend visits, not a membership." (P050) |
+| quality | 4 | "The free first visit costs me nothing, and a clean, not-packed place where I can actually sit with a coffee on a Saturday sounds better than CoCo's. If it really is calmer and cleaner I'd pay for a couple of Saturdays." (P036) · "I'd take the free first visit on a Saturday just to see if it's actually cleaner and calmer than CoCo's. If it is, I'd pay for a visit or two, but only on weekends since I work full time." (P038) |
+| habit | 4 | "I'd take the free first visit on a Saturday for sure, and probably pay for one more drop-in if my kid liked it. I'd go once or twice a month at most, so a membership makes no sense for us." (P037) · "The free first visit is an easy yes and the clean, never-packed setup is what I'd want on a rainy Saturday. After that I'd pay the weekend drop-in once, maybe twice a month, but I wouldn't commit to a membership." (P041) |
 
 ### What would flip a no
 
-- A free or Groupon-priced first visit, plus a clear cleaning routine (toys sanitized between sessions, shoes-off, and a cap on how many kids are in at once).
-- A much cheaper way to try it, like a free first visit or a 5-visit pass around $30, and some proof it's close enough that I'd go weekly.
-- A weekend-only or 4-visit pass at about $30, or confirmation that it's a short drive from me and the first Saturday I try is good.
-- A free or very cheap trial visit that proved my toddler plays on their own while I sit, or a free community morning I could try with no commitment.
-- A free or very cheap trial visit, plus a separate baby-only area or hours, so I could see it is safe for my baby before paying anything.
-- Seeing it open with strong reviews and a visibly clean space, plus a cheap trial visit or a drop-in price around $8 to try first.
-- A free or cheap first visit, or a punch-card or drop-in pack where I only pay for visits I actually use, and it being close enough that gas isn't a factor.
-- A weekend-only or per-visit pass around $25 to $30 a month, or a location close enough that it isn't a real trip.
-- A free or cheap trial visit, or a membership around $25-30 a month that I could cancel anytime.
-- A cheap weekend-only pass, or drop-in of about $6 with no required drink, that I could use a couple of Saturdays a month.
-- A free trial day or a discounted first-visit deal (Groupon-style), and some proof it's busy and well run once it's open.
-- A separate, protected baby area or baby-only hours, plus a free first visit or a cheap drop-in so I can see it first.
+- A visit price around $6 to $8 for a toddler, or a free or cheap weekday morning deal, and being close enough that gas isn't a factor.
+- If it were free or a couple dollars a visit, or if a church or moms group I'm already in booked it and I didn't have to pay myself.
+- A drop-in around $5 to $6 a visit, or a free baby-only hour where the older kids aren't there.
+- A cheaper per-child drop-in around $8 to $9 or a pack that works out to that, since the drive is already a cost.
+- A weekend price around $8 a visit, or a free-with-purchase deal that makes the $60 pack feel closer to $8 a visit.
+- A free or very cheap (under $5) under-2 session at set quiet hours, with real proof that the Baby Nook stays separate from the 5-year-olds.
+- A much cheaper way in, like a $5 to $8 weekday visit, or a moms-group rate that really comes out around $8 a child and that I could organize for my group.
+- A sibling price low enough that two kids is under about $15 total, or a cheap weekday-morning deal near where I already drive.
+- A confirmed $8 moms-group rate that my group actually uses, plus seeing the Baby Nook is truly separated from the big kids.
+- A drop-in around $7 to $8 per child, or a free or very cheap weekday session I could use now and then.
+- A very cheap or free weekend rate, or it being close enough that the drive isn't a factor.
+- A visit price around $5 to $6, or a free-for-families day each week. I'd also need to know it's much better than the free stuff for my 10-month-old.
 
-Buyers say they would buy **1.6 times** in the first month on average.
+Buyers say they would buy **1.9 times** in the first month on average.
 
 100 buyers gave all four price answers. Run founder-pricing's van_westendorp.py on the answers folder.
 
@@ -377,6 +369,20 @@ Founding Family membership at $39, locked for 12 months, **first 50 families or 
 - "We stick to free stuff like storytime, parks and church groups, and we'd maybe go once or twice a month. That doesn't come close to justifying $59 a month." (P026)
 
 Panel quotes are research. Never use them as testimonials.
+
+### Final pricing (after the Year 1 optimization, Oct 8, 2026)
+
+This supersedes the table above. Evidence: rounds 1 to 4 and the final 100-buyer panel (`optimization.md`).
+
+| item | price | evidence |
+| --- | --- | --- |
+| First visit | Free | Top flip request in every round |
+| Drop-in | **Weekdays $13, weekends $15**, coffee included; siblings $7; under 1 free | Combined price ceiling across 180 answers is $14.99; weekday price lifted buyers (round 3B) and ~70% of visits are weekdays |
+| 5-visit pack | **$60**, any day | $12 a visit, below the weekday price so the step up is obvious |
+| Membership | $45 unlimited (+$15 sibling); $39 founding, first 50 | Unchanged; a retention product for weekly families |
+| Parties | **$325** (12 kids) / **$395** (20 kids), all-in | Party panel range $151 to $400 |
+| Classes | $12, teacher-led, 50% to the teacher | 11% would take one |
+| Monday private rental | $200 | 2% interested: offer it, do not count on it |
 
 ## The offer
 
@@ -489,54 +495,36 @@ Changes tested: membership stated as per child ($45 first child, +$20 per siblin
 - **Flipped to yes:** P015, but only for the free first visit.
 - **Read:** the perks did not register, and per-child framing cost a little with multi-kid families. With 20 buyers, 9 vs 7 is within noise. **Keep v2 as the recommended offer.** The monthly drink stays as a cheap retention perk for members (about $1.65 each), not a selling point. Keep the sibling add-on at $15 in the headline; test $20 quietly with real members later.
 
+### 7. Final offer (Year 1 optimization)
+
+The pitch buyers saw is `pitch.md` (also `pitch-v5.md`). It opens with **"They play. You sit. Right there."** and keeps the free first visit, the visible clean standard, the Baby Nook and the guarantee. Results and every tested variant: `optimization.md`. On the same 100 buyer cards: **71 buy vs 24 as first pitched**, 0 buyers lost.
+
 ## The numbers
 
 ### The CFO's note
 
-**How this is modeled.** The founder-cfo tool takes one unit at one price. A play cafe sells memberships, drop-ins, packs, coffee, parties and programs, so `model/mix.py` turns one steady-state month of that mix into a **paying family visit**: a blended price of **$20.82** and blended direct costs of **$3.77**. All inputs are in `model/scenario-v2-recommended.json`; the tool output below runs on `numbers.json`. This version includes the ops corrections: about 84 hired hours a week (not 63), Wicomico admissions and amusement tax (~$580/mo, rate to confirm), 3.5% card fees and a 15% build-out contingency. **Owner pay and loan payments are not in fixed costs**; they are shown separately because they decide whether this works.
+**How this is modeled.** One unit, a **paying family visit**, built by `model/mix.py` from one steady-state month of the full mix (drop-ins, packs, memberships, cafe, parties, classes, a Monday rental, a small retail shelf). Inputs: `model/scenario-v5-final.json`, calibrated to the final 100-buyer panel and the ops cost review. Space: **2,500 sq ft, about 39 kids at once, about 106 family visits a day of capacity.** Owner pay and loan payments are shown separately.
 
-**The margin.** Each family visit leaves **$17.05** (82%) after its own costs. Fixed costs are **$13,190 a month**. Break-even is **30 paying family visits a day**. At the plan of 38 a day, the profit margin is **18%**, about **$3,650 a month** at steady state.
+**The margin.** Each family visit brings **$20.23** and leaves **$16.28** (80%) after its own costs. Fixed costs are **$12,012 a month** (incl. ops' staffing and admissions-tax corrections, and a negotiated 3-month rent abatement averaged in). Break-even is **29 paying family visits a day**. At the plan of 45 a day the profit margin is **30%**, about **$7,000 a month** at steady state.
 
-**Year 1.** **$188k** revenue and an **operating loss of $4,012**, with losses in months 1 to 5. The $221,500 startup spend (incl. contingency) is not earned back in Year 1. **Cash needed before it pays for itself: $238,244.**
-
-**The line to watch: volume, then debt and owner pay.**
+**Year 1.** **$216,756** revenue, **$30,290 operating profit**; losses only in months 1 to 3. Without the rent abatement: **$21,290**. Cash needed before it pays for itself: **$230,465** as designed, **$157,965** with the lean build-out and $15k of signed sponsorships.
 
 | what-if (tool runs) | break-even a day | Year 1 | steady month |
 | --- | ---: | ---: | ---: |
-| Base plan (38/day at steady state) | 30 | -$4,012 | $3,655 |
-| Visits -20% | 30 | -$35,082 | $263 |
-| + loan payment on $200k (~$2,588/mo, 10 yrs, ~9.5%, estimate) | 36 | -$35,068 | $1,067 |
-| + loan + $3,000/mo owner pay for Jordan (placeholder) | 42 | -$71,068 | -$1,933 |
-| 48 visits a day, no loan, no owner pay | 30 | $36,814 | $8,113 |
+| Base: 45 visits/day at steady state | 29 | **$30,290** | $7,036 |
+| Without rent abatement | 30 | $21,290 | $6,286 |
+| Demand only 38/day | 29 | $2,975 | $4,053 |
+| Demand 55/day | 29 | $69,446 | $11,311 |
+| + $150k loan + $3,000/mo for Jordan | 40 | -$29,002 | $2,095 |
+| + loan + Jordan at 55/day | 40 | $10,154 | $6,370 |
 
-**Read this plainly:** at 38 family visits a day this is a job that does not pay its operator, on top of a $200k+ debt. It works only if the pop-ups prove demand well above the plan.
+**The line to watch is still volume.** Price -10% costs $21,676 of Year 1; volume -20% costs $34,887 and turns Year 1 negative.
 
-**Three ways to improve the margin (each run through the tool):**
+**What moved Year 1 from -$4,012 to +$30,290:** see `optimization.md` for every lever, the panel evidence behind it and what was cut.
 
-1. **Drop-in $14 → $15, pack $55 → $60:** Year 1 -$4,012 → **+$3,408**, break-even 30 → 29. The re-test ceiling is about $16.
-2. **Parties 6 → 10 a month:** Year 1 → **+$4,494**. Highest-margin line; pre-sell them.
-3. **Staff 84 → 76 hired hours** (third person only Saturday peak): Year 1 → **+$2,948**, break-even 28.
+**The board's money conditions:** survives Year 1 with zero sponsor money: **yes** ($30,290 on operations; sponsors only reduce cash need). 40+ founding deposits and party pre-sales: still to be proven at the pop-ups.
 
-**The biggest lever is the startup bill.** A leaner build-out (construction $45k, catalog play houses $35k, contingency $12k) plus **$15k in signed sponsorships** cuts cash needed from **$238,244 to $165,744** with no change to operations.
-
-**What it takes to pay a lender and Jordan** (all three levers + lean build-out + $15k signed sponsors + a $150k loan at ~$1,941/mo + $3,000/mo owner pay):
-
-| steady paying family visits a day | break-even a day | Year 1 | steady month after loan and owner pay |
-| ---: | ---: | ---: | ---: |
-| 38 | 37 | -$47,379 | $453 |
-| 42 | 37 | -$30,164 | $2,333 |
-| 45 | 37 | -$17,314 | $3,736 |
-| 48 | 37 | -$4,306 | $5,157 |
-
-**So the go/no-go number for the pop-ups is about 45 paying family visits a day of proven demand**, about 70% of the 65-a-day capacity. Anything that shows the demand sits near 38 a day means the business, as designed, cannot carry debt plus a salary.
-
-**The board's money conditions:**
-
-- [ ] Survives Year 1 with zero sponsor money: **no** (-$4,012 on operations alone, before any loan).
-- [ ] 40 refundable founding deposits before a lease: not yet tested. Note the real threshold is visits a day, not member families: members are about 15% of visits at steady state.
-- [ ] Pre-sell parties: not yet tested.
-
-Revenue is before Maryland's 6% sales tax on food and prepared drinks; the admissions and amusement tax is modeled as a cost because the price promise is "all-in." Confirm both with the Comptroller and Wicomico County. **Not financial, tax or legal advice: an accountant should check the structure, payroll and tax before money moves.**
+Revenue is before Maryland's 6% sales tax on food and drinks; admissions and amusement tax is modeled as a cost (4.5%, rate to confirm). **Not financial, tax or legal advice: an accountant should check the structure, payroll and tax before money moves.**
 
 ---
 
@@ -548,57 +536,58 @@ Every number below comes from the input file. Nothing is looked up or guessed.
 
 | line | per family visit |
 | --- | ---: |
-| Price | $20.82 |
-| Cafe cost of goods | -$1.07 |
-| Included drinks (drop-in/pack) | -$0.51 |
-| Party direct costs | -$0.64 |
-| Program materials | -$0.32 |
-| Card processing | -$0.73 |
+| Price | $20.23 |
+| Cafe cost of goods | -$0.94 |
+| Included drinks (drop-in/pack) | -$0.45 |
+| Party direct costs | -$0.72 |
+| Card processing | -$0.71 |
 | Per-visit supplies (sanitizer, wipes, toy wear) | -$0.50 |
-| **Contribution** (what each family visit leaves to pay the fixed costs) | **$17.05** (82%) |
+| Direct costs: Instructor classes (50% to teacher) | -$0.43 |
+| Direct costs: Monday private rental (1 a month) | -$0.03 |
+| Direct costs: Retail shelf (toys, merch) | -$0.17 |
+| **Contribution** (what each family visit leaves to pay the fixed costs) | **$16.28** (80%) |
 
 ### The margin that matters
 
-Fixed costs: $13,190 a month (Rent, base (founder quote midpoint) $2,850, NNN / CAM (estimate) $700, Utilities and internet (estimate) $700, Hired staff, ~84 hrs/wk at $15 + 12% burden (ops rota, estimate) $6,110, Insurance incl. abuse/molestation (estimate) $450, Software: POS, booking, waivers (estimate) $250, Cleaning, maintenance, repairs (estimate) $400, Marketing incl. free first visits (estimate) $700, Bookkeeping and accounting (estimate) $250, Licenses and misc (estimate) $150, Membership 30-day guarantee refunds (estimate) $50, Admissions and amusement tax, ~4.5% of admissions (rate to confirm) $580).
+Fixed costs: $12,012 a month (Rent, base, 2,500 sq ft (founder quote, top of range) $3,000, NNN / CAM (estimate) $730, Utilities and internet (estimate) $700, Hired staff, ~76 hrs/wk at $15 + 12% burden; 2 on the floor at all times (estimate) $5,530, Insurance incl. abuse/molestation (estimate) $450, Software: POS, booking, waivers (estimate) $250, Cleaning, maintenance, repairs (estimate) $400, Marketing incl. free first visits, $700 launch then $500 (estimate) $550, Bookkeeping and accounting (estimate) $250, Licenses and misc (estimate) $150, Membership 30-day guarantee refunds (estimate) $50, Admissions and amusement tax, 4.5% of admissions (rate to confirm) $702, Rent abatement: 3 free months on a 5-yr lease, averaged over Y1 (to negotiate) -$750).
 
-- **Break-even: 30 family visits a day.** Below that you lose money every month.
-- **Profit margin at your plan** (38 a day): **18%** of every sale, after every cost.
-- Capacity: 65 a day.
+- **Break-even: 29 family visits a day.** Below that you lose money every month.
+- **Profit margin at your plan** (45 a day): **30%** of every sale, after every cost.
+- Capacity: 106 a day.
 
 ### Year 1, month by month
 
-| month | family visits a day | revenue | profit | cumulative (after $221,500 startup) |
+| month | family visits a day | revenue | profit | cumulative (after $223,000 startup) |
 | ---: | ---: | ---: | ---: | ---: |
-| 1 | 15 | $8,120 | -$6,540 | -$228,040 |
-| 2 | 19 | $10,285 | -$4,767 | -$232,808 |
-| 3 | 23 | $12,450 | -$2,994 | -$235,802 |
-| 4 | 26 | $14,074 | -$1,664 | -$237,466 |
-| 5 | 28 | $15,157 | -$778 | -$238,244 |
-| 6 | 30 | $16,240 | $109 | -$238,135 |
-| 7 | 32 | $17,322 | $996 | -$237,139 |
-| 8 | 33 | $17,864 | $1,439 | -$235,700 |
-| 9 | 34 | $18,405 | $1,882 | -$233,818 |
-| 10 | 35 | $18,946 | $2,326 | -$231,492 |
-| 11 | 36 | $19,488 | $2,769 | -$228,724 |
-| 12 | 37 | $20,029 | $3,212 | -$225,512 |
+| 1 | 18 | $9,362 | -$4,478 | -$227,478 |
+| 2 | 22 | $11,835 | -$2,488 | -$229,966 |
+| 3 | 27 | $14,307 | -$499 | -$230,465 |
+| 4 | 31 | $16,200 | $1,025 | -$229,440 |
+| 5 | 33 | $17,463 | $2,041 | -$227,399 |
+| 6 | 36 | $18,672 | $3,014 | -$224,384 |
+| 7 | 38 | $19,935 | $4,030 | -$220,354 |
+| 8 | 39 | $20,566 | $4,538 | -$215,816 |
+| 9 | 40 | $21,197 | $5,046 | -$210,769 |
+| 10 | 41 | $21,776 | $5,512 | -$205,258 |
+| 11 | 43 | $22,407 | $6,020 | -$199,238 |
+| 12 | 44 | $23,038 | $6,528 | -$192,710 |
 
-- **Year 1 operating profit: -$4,012** on $188,379 of revenue.
-- After the $221,500 startup spend: -$225,512.
+- **Year 1 operating profit: $30,290** on $216,756 of revenue.
+- After the $223,000 startup spend: -$192,710.
 - Startup money earned back: not within year 1.
-- Cash you need before it pays for itself: **$238,244**.
+- Cash you need before it pays for itself: **$230,465**.
 
 ### What if
 
 | scenario | margin at plan | break-even a day | year 1 profit |
 | --- | ---: | ---: | ---: |
-| Base plan | 18% | 30 | -$4,012 |
-| Price -10% | 9% | 34 | -$22,850 |
-| Volume -20% | 2% | 30 | -$34,865 |
-| Unit costs +15% | 15% | 31 | -$9,128 |
+| Base plan | 30% | 29 | $30,290 |
+| Price -10% | 22% | 33 | $8,614 |
+| Volume -20% | 17% | 29 | -$4,597 |
+| Unit costs +15% | 27% | 30 | $23,941 |
 
 ### Red flags
 
-- Year 1 loses money on operations (-$4,012).
 - The startup spend is not earned back within year 1.
 
 ## Marketing
@@ -1287,5 +1276,11 @@ Free first visits by booked slot to hold the 25-kid cap. Offer: first visit free
 **Day 30 (Mon Dec 20, closed day):** Paying visits a day vs 15 and 18? Conversion, members, parties vs targets? Cash vs the CFO month-1 loss of $6,540? Change hours, price or channel, or hold? Report to the board.
 
 Next: `/founder-plan` compiles everything into the business plan.
+
+### Update after the Year 1 optimization (Oct 8, 2026)
+
+- **Party pre-sales move after the lease.** 8 of 10 simulated birthday planners would not book a venue without an opening date. Sell parties from the lease signing (target late May 2027) with a refundable deposit and a firm date; the 12+ pre-booked party line now applies to Aug 1, 2027, not May 14.
+- **The go/no-go stays at about 45 paying family visits a day.** With a $150k loan and $3,000/mo for Jordan, break-even is 40 a day (`cfo.md`).
+- **Pop-up pricing:** test weekday $13 / weekend $15 exactly as in `pitch.md`, so real buyers confirm the simulated result.
 
 _The panel is simulated buyers and the numbers are projections from your inputs. Confirm demand with real customers and costs with real quotes before you spend. Not financial, legal or tax advice._

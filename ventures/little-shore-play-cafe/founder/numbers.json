@@ -1,49 +1,57 @@
 {
  "business": "Little Shore Play Cafe",
  "unit": "family visit",
- "price": 20.82,
+ "price": 20.23,
  "variable": [
   {
    "label": "Cafe cost of goods",
-   "cost": 1.07
+   "cost": 0.94
   },
   {
    "label": "Included drinks (drop-in/pack)",
-   "cost": 0.51
+   "cost": 0.45
   },
   {
    "label": "Party direct costs",
-   "cost": 0.64
-  },
-  {
-   "label": "Program materials",
-   "cost": 0.32
+   "cost": 0.72
   },
   {
    "label": "Card processing",
-   "cost": 0.73
+   "cost": 0.71
   },
   {
    "label": "Per-visit supplies (sanitizer, wipes, toy wear)",
    "cost": 0.5
+  },
+  {
+   "label": "Direct costs: Instructor classes (50% to teacher)",
+   "cost": 0.43
+  },
+  {
+   "label": "Direct costs: Monday private rental (1 a month)",
+   "cost": 0.03
+  },
+  {
+   "label": "Direct costs: Retail shelf (toys, merch)",
+   "cost": 0.17
   }
  ],
  "fixed_monthly": [
   {
-   "label": "Rent, base (founder quote midpoint)",
-   "cost": 2850
+   "label": "Rent, base, 2,500 sq ft (founder quote, top of range)",
+   "cost": 3000
   },
   {
    "label": "NNN / CAM (estimate)",
-   "cost": 700
+   "cost": 730
   },
   {
    "label": "Utilities and internet (estimate)",
    "cost": 700
   },
   {
-   "label": "Hired staff, ~84 hrs/wk at $15 + 12% burden (ops rota, estimate)",
-   "cost": 6110
+   "label": "Hired staff, ~76 hrs/wk at $15 + 12% burden; 2 on the floor at all times (estimate)",
+   "cost": 5530
   },
   {
    "label": "Insurance incl. abuse/molestation (estimate)",
@@ -58,8 +66,8 @@
    "cost": 400
   },
   {
-   "label": "Marketing incl. free first visits (estimate)",
-   "cost": 700
+   "label": "Marketing incl. free first visits, $700 launch then $500 (estimate)",
+   "cost": 550
   },
   {
    "label": "Bookkeeping and accounting (estimate)",
@@ -74,14 +82,18 @@
    "cost": 50
   },
   {
-   "label": "Admissions and amusement tax, ~4.5% of admissions (rate to confirm)",
-   "cost": 580
+   "label": "Admissions and amusement tax, 4.5% of admissions (rate to confirm)",
+   "cost": 702
+  },
+  {
+   "label": "Rent abatement: 3 free months on a 5-yr lease, averaged over Y1 (to negotiate)",
+   "cost": -750
   }
  ],
  "startup": [
   {
    "label": "Lease deposit + first month (estimate)",
-   "cost": 6000
+   "cost": 7500
   },
   {
    "label": "Construction / TI net of allowance (estimate)",
@@ -129,20 +141,20 @@
   }
  ],
  "days_per_month": 26,
- "capacity_per_day": 65,
- "plan_per_day": 38,
+ "capacity_per_day": 106,
+ "plan_per_day": 45,
  "ramp_per_day": [
-  15,
-  19,
-  23,
-  26,
-  28,
-  30,
-  32,
-  33,
-  34,
-  35,
-  36,
-  37
+  17.8,
+  22.5,
+  27.2,
+  30.8,
+  33.2,
+  35.5,
+  37.9,
+  39.1,
+  40.3,
+  41.4,
+  42.6,
+  43.8
  ]
 }

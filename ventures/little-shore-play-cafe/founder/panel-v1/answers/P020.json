@@ -1,0 +1,13 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "Money is tight since daycare went up, and $59 a month is a real bill for something I might use twice. Add the gas to get there and I can just take the kids to the library or a free park instead.",
+  "objection": "It's a drive for us and gas adds up, so $12 a visit plus a tank of gas is more than I can justify when there are free options.",
+  "would_change_my_mind": "A cheap or free first visit to see if my kids actually like it, and a pay-per-visit pack or a lower membership (around $30) so I'm not locked in if we can't make the drive often.",
+  "price_too_cheap": 15,
+  "price_cheap": 25,
+  "price_expensive": 40,
+  "price_too_expensive": 55
+}

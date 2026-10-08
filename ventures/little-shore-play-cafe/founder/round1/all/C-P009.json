@@ -1,0 +1,20 @@
+{
+  "id": "P009",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "We do the zoo for free on Saturdays and $15 a kid every visit adds up fast for a weekend-only outing. I might use the free first visit once, but I would not pay after that.",
+  "objection": "$15 per kid per visit when the zoo and the park cost nothing, and it feels more like an Instagram thing than something Salisbury needs.",
+  "would_change_my_mind": "A weekend price around $8 to $10 per kid, or a cheap weekend-friendly pass, plus proof it is actually clean and uncrowded on Saturdays.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 3,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 250,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "P003",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "The free first visit is a no-brainer and I'd use it, maybe come back once if my toddler loved it. But at $38k, $15 plus coffee I may not need is steep for a once-or-twice-a-month outing, and I'd never pay for a membership.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, and $15 a visit adds up fast on our budget.",
+  "would_change_my_mind": "A drop-in closer to $10 for one kid, or a pack of visits that doesn't expire.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 3,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

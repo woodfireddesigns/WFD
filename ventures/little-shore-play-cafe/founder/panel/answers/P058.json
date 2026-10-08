@@ -1,13 +1,20 @@
 {
   "id": "P058",
   "buys": true,
-  "purchases_first_month": 1,
+  "purchases_first_month": 2,
   "reason_code": "quality",
-  "reason": "I work all week so it would only ever be a Saturday, and I'd pay $12 to try it once if the calm, designed space is really different from CoCo's. I would not sign up for a membership until I'd seen it myself.",
-  "objection": "Isn't this just CoCo's Funhouse with nicer decor? I only get Saturdays, so $59 a month is more than I'd use, and four drop-ins cost less.",
-  "would_change_my_mind": "A weekend-only or 4-visit pass around $35-40 a month, or a free trial visit or moms group event, so I can see it's actually calmer and cleaner than what we already go to.",
-  "price_too_cheap": 25,
-  "price_cheap": 39,
-  "price_expensive": 59,
-  "price_too_expensive": 80
+  "reason": "The free first visit makes it easy to try, and a clean, calm place where I can sit with a real coffee on a Saturday sounds a lot nicer than CoCo's. I work full time, so it would be a Saturday thing, and I'd see after the free visit whether it's actually clean and not loud.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? I work all week, so I'd only come on weekends, and $15 a kid plus a sibling adds up fast for a Saturday outing. Unlimited at $45 doesn't pay off for me when I can only come on weekends.",
+  "would_change_my_mind": "A weekend price under $12, or seeing in person on the free visit that it's clean, not crowded, and the cleaning log is real.",
+  "price_too_cheap": 6,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 5,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "yes",
+  "party_max_price": 325,
+  "monday_group_rental": false,
+  "preferred_time": "weekend"
 }

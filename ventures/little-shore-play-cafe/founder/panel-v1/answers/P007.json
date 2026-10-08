@@ -1,0 +1,13 @@
+{
+  "id": "P007",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "need",
+  "reason": "Indoor options for little kids around Salisbury are thin, and $12 a drop-in is nothing on our income. I'd try it on a Saturday or two, but I'd stay on drop-in rather than commit to a membership.",
+  "objection": "I only have weekends, so a monthly membership only pays off if I go 5+ times a month, and I don't trust a fancy 'Montessori-inspired' cafe to still be good and not just Instagram once the novelty fades.",
+  "would_change_my_mind": "A membership that works for weekend-only use (or a visit-pack/weekend-only tier around $30-35), plus proof it is actually clean, calm and well run, e.g. a trial visit or reviews from local parents.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 15,
+  "price_too_expensive": 25
+}

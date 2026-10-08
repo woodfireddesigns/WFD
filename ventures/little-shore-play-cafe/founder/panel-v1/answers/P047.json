@@ -1,0 +1,13 @@
+{
+  "id": "P047",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "need",
+  "reason": "I need somewhere indoors to burn an hour between naps, and $12 with a drink included is fair for that. I'd try it as a drop-in a couple of times, not commit to a membership.",
+  "objection": "I'll still be chasing my kid around, so I won't really get to sit and drink the coffee. And with daycare costs up, $59 a month is a commitment I can't justify until I know we'd actually go often enough.",
+  "would_change_my_mind": "A free or cheap trial visit, or a multi-visit pass with no monthly commitment, would get me to spend more. A membership would only work if I knew we'd go at least weekly.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 14,
+  "price_too_expensive": 20
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P060",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I only have Saturdays, so $59 a month works out to about $15 a visit, and the zoo is free. I'm not paying a membership for a place I haven't seen.",
+  "objection": "Is it actually clean? My toddler puts everything in her mouth, and a shared play village full of toys worries me. I also only get about four Saturdays a month, so a membership doesn't pay off for me.",
+  "would_change_my_mind": "A clear, visible cleaning routine (toys sanitized between sessions, shoes-off rule), plus a cheaper weekend-only or 4-visit pass so I'm not paying for days I can't use.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 55,
+  "price_too_expensive": 80
+}

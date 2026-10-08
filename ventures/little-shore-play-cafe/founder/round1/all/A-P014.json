@@ -1,0 +1,20 @@
+{
+  "id": "P014",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "We do library storytime, parks and church groups, and I almost never pay for kid activities. I'd take the free first visit maybe, but $15 a visit when I'll just be chasing my kid anyway isn't something I'd keep paying for.",
+  "objection": "I'll still be chasing my kid, so I won't really get to sit and drink coffee, and I can get the same play for free at the library or park.",
+  "would_change_my_mind": "A free or very cheap parent-and-kid session, like a pay-what-you-can morning, or a long-term price under $8 a visit.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 12,
+  "price_too_expensive": 18,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 6,
+  "party_next_birthday": "no",
+  "party_max_price": 200,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

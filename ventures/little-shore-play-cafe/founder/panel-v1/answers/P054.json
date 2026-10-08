@@ -1,0 +1,13 @@
+{
+  "id": "P054",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "$59 a month is a lot for a place I'd only get to a few times, and with gas for the drive it adds up. My moms group already meets twice a month at church for free, so I'd rather do that and playdates at the park or someone's house.",
+  "objection": "It's a drive for us and gas adds up, so a monthly membership would not pay for itself. I'd be paying for visits I probably wouldn't make.",
+  "would_change_my_mind": "A free or cheap group visit for my moms group, or a drop-in price low enough that one trip a month makes sense, or if it turns out to be close to us.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 55,
+  "price_too_expensive": 75
+}

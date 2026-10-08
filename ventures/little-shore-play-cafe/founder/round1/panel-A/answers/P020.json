@@ -1,0 +1,20 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd use the free first visit, but $15 plus $7 for my second kid is $22 a trip before gas, and we're on $42k. That's a lot when the library and the park are free.",
+  "objection": "It's a drive for us and gas adds up, and then $22 a visit on top. I can't do that more than once in a blue moon.",
+  "would_change_my_mind": "A drop-in around $8 to $10 for the first kid, or a cheap pack where it works out to under $8 a visit, and it being close enough that gas isn't a factor.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 11,
+  "price_too_expensive": 15,
+  "cafe_spend_per_visit": 0,
+  "would_take_class": false,
+  "class_max_price": 6,
+  "party_next_birthday": "no",
+  "party_max_price": 150,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
+}

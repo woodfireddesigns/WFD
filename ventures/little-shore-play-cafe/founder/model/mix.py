@@ -35,6 +35,8 @@ def build(s):
         "Parties": m["parties_per_month"] * m["avg_party_price"],
         "Programs and events": m["programs_revenue"],
     }
+    for e in m.get("extra_revenue", []):
+        rev[e["label"]] = e["monthly"]
     total = sum(rev.values())
     c = s["cost_rates"]
     var = {
@@ -45,6 +47,8 @@ def build(s):
         "Card processing": total * c["card_fee_pct"],
         "Per-visit supplies (sanitizer, wipes, toy wear)": visits * c["supplies_per_visit"],
     }
+    for e in m.get("extra_revenue", []):
+        var["Direct costs: " + e["label"]] = e["monthly"] * e["cost_pct"]
     price = total / visits
     variable = [{"label": k, "cost": round(v / visits, 2)} for k, v in var.items() if v]
     out = {

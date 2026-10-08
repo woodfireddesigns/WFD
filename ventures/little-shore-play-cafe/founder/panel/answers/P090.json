@@ -1,13 +1,20 @@
 {
   "id": "P090",
   "buys": true,
-  "purchases_first_month": 1,
-  "reason_code": "need",
-  "reason": "The coffee, Wi-Fi and a toddler playing a few feet away fits my work-from-home days, and $12 drop-in is easy to try. I'd come on a rainy day, not sign up for a membership.",
-  "objection": "We'd go once or twice a month, so $49-59 a month for a membership doesn't pay off. I also don't know if it's actually quiet enough to get work done.",
-  "would_change_my_mind": "A cheaper punch card or 4-visit pass would make me commit more. A membership under about $30 would flip me to joining.",
-  "price_too_cheap": 4,
-  "price_cheap": 8,
+  "purchases_first_month": 2,
+  "reason_code": "habit",
+  "reason": "The free first visit makes it easy to try, and a calm place where I can sit with a coffee and get a little done while my toddler plays is something I'd actually use. I'd go maybe twice a month, so I'd pay per visit and skip the membership.",
+  "objection": "We'd only go once or twice a month, which isn't enough to justify a membership. I'd also want to see that it really is calm and clean once it's open, not just promised.",
+  "would_change_my_mind": "If the per-visit price crept above about $16, or if it turned out too loud or crowded to sit with a laptop for a bit, I'd skip it.",
+  "price_too_cheap": 6,
+  "price_cheap": 10,
   "price_expensive": 15,
-  "price_too_expensive": 22
+  "price_too_expensive": 20,
+  "cafe_spend_per_visit": 4,
+  "would_take_class": false,
+  "class_max_price": 8,
+  "party_next_birthday": "no",
+  "party_max_price": 0,
+  "monday_group_rental": false,
+  "preferred_time": "weekday morning"
 }

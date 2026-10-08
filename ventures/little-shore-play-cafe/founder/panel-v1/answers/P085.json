@@ -1,0 +1,13 @@
+{
+  "id": "P085",
+  "buys": true,
+  "purchases_first_month": 2,
+  "reason_code": "convenience",
+  "reason": "A place where my toddler can play a few feet away while I get an hour of laptop work done with coffee and Wi-Fi is something I'd actually use, so I'd try it as a drop-in. I wouldn't sign up for the $59 membership until I know it works for me.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? $59 a month is a lot if I only go two or three times, and I don't know yet if I can really focus on work with a toddler running around.",
+  "would_change_my_mind": "A cheaper or flexible plan, like a 10-visit pass or a membership that's easy to pause. Seeing it in person and knowing the Wi-Fi and seating suit working would also help.",
+  "price_too_cheap": 20,
+  "price_cheap": 35,
+  "price_expensive": 59,
+  "price_too_expensive": 85
+}

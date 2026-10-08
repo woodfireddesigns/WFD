@@ -22,7 +22,7 @@
 
 **Three ways to improve the margin (each run through the tool):**
 
-1. **Drop-in $14 → $15, pack $55 → $60:** Year 1 -$4,012 → **+$5,489**, break-even 30 → 28. The re-test ceiling is about $16.
+1. **Drop-in $14 → $15, pack $55 → $60:** Year 1 -$4,012 → **+$3,408**, break-even 30 → 29. The re-test ceiling is about $16.
 2. **Parties 6 → 10 a month:** Year 1 → **+$4,494**. Highest-margin line; pre-sell them.
 3. **Staff 84 → 76 hired hours** (third person only Saturday peak): Year 1 → **+$2,948**, break-even 28.
 
@@ -32,10 +32,10 @@
 
 | steady paying family visits a day | break-even a day | Year 1 | steady month after loan and owner pay |
 | ---: | ---: | ---: | ---: |
-| 38 | 37 | -$45,208 | $690 |
-| 42 | 37 | -$27,664 | $2,606 |
-| 45 | 37 | -$14,421 | $4,052 |
-| 48 | 37 | -$1,106 | $5,506 |
+| 38 | 37 | -$47,379 | $453 |
+| 42 | 37 | -$30,164 | $2,333 |
+| 45 | 37 | -$17,314 | $3,736 |
+| 48 | 37 | -$4,306 | $5,157 |
 
 **So the go/no-go number for the pop-ups is about 45 paying family visits a day of proven demand**, about 70% of the 65-a-day capacity. Anything that shows the demand sits near 38 a day means the business, as designed, cannot carry debt plus a salary.
 

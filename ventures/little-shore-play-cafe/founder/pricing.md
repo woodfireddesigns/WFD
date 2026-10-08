@@ -24,7 +24,7 @@ From `competitors.md` (search excerpts, re-check live pages before relying on th
 
 ## What the business needs
 
-From the CFO tool at the recommended offer (with the ops cost corrections): each family visit brings $20.82 and leaves $17.05 after its own costs. Break-even is 30 paying family visits a day. A $1 drop-in increase (to $15, pack to $60) moves Year 1 from a $4,012 loss to a $5,489 profit and break-even to 28 a day. Price alone does not fix this business; volume does.
+From the CFO tool at the recommended offer (with the ops cost corrections): each family visit brings $20.82 and leaves $17.05 after its own costs. Break-even is 30 paying family visits a day. A $1 drop-in increase (to $15, pack to $60) moves Year 1 from a $4,012 loss to a $3,408 profit and break-even to 29 a day. Price alone does not fix this business; volume does.
 
 ## The decision
 

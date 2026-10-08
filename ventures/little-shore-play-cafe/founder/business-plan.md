@@ -340,7 +340,7 @@ From `competitors.md` (search excerpts, re-check live pages before relying on th
 
 ### What the business needs
 
-From the CFO tool at the recommended offer (with the ops cost corrections): each family visit brings $20.82 and leaves $17.05 after its own costs. Break-even is 30 paying family visits a day. A $1 drop-in increase (to $15, pack to $60) moves Year 1 from a $4,012 loss to a $5,489 profit and break-even to 28 a day. Price alone does not fix this business; volume does.
+From the CFO tool at the recommended offer (with the ops cost corrections): each family visit brings $20.82 and leaves $17.05 after its own costs. Break-even is 30 paying family visits a day. A $1 drop-in increase (to $15, pack to $60) moves Year 1 from a $4,012 loss to a $3,408 profit and break-even to 29 a day. Price alone does not fix this business; volume does.
 
 ### The decision
 
@@ -472,6 +472,23 @@ Value to buyer 1 to 5; cost to deliver 1 to 5 (5 = expensive), checked against `
 
 Caveat: 20 buyers is thin and the cards differ from the first panel. Treat the direction as real and the size as unproven.
 
+### 6. Re-test v3: per-child unlimited + monthly drink + weekday tier (Oct 8, 2026)
+
+`pitch-v3.md`, the **same 20 buyer cards** as the v2 re-test (seed 2026), so this is like for like.
+
+Changes tested: membership stated as per child ($45 first child, +$20 per sibling, parents always free), one free latte or refresher a month for members, a free latte or refresher on the 4th drop-in/pack visit in a month, and Weekday Unlimited (Tue to Fri) at $29 a month per child.
+
+| | v2 | v3 |
+| --- | ---: | ---: |
+| Buy rate | 9 of 20 (45%) | 7 of 20 (35%) |
+| Took a membership in month 1 | 0 | 0 |
+| Buyers who mentioned the drink perk | n/a | 0 |
+| Buyers who wanted the $29 weekday tier | n/a | 0 (one asked for a weekday pass under ~$35 *for two kids*) |
+
+- **Flipped to no:** P002, P004, P018, all budget-stretched or tight-money households. Their reasons centered on "$14 a kid plus the sibling adds up". Spelling out per-child pricing made the sibling cost more visible.
+- **Flipped to yes:** P015, but only for the free first visit.
+- **Read:** the perks did not register, and per-child framing cost a little with multi-kid families. With 20 buyers, 9 vs 7 is within noise. **Keep v2 as the recommended offer.** The monthly drink stays as a cheap retention perk for members (about $1.65 each), not a selling point. Keep the sibling add-on at $15 in the headline; test $20 quietly with real members later.
+
 ## The numbers
 
 ### The CFO's note
@@ -496,7 +513,7 @@ Caveat: 20 buyers is thin and the cards differ from the first panel. Treat the d
 
 **Three ways to improve the margin (each run through the tool):**
 
-1. **Drop-in $14 → $15, pack $55 → $60:** Year 1 -$4,012 → **+$5,489**, break-even 30 → 28. The re-test ceiling is about $16.
+1. **Drop-in $14 → $15, pack $55 → $60:** Year 1 -$4,012 → **+$3,408**, break-even 30 → 29. The re-test ceiling is about $16.
 2. **Parties 6 → 10 a month:** Year 1 → **+$4,494**. Highest-margin line; pre-sell them.
 3. **Staff 84 → 76 hired hours** (third person only Saturday peak): Year 1 → **+$2,948**, break-even 28.
 
@@ -506,10 +523,10 @@ Caveat: 20 buyers is thin and the cards differ from the first panel. Treat the d
 
 | steady paying family visits a day | break-even a day | Year 1 | steady month after loan and owner pay |
 | ---: | ---: | ---: | ---: |
-| 38 | 37 | -$45,208 | $690 |
-| 42 | 37 | -$27,664 | $2,606 |
-| 45 | 37 | -$14,421 | $4,052 |
-| 48 | 37 | -$1,106 | $5,506 |
+| 38 | 37 | -$47,379 | $453 |
+| 42 | 37 | -$30,164 | $2,333 |
+| 45 | 37 | -$17,314 | $3,736 |
+| 48 | 37 | -$4,306 | $5,157 |
 
 **So the go/no-go number for the pop-ups is about 45 paying family visits a day of proven demand**, about 70% of the 65-a-day capacity. Anything that shows the demand sits near 38 a day means the business, as designed, cannot carry debt plus a salary.
 

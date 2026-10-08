@@ -1,0 +1,13 @@
+{
+  "id": "P018",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "Daycare costs jumped and money is tight, so I'm not adding a $45 a month membership or $14 a visit for something that isn't even open yet. I'd take the free first visit when it opens, but that's not a purchase, and for a party I'd still compare it with CoCo's.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? $14 a kid adds up fast, and a membership is a bill I'd feel every month.",
+  "would_change_my_mind": "A party package clearly cheaper or easier than CoCo's, or a drop-in price under about $10 per child with the free first visit proving it's actually calmer and cleaner.",
+  "price_too_cheap": 6,
+  "price_cheap": 9,
+  "price_expensive": 14,
+  "price_too_expensive": 20
+}

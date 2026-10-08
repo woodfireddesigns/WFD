@@ -1,0 +1,13 @@
+{
+  "id": "P004",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd go for the free first visit, but paying $14 a kid plus $7 for the sibling is a lot when we're stretched and I can take them to CoCo's or the library for way less. Our shifts change week to week so a $45+ membership would just sit there.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? I can't see why it's worth double for my budget.",
+  "would_change_my_mind": "If the Group Mornings at $8 a kid really worked for my moms group and a few other families committed to coming, I'd organize one and pay for that.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 11,
+  "price_too_expensive": 16
+}

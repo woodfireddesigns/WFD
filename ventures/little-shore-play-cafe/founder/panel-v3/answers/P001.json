@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd take the free visit to look, but $14 a visit adds up fast on our budget when the library and the park are free. I'm not paying for a membership on a place I haven't seen.",
+  "objection": "Will bigger kids be running wild around my baby? A Baby Nook for under-2s sounds nice, but 25 kids up to age 5 in one room is still a lot, and I'd be paying $14 a visit to find out.",
+  "would_change_my_mind": "A free visit that shows the Baby Nook really keeps the bigger kids out and the room stays calm, plus a cheaper weekday-morning drop-in around $8 to $10 that fits around our shifts.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 12,
+  "price_too_expensive": 18
+}

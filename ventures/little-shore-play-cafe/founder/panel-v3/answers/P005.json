@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "The cleaning log and shoes-off rule are exactly what I look for, and I'd probably use the free first visit. But with daycare costs up, $14 a child plus gas for the drive is hard to justify when the park and library are free.",
+  "objection": "It's a drive for us, and $14 per kid plus gas adds up fast. It also isn't open yet, so I can't read any reviews or see how clean it really is.",
+  "would_change_my_mind": "Opening close to me with real reviews from other parents, plus a drop-in price around $8-10 a child, or a pack bringing each visit under $9.",
+  "price_too_cheap": 4,
+  "price_cheap": 8,
+  "price_expensive": 12,
+  "price_too_expensive": 16
+}

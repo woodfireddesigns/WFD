@@ -1,0 +1,13 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "I'd probably use the free first visit if it's close, but $14 for the 4-year-old plus $7 for the baby is $21 a trip, and with gas on top that's a lot on one income. Free parks and the library already fill most of my weekdays.",
+  "objection": "It's a drive for us and gas adds up, and $21 a visit for two kids is hard to justify when I'm watching every dollar. A membership at $45 plus $20 for the second is $65 a month, and that's too much to commit to.",
+  "would_change_my_mind": "A cheaper sibling or under-2 price, or a weekday pass for the two of us under about $35 a month, and being close enough that the drive isn't a big gas cost.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 12,
+  "price_too_expensive": 18
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P015",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "price",
+  "reason": "The free first visit costs me nothing, so I'd take both kids once and see. I wouldn't pay $45 plus $20 for the sibling when storytime and the parks are free, but a 5-visit pack at $55 might come later if the baby nook is good on a rainy day.",
+  "objection": "$65 a month for two kids is a lot when library storytime and the parks are free. I'd rather use coupons and trial days than commit to a membership.",
+  "would_change_my_mind": "A Groupon or a pack price near $40 for 5 visits, or a family flat rate that covers both my kids for about $35 a month.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 14,
+  "price_too_expensive": 20
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P006",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "Money is tight since daycare went up, and we do library storytime and parks for free. We'd maybe go once or twice a month, so a membership doesn't pay off and $14 a kid adds up fast.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, and I can get the kids out for free at the library and parks.",
+  "would_change_my_mind": "A much lower drop-in, like $6-7 a kid, or a free-entry day each month. I'd also need to hear a few other moms say it was worth it.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 12,
+  "price_too_expensive": 16
+}

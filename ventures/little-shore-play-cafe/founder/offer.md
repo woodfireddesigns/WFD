@@ -91,3 +91,20 @@ Value to buyer 1 to 5; cost to deliver 1 to 5 (5 = expensive), checked against `
 **What did not move:** nobody takes the membership before visiting, and free-activity loyalists and deal hunters still pass. The remaining objection is price per visit against free options; $14 sits right at many buyers' "getting expensive" line. The membership is a retention product for families who already come weekly, not an acquisition product. The CFO model is built that way: 25 member families at steady state, the rest drop-ins and packs.
 
 Caveat: 20 buyers is thin and the cards differ from the first panel. Treat the direction as real and the size as unproven.
+
+## 6. Re-test v3: per-child unlimited + monthly drink + weekday tier (Oct 8, 2026)
+
+`pitch-v3.md`, the **same 20 buyer cards** as the v2 re-test (seed 2026), so this is like for like.
+
+Changes tested: membership stated as per child ($45 first child, +$20 per sibling, parents always free), one free latte or refresher a month for members, a free latte or refresher on the 4th drop-in/pack visit in a month, and Weekday Unlimited (Tue to Fri) at $29 a month per child.
+
+| | v2 | v3 |
+| --- | ---: | ---: |
+| Buy rate | 9 of 20 (45%) | 7 of 20 (35%) |
+| Took a membership in month 1 | 0 | 0 |
+| Buyers who mentioned the drink perk | n/a | 0 |
+| Buyers who wanted the $29 weekday tier | n/a | 0 (one asked for a weekday pass under ~$35 *for two kids*) |
+
+- **Flipped to no:** P002, P004, P018, all budget-stretched or tight-money households. Their reasons centered on "$14 a kid plus the sibling adds up". Spelling out per-child pricing made the sibling cost more visible.
+- **Flipped to yes:** P015, but only for the free first visit.
+- **Read:** the perks did not register, and per-child framing cost a little with multi-kid families. With 20 buyers, 9 vs 7 is within noise. **Keep v2 as the recommended offer.** The monthly drink stays as a cheap retention perk for members (about $1.65 each), not a selling point. Keep the sibling add-on at $15 in the headline; test $20 quietly with real members later.

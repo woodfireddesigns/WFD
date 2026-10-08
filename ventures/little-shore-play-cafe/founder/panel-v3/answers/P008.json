@@ -1,0 +1,13 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "The zoo is free and that's where we go on Saturdays, so paying $14 a kid every weekend is hard to justify. I'd maybe use the free first visit, but I wouldn't count on paying after that.",
+  "objection": "Saturdays are going to be packed with bigger kids, and I don't trust a cap of 25 to keep them from running into my baby, even with a gated nook.",
+  "would_change_my_mind": "A quiet, separate under-2 time slot on Saturdays or a way to book a spot with a small capped group, so I know the baby won't get run over.",
+  "price_too_cheap": 5,
+  "price_cheap": 8,
+  "price_expensive": 13,
+  "price_too_expensive": 20
+}

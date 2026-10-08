@@ -1,0 +1,13 @@
+{
+  "id": "P013",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I work full time, so it's Saturdays only, and I already do free library storytime on Tuesdays. I'd grab the free first visit, but I wouldn't commit money before seeing it, and I'll be chasing my kid anyway so the coffee isn't much of a draw.",
+  "objection": "I only get weekends, so a membership would get maybe 3-4 visits a month at best, and I'd still be up chasing my toddler instead of sitting with a coffee. Free library storytime and the park cover most of what we need.",
+  "would_change_my_mind": "A great free first visit on a Saturday where my kid actually wants to go back, plus a drop-in or pack price that works for weekend-only use.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22
+}

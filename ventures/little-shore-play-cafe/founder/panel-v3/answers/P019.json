@@ -1,0 +1,13 @@
+{
+  "id": "P019",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I do free stuff: library storytime, parks, church group. I'd take the free first visit out of curiosity, but I wouldn't pay $14 a kid on a normal week when the library costs nothing.",
+  "objection": "Isn't this just CoCo's Funhouse with nicer decor? $14 a child plus a sibling at $7 adds up fast when I already have free options, and I'd only pay for a rainy-week emergency.",
+  "would_change_my_mind": "A much lower drop-in price (around $8 for the first child) or a free or cheap open-play hour, so it's not a $20+ outing for two kids.",
+  "price_too_cheap": 4,
+  "price_cheap": 7,
+  "price_expensive": 11,
+  "price_too_expensive": 15
+}

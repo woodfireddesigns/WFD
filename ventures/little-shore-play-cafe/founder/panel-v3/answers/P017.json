@@ -1,0 +1,13 @@
+{
+  "id": "P017",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I'd take the free first visit for sure, but we'd only go once or twice a month, so a membership makes no sense and $14 a kid plus a sibling adds up fast. I'd wait for a Groupon or a pack deal before paying anything.",
+  "objection": "We'd go once or twice a month, not enough to justify a membership, and the drop-in price per visit is steep with two kids when the free play places and the library cost nothing.",
+  "would_change_my_mind": "A cheaper pack or a Groupon-style deal, say 5 visits for about $40 that doesn't expire quickly, after a free visit my kids actually love.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 15,
+  "price_too_expensive": 22
+}

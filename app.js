@@ -59,6 +59,7 @@ function defaultState() {
       unit: 'lb', bodyweight: 185, experience: 'intermediate', goal: 'hypertrophy', split: 'auto',
       duration: 60, core: true, warmups: true, sound: true, wake: true,
       gym: 'gym', incBar: 5, incDb: 5, incMachine: 5,
+      health: false, healthWeight: true, healthShortcut: 'Kiln to Health',
     },
     gyms: [
       { id: 'gym', name: 'Commercial Gym', equip: [...ALL_EQUIP] },
@@ -66,6 +67,7 @@ function defaultState() {
     ],
     fav: {}, ban: {}, custom: [],
     workouts: [], plan: null, body: [], seed: 1,
+    deload: null,
   };
 }
 function mergeState(data) {
@@ -140,7 +142,7 @@ function hist() {
     const ws = [...S.workouts].sort((a, b) => a.start - b.start);
     for (const w of ws) for (const x of w.exercises) {
       const sets = x.sets.filter(s => s.done && !s.wu);
-      if (sets.length) (HIST[x.exId] ||= []).push({ date: w.start, wid: w.id, sets });
+      if (sets.length) (HIST[x.exId] ||= []).push({ date: w.start, wid: w.id, sets, effort: x.effort || 0, deload: !!w.deload });
     }
     histVersion = dataVersion;
   }
@@ -221,29 +223,54 @@ function roundW(lb, e) {
   if (isBarbell(e) && out < barLb()) out = barLb();
   return out;
 }
+// Progression jump in display units. Compound barbell-style lifts move ~2.5% (rounded to real
+// increments), everything else moves one increment. An "easy" rating doubles the jump.
+function jumpFor(e, lb, effort) {
+  const step = incFor(e);
+  let j = step;
+  if (e.compound && e.kind === 'w') j = Math.max(step, Math.round((toDisp(lb) * 0.025) / step) * step);
+  return effort === 1 ? j * 2 : j;
+}
+const EFFORT = { 1: 'Easy', 2: 'Solid', 3: 'Grind' };
+const BW_GRADUATE = 12; // bodyweight reps at which pull-ups/dips graduate to added weight
+const canAddLoad = e => e.kind === 'bw' && e.compound && (e.equip || []).some(k => k === 'pullup' || k === 'dip');
 function recommend(e, sc) {
-  const H = hist()[e.id] || [];
+  // deload sessions are deliberately light, so they never set the bar for the next session
+  const H = (hist()[e.id] || []).filter(h => !h.deload);
   const last = H[H.length - 1], prev = H[H.length - 2];
-  const inc = incFor(e);
   const mid = Math.round((sc.lo + sc.hi) / 2) || 8;
   const out = { w: null, r: mid, s: null, note: '', up: false };
   const expMult = { beginner: 0.7, intermediate: 1, advanced: 1.3 }[S.settings.experience] || 1;
+  const eff = last?.effort || 2;
+  const felt = last?.effort ? ` (${EFFORT[last.effort].toLowerCase()})` : '';
 
   if (e.kind === 'w') {
     if (last) {
       const top = Math.max(...last.sets.map(s => s.w || 0));
       const topSets = last.sets.filter(s => (s.w || 0) === top);
       const minR = Math.min(...topSets.map(s => s.r || 0));
+      const add = j => roundW(fromDisp(toDisp(top) + j), e);
       if (top > 0 && minR >= sc.lo - 2 && minR <= sc.hi + 4) {
-        if (minR >= sc.hi) {
-          out.w = roundW(fromDisp(toDisp(top) + inc), e); out.r = sc.lo; out.up = true;
-          out.note = `+${inc} ${U()}. You hit ${minR} reps at ${fmtW(top)} last time`;
+        if (minR >= sc.hi && eff === 3) {
+          out.w = top; out.r = sc.hi;
+          out.note = `Hold ${fmtW(top)}. You hit ${minR}s but it was a grind. Make it solid, then add weight`;
+        } else if (minR >= sc.hi) {
+          const j = jumpFor(e, top, eff);
+          out.w = add(j); out.r = sc.lo; out.up = true;
+          out.note = `+${j} ${U()}. You hit ${minR} reps at ${fmtW(top)}${felt}`;
         } else if (minR < sc.lo && prev && stalled(prev, top, sc.lo)) {
           out.w = roundW(top * 0.9, e); out.r = sc.lo + 1;
           out.note = 'Reset 10%. Missed the rep floor two sessions in a row';
+        } else if (eff === 1 && minR >= mid) {
+          const j = jumpFor(e, top, 2);
+          out.w = add(j); out.r = clamp(minR - 2, sc.lo, sc.hi); out.up = true;
+          out.note = `+${j} ${U()}. ${fmtW(top)}×${minR} felt easy`;
+        } else if (eff === 3) {
+          out.w = top; out.r = clamp(minR, sc.lo, sc.hi);
+          out.note = `Repeat ${fmtW(top)}×${minR} and make it smoother`;
         } else {
-          out.w = top; out.r = clamp(minR + 1, sc.lo, sc.hi);
-          out.note = `Beat last time: ${fmtW(top)}×${minR}`;
+          out.w = top; out.r = clamp(minR + (eff === 1 ? 2 : 1), sc.lo, sc.hi);
+          out.note = `Beat last time: ${fmtW(top)}×${minR}${felt}`;
         }
       } else {
         const best = Math.max(...H.slice(-3).map(h => sessionBest(e, h.sets)));
@@ -258,15 +285,28 @@ function recommend(e, sc) {
     if (last) {
       const reps = last.sets.map(s => s.r || 0);
       const minR = Math.min(...reps), maxR = Math.max(...reps);
-      const add = Math.max(...last.sets.map(s => s.w || 0));
-      out.w = add || null;
-      out.r = minR >= maxR ? maxR + 1 : minR + 1;
-      out.note = `Last: ${last.sets.map(s => fmtSet(e, s)).join(', ')}`;
+      const added = Math.max(...last.sets.map(s => s.w || 0));
+      const step = +S.settings.incDb || 5;
+      if (added > 0) {
+        // weighted calisthenics: double progression on the added load
+        if (minR >= sc.hi && eff !== 3) {
+          out.w = fromDisp(toDisp(added) + step); out.r = sc.lo; out.up = true;
+          out.note = `+${step} ${U()}. You hit ${minR} reps with +${fmtW(added)}`;
+        } else if (eff === 3) { out.w = added; out.r = clamp(minR, sc.lo, sc.hi); out.note = `Repeat +${fmtW(added)}×${minR} and make it smoother`; }
+        else { out.w = added; out.r = clamp(minR + 1, sc.lo, sc.hi); out.note = `Beat last time: +${fmtW(added)}×${minR}${felt}`; }
+      } else if (canAddLoad(e) && minR >= BW_GRADUATE && eff !== 3) {
+        out.w = fromDisp(step); out.r = sc.lo || 6; out.up = true;
+        out.note = `${minR}+ clean reps. Time to add weight: +${step} ${U()} on a belt or a dumbbell between the feet`;
+      } else {
+        out.r = eff === 3 ? minR : minR >= maxR ? maxR + (eff === 1 ? 2 : 1) : minR + (eff === 1 ? 2 : 1);
+        out.note = `Last: ${last.sets.map(s => fmtSet(e, s)).join(', ')}${felt}`;
+        if (canAddLoad(e)) out.note += `. Weighted at ${BW_GRADUATE}+`;
+      }
     } else { out.r = sc.lo || 8; out.note = 'First time. Log clean reps, stop 1–2 short of failure'; }
   } else if (e.kind === 't') {
     out.r = null;
-    out.s = last ? Math.max(...last.sets.map(s => s.s || 0)) + 5 : 30;
-    out.note = last ? 'Add 5 seconds on last time' : 'First time. Hold with good form';
+    out.s = last ? Math.max(...last.sets.map(s => s.s || 0)) + (eff === 3 ? 0 : eff === 1 ? 10 : 5) : 30;
+    out.note = last ? (eff === 3 ? 'Match last time' : 'Add time on last session') : 'First time. Hold with good form';
   } else if (e.kind === 'tw') {
     out.r = null;
     if (last) { out.w = Math.max(...last.sets.map(s => s.w || 0)) || null; out.s = Math.max(...last.sets.map(s => s.s || 0)) + 5; out.note = 'Add 5 seconds on last time'; }
@@ -274,6 +314,39 @@ function recommend(e, sc) {
   }
   return out;
 }
+
+/* ---------- deloads ---------- */
+// A deload week is recommended after 6 training weeks, or sooner when 3+ lifts have stalled.
+const DELOAD_WEEKS = 6, DELOAD_DAYS = 7;
+function deloadInfo() {
+  const now = Date.now();
+  if (!S.deload) { S.deload = { anchor: now, until: 0, snooze: 0 }; save(); }
+  const d = S.deload;
+  if (d.until && now < d.until) return { active: true, daysLeft: Math.ceil((d.until - now) / DAY) };
+  if (d.until && now >= d.until) { d.anchor = d.until; d.until = 0; save(); }
+  const weeks = new Set(S.workouts.filter(w => w.start >= d.anchor && !w.deload).map(w => startOfWeek(w.start))).size;
+  const stalls = stalledLifts();
+  const info = { weeks, stalls };
+  if (d.snooze && now < d.snooze) return info;
+  if (weeks >= DELOAD_WEEKS) info.due = `${weeks} training weeks since your last deload`;
+  else if (stalls.length >= 3) info.due = `${stalls.length} lifts have stalled: ${stalls.slice(0, 3).map(exName).join(', ')}`;
+  return info;
+}
+function stalledLifts() {
+  const out = [];
+  for (const [id, sess] of Object.entries(hist())) {
+    const e = EX[id]; if (!e || e.kind !== 'w') continue;
+    const H = sess.filter(h => !h.deload);
+    const last = H[H.length - 1], prev = H[H.length - 2];
+    if (!last || !prev || Date.now() - last.date > 21 * DAY) continue;
+    const sc = scheme(e);
+    const top = Math.max(...last.sets.map(s => s.w || 0));
+    if (top && stalled(last, top, sc.lo) && stalled(prev, top, sc.lo)) out.push(id);
+  }
+  return out;
+}
+const deloadActive = () => !!(S.deload?.until && Date.now() < S.deload.until);
+
 function stalled(sess, top, lo) {
   const t = Math.max(...sess.sets.map(s => s.w || 0));
   return t === top && Math.min(...sess.sets.filter(s => s.w === t).map(s => s.r || 0)) < lo;
@@ -298,7 +371,15 @@ function warmups(e, w) {
 function buildEntry(e, first) {
   const sc = scheme(e);
   const rec = recommend(e, sc);
-  const n = sc.sets + (first && S.settings.goal === 'hypertrophy' && e.compound ? 1 : 0);
+  let n = sc.sets + (first && S.settings.goal === 'hypertrophy' && e.compound ? 1 : 0);
+  if (deloadActive()) {
+    n = Math.max(2, Math.round(sc.sets / 2));
+    if (rec.w && e.kind === 'w') rec.w = roundW(rec.w * 0.9, e);
+    if (rec.r && e.kind !== 'w') rec.r = Math.max(1, Math.round(rec.r * 0.7));
+    else if (rec.r) rec.r = sc.lo || rec.r;
+    rec.up = false;
+    rec.note = 'Deload: 90% load, half the sets. Leave 3+ reps in the tank';
+  }
   const sets = [];
   if (first) for (const s of warmups(e, rec.w)) sets.push({ ...s, s: null, done: false });
   for (let i = 0; i < n; i++) sets.push({ w: rec.w, r: rec.r, s: rec.s, done: false });
@@ -364,7 +445,7 @@ function generate(focus) {
     if (abs.length) { let best = abs[0], bs = -1e9; for (const e of abs) { const s = score(e); if (s > bs) { bs = s; best = e; } } chosen.push(best); }
   }
   S.plan = {
-    id: uid(), focus, gym: activeGym().id, day: dayKey(), created: Date.now(), start: null,
+    id: uid(), focus, gym: activeGym().id, day: dayKey(), created: Date.now(), start: null, deload: deloadActive(),
     exercises: chosen.map((e, i) => buildEntry(e, i === 0)),
   };
   save();
@@ -388,7 +469,7 @@ function finishWorkout() {
   for (const x of p.exercises) {
     const sets = x.sets.filter(s => s.done).map(s => ({ w: s.w ?? null, r: s.r ?? null, s: s.s ?? null, wu: !!s.wu, done: true }));
     if (!sets.length) continue;
-    exercises.push({ exId: x.exId, sets, note: x.userNote || '' });
+    exercises.push({ exId: x.exId, sets, note: x.userNote || '', effort: x.effort || 0 });
     const e = EX[x.exId];
     const working = sets.filter(s => !s.wu);
     if (!e || !working.length) continue;
@@ -397,7 +478,7 @@ function finishWorkout() {
     if (prevBest > 0 && nowBest > prevBest + 0.01) prs.push({ exId: x.exId, value: nowBest, prev: prevBest });
   }
   if (!exercises.length) { toast('No completed sets to save'); return; }
-  const w = { id: p.id, focus: p.focus, name: FOCUS[p.focus] || 'Workout', start: p.start || Date.now(), end: Date.now(), exercises, prs };
+  const w = { id: p.id, focus: p.focus, name: (FOCUS[p.focus] || 'Workout') + (p.deload ? ' · Deload' : ''), start: p.start || Date.now(), end: Date.now(), exercises, prs, deload: !!p.deload };
   S.workouts.unshift(w);
   S.workouts.sort((a, b) => b.start - a.start);
   S.plan = null; S.seed++;
@@ -407,6 +488,7 @@ function finishWorkout() {
   saveNow();
   render();
   showSummary(w);
+  if (S.settings.health) sendWorkoutToHealth(w);
 }
 function discardWorkout() {
   if (!confirm('Discard this workout? Logged sets will be lost.')) return;
@@ -542,6 +624,8 @@ function viewWorkout() {
     <div class="meta-line">${doneSets} of ${totalSets} working sets</div>`}
   </header>
 
+  ${deloadBanner(started)}
+
   ${!started ? `
   <section class="target-strip">
     ${muscles.map(m => `<div class="tm"><div class="ring" style="--p:${rec.r[m]};--c:${recColor(rec.r[m])}"><span>${rec.r[m]}</span></div><label>${MUSCLES[m]}</label></div>`).join('')}
@@ -560,6 +644,12 @@ function viewWorkout() {
 
   ${!started ? `<div class="dock"><button class="btn primary big" data-a="start">${I.play} Start Workout</button></div>` : ''}
   `;
+}
+function deloadBanner(started) {
+  const d = deloadInfo();
+  if (d.active) return `<div class="banner calm"><div><b>Deload week</b><span>${d.daysLeft} day${d.daysLeft === 1 ? '' : 's'} left. Lighter on purpose so you come back stronger.</span></div>${started ? '' : '<button class="btn sm" data-a="deload-end">End early</button>'}</div>`;
+  if (d.due && !started) return `<div class="banner"><div><b>Deload week recommended</b><span>${esc(d.due)}. One lighter week: 90% load, half the sets.</span></div><div class="banner-actions"><button class="btn sm primary" data-a="deload-start">Start deload</button><button class="btn sm ghost" data-a="deload-snooze">Not now</button></div></div>`;
+  return '';
 }
 function exerciseCard(x, i, started) {
   const e = EX[x.exId] || { name: 'Unknown', primary: 'other', kind: 'w', equip: [] };
@@ -590,6 +680,8 @@ function exerciseCard(x, i, started) {
       <div class="set-h"><span>Set</span>${setHeaders(e)}<span></span></div>
       ${x.sets.map((s, j) => { if (!s.wu) k++; return setRow(e, s, i, j, s.wu ? 'W' : k); }).join('')}
     </div>
+    ${started && working.length && working.every(s => s.done) ? `
+    <div class="effort"><span>How did that feel?</span>${[1, 2, 3].map(v => `<button data-a="effort" data-i="${i}" data-v="${v}" class="${x.effort === v ? 'on e' + v : ''}">${EFFORT[v]}</button>`).join('')}</div>` : ''}
     <div class="ex-foot">
       <button data-a="add-set" data-i="${i}">${I.plus} Set</button>
       <button data-a="rm-set" data-i="${i}">${I.minus} Set</button>
@@ -718,6 +810,7 @@ function workoutDetail(id) {
     }).join('')}
     <div class="sheet-actions">
       <button class="btn" data-a="repeat-workout" data-v="${w.id}">${I.refresh} Repeat this workout</button>
+      <button class="btn" data-a="health-send" data-v="${w.id}">${w.healthSent ? 'Sent to Apple Health · send again' : 'Send to Apple Health'}</button>
       <button class="btn ghost danger" data-a="delete-workout" data-v="${w.id}">Delete</button>
     </div>`);
 }
@@ -734,7 +827,10 @@ function showSummary(w) {
         <div><b>${w.prs.length}</b><span>PRs</span></div>
       </div>
       ${w.prs.length ? `<div class="pr-list">${w.prs.map(p => { const e = EX[p.exId]; return `<div>${I.trophy}<span>${esc(e.name)}</span><b>${fmtMetric(e, p.value)}</b></div>`; }).join('')}</div>` : ''}
-      <button class="btn primary big" data-a="close-sheet">Done</button>
+      <div class="sheet-actions">
+        <button class="btn" data-a="health-send" data-v="${w.id}">${S.settings.health ? 'Send to Apple Health again' : 'Send to Apple Health'}</button>
+        <button class="btn primary big" data-a="close-sheet">Done</button>
+      </div>
     </div>`);
 }
 
@@ -927,6 +1023,8 @@ function viewSettings() {
     <div class="field"><label>Experience</label>${seg('experience', [['beginner', 'New'], ['intermediate', 'Intermediate'], ['advanced', 'Advanced']], st.experience)}</div>
     ${toggle('core', 'Add a core finisher', st.core)}
     ${toggle('warmups', 'Warm-up sets on first lift', st.warmups)}
+    <div class="toggle-row static"><span>Deload</span><small>${deloadActive() ? 'Active now' : `${deloadInfo().weeks || 0} of ${DELOAD_WEEKS} training weeks`}</small></div>
+    ${deloadActive() ? '<button class="btn block" data-a="deload-end">End deload week</button>' : '<button class="btn block" data-a="deload-start">Start a deload week now</button>'}
   </section>
 
   <h4 class="group-h">Gyms</h4>
@@ -953,6 +1051,14 @@ function viewSettings() {
   <section class="card pad form">
     ${toggle('sound', 'Rest timer chime', st.sound)}
     ${toggle('wake', 'Keep screen awake', st.wake)}
+  </section>
+
+  <h4 class="group-h">Apple Health</h4>
+  <section class="card pad form">
+    ${toggle('health', 'Send finished workouts to Health', st.health)}
+    ${toggle('healthWeight', 'Send logged bodyweight too', st.healthWeight)}
+    <div class="field"><label>Shortcut name</label><input class="txt" data-setting-str="healthShortcut" value="${esc(st.healthShortcut)}"></div>
+    <button class="btn block" data-a="health-guide">Set up the shortcut (2 min)</button>
   </section>
 
   <h4 class="group-h">Data</h4>
@@ -1211,6 +1317,47 @@ function exportCSV() {
   download(`kiln-workouts-${dayKey()}.csv`, lines.join('\n'), 'text/csv');
 }
 
+/* ---------- Apple Health (via the Shortcuts app) ---------- */
+// Web apps can't write to HealthKit, so Kiln hands a JSON payload to a user-built shortcut.
+function shortcutURL(payload) {
+  return `shortcuts://run-shortcut?name=${encodeURIComponent(S.settings.healthShortcut || 'Kiln to Health')}&input=text&text=${encodeURIComponent(JSON.stringify(payload))}`;
+}
+const pad2 = n => String(n).padStart(2, '0');
+function localStamp(t) { const d = new Date(t); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
+function workoutCalories(w) {
+  // MET estimate: ~5 for working sets with rest, ~3.5 for a deload session
+  const hrs = Math.max(0.1, (w.end - w.start) / 36e5);
+  return Math.round((w.deload ? 3.5 : 5) * ((S.settings.bodyweight || 180) / KG) * hrs);
+}
+function sendWorkoutToHealth(w) {
+  const minutes = Math.max(1, Math.round((w.end - w.start) / 6e4));
+  w.healthSent = true; saveNow();
+  location.href = shortcutURL({ type: 'workout', name: w.name, start: localStamp(w.start), end: localStamp(w.end), minutes, calories: workoutCalories(w) });
+}
+function sendWeightToHealth(lb) {
+  location.href = shortcutURL({ type: 'weight', lb: Math.round(lb * 10) / 10, kg: Math.round((lb / KG) * 10) / 10 });
+}
+function healthGuide() {
+  const name = esc(S.settings.healthShortcut || 'Kiln to Health');
+  openSheet(`
+    <div class="sheet-head"><div><div class="eyebrow">Apple Health</div><h2>Build the shortcut</h2></div></div>
+    <p class="fine">One-time setup in the Shortcuts app. Kiln sends each finished workout to it, and the shortcut logs it to Health.</p>
+    <ol class="steps">
+      <li>Open <b>Shortcuts</b>, tap <b>+</b>, and name it exactly <b>${name}</b>.</li>
+      <li>Add <b>Get Dictionary from Input</b> (input: Shortcut Input).</li>
+      <li>Add <b>Get Dictionary Value</b>: key <code>type</code>.</li>
+      <li>Add <b>If</b>: Dictionary Value <b>is</b> <code>workout</code>.</li>
+      <li>Inside the If, add <b>Get Dictionary Value</b> for <code>start</code>, then <b>Get Dates from Input</b>. Add two more Get Dictionary Value actions for <code>minutes</code> and <code>calories</code>.</li>
+      <li>Add <b>Log Workout</b>: type <b>Traditional Strength Training</b>, start date = Dates, duration = <code>minutes</code> minutes, energy = <code>calories</code> kcal.</li>
+      <li>In the <b>Otherwise</b> branch, add <b>Get Dictionary Value</b> <code>lb</code>, then <b>Log Health Sample</b>: Weight, value = Dictionary Value, unit lb.</li>
+      <li>Tap the shortcut's settings (ⓘ) and make sure it receives <b>Text</b>. Run it once from Kiln and allow Health access when asked.</li>
+    </ol>
+    <p class="fine">After it runs, tap ◀ Kiln in the top-left corner to come back. If nothing shows up in Health, check Health → Sharing → Apps → Shortcuts and turn on write access for Workouts and Weight.</p>
+    <div class="sheet-actions">
+      <button class="btn primary" data-a="health-test">Send a test workout</button>
+    </div>`);
+}
+
 /* ---------- toast ---------- */
 let toastT;
 function toast(msg) {
@@ -1229,7 +1376,12 @@ const A = {
     if (b.closest('#sheet')) closeSheet();
     save(); render();
   },
-  'toggle-setting'(b) { const k = b.dataset.k; S.settings[k] = !S.settings[k]; if (k === 'core' && S.plan && !S.plan.start) generate(); save(); render(); },
+  'toggle-setting'(b) {
+    const k = b.dataset.k; S.settings[k] = !S.settings[k];
+    if (k === 'core' && S.plan && !S.plan.start) generate();
+    save(); render();
+    if (k === 'health' && S.settings.health) healthGuide();
+  },
   'ob-next'() { OB.step++; render(); window.scrollTo(0, 0); },
   'ob-done'() { S.onboarded = true; generate(); render(); window.scrollTo(0, 0); },
   'ob-import'() { pickFile('csv'); },
@@ -1361,6 +1513,7 @@ const A = {
     const lb = fromDisp(v); const today = dayKey();
     S.body = S.body.filter(b => dayKey(b.t) !== today); S.body.push({ t: Date.now(), w: lb });
     S.body.sort((a, b) => a.t - b.t); S.settings.bodyweight = lb; save(); render(); toast('Logged');
+    if (S.settings.health && S.settings.healthWeight) sendWeightToHealth(lb);
   },
   'import-file'(b) { pickFile(b.dataset.v); },
   'export-json'() { saveNow(); download(`kiln-backup-${dayKey()}.json`, JSON.stringify(S), 'application/json'); },
@@ -1369,6 +1522,31 @@ const A = {
     if (!confirm('Erase all workouts, settings and custom exercises on this device?')) return;
     if (!confirm('Really erase everything? Export a backup first if unsure.')) return;
     localStorage.removeItem(STORE_KEY); location.reload();
+  },
+  effort(b) {
+    const x = S.plan.exercises[+b.dataset.i]; const v = +b.dataset.v;
+    x.effort = x.effort === v ? 0 : v; save(); render();
+  },
+  'deload-start'() {
+    if (!S.deload) deloadInfo();
+    S.deload.until = Date.now() + DELOAD_DAYS * DAY; S.deload.snooze = 0;
+    if (S.plan && !S.plan.start) generate(S.plan.focus);
+    save(); render(); toast('Deload week started');
+  },
+  'deload-snooze'() { S.deload.snooze = Date.now() + 7 * DAY; save(); render(); toast('Reminder snoozed for a week'); },
+  'deload-end'() {
+    S.deload.anchor = Date.now(); S.deload.until = 0;
+    if (S.plan && !S.plan.start) generate(S.plan.focus);
+    save(); render(); toast('Back to normal training');
+  },
+  'health-guide'() { healthGuide(); },
+  'health-send'(b) {
+    if (!S.settings.health) { S.settings.health = true; save(); render(); }
+    const w = S.workouts.find(x => x.id === b.dataset.v); if (w) sendWorkoutToHealth(w);
+  },
+  'health-test'() {
+    const end = Date.now();
+    sendWorkoutToHealth({ name: 'Kiln test', start: end - 10 * 6e4, end, deload: true });
   },
   't-add'(b) { timer.add(+b.dataset.v); },
   't-skip'() { timer.stop(); },
@@ -1417,6 +1595,7 @@ document.addEventListener('change', async ev => {
     }
     save(); render();
   }
+  if (t.dataset.settingStr) { S.settings[t.dataset.settingStr] = t.value.trim() || 'Kiln to Health'; save(); }
   if (t.dataset.setting) {
     const k = t.dataset.setting; const v = parseFloat(t.value);
     if (isNaN(v) || v <= 0) return;

@@ -330,3 +330,20 @@ select.txt { background-image: linear-gradient(45deg, transparent 50%, var(--mu)
 #toast.show { transform: translate(-50%, 0); }
 
 @media (min-width: 600px) { #app { padding-top: 28px; } }
+
+/* ---------- effort, banners, guide ---------- */
+.effort { display: flex; align-items: center; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.effort span { font-size: 12.5px; color: var(--mu); font-weight: 600; margin-right: auto; }
+.effort button { padding: 7px 12px; border-radius: 999px; background: var(--s2); border: 1px solid var(--line); font-size: 13px; font-weight: 650; color: var(--mu); }
+.effort button.on.e1 { background: rgba(61, 220, 151, .14); border-color: rgba(61, 220, 151, .5); color: var(--good); }
+.effort button.on.e2 { background: rgba(255, 91, 31, .12); border-color: rgba(255, 91, 31, .5); color: var(--accent2); }
+.effort button.on.e3 { background: rgba(255, 90, 95, .12); border-color: rgba(255, 90, 95, .5); color: var(--bad); }
+.banner { display: flex; flex-direction: column; gap: 12px; padding: 14px; margin: 0 0 14px; border-radius: var(--r); background: linear-gradient(135deg, rgba(255, 181, 71, .14), rgba(255, 181, 71, .03)); border: 1px solid rgba(255, 181, 71, .3); }
+.banner.calm { flex-direction: row; align-items: center; justify-content: space-between; background: linear-gradient(135deg, rgba(61, 220, 151, .12), rgba(61, 220, 151, .02)); border-color: rgba(61, 220, 151, .28); }
+.banner b { display: block; font-size: 15px; }
+.banner span { display: block; font-size: 13px; color: var(--mu); margin-top: 2px; }
+.banner-actions { display: flex; gap: 8px; }
+.toggle-row.static { cursor: default; }
+.toggle-row.static small { color: var(--mu); font-size: 13px; font-weight: 600; }
+.steps { margin: 6px 0 4px; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; line-height: 1.45; }
+.steps code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: var(--s3); padding: 1px 6px; border-radius: 6px; color: var(--accent2); }

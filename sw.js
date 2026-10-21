@@ -1,5 +1,5 @@
 // Stale-while-revalidate app shell: opens instantly offline, picks up new versions on next launch.
-const CACHE = 'kiln-v1';
+const CACHE = 'kiln-v2';
 const ASSETS = ['./', 'index.html', 'styles.css', 'exercises.js', 'app.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 

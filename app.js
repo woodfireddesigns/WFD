@@ -1060,14 +1060,13 @@ function viewSettings() {
   <h4 class="group-h">Apple Health</h4>
   <section class="card pad form">
     ${toggle('health', 'Send finished workouts to Health', st.health)}
-    ${toggle('healthWeight', 'Send logged bodyweight too', st.healthWeight)}
     <div class="field"><label>Shortcut name</label><input class="txt" data-setting-str="healthShortcut" value="${esc(st.healthShortcut)}"></div>
-    <button class="btn block" data-a="health-guide">Set up the workout shortcut (2 min)</button>
+    <button class="btn block" data-a="health-guide">Set up workouts → Health (2 actions)</button>
     <div class="field three" style="margin-top:16px">
       <div><label>Daily step goal</label><input class="txt" inputmode="numeric" data-setting="stepGoal" value="${st.stepGoal}"></div>
       <div style="grid-column: span 2"><label>Steps shortcut name</label><input class="txt" data-setting-str="stepsShortcut" value="${esc(st.stepsShortcut)}"></div>
     </div>
-    <button class="btn block" data-a="steps-guide">Set up the steps shortcut (2 min)</button>
+    <button class="btn block" data-a="steps-guide">Set up steps ← Health (3 actions)</button>
   </section>
 
   <h4 class="group-h">Data</h4>
@@ -1389,6 +1388,10 @@ function parseSteps(text) {
 }
 function importSteps(text) {
   const got = parseSteps(text);
+  if (!Object.keys(got).length) {
+    const m = String(text).match(/\d[\d,]*(\.\d+)?/);
+    if (m) got[isoDay(Date.now())] = Math.round(parseFloat(m[0].replace(/,/g, '')));
+  }
   const n = Object.keys(got).length;
   if (!n) { toast('No step data found in that text'); return false; }
   S.steps = { ...(S.steps || {}), ...got }; S.stepsSynced = Date.now(); S.stepsPending = 0;
@@ -1434,43 +1437,53 @@ document.addEventListener('visibilitychange', () => {
 
 /* ---------- Apple Health (via the Shortcuts app) ---------- */
 // Web apps can't write to HealthKit, so Kiln hands a JSON payload to a user-built shortcut.
-function shortcutURL(payload) {
-  return `shortcuts://run-shortcut?name=${encodeURIComponent(S.settings.healthShortcut || 'Kiln to Health')}&input=text&text=${encodeURIComponent(JSON.stringify(payload))}`;
+function runShortcut(name, text) {
+  location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(name)}` + (text != null ? `&input=text&text=${encodeURIComponent(text)}` : '');
 }
 const pad2 = n => String(n).padStart(2, '0');
-function localStamp(t) { const d = new Date(t); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`; }
-function workoutCalories(w) {
-  // MET estimate: ~5 for working sets with rest, ~3.5 for a deload session
-  const hrs = Math.max(0.1, (w.end - w.start) / 36e5);
-  return Math.round((w.deload ? 3.5 : 5) * ((S.settings.bodyweight || 180) / KG) * hrs);
-}
 function sendWorkoutToHealth(w) {
   const minutes = Math.max(1, Math.round((w.end - w.start) / 6e4));
   w.healthSent = true; saveNow();
-  location.href = shortcutURL({ type: 'workout', name: w.name, start: localStamp(w.start), end: localStamp(w.end), minutes, calories: workoutCalories(w) });
+  runShortcut(S.settings.healthShortcut || 'Kiln to Health', minutes);
 }
-function sendWeightToHealth(lb) {
-  location.href = shortcutURL({ type: 'weight', lb: Math.round(lb * 10) / 10, kg: Math.round((lb / KG) * 10) / 10 });
+function guideSteps(items) {
+  return `<ol class="guide">${items.map(([title, detail]) => `<li><b>${title}</b>${detail ? `<span>${detail}</span>` : ''}</li>`).join('')}</ol>`;
 }
+const pill = t => `<em class="pill">${t}</em>`;
 function healthGuide() {
   const name = esc(S.settings.healthShortcut || 'Kiln to Health');
   openSheet(`
-    <div class="sheet-head"><div><div class="eyebrow">Apple Health</div><h2>Build the shortcut</h2></div></div>
-    <p class="fine">One-time setup in the Shortcuts app. Kiln sends each finished workout to it, and the shortcut logs it to Health.</p>
-    <ol class="steps">
-      <li>Open <b>Shortcuts</b>, tap <b>+</b>, and name it exactly <b>${name}</b>.</li>
-      <li>Add <b>Get Dictionary from Input</b> (input: Shortcut Input).</li>
-      <li>Add <b>Get Dictionary Value</b>: key <code>type</code>.</li>
-      <li>Add <b>If</b>: Dictionary Value <b>is</b> <code>workout</code>.</li>
-      <li>Inside the If, add <b>Get Dictionary Value</b> for <code>start</code>, then <b>Get Dates from Input</b>. Add two more Get Dictionary Value actions for <code>minutes</code> and <code>calories</code>.</li>
-      <li>Add <b>Log Workout</b>: type <b>Traditional Strength Training</b>, start date = Dates, duration = <code>minutes</code> minutes, energy = <code>calories</code> kcal.</li>
-      <li>In the <b>Otherwise</b> branch, add <b>Get Dictionary Value</b> <code>lb</code>, then <b>Log Health Sample</b>: Weight, value = Dictionary Value, unit lb.</li>
-      <li>Tap the shortcut's settings (ⓘ) and make sure it receives <b>Text</b>. Run it once from Kiln and allow Health access when asked.</li>
-    </ol>
-    <p class="fine">After it runs, tap ◀ Kiln in the top-left corner to come back. If nothing shows up in Health, check Health → Sharing → Apps → Shortcuts and turn on write access for Workouts and Weight.</p>
+    <div class="sheet-head"><div><div class="eyebrow">Apple Health · 2 actions</div><h2>Send workouts to Health</h2></div></div>
+    <p class="fine">Kiln sends the workout length. The shortcut logs it as a strength workout in Health.</p>
+    ${guideSteps([
+      ['Open the Shortcuts app and tap +', ''],
+      [`Name it ${pill(name)}`, 'Tap the name at the top. Spelling must match exactly.'],
+      [`Search ${pill('Adjust Date')} and tap it`, `Tap the blue <b>Add</b> and change it to <b>Subtract</b>. Tap the blue <b>0</b>, choose <b>Shortcut Input</b>, and set the unit to <b>minutes</b>. Leave the date as <b>Current Date</b>.`],
+      [`Search ${pill('Log Workout')} and tap it`, `Type: <b>Traditional Strength Training</b>. Start Date: <b>Adjusted Date</b>. Duration: <b>Shortcut Input</b>, in minutes.`],
+      ['Tap Done', ''],
+    ])}
     <div class="sheet-actions">
-      <button class="btn primary" data-a="health-test">Send a test workout</button>
-    </div>`);
+      <button class="btn primary big" data-a="health-test">Test it (logs a 10 min workout)</button>
+    </div>
+    <p class="fine">The first run asks for Health access. Allow it. Then tap ◀ Kiln at the top-left corner to come back. You can delete the test workout in the Health app.</p>`);
+}
+function stepsGuide() {
+  const name = esc(S.settings.stepsShortcut || 'Kiln Steps');
+  openSheet(`
+    <div class="sheet-head"><div><div class="eyebrow">Apple Health · 3 actions</div><h2>Bring in your steps</h2></div></div>
+    <p class="fine">Copies today's step total from Health so Kiln can paste it.</p>
+    ${guideSteps([
+      ['Open the Shortcuts app and tap +', ''],
+      [`Name it ${pill(name)}`, 'Tap the name at the top. Spelling must match exactly.'],
+      [`Search ${pill('Find Health Samples')} and tap it`, `Tap <b>Type</b> and choose <b>Steps</b>. Tap <b>Add Filter</b> and set it to <b>Start Date is today</b>.`],
+      [`Search ${pill('Calculate Statistics')} and tap it`, 'Set it to <b>Sum</b>.'],
+      [`Search ${pill('Copy to Clipboard')} and tap it`, ''],
+      ['Tap Done', ''],
+    ])}
+    <div class="sheet-actions">
+      <button class="btn primary big" data-a="steps-sync">Test it now</button>
+    </div>
+    <p class="fine">Allow Health access to Steps the first time. Then tap ◀ Kiln at the top-left corner, and tap Paste steps.</p>`);
 }
 
 /* ---------- toast ---------- */
@@ -1628,7 +1641,6 @@ const A = {
     const lb = fromDisp(v); const today = dayKey();
     S.body = S.body.filter(b => dayKey(b.t) !== today); S.body.push({ t: Date.now(), w: lb });
     S.body.sort((a, b) => a.t - b.t); S.settings.bodyweight = lb; save(); render(); toast('Logged');
-    if (S.settings.health && S.settings.healthWeight) sendWeightToHealth(lb);
   },
   'import-file'(b) { pickFile(b.dataset.v); },
   'export-json'() { saveNow(); download(`kiln-backup-${dayKey()}.json`, JSON.stringify(S), 'application/json'); },
@@ -1658,7 +1670,7 @@ const A = {
   'steps-guide'() { stepsGuide(); },
   'steps-sync'() {
     S.stepsPending = Date.now(); saveNow();
-    location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(S.settings.stepsShortcut || 'Kiln Steps')}`;
+    runShortcut(S.settings.stepsShortcut || 'Kiln Steps');
   },
   async 'steps-paste'() {
     try { importSteps(await navigator.clipboard.readText()); }
@@ -1677,10 +1689,7 @@ const A = {
     if (!S.settings.health) { S.settings.health = true; save(); render(); }
     const w = S.workouts.find(x => x.id === b.dataset.v); if (w) sendWorkoutToHealth(w);
   },
-  'health-test'() {
-    const end = Date.now();
-    sendWorkoutToHealth({ name: 'Kiln test', start: end - 10 * 6e4, end, deload: true });
-  },
+  'health-test'() { runShortcut(S.settings.healthShortcut || 'Kiln to Health', 10); },
   't-add'(b) { timer.add(+b.dataset.v); },
   't-skip'() { timer.stop(); },
 };

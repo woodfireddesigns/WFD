@@ -364,3 +364,12 @@ select.txt { background-image: linear-gradient(45deg, transparent 50%, var(--mu)
 .sb.now i { background: linear-gradient(180deg, var(--accent2), var(--accent)); }
 .sb-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--mu2); margin-top: 6px; font-weight: 600; }
 .txt.area { height: 110px; padding: 12px 14px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; }
+
+/* ---------- setup guides ---------- */
+.guide { list-style: none; counter-reset: g; margin: 14px 0 6px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.guide li { counter-increment: g; position: relative; padding: 13px 14px 13px 52px; background: var(--s2); border: 1px solid var(--line); border-radius: 14px; }
+.guide li::before { content: counter(g); position: absolute; left: 14px; top: 12px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); font-weight: 800; font-size: 13px; }
+.guide b { display: block; font-size: 15.5px; line-height: 1.35; }
+.guide span { display: block; font-size: 13.5px; color: var(--mu); margin-top: 4px; line-height: 1.45; }
+.guide span b { display: inline; font-size: inherit; color: var(--tx); }
+.pill { font-style: normal; display: inline-block; background: rgba(255, 91, 31, .14); color: var(--accent2); border: 1px solid rgba(255, 91, 31, .35); padding: 1px 8px; border-radius: 7px; font-weight: 700; }

@@ -1066,7 +1066,7 @@ function viewSettings() {
       <div><label>Daily step goal</label><input class="txt" inputmode="numeric" data-setting="stepGoal" value="${st.stepGoal}"></div>
       <div style="grid-column: span 2"><label>Steps shortcut name</label><input class="txt" data-setting-str="stepsShortcut" value="${esc(st.stepsShortcut)}"></div>
     </div>
-    <button class="btn block" data-a="steps-guide">Set up steps ← Health (3 actions)</button>
+    <button class="btn block" data-a="steps-guide">Set up automatic steps sync</button>
   </section>
 
   <h4 class="group-h">Data</h4>
@@ -1338,8 +1338,8 @@ function stepsCard() {
   if (!Object.keys(st).length) {
     return `<section class="card pad">
       <div class="card-h"><h3>Steps</h3><span>Apple Health</span></div>
-      <p class="fine">Pull your daily steps from Apple Health so training and walking live in one place. One-time 2 minute setup.</p>
-      <div class="btn-row"><button class="btn sm primary" data-a="steps-sync">Sync steps</button><button class="btn sm" data-a="steps-guide">Set up</button></div>
+      <p class="fine">Your daily steps from Apple Health, synced automatically. One-time setup, about 3 minutes.</p>
+      <div class="btn-row"><button class="btn sm primary" data-a="steps-guide">Set up auto-sync</button><button class="btn sm" data-a="steps-manual">Enter manually</button></div>
     </section>`;
   }
   const today = days[29].v;
@@ -1364,75 +1364,66 @@ function stepsCard() {
       ${days.map((d, k) => `<div class="sb ${d.v >= goal ? 'hit' : ''} ${k === 29 ? 'now' : ''}" title="${d.k}: ${d.v}"><i style="height:${(d.v / max) * 100}%"></i></div>`).join('')}
     </div>
     <div class="sb-axis"><span>${fmtDate(days[0].t, { month: 'short', day: 'numeric' })}</span><span>Today</span></div>
-    <div class="btn-row"><button class="btn sm primary" data-a="steps-sync">Sync steps</button><button class="btn sm" data-a="steps-manual">Enter manually</button></div>
+    <div class="btn-row"><button class="btn sm" data-a="steps-sync">Sync now</button><button class="btn sm ghost" data-a="steps-guide">Setup</button></div>
   </section>`;
 }
-function parseSteps(text) {
-  const out = {};
-  for (const line of String(text).split(/\r?\n/)) {
-    let k = null, rest = line;
-    let m = line.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
-    if (m) k = `${m[1]}-${pad2(+m[2])}-${pad2(+m[3])}`;
-    else if ((m = line.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/))) {
-      const y = m[3].length === 2 ? 2000 + +m[3] : +m[3];
-      k = `${y}-${pad2(+m[1])}-${pad2(+m[2])}`;
-    }
-    if (!k) continue;
-    rest = line.replace(m[0], ' ');
-    const nums = rest.match(/\d[\d,]*(\.\d+)?/g);
-    if (!nums) continue;
-    const v = Math.round(parseFloat(nums[nums.length - 1].replace(/,/g, '')));
-    if (v >= 0 && v < 200000) out[k] = v;
+function syncKey() {
+  if (!S.syncKey) {
+    const a = new Uint8Array(18); crypto.getRandomValues(a);
+    S.syncKey = Array.from(a, b => b.toString(16).padStart(2, '0')).join(''); save();
   }
-  return out;
+  return S.syncKey;
 }
-function importSteps(text) {
-  const got = parseSteps(text);
-  if (!Object.keys(got).length) {
-    const m = String(text).match(/\d[\d,]*(\.\d+)?/);
-    if (m) got[isoDay(Date.now())] = Math.round(parseFloat(m[0].replace(/,/g, '')));
-  }
-  const n = Object.keys(got).length;
-  if (!n) { toast('No step data found in that text'); return false; }
-  S.steps = { ...(S.steps || {}), ...got }; S.stepsSynced = Date.now(); S.stepsPending = 0;
-  save(); closeSheet(); render(); toast(`Imported ${n} day${n === 1 ? '' : 's'} of steps`);
-  return true;
+function stepsWriteURL() {
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York';
+  return `${location.origin}/api/steps?k=${syncKey()}&tz=${encodeURIComponent(tz)}&n=`;
 }
-function stepsPasteSheet() {
-  openSheet(`
-    <div class="sheet-head"><div><div class="eyebrow">Steps</div><h2>Paste your steps</h2></div></div>
-    <p class="fine">The shortcut copied your steps. Tap Paste, then confirm the small Paste bubble iOS shows.</p>
-    <div class="sheet-actions">
-      <button class="btn primary big" data-a="steps-paste">Paste steps</button>
-    </div>
-    <p class="fine">Or long-press the box below, paste, and tap Import.</p>
-    <textarea class="txt area" id="steps-text" placeholder="2026-10-21,8412"></textarea>
-    <div class="sheet-actions"><button class="btn" data-a="steps-import-text">Import</button></div>`);
+let stepsFetchedAt = 0;
+async function fetchSteps(force) {
+  if (!S.syncKey || (!force && Date.now() - stepsFetchedAt < 30e3)) return;
+  stepsFetchedAt = Date.now();
+  try {
+    const r = await fetch(`/api/steps?k=${S.syncKey}`, { cache: 'no-store' });
+    if (!r.ok) return;
+    const data = await r.json();
+    if (!data.updated) return;
+    S.steps = { ...(S.steps || {}), ...data.days };
+    S.stepsSynced = data.updated; save();
+    if (V.tab === 'progress' || V.tab === 'workout') { const y = scrollY; render(); scrollTo(0, y); }
+  } catch (e) { /* offline: keep what we have */ }
 }
 function stepsGuide() {
   const name = esc(S.settings.stepsShortcut || 'Kiln Steps');
+  const url = esc(stepsWriteURL());
   openSheet(`
-    <div class="sheet-head"><div><div class="eyebrow">Apple Health</div><h2>Steps shortcut</h2></div></div>
-    <p class="fine">One-time setup. It reads 30 days of steps from Health (the same numbers Pedometer++ shows) and copies them for Kiln.</p>
-    <ol class="steps">
-      <li>Open <b>Shortcuts</b>, tap <b>+</b>, and name it exactly <b>${name}</b>.</li>
-      <li>Add <b>Find Health Samples</b>: type <b>Steps</b>, filter <b>Start Date is in the last 30 days</b>, <b>Group by Day</b>, sort by <b>Start Date</b>.</li>
-      <li>Add <b>Repeat with Each</b> (Health Samples).</li>
-      <li>Inside the repeat, add <b>Format Date</b>: date = Repeat Item → <b>Start Date</b>, format <b>Custom</b> <code>yyyy-MM-dd</code>.</li>
-      <li>Still inside, add <b>Text</b>: <code>Formatted Date,Value</code> (tap Repeat Item and choose <b>Value</b> for the second part).</li>
-      <li>After <b>End Repeat</b>, add <b>Combine Text</b>: Repeat Results, separator <b>New Lines</b>.</li>
-      <li>Add <b>Copy to Clipboard</b>.</li>
-      <li>Run it once from Kiln (Sync steps) and allow Health access to Steps.</li>
-    </ol>
-    <p class="fine">After it runs, tap ◀ Kiln in the top-left corner. Kiln asks you to paste.</p>
-    <div class="sheet-actions"><button class="btn primary" data-a="steps-sync">Run it now</button></div>`);
+    <div class="sheet-head"><div><div class="eyebrow">Apple Health · automatic</div><h2>Auto-sync your steps</h2></div></div>
+    <p class="fine">Part 1 builds the shortcut. Part 2 makes your iPhone run it on its own, so Kiln always has your steps.</p>
+    <h4 class="group-h">Part 1 · The shortcut</h4>
+    ${guideSteps([
+      ['Open the Shortcuts app and tap +', ''],
+      [`Name it ${pill(name)}`, 'Tap the name at the top. Spelling must match exactly.'],
+      [`Search ${pill('Find Health Samples')} and tap it`, `Tap <b>Type</b> and choose <b>Steps</b>. Tap <b>Add Filter</b> and set it to <b>Start Date is today</b>.`],
+      [`Search ${pill('Calculate Statistics')} and tap it`, 'Set it to <b>Sum</b>.'],
+      [`Search ${pill('Get Contents of URL')} and tap it`, `Tap the blue <b>URL</b>, paste your Kiln link (copy button below), then tap <b>Statistics</b> in the bar above the keyboard so it lands at the very end.`],
+      ['Tap Done', ''],
+    ])}
+    <div class="copy-box"><code id="sync-url">${url}</code><button class="btn sm primary" data-a="copy-sync-url">Copy link</button></div>
+    <p class="fine">This link is private to your phone. Don't share it.</p>
+    <div class="sheet-actions"><button class="btn big" data-a="steps-sync">Test the shortcut</button></div>
+    <h4 class="group-h">Part 2 · Make it automatic</h4>
+    ${guideSteps([
+      ['In Shortcuts, tap the Automation tab, then +', ''],
+      [`Choose ${pill('Time of Day')}`, 'Set <b>6:00 PM</b>, <b>Daily</b>. Choose <b>Run Immediately</b>, then tap <b>Next</b>.'],
+      [`Pick ${pill(name)}`, 'That one now runs every day by itself.'],
+      ['Repeat for 11:55 PM', 'This captures your final total for the day. Add more times (like noon) for fresher numbers.'],
+    ])}
+    <p class="fine">Allow Health access the first time it runs. Kiln loads your latest steps every time you open it.</p>`);
 }
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && S.stepsPending && Date.now() - S.stepsPending < 15 * 6e4) {
-    S.stepsPending = 0; save();
-    if (V.tab !== 'progress') { V.tab = 'progress'; render(); }
-    stepsPasteSheet();
-  }
+  if (document.hidden) return;
+  const justSynced = S.stepsPending && Date.now() - S.stepsPending < 15 * 6e4;
+  if (justSynced) { S.stepsPending = 0; save(); setTimeout(() => fetchSteps(true), 1500); }
+  else fetchSteps();
 });
 
 /* ---------- Apple Health (via the Shortcuts app) ---------- */
@@ -1467,25 +1458,6 @@ function healthGuide() {
     </div>
     <p class="fine">The first run asks for Health access. Allow it. Then tap ◀ Kiln at the top-left corner to come back. You can delete the test workout in the Health app.</p>`);
 }
-function stepsGuide() {
-  const name = esc(S.settings.stepsShortcut || 'Kiln Steps');
-  openSheet(`
-    <div class="sheet-head"><div><div class="eyebrow">Apple Health · 3 actions</div><h2>Bring in your steps</h2></div></div>
-    <p class="fine">Copies today's step total from Health so Kiln can paste it.</p>
-    ${guideSteps([
-      ['Open the Shortcuts app and tap +', ''],
-      [`Name it ${pill(name)}`, 'Tap the name at the top. Spelling must match exactly.'],
-      [`Search ${pill('Find Health Samples')} and tap it`, `Tap <b>Type</b> and choose <b>Steps</b>. Tap <b>Add Filter</b> and set it to <b>Start Date is today</b>.`],
-      [`Search ${pill('Calculate Statistics')} and tap it`, 'Set it to <b>Sum</b>.'],
-      [`Search ${pill('Copy to Clipboard')} and tap it`, ''],
-      ['Tap Done', ''],
-    ])}
-    <div class="sheet-actions">
-      <button class="btn primary big" data-a="steps-sync">Test it now</button>
-    </div>
-    <p class="fine">Allow Health access to Steps the first time. Then tap ◀ Kiln at the top-left corner, and tap Paste steps.</p>`);
-}
-
 /* ---------- toast ---------- */
 let toastT;
 function toast(msg) {
@@ -1672,11 +1644,11 @@ const A = {
     S.stepsPending = Date.now(); saveNow();
     runShortcut(S.settings.stepsShortcut || 'Kiln Steps');
   },
-  async 'steps-paste'() {
-    try { importSteps(await navigator.clipboard.readText()); }
-    catch (e) { toast('Paste into the box below instead'); $('#steps-text')?.focus(); }
+  async 'copy-sync-url'() {
+    const url = stepsWriteURL();
+    try { await navigator.clipboard.writeText(url); toast('Link copied'); }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($('#sync-url')); getSelection().removeAllRanges(); getSelection().addRange(r); toast('Press and hold to copy'); }
   },
-  'steps-import-text'() { importSteps($('#steps-text').value); },
   'steps-manual'() {
     openSheet(`<div class="sheet-head"><div><div class="eyebrow">Steps</div><h2>Today's steps</h2></div></div>
       <div class="inline-form"><input class="txt" id="steps-today" inputmode="numeric" placeholder="e.g. 8412" value="${(S.steps || {})[isoDay(Date.now())] || ''}"><button class="btn primary" data-a="steps-save-today">Save</button></div>`);
@@ -1804,6 +1776,7 @@ document.addEventListener('keydown', ev => {
 /* ---------- boot ---------- */
 ensurePlan();
 render();
+fetchSteps(true);
 if (S.plan?.start) requestWake();
 if (navigator.storage?.persist) navigator.storage.persist().catch(() => {});
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});

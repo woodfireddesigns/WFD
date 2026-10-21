@@ -60,6 +60,7 @@ function defaultState() {
       duration: 60, core: true, warmups: true, sound: true, wake: true,
       gym: 'gym', incBar: 5, incDb: 5, incMachine: 5,
       health: false, healthWeight: true, healthShortcut: 'Kiln to Health',
+      stepGoal: 10000, stepsShortcut: 'Kiln Steps',
     },
     gyms: [
       { id: 'gym', name: 'Commercial Gym', equip: [...ALL_EQUIP] },
@@ -68,6 +69,7 @@ function defaultState() {
     fav: {}, ban: {}, custom: [],
     workouts: [], plan: null, body: [], seed: 1,
     deload: null,
+    steps: {}, stepsSynced: 0,
   };
 }
 function mergeState(data) {
@@ -875,6 +877,8 @@ function viewProgress() {
     <div><b>${fmtBig(toDisp(weekVol))}</b><span>${U()} this week</span></div>
   </div>
 
+  ${stepsCard()}
+
   <section class="card pad">
     <div class="card-h"><h3>Workouts per week</h3><span>12 weeks</span></div>
     ${barChart(weeks.map(w => ({ label: fmtDate(w.ws, { month: 'numeric', day: 'numeric' }), v: w.n })))}
@@ -1058,7 +1062,12 @@ function viewSettings() {
     ${toggle('health', 'Send finished workouts to Health', st.health)}
     ${toggle('healthWeight', 'Send logged bodyweight too', st.healthWeight)}
     <div class="field"><label>Shortcut name</label><input class="txt" data-setting-str="healthShortcut" value="${esc(st.healthShortcut)}"></div>
-    <button class="btn block" data-a="health-guide">Set up the shortcut (2 min)</button>
+    <button class="btn block" data-a="health-guide">Set up the workout shortcut (2 min)</button>
+    <div class="field three" style="margin-top:16px">
+      <div><label>Daily step goal</label><input class="txt" inputmode="numeric" data-setting="stepGoal" value="${st.stepGoal}"></div>
+      <div style="grid-column: span 2"><label>Steps shortcut name</label><input class="txt" data-setting-str="stepsShortcut" value="${esc(st.stepsShortcut)}"></div>
+    </div>
+    <button class="btn block" data-a="steps-guide">Set up the steps shortcut (2 min)</button>
   </section>
 
   <h4 class="group-h">Data</h4>
@@ -1079,15 +1088,18 @@ function toggle(key, label, on) {
 }
 
 /* ---------- sheets ---------- */
+let sheetGen = 0;
 function openSheet(html) {
   const sh = $('#sheet'), sc = $('#scrim');
+  const gen = ++sheetGen;
   sh.innerHTML = `<div class="grab"></div><button class="sheet-x" data-a="close-sheet" aria-label="Close">${I.x}</button><div class="sheet-body">${html}</div>`;
   sh.hidden = false; sc.hidden = false;
-  requestAnimationFrame(() => { sh.classList.add('open'); sc.classList.add('open'); });
+  requestAnimationFrame(() => { if (gen === sheetGen) { sh.classList.add('open'); sc.classList.add('open'); } });
   document.body.classList.add('locked');
 }
 function closeSheet() {
   const sh = $('#sheet'), sc = $('#scrim');
+  sheetGen++;
   sh.classList.remove('open'); sc.classList.remove('open');
   document.body.classList.remove('locked');
   setTimeout(() => { if (!sh.classList.contains('open')) { sh.hidden = true; sc.hidden = true; sh.innerHTML = ''; } }, 260);
@@ -1317,6 +1329,109 @@ function exportCSV() {
   download(`kiln-workouts-${dayKey()}.csv`, lines.join('\n'), 'text/csv');
 }
 
+/* ---------- steps (read from Apple Health via a shortcut + clipboard) ---------- */
+function isoDay(t) { const d = new Date(t); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; }
+function stepsCard() {
+  const st = S.steps || {};
+  const goal = +S.settings.stepGoal || 10000;
+  const days = [];
+  for (let i = 29; i >= 0; i--) { const d = new Date(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() - i); days.push({ k: isoDay(d), t: d.getTime(), v: st[isoDay(d)] || 0 }); }
+  if (!Object.keys(st).length) {
+    return `<section class="card pad">
+      <div class="card-h"><h3>Steps</h3><span>Apple Health</span></div>
+      <p class="fine">Pull your daily steps from Apple Health so training and walking live in one place. One-time 2 minute setup.</p>
+      <div class="btn-row"><button class="btn sm primary" data-a="steps-sync">Sync steps</button><button class="btn sm" data-a="steps-guide">Set up</button></div>
+    </section>`;
+  }
+  const today = days[29].v;
+  const last7 = days.slice(-7).map(d => d.v);
+  const avg7 = Math.round(last7.reduce((a, b) => a + b, 0) / 7);
+  let streak = 0;
+  for (let i = days[29].v >= goal ? 29 : 28; i >= 0 && days[i].v >= goal; i--) streak++;
+  const max = Math.max(goal * 1.15, ...days.map(d => d.v));
+  const pct = Math.min(1, today / goal);
+  return `<section class="card pad">
+    <div class="card-h"><h3>Steps</h3><span>${S.stepsSynced ? 'Synced ' + agoText(S.stepsSynced) : ''}</span></div>
+    <div class="steps-top">
+      <div class="ring big" style="--p:${Math.round(pct * 100)};--c:${pct >= 1 ? 'var(--good)' : 'var(--accent)'}"><span>${today >= 1000 ? (today / 1000).toFixed(1) + 'k' : today}</span></div>
+      <div class="steps-stats">
+        <div><b>${today.toLocaleString()}</b><span>Today · goal ${goal.toLocaleString()}</span></div>
+        <div><b>${avg7.toLocaleString()}</b><span>7-day average</span></div>
+        <div><b>${streak}</b><span>Day goal streak</span></div>
+      </div>
+    </div>
+    <div class="step-bars">
+      <i class="goal-line" style="bottom:${(goal / max) * 100}%"></i>
+      ${days.map((d, k) => `<div class="sb ${d.v >= goal ? 'hit' : ''} ${k === 29 ? 'now' : ''}" title="${d.k}: ${d.v}"><i style="height:${(d.v / max) * 100}%"></i></div>`).join('')}
+    </div>
+    <div class="sb-axis"><span>${fmtDate(days[0].t, { month: 'short', day: 'numeric' })}</span><span>Today</span></div>
+    <div class="btn-row"><button class="btn sm primary" data-a="steps-sync">Sync steps</button><button class="btn sm" data-a="steps-manual">Enter manually</button></div>
+  </section>`;
+}
+function parseSteps(text) {
+  const out = {};
+  for (const line of String(text).split(/\r?\n/)) {
+    let k = null, rest = line;
+    let m = line.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (m) k = `${m[1]}-${pad2(+m[2])}-${pad2(+m[3])}`;
+    else if ((m = line.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/))) {
+      const y = m[3].length === 2 ? 2000 + +m[3] : +m[3];
+      k = `${y}-${pad2(+m[1])}-${pad2(+m[2])}`;
+    }
+    if (!k) continue;
+    rest = line.replace(m[0], ' ');
+    const nums = rest.match(/\d[\d,]*(\.\d+)?/g);
+    if (!nums) continue;
+    const v = Math.round(parseFloat(nums[nums.length - 1].replace(/,/g, '')));
+    if (v >= 0 && v < 200000) out[k] = v;
+  }
+  return out;
+}
+function importSteps(text) {
+  const got = parseSteps(text);
+  const n = Object.keys(got).length;
+  if (!n) { toast('No step data found in that text'); return false; }
+  S.steps = { ...(S.steps || {}), ...got }; S.stepsSynced = Date.now(); S.stepsPending = 0;
+  save(); closeSheet(); render(); toast(`Imported ${n} day${n === 1 ? '' : 's'} of steps`);
+  return true;
+}
+function stepsPasteSheet() {
+  openSheet(`
+    <div class="sheet-head"><div><div class="eyebrow">Steps</div><h2>Paste your steps</h2></div></div>
+    <p class="fine">The shortcut copied your steps. Tap Paste, then confirm the small Paste bubble iOS shows.</p>
+    <div class="sheet-actions">
+      <button class="btn primary big" data-a="steps-paste">Paste steps</button>
+    </div>
+    <p class="fine">Or long-press the box below, paste, and tap Import.</p>
+    <textarea class="txt area" id="steps-text" placeholder="2026-10-21,8412"></textarea>
+    <div class="sheet-actions"><button class="btn" data-a="steps-import-text">Import</button></div>`);
+}
+function stepsGuide() {
+  const name = esc(S.settings.stepsShortcut || 'Kiln Steps');
+  openSheet(`
+    <div class="sheet-head"><div><div class="eyebrow">Apple Health</div><h2>Steps shortcut</h2></div></div>
+    <p class="fine">One-time setup. It reads 30 days of steps from Health (the same numbers Pedometer++ shows) and copies them for Kiln.</p>
+    <ol class="steps">
+      <li>Open <b>Shortcuts</b>, tap <b>+</b>, and name it exactly <b>${name}</b>.</li>
+      <li>Add <b>Find Health Samples</b>: type <b>Steps</b>, filter <b>Start Date is in the last 30 days</b>, <b>Group by Day</b>, sort by <b>Start Date</b>.</li>
+      <li>Add <b>Repeat with Each</b> (Health Samples).</li>
+      <li>Inside the repeat, add <b>Format Date</b>: date = Repeat Item → <b>Start Date</b>, format <b>Custom</b> <code>yyyy-MM-dd</code>.</li>
+      <li>Still inside, add <b>Text</b>: <code>Formatted Date,Value</code> (tap Repeat Item and choose <b>Value</b> for the second part).</li>
+      <li>After <b>End Repeat</b>, add <b>Combine Text</b>: Repeat Results, separator <b>New Lines</b>.</li>
+      <li>Add <b>Copy to Clipboard</b>.</li>
+      <li>Run it once from Kiln (Sync steps) and allow Health access to Steps.</li>
+    </ol>
+    <p class="fine">After it runs, tap ◀ Kiln in the top-left corner. Kiln asks you to paste.</p>
+    <div class="sheet-actions"><button class="btn primary" data-a="steps-sync">Run it now</button></div>`);
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && S.stepsPending && Date.now() - S.stepsPending < 15 * 6e4) {
+    S.stepsPending = 0; save();
+    if (V.tab !== 'progress') { V.tab = 'progress'; render(); }
+    stepsPasteSheet();
+  }
+});
+
 /* ---------- Apple Health (via the Shortcuts app) ---------- */
 // Web apps can't write to HealthKit, so Kiln hands a JSON payload to a user-built shortcut.
 function shortcutURL(payload) {
@@ -1540,6 +1655,24 @@ const A = {
     save(); render(); toast('Back to normal training');
   },
   'health-guide'() { healthGuide(); },
+  'steps-guide'() { stepsGuide(); },
+  'steps-sync'() {
+    S.stepsPending = Date.now(); saveNow();
+    location.href = `shortcuts://run-shortcut?name=${encodeURIComponent(S.settings.stepsShortcut || 'Kiln Steps')}`;
+  },
+  async 'steps-paste'() {
+    try { importSteps(await navigator.clipboard.readText()); }
+    catch (e) { toast('Paste into the box below instead'); $('#steps-text')?.focus(); }
+  },
+  'steps-import-text'() { importSteps($('#steps-text').value); },
+  'steps-manual'() {
+    openSheet(`<div class="sheet-head"><div><div class="eyebrow">Steps</div><h2>Today's steps</h2></div></div>
+      <div class="inline-form"><input class="txt" id="steps-today" inputmode="numeric" placeholder="e.g. 8412" value="${(S.steps || {})[isoDay(Date.now())] || ''}"><button class="btn primary" data-a="steps-save-today">Save</button></div>`);
+  },
+  'steps-save-today'() {
+    const v = parseInt($('#steps-today').value.replace(/,/g, ''), 10); if (isNaN(v)) return;
+    S.steps = { ...(S.steps || {}), [isoDay(Date.now())]: v }; save(); closeSheet(); render(); toast('Saved');
+  },
   'health-send'(b) {
     if (!S.settings.health) { S.settings.health = true; save(); render(); }
     const w = S.workouts.find(x => x.id === b.dataset.v); if (w) sendWorkoutToHealth(w);
@@ -1595,7 +1728,7 @@ document.addEventListener('change', async ev => {
     }
     save(); render();
   }
-  if (t.dataset.settingStr) { S.settings[t.dataset.settingStr] = t.value.trim() || 'Kiln to Health'; save(); }
+  if (t.dataset.settingStr) { const k = t.dataset.settingStr; S.settings[k] = t.value.trim() || defaultState().settings[k]; save(); }
   if (t.dataset.setting) {
     const k = t.dataset.setting; const v = parseFloat(t.value);
     if (isNaN(v) || v <= 0) return;

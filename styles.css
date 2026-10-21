@@ -347,3 +347,20 @@ select.txt { background-image: linear-gradient(45deg, transparent 50%, var(--mu)
 .toggle-row.static small { color: var(--mu); font-size: 13px; font-weight: 600; }
 .steps { margin: 6px 0 4px; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; line-height: 1.45; }
 .steps code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: var(--s3); padding: 1px 6px; border-radius: 6px; color: var(--accent2); }
+
+/* ---------- steps ---------- */
+.ring.big { width: 84px; height: 84px; flex: none; }
+.ring.big::before { inset: 7px; }
+.ring.big span { font-size: 18px; }
+.steps-top { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
+.steps-stats { display: grid; gap: 8px; flex: 1; min-width: 0; }
+.steps-stats b { display: block; font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.steps-stats span { font-size: 12px; color: var(--mu); font-weight: 600; }
+.step-bars { position: relative; display: flex; align-items: flex-end; gap: 3px; height: 96px; }
+.step-bars .goal-line { position: absolute; left: 0; right: 0; border-top: 1px dashed rgba(61, 220, 151, .55); z-index: 1; }
+.sb { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.sb i { width: 100%; min-height: 2px; border-radius: 3px 3px 1px 1px; background: var(--s3); }
+.sb.hit i { background: rgba(61, 220, 151, .7); }
+.sb.now i { background: linear-gradient(180deg, var(--accent2), var(--accent)); }
+.sb-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--mu2); margin-top: 6px; font-weight: 600; }
+.txt.area { height: 110px; padding: 12px 14px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; }

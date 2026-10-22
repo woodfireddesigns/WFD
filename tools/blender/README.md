@@ -9,7 +9,7 @@ Source of `img/body-*.webp` (sculpted render) and `img/body-*-id.png` (muscle gr
 
 ```
 COMMON='"fbx": ".../MuscularSystem100.fbx", "skel": ".../SkeletalSystem100.fbx", "skin": ".../Regions of human body100.fbx",
-  "views": ["front", "back"], "res": [600, 1200], "head_z": 1.535, "core_dy": 0.015, "core_s": 0.84, "core_sy": 0.78, "eye_back": 2.3'
+  "views": ["front", "back"], "res": [600, 1200], "head_z": 1.535, "core_dy": 0.015, "core_s": 0.84, "core_sy": 0.78, "eye_back": 2.3, "hair": true'
 python -I render.py "{\"mode\": \"id\", \"out\": \"out\", $COMMON}"            # rename to *-id.png
 python -I render.py "{\"mode\": \"beauty\", \"out\": \"out\", \"samples\": 128, \"light\": 0.28, \"clay\": [0.045,0.044,0.043], $COMMON}"
 ```

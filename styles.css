@@ -382,7 +382,7 @@ select.txt { background-image: linear-gradient(45deg, transparent 50%, var(--mu)
 .body-map { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .body-map figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
 .body-map figcaption { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mu2); margin-top: 4px; }
-.body-cv { width: 100%; max-width: 190px; aspect-ratio: 426 / 1061; height: auto; display: block; cursor: pointer; }
+.body-cv { width: 100%; max-width: 190px; aspect-ratio: 426 / 1082; height: auto; display: block; cursor: pointer; }
 .body-map { background: radial-gradient(60% 45% at 50% 40%, rgba(255, 138, 61, .06), transparent 70%); border-radius: 14px; padding-top: 6px; }
 .body-legend { display: flex; align-items: center; gap: 8px; margin: 12px 4px 0; font-size: 11.5px; color: var(--mu); font-weight: 600; }
 .body-legend i { flex: 1; height: 6px; border-radius: 6px; background: linear-gradient(90deg, #3a3633, #a8471c, var(--accent2)); }

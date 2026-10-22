@@ -44,11 +44,15 @@ if HEAD_Z:
     # sculpted head: skin regions of the face and skull from the body-surface model
     before = set(bpy.context.scene.objects)
     bpy.ops.import_scene.fbx(filepath=args['skin'])
-    NO = ['neck', 'carotid', 'sternocleidomastoid', 'muscular triangle', 'supraclavicular', 'hair', 'eyelash', 'cilia', 'cross section']
+    NO = ['carotid', 'muscular triangle', 'supraclavicular', 'eyelash', 'cilia', 'cross section', 'eyebrow hair', 'hairs of eyebrow', 'pubic', 'axilla']
+    if not args.get('hair'): NO.append('hair')
+    if not args.get('neck'): NO += ['neck', 'sternocleidomastoid']
+    zmin_keep = args.get('skin_zmin', 1.475)
     for o in [o for o in bpy.context.scene.objects if o not in before]:
         if o.type != 'MESH': continue
         n = o.name.lower(); ws = [o.matrix_world @ mathutils.Vector(v) for v in o.bound_box]
-        if n.endswith('.j') or n.endswith('.i') or any(x in n for x in NO) or min(w.z for w in ws) < 1.475:
+        is_neck = any(x in n for x in ['neck', 'sternocleidomastoid'])
+        if n.endswith('.j') or n.endswith('.i') or any(x in n for x in NO) or (min(w.z for w in ws) < zmin_keep and not is_neck):
             o.hide_render = True; continue
         keep.append(o)
         if n.startswith('orbital region'):

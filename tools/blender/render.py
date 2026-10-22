@@ -88,18 +88,87 @@ if args.get('scanhead') and args.get('head_z'):
     for v in bm.verts:
         c = v.co
         v.co = mathutils.Vector((c.x * k, args.get('scan_nose_y', -0.118) + (c.y - nose_y) * k, args.get('scan_top', 1.712) - (top - c.z) * k))
-    band = [v.co for v in bm.verts if 1.49 < v.co.z < 1.51]
-    ncy = sum(c.y for c in band) / max(1, len(band))
-    rx, ry = args.get('neck_rx', 0.062), args.get('neck_ry', 0.07)
+    # weld the scan's split seams first, then add resolution so the neck edge can be shaped smoothly
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=args.get('scan_weld', 0.0004))
+    bmesh.ops.subdivide_edges(bm, edges=bm.edges, cuts=args.get('scan_cuts', 2), use_grid_fill=True, smooth=0.5)
+    bmesh.ops.triangulate(bm, faces=[f for f in bm.faces if len(f.verts) > 4])
+    band = [v.co for v in bm.verts if 1.445 < v.co.z < 1.465 and abs(v.co.x) < 0.05]
+    ncy = (min(c.y for c in band) + max(c.y for c in band)) / 2 if band else 0.0
+    print('NECK centre y', round(ncy, 4), 'depth', round(max(c.y for c in band) - min(c.y for c in band), 4) if band else None)
+    rx0, ry0 = args.get('neck_rx', 0.062), args.get('neck_ry', 0.07)
+    flare = args.get('neck_flare', 0.35)
+    def radii(z):   # neck widens toward its base so the edge tucks under collarbones and traps
+        f = 1 + flare * max(0.0, min(1.0, (1.47 - z) / 0.08)); return rx0 * f, ry0 * f
     def outside_neck(c):
-        if c.z >= 1.535: return False
-        if c.y > ncy + args.get('neck_back_dy', 0.012) and c.z < args.get('neck_back_z', 1.525): return True   # let the traps show at the back
-        if c.z > args.get('jaw_keep_z', 1.478) and abs(c.x) < rx * 1.25: return False   # keep the jaw and under-chin
+        if c.z >= args.get('neck_top', 1.535): return False
+        rx, ry = radii(c.z)
+        if c.z > args.get('jaw_keep_z', 1.478) and abs(c.x) < rx0 * args.get('jaw_keep_x', 1.2) and c.y < ncy - 0.01: return False   # jaw and under-chin
+        if c.y > ncy: ry *= args.get('neck_back_k', 1.15)
+        # back of the neck ends where the trimmed traps start, so they tuck underneath
+        if c.y > ncy + args.get('back_dy', 0.01) and c.z < args.get('back_cut', 1.465): return True
         return ((c.x / rx) ** 2 + ((c.y - ncy) / ry) ** 2) > 1
-    bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.co.z < args.get('scan_cut', 1.40) or outside_neck(v.co)], context='VERTS')
+    if args.get('neck_squeeze', True):
+        # squeeze (don't cut) the neck into the column so it stays a closed tube; only the bottom is cut
+        top = args.get('neck_top', 1.535)
+        for v in bm.verts:
+            c = v.co
+            if c.z >= top: continue
+            rx, ry = radii(c.z)
+            if c.y > ncy: ry *= args.get('neck_back_k', 1.15)
+            e = math.sqrt((c.x / rx) ** 2 + ((c.y - ncy) / ry) ** 2)
+            if e <= 1: continue
+            w = smoothstep_(c.z, top, top - 0.035)
+            if c.z > 1.478 and c.y < ncy - 0.01 and abs(c.x) < rx0: w *= 0.0          # leave the jaw alone
+            cen = mathutils.Vector((0, ncy, c.z))
+            v.co = c.lerp(cen + (c - cen) / e, w)
+        dead = [v for v in bm.verts if v.co.z < args.get('scan_cut', 1.40) or
+                (v.co.y > ncy + args.get('back_dy', 0.01) and v.co.z < args.get('back_cut', 1.465))]
+        bmesh.ops.delete(bm, geom=dead, context='VERTS')
+    else:
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.co.z < args.get('scan_cut', 1.40) or outside_neck(v.co)], context='VERTS')
+    # tidy the cut: drop stray islands, then relax the open edge so it's a smooth line, not a zigzag
+    bmesh.ops.delete(bm, geom=[f for f in bm.faces if all(e.is_boundary for e in f.edges)], context='FACES')
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context='VERTS')
+    for _ in range(args.get('neck_relax', 12)):
+        edge = [v for v in bm.verts if v.is_boundary]
+        new = {}
+        for v in edge:
+            ns = [e.other_vert(v) for e in v.link_edges if e.is_boundary]
+            if ns: new[v] = v.co.lerp(sum((n.co for n in ns), mathutils.Vector()) / len(ns), 0.5)
+        for v, c in new.items(): v.co = c
     for f in bm.faces: f.smooth = True
     head = bpy.data.objects.new('scan_head', bpy.data.meshes.new('scan_head')); sc.collection.objects.link(head)
     bm.to_mesh(head.data); bm.free()
+    sol = head.modifiers.new('thick', 'SOLIDIFY'); sol.thickness = args.get('scan_thick', 0.004); sol.offset = -1
+    # muscles that would stick up out of the neck column end cleanly underneath it
+    tz = args.get('trim_z', 1.475); tx = args.get('trim_x', 0.09)
+    TRAPS = [o for o in keep if o.type == 'MESH' and o.name in MUSCLE_NAMES and group_of(o.name) in ('traps', 'upperback') and 'trapezius' in o.name.lower()]
+    for o in [o for o in keep if o.type == 'MESH' and (o.name in MUSCLE_NAMES or o in SKEL) and (args.get('trim_traps', True) or o not in TRAPS)]:
+        mw = o.matrix_world
+        if max((mw @ mathutils.Vector(c)).z for c in o.bound_box) < tz: continue
+        tb = bmesh.new(); tb.from_mesh(o.data)
+        dead = [v for v in tb.verts if (lambda w: w.z > tz and abs(w.x) < tx)(mw @ v.co)]
+        if dead:
+            if o.data.users > 1: o.data = o.data.copy()
+            bmesh.ops.delete(tb, geom=dead, context='VERTS'); tb.to_mesh(o.data)
+        tb.free()
+    if args.get('flush', True):
+        from mathutils.bvhtree import BVHTree
+        tv, tp = [], []
+        for o in [o for o in keep if o.type == 'MESH' and o.name in MUSCLE_NAMES and 'trapezius' in o.name.lower()]:
+            off = len(tv); tv += [o.matrix_world @ v.co for v in o.data.vertices]
+            tp += [[off + i for i in p.vertices] for p in o.data.polygons]
+        if tv:
+            tt = BVHTree.FromPolygons(tv, tp)
+            lo_z = args.get('back_cut', 1.465); band = args.get('flush_band', 0.035)
+            for v in head.data.vertices:
+                c = v.co
+                if c.y <= ncy or c.z > lo_z + band: continue
+                hit = tt.find_nearest(c)
+                if hit[0] is None or hit[3] > args.get('flush_reach', 0.08): continue
+                w = 1 - max(0.0, min(1.0, (c.z - lo_z) / band)); w = w * w * (3 - 2 * w)
+                target = hit[0] + (c - hit[0]).normalized() * 0.0012 if (c - hit[0]).length > 1e-6 else hit[0]
+                v.co = c.lerp(target, w)
     scan.hide_render = True
     for o in SKIN_HEAD: o.hide_render = True
     core.hide_render = True
@@ -274,7 +343,12 @@ for o in keep:
         counts[g] = counts.get(g, 0) + 1
         o.data.materials.append(idmats[g] if g else idnone)
     else:
-        o.data.materials.append(buzz if o in BUZZ else mat)
+        if args.get('debug_scan') and o.name.startswith('scan_head'):
+            dm = bpy.data.materials.get('dbg') or bpy.data.materials.new('dbg'); dm.use_nodes = True
+            dm.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.6, 0.02, 0.02, 1)
+            o.data.materials.append(dm)
+        else:
+            o.data.materials.append(buzz if o in BUZZ else mat)
     for p in o.data.polygons: p.use_smooth = True
 if MODE == 'id': print('IDCOUNTS', counts)
 # world: black, transparent film

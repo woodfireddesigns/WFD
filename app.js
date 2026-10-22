@@ -884,12 +884,7 @@ function viewProgress() {
     ${barChart(weeks.map(w => ({ label: fmtDate(w.ws, { month: 'numeric', day: 'numeric' }), v: w.n })))}
   </section>
 
-  <section class="card pad">
-    <div class="card-h"><h3>Muscle recovery</h3><span>Now</span></div>
-    <div class="rec-grid">
-      ${Object.keys(MUSCLES).map(m => `<div class="rec-cell"><div class="ring" style="--p:${rec.r[m]};--c:${recColor(rec.r[m])}"><span>${rec.r[m]}</span></div><label>${MUSCLES[m]}</label><small>${rec.last[m] ? agoText(rec.last[m]) : '—'}</small></div>`).join('')}
-    </div>
-  </section>
+  <section class="card pad" id="recovery-card">${recoveryCard(rec)}</section>
 
   <section class="card pad">
     <div class="card-h"><h3>Weekly sets by muscle</h3><span>Last 7 days</span></div>
@@ -916,6 +911,22 @@ function viewProgress() {
     }).join('')}
   </section>` : ''}
   `;
+}
+function recoveryCard(rec) {
+  const sel = V.muscle && MUSCLES[V.muscle] ? V.muscle : null;
+  const tired = Object.keys(MUSCLES).filter(m => rec.r[m] < 95).sort((a, b) => rec.r[a] - rec.r[b]);
+  const info = sel
+    ? `<div class="mz-info"><b>${MUSCLES[sel]}</b><span style="color:${recColor(rec.r[sel])}">${rec.r[sel]}% recovered</span><small>${rec.last[sel] ? 'Last trained ' + agoText(rec.last[sel]) : 'No recent training'}</small></div>`
+    : `<div class="mz-info"><small>Tap a muscle for details</small></div>`;
+  return `
+    <div class="card-h"><h3>Muscle recovery</h3><span>Now</span></div>
+    <div class="body-map">
+      <figure>${bodySVG('front', rec.r, sel)}<figcaption>Front</figcaption></figure>
+      <figure>${bodySVG('back', rec.r, sel)}<figcaption>Back</figcaption></figure>
+    </div>
+    <div class="body-legend"><span>Fresh</span><i></i><span>Fatigued</span></div>
+    ${info}
+    ${tired.length ? `<div class="tired">${tired.map(m => `<button class="chip ${sel === m ? 'on' : ''}" data-a="muscle" data-v="${m}"><i style="background:${recColor(rec.r[m])}"></i>${MUSCLES[m]} ${rec.r[m]}%</button>`).join('')}</div>` : '<p class="fine">Everything is fully recovered. Good day to train anything.</p>'}`;
 }
 function startOfWeek(t) { const d = new Date(t); d.setHours(0, 0, 0, 0); const day = (d.getDay() + 6) % 7; return d.getTime() - day * DAY; }
 function agoText(t) { const h = (Date.now() - t) / 36e5; if (h < 1) return 'just now'; if (h < 24) return `${Math.round(h)}h ago`; const d = Math.round(h / 24); return d > 60 ? '60d+' : `${d}d ago`; }
@@ -1662,6 +1673,10 @@ const A = {
     const w = S.workouts.find(x => x.id === b.dataset.v); if (w) sendWorkoutToHealth(w);
   },
   'health-test'() { runShortcut(S.settings.healthShortcut || 'Kiln to Health', 10); },
+  muscle(b) {
+    V.muscle = V.muscle === b.dataset.v ? null : b.dataset.v;
+    const card = $('#recovery-card'); if (card) card.innerHTML = recoveryCard(recovery());
+  },
   't-add'(b) { timer.add(+b.dataset.v); },
   't-skip'() { timer.stop(); },
 };

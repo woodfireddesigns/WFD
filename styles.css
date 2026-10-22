@@ -16,6 +16,8 @@
   --good: #3ddc97;
   --warn: #ffb547;
   --bad: #ff5a5f;
+  --body-base: #1f1f22;
+  --body-muscle: #2c2c31;
   --r: 18px;
   --r-sm: 12px;
   --tabs-h: 64px;
@@ -375,3 +377,20 @@ select.txt { background-image: linear-gradient(45deg, transparent 50%, var(--mu)
 .pill { font-style: normal; display: inline-block; background: rgba(255, 91, 31, .14); color: var(--accent2); border: 1px solid rgba(255, 91, 31, .35); padding: 1px 8px; border-radius: 7px; font-weight: 700; }
 .copy-box { display: flex; align-items: center; gap: 10px; background: var(--s2); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 10px 10px 12px; margin-top: 10px; }
 .copy-box code { flex: 1; min-width: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--mu); word-break: break-all; line-height: 1.4; }
+
+/* ---------- recovery body map ---------- */
+.body-map { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.body-map figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+.body-map figcaption { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mu2); margin-top: 4px; }
+.body-svg { width: 100%; max-width: 170px; height: auto; display: block; }
+.body-svg .mz { cursor: pointer; transition: opacity .15s; }
+.body-svg .mz.sel path:first-child { stroke: var(--tx); stroke-width: 2; }
+.body-legend { display: flex; align-items: center; gap: 8px; margin: 12px 4px 0; font-size: 11.5px; color: var(--mu); font-weight: 600; }
+.body-legend i { flex: 1; height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--body-muscle), var(--accent)); }
+.mz-info { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-height: 22px; margin: 12px 4px 4px; }
+.mz-info b { font-size: 16px; }
+.mz-info span { font-weight: 750; font-variant-numeric: tabular-nums; }
+.mz-info small { color: var(--mu); font-size: 12.5px; }
+.tired { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tired .chip { padding: 6px 11px; font-size: 12.5px; gap: 6px; }
+.tired .chip i { width: 7px; height: 7px; border-radius: 50%; }

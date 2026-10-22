@@ -1,6 +1,6 @@
 // Stale-while-revalidate app shell: opens instantly offline, picks up new versions on next launch.
-const CACHE = 'kiln-v5';
-const ASSETS = ['./', 'index.html', 'styles.css', 'exercises.js', 'app.js', 'manifest.webmanifest',
+const CACHE = 'kiln-v6';
+const ASSETS = ['./', 'index.html', 'styles.css', 'exercises.js', 'body.js', 'app.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

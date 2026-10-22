@@ -393,3 +393,11 @@ select.txt { background-image: linear-gradient(45deg, transparent 50%, var(--mu)
 .tired { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .tired .chip { padding: 6px 11px; font-size: 12.5px; gap: 6px; }
 .tired .chip i { width: 7px; height: 7px; border-radius: 50%; }
+
+/* ---------- pull to refresh ---------- */
+#ptr { position: fixed; z-index: 70; top: calc(var(--safe-t) + 8px); left: 50%; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--s2); border: 1px solid var(--line2); color: var(--mu); box-shadow: 0 8px 24px -8px rgba(0, 0, 0, .8); opacity: 0; transform: translate(-50%, -48px); pointer-events: none; }
+#ptr svg { width: 20px; height: 20px; }
+#ptr.ready { color: var(--accent); border-color: rgba(255, 91, 31, .5); }
+#ptr.spin svg { animation: ptr-spin .7s linear infinite; }
+@keyframes ptr-spin { to { transform: rotate(360deg); } }

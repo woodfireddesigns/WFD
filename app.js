@@ -1795,6 +1795,57 @@ document.addEventListener('keydown', ev => {
   document.addEventListener('touchend', e => { if (y0 == null) return; const dy = e.changedTouches[0].clientY - y0; sh.style.transform = ''; y0 = null; if (dy > 110) closeSheet(); });
 })();
 
+/* ---------- pull to refresh ---------- */
+// Pull down from the top of the page: refresh the offline copy of the app, then reload.
+const APP_FILES = ['index.html', 'styles.css', 'exercises.js', 'body.js', 'app.js', 'manifest.webmanifest'];
+async function refreshApp() {
+  saveNow();
+  try {
+    const reg = await navigator.serviceWorker?.getRegistration();
+    await reg?.update();
+    if (window.caches) {
+      const fresh = await Promise.all(APP_FILES.map(f => fetch(f, { cache: 'reload' }).then(r => (r.ok ? [f, r] : null)).catch(() => null)));
+      for (const key of await caches.keys()) {
+        const c = await caches.open(key);
+        for (const hit of fresh) if (hit) await c.put(hit[0], hit[1].clone());
+      }
+    }
+  } catch (e) { /* offline: just reload what we have */ }
+  location.reload();
+}
+(() => {
+  const el = document.createElement('div');
+  el.id = 'ptr'; el.innerHTML = I.refresh; document.body.appendChild(el);
+  const TRIGGER = 72;
+  let y0 = null, pull = 0, busy = false;
+  const set = (p, anim) => {
+    el.style.transition = anim ? 'transform .25s, opacity .25s' : 'none';
+    el.style.transform = `translate(-50%, ${Math.min(p, 96) - 48}px) rotate(${p * 3.2}deg)`;
+    el.style.opacity = Math.min(1, p / TRIGGER);
+    el.classList.toggle('ready', p >= TRIGGER);
+  };
+  document.addEventListener('touchstart', e => {
+    if (busy || scrollY > 0 || !$('#sheet').hidden || e.target.closest('input, textarea, select, canvas')) { y0 = null; return; }
+    y0 = e.touches[0].clientY; pull = 0;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (y0 == null) return;
+    const dy = e.touches[0].clientY - y0;
+    if (dy <= 0 || scrollY > 0) { if (pull) set(0, true); pull = 0; return; }
+    pull = dy * 0.55; set(pull, false);
+  }, { passive: true });
+  document.addEventListener('touchend', () => {
+    if (y0 == null) return;
+    y0 = null;
+    if (pull >= TRIGGER) {
+      busy = true; el.classList.add('spin'); set(TRIGGER, true);
+      if (navigator.vibrate) navigator.vibrate(10);
+      refreshApp();
+    } else set(0, true);
+    pull = 0;
+  });
+})();
+
 /* ---------- boot ---------- */
 ensurePlan();
 render();

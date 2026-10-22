@@ -1,76 +1,88 @@
 'use strict';
-// Stylized front/back anatomy for the recovery map. 200x410 viewBox per figure.
-// Left-side shapes are mirrored across x=100; "center" shapes are drawn once.
-const BODY_BASE = {
-  center: [
-    'M100,10 C112,10 119,20 119,32 C119,45 111,54 100,54 C89,54 81,45 81,32 C81,20 88,10 100,10 Z',
-    'M91,50 L109,50 L111,66 L89,66 Z',
-    'M100,62 C118,62 134,66 146,74 C153,80 153,92 150,100 C142,120 136,140 134,160 C132,180 132,196 134,212 L66,212 C68,196 68,180 66,160 C64,140 58,120 50,100 C47,92 47,80 54,74 C66,66 82,62 100,62 Z',
-    'M66,208 C63,224 65,238 72,248 L128,248 C135,238 137,224 134,208 Z',
-  ],
-  left: [
-    'M51,80 C40,89 35,109 37,130 C37,150 39,164 42,174 L59,174 C61,160 63,140 63,122 C63,104 60,90 51,80 Z',
-    'M42,170 C36,190 34,210 36,230 L49,230 C53,210 57,190 59,170 Z',
-    'M42,229 C36,232 35,246 39,254 C43,258 48,256 50,248 C51,240 49,231 42,229 Z',
-    'M72,240 C65,270 65,300 69,328 L97,328 C99,300 100,270 99,246 Z',
-    'M69,326 C65,352 67,374 71,396 L91,396 C95,374 97,352 96,326 Z',
-    'M70,394 C62,398 62,408 72,409 L92,409 C95,404 93,396 90,394 Z',
-  ],
+// Recovery body map. Each view is a Blender render of the Z-Anatomy model (CC BY-SA 4.0)
+// plus an ID map whose grey value (group index + 1) * 16 says which muscle group a pixel is.
+// The canvas blends ember glow into each muscle by fatigue while keeping the sculpted shading.
+const BODY_GROUPS = ['chest', 'shoulders', 'triceps', 'lats', 'upperback', 'traps', 'biceps', 'forearms', 'quads', 'hamstrings', 'glutes', 'calves', 'abs', 'lowerback'];
+const BODY_SRC = {
+  front: { base: 'img/body-front.webp', id: 'img/body-front-id.png' },
+  back: { base: 'img/body-back.webp', id: 'img/body-back-id.png' },
 };
-const BODY_FRONT = {
-  center: [
-    ['abs', 'M87,133 L99,133 L99,149 L87,149 Q86,149 86,147 L86,135 Q86,133 87,133 Z'],
-    ['abs', 'M113,133 L101,133 L101,149 L113,149 Q114,149 114,147 L114,135 Q114,133 113,133 Z'],
-    ['abs', 'M87,152 L99,152 L99,168 L87,168 L86,166 L86,154 Z'],
-    ['abs', 'M113,152 L101,152 L101,168 L113,168 L114,166 L114,154 Z'],
-    ['abs', 'M87,171 L99,171 L99,188 L88,188 L86,186 L86,173 Z'],
-    ['abs', 'M113,171 L101,171 L101,188 L112,188 L114,186 L114,173 Z'],
-    ['abs', 'M88,192 L112,192 C111,200 106,208 100,212 C94,208 89,200 88,192 Z'],
-  ],
-  left: [
-    ['traps', 'M91,62 C84,66 74,70 63,74 C71,77 81,77 91,72 Z'],
-    ['chest', 'M98,79 C86,76 71,78 61,87 C57,97 59,111 65,121 C77,127 90,127 98,123 Z'],
-    ['shoulders', 'M53,77 C43,83 38,97 40,112 C47,108 55,100 61,92 C63,85 59,79 53,77 Z'],
-    ['biceps', 'M44,115 C41,131 42,149 46,164 C52,165 58,157 60,141 C61,128 57,118 51,112 Z'],
-    ['forearms', 'M43,175 C38,191 37,206 38,223 L47,223 C51,207 55,191 57,175 Z'],
-    ['abs', 'M67,128 C71,150 73,176 75,202 L83,205 C84,180 84,152 84,130 C78,126 72,126 67,128 Z'],
-    ['quads', 'M75,250 C68,274 68,300 72,320 C78,325 88,325 94,320 C98,298 98,274 96,254 C88,247 81,247 75,250 Z'],
-    ['calves', 'M72,338 C69,355 70,372 74,388 L83,388 C85,370 85,352 83,335 Z'],
-  ],
-};
-const BODY_BACK = {
-  center: [
-    ['lowerback', 'M88,180 C86,192 86,203 88,213 L112,213 C114,203 114,192 112,180 C106,184 94,184 88,180 Z'],
-  ],
-  left: [
-    ['upperback', 'M97,88 C85,86 71,89 62,97 C64,110 72,122 84,128 C91,123 95,111 97,99 Z'],
-    ['lats', 'M62,104 C58,124 62,150 70,172 C78,182 88,186 97,188 C95,170 93,150 87,133 C79,125 69,115 62,104 Z'],
-    ['shoulders', 'M53,77 C43,83 38,97 40,112 C47,108 55,100 61,92 C63,85 59,79 53,77 Z'],
-    ['triceps', 'M41,110 C38,128 40,148 44,165 C50,167 56,161 58,145 C59,129 55,117 48,108 Z'],
-    ['forearms', 'M43,175 C38,191 37,206 38,223 L47,223 C51,207 55,191 57,175 Z'],
-    ['glutes', 'M98,214 C85,212 73,218 69,231 C67,245 73,256 85,258 C93,258 98,253 99,245 Z'],
-    ['hamstrings', 'M73,263 C69,285 69,305 72,322 L95,322 C98,303 98,284 96,263 C89,259 80,259 73,263 Z'],
-    ['calves', 'M71,333 C67,347 68,363 74,374 C80,372 85,363 87,351 C87,341 85,334 81,330 Z'],
-  ],
-  // traps drawn last so they sit over the upper back
-  top: [
-    ['traps', 'M100,58 C94,62 82,68 66,74 C78,80 90,93 100,140 C110,93 122,80 134,74 C118,68 106,62 100,58 Z'],
-  ],
-};
-function bodySVG(view, rec, selected) {
-  const def = view === 'front' ? BODY_FRONT : BODY_BACK;
-  const shape = ([m, d]) => {
-    const p = rec[m] ?? 100;
-    const f = (100 - p) / 100;
-    const glow = p < 98 ? `<path d="${d}" fill="var(--accent)" fill-opacity="${(0.18 + f * 0.82).toFixed(2)}" stroke="none"/>` : '';
-    return `<g class="mz${selected === m ? ' sel' : ''}" data-a="muscle" data-v="${m}"><path d="${d}" fill="var(--body-muscle)" stroke="var(--s1)" stroke-width="1.4"/>${glow}</g>`;
-  };
-  const mirror = html => `${html}<g transform="translate(200 0) scale(-1 1)">${html}</g>`;
-  const base = BODY_BASE.center.map(d => `<path d="${d}"/>`).join('') + mirror(BODY_BASE.left.map(d => `<path d="${d}"/>`).join(''));
-  return `<svg class="body-svg" viewBox="0 0 200 412" role="img" aria-label="${view === 'front' ? 'Front' : 'Back'} muscle recovery">
-    <g fill="var(--body-base)" stroke="none">${base}</g>
-    ${(def.center || []).map(shape).join('')}
-    ${mirror(def.left.map(shape).join(''))}
-    ${(def.top || []).map(shape).join('')}
-  </svg>`;
+const bodyData = {};
+
+function loadImage(src) {
+  return new Promise((ok, fail) => { const im = new Image(); im.onload = () => ok(im); im.onerror = fail; im.src = src; });
+}
+function loadBody(view) {
+  if (bodyData[view]) return bodyData[view].ready;
+  const d = bodyData[view] = {};
+  d.ready = Promise.all([loadImage(BODY_SRC[view].base), loadImage(BODY_SRC[view].id)]).then(([base, id]) => {
+    const w = base.naturalWidth, h = base.naturalHeight;
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const x = c.getContext('2d', { willReadFrequently: true });
+    x.drawImage(base, 0, 0); d.base = x.getImageData(0, 0, w, h);
+    x.clearRect(0, 0, w, h); x.drawImage(id, 0, 0, w, h);
+    const raw = x.getImageData(0, 0, w, h).data;
+    d.ids = new Uint8Array(w * h);
+    for (let i = 0; i < w * h; i++) d.ids[i] = Math.min(14, Math.round(raw[i * 4] / 16));
+    d.w = w; d.h = h;
+    return d;
+  });
+  return d.ready;
+}
+
+// Paint every .body-cv canvas on the page for the given recovery map.
+function paintBodies(rec, selected) {
+  document.querySelectorAll('canvas.body-cv').forEach(cv => {
+    const view = cv.dataset.view;
+    loadBody(view).then(d => {
+      if (!cv.isConnected) return;
+      cv.width = d.w; cv.height = d.h;
+      // per-group glow strength 0..1 (fatigue), with a floor so any fatigue is visible
+      const amt = new Float32Array(15), sel = new Uint8Array(15);
+      BODY_GROUPS.forEach((m, i) => {
+        const p = rec[m] ?? 100;
+        // 95%+ reads as fresh; below that glow ramps up so 40% clearly out-burns 85%
+        const f = (100 - p) / 100;
+        amt[i + 1] = p >= 95 ? 0 : Math.min(1, 0.1 + 1.25 * Math.pow(f, 1.1));
+        sel[i + 1] = selected === m ? 1 : 0;
+      });
+      const src = d.base.data, out = new ImageData(d.w, d.h), o = out.data, ids = d.ids;
+      for (let i = 0, n = d.w * d.h; i < n; i++) {
+        const k = i * 4;
+        let r = src[k], g = src[k + 1], b = src[k + 2];
+        const id = ids[i];
+        if (id) {
+          const a = amt[id];
+          if (a > 0) {
+            // ember glow modulated by the sculpt's own lighting so form stays readable
+            const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            const s = 0.38 + lum * 2.2;
+            r += (Math.min(255, 255 * s) - r) * a;
+            g += (Math.min(255, 92 * s) - g) * a;
+            b += (Math.min(255, 30 * s) - b) * a;
+          }
+          if (sel[id]) { r = r + (255 - r) * 0.12; g = g + (236 - g) * 0.12; b = b + (220 - b) * 0.12; }
+        }
+        o[k] = r; o[k + 1] = g; o[k + 2] = b; o[k + 3] = src[k + 3];
+      }
+      cv.getContext('2d').putImageData(out, 0, 0);
+    }).catch(() => { /* image failed to load: canvas stays blank */ });
+  });
+}
+
+// Muscle group under a tap on a body canvas, or null.
+function bodyHit(cv, ev) {
+  const d = bodyData[cv.dataset.view]; if (!d || !d.ids) return null;
+  const r = cv.getBoundingClientRect();
+  const x = Math.floor((ev.clientX - r.left) / r.width * d.w), y = Math.floor((ev.clientY - r.top) / r.height * d.h);
+  // search a small radius so near-misses on thin muscles still register
+  for (let rad = 0; rad <= 10; rad += 2) {
+    for (let dy = -rad; dy <= rad; dy += 2) for (let dx = -rad; dx <= rad; dx += 2) {
+      const xx = x + dx, yy = y + dy;
+      if (xx < 0 || yy < 0 || xx >= d.w || yy >= d.h) continue;
+      const id = d.ids[yy * d.w + xx];
+      if (id) return BODY_GROUPS[id - 1];
+    }
+  }
+  return null;
 }

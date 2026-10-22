@@ -1,0 +1,17 @@
+# Body map renders
+
+Source of `img/body-*.webp` (sculpted render) and `img/body-*-id.png` (muscle group ID maps).
+
+- Model: [Z-Anatomy](https://github.com/LluisV/Z-Anatomy) (CC BY-SA 4.0): `MuscularSystem100.fbx`,
+  `SkeletalSystem100.fbx`, `Regions of human body100.fbx` from `Resources/Models/FBX/` on the `PC-Version` branch.
+- Blender: `pip install bpy` (5.2, Python 3.13), run headless.
+- `groups.py` maps anatomical muscle names to Kiln's 14 groups. ID value = (group index + 1) * 16.
+
+```
+COMMON='"fbx": ".../MuscularSystem100.fbx", "skel": ".../SkeletalSystem100.fbx", "skin": ".../Regions of human body100.fbx",
+  "views": ["front", "back"], "res": [600, 1200], "head_z": 1.535, "core_dy": 0.015, "core_s": 0.84, "core_sy": 0.78, "eye_back": 2.3'
+python -I render.py "{\"mode\": \"id\", \"out\": \"out\", $COMMON}"            # rename to *-id.png
+python -I render.py "{\"mode\": \"beauty\", \"out\": \"out\", \"samples\": 128, \"light\": 0.28, \"clay\": [0.045,0.044,0.043], $COMMON}"
+```
+
+Then crop both views to the shared alpha bounding box (+6px), save beauty as WebP q84, and snap ID values to multiples of 16.

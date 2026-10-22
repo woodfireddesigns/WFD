@@ -591,6 +591,7 @@ function render() {
   const fn = { workout: viewWorkout, history: viewHistory, progress: viewProgress, library: viewLibrary, settings: viewSettings }[V.tab];
   $('#view').innerHTML = fn();
   if (V.tab === 'workout') tickElapsed();
+  if ($('canvas.body-cv')) paintBodies(recovery().r, V.muscle);
 }
 function renderTabs() {
   const tabs = [['workout', 'Workout', I.dumbbell], ['history', 'History', I.history], ['progress', 'Progress', I.chart], ['library', 'Exercises', I.list], ['settings', 'Settings', I.gear]];
@@ -912,6 +913,13 @@ function viewProgress() {
   </section>` : ''}
   `;
 }
+function selectMuscle(m) {
+  V.muscle = V.muscle === m ? null : m;
+  const card = $('#recovery-card'); if (!card) return;
+  const rec = recovery();
+  card.innerHTML = recoveryCard(rec);
+  paintBodies(rec.r, V.muscle);
+}
 function recoveryCard(rec) {
   const sel = V.muscle && MUSCLES[V.muscle] ? V.muscle : null;
   const tired = Object.keys(MUSCLES).filter(m => rec.r[m] < 95).sort((a, b) => rec.r[a] - rec.r[b]);
@@ -921,8 +929,8 @@ function recoveryCard(rec) {
   return `
     <div class="card-h"><h3>Muscle recovery</h3><span>Now</span></div>
     <div class="body-map">
-      <figure>${bodySVG('front', rec.r, sel)}<figcaption>Front</figcaption></figure>
-      <figure>${bodySVG('back', rec.r, sel)}<figcaption>Back</figcaption></figure>
+      <figure><canvas class="body-cv" data-view="front" data-a="body-tap" aria-label="Front muscle recovery"></canvas><figcaption>Front</figcaption></figure>
+      <figure><canvas class="body-cv" data-view="back" data-a="body-tap" aria-label="Back muscle recovery"></canvas><figcaption>Back</figcaption></figure>
     </div>
     <div class="body-legend"><span>Fresh</span><i></i><span>Fatigued</span></div>
     ${info}
@@ -1090,6 +1098,7 @@ function viewSettings() {
     <button class="btn block ghost danger" data-a="reset">Erase everything</button>
   </section>
   <p class="fine center">Kiln v1 · Back up monthly. iOS can clear web app data if storage gets tight.</p>
+  <p class="fine center">Anatomy model: <a href="https://www.z-anatomy.com" target="_blank" rel="noopener">Z-Anatomy</a>, CC BY-SA 4.0</p>
   <input type="file" id="file-in" accept=".csv,.json,text/csv,application/json" hidden>
   `;
 }
@@ -1673,10 +1682,8 @@ const A = {
     const w = S.workouts.find(x => x.id === b.dataset.v); if (w) sendWorkoutToHealth(w);
   },
   'health-test'() { runShortcut(S.settings.healthShortcut || 'Kiln to Health', 10); },
-  muscle(b) {
-    V.muscle = V.muscle === b.dataset.v ? null : b.dataset.v;
-    const card = $('#recovery-card'); if (card) card.innerHTML = recoveryCard(recovery());
-  },
+  muscle(b) { selectMuscle(b.dataset.v); },
+  'body-tap'(b, ev) { const m = bodyHit(b, ev); if (m) selectMuscle(m); },
   't-add'(b) { timer.add(+b.dataset.v); },
   't-skip'() { timer.stop(); },
 };

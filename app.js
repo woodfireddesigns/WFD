@@ -1098,7 +1098,7 @@ function viewSettings() {
     <button class="btn block ghost danger" data-a="reset">Erase everything</button>
   </section>
   <p class="fine center">Kiln v1 · Back up monthly. iOS can clear web app data if storage gets tight.</p>
-  <p class="fine center">Anatomy model: <a href="https://www.z-anatomy.com" target="_blank" rel="noopener">Z-Anatomy</a>, CC BY-SA 4.0</p>
+  <p class="fine center">Anatomy model: <a href="https://www.z-anatomy.com" target="_blank" rel="noopener">Z-Anatomy</a>, CC BY-SA 4.0 · Head scan: Lee Perry-Smith by <a href="https://ir-ltd.net" target="_blank" rel="noopener">Infinite Realities</a>, CC BY 3.0</p>
   <input type="file" id="file-in" accept=".csv,.json,text/csv,application/json" hidden>
   `;
 }

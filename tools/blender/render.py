@@ -1,4 +1,6 @@
 import bpy, sys, math, mathutils, json, os
+def smoothstep_(x, a, b):
+    t = max(0.0, min(1.0, (x - a) / (b - a))); return t * t * (3 - 2 * t)
 sys.path.insert(0, os.path.dirname(__file__))
 from groups import group_of, GROUPS
 args = json.loads(sys.argv[-1])
@@ -41,11 +43,12 @@ if HEAD_Z:
     core.location = (0, c.y + args.get('core_dy', 0.0), c.z + 0.02)
     core.scale = ((hi.x - lo.x) / 2 * args.get("core_s", 0.86), (hi.y - lo.y) / 2 * args.get("core_sy", 0.8), (hi.z - lo.z) / 2 * args.get("core_s", 0.86))
     keep.append(core)
+    HAIR = []; SKIN_HEAD = []
     # sculpted head: skin regions of the face and skull from the body-surface model
     before = set(bpy.context.scene.objects)
     bpy.ops.import_scene.fbx(filepath=args['skin'])
     NO = ['carotid', 'muscular triangle', 'supraclavicular', 'eyelash', 'cilia', 'cross section', 'eyebrow hair', 'hairs of eyebrow', 'pubic', 'axilla']
-    if not args.get('hair'): NO.append('hair')
+    if not (args.get('hair') or args.get('buzz')): NO.append('hair')
     if not args.get('neck'): NO += ['neck', 'sternocleidomastoid']
     zmin_keep = args.get('skin_zmin', 1.475)
     for o in [o for o in bpy.context.scene.objects if o not in before]:
@@ -55,11 +58,13 @@ if HEAD_Z:
         if n.endswith('.j') or n.endswith('.i') or any(x in n for x in NO) or (min(w.z for w in ws) < zmin_keep and not is_neck):
             o.hide_render = True; continue
         keep.append(o)
+        SKIN_HEAD.append(o)
+        if n.startswith('hairs of head'): HAIR.append(o)
         if n.startswith('orbital region'):
             # sculpted eyeball behind each eye opening
             cx = sum(w.x for w in ws) / 8; fy = min(w.y for w in ws); r = 0.0125
             bpy.ops.mesh.primitive_uv_sphere_add(segments=48, ring_count=32, radius=r, location=(cx * 0.93, fy + r * args.get('eye_back', 2.2), args.get('eye_z', 1.5915)))
-            bpy.ops.object.shade_smooth(); keep.append(bpy.context.active_object)
+            bpy.ops.object.shade_smooth(); keep.append(bpy.context.active_object); SKIN_HEAD.append(bpy.context.active_object)
 print('KEEP', len(keep), 'of', len(meshes))
 # clay material
 mat = bpy.data.materials.new('clay'); mat.use_nodes = True
@@ -67,12 +72,198 @@ b = mat.node_tree.nodes['Principled BSDF']
 b.inputs['Base Color'].default_value = tuple(args.get('clay', [0.11, 0.105, 0.10])) + (1,)
 b.inputs['Roughness'].default_value = 0.55
 if 'Specular IOR Level' in b.inputs: b.inputs['Specular IOR Level'].default_value = 0.35
+if args.get('scanhead') and args.get('head_z'):
+    # realistic male head scan (Lee Perry-Smith, Infinite Realities, CC BY 3.0) replaces the atlas head
+    import bmesh
+    before = set(sc.objects)
+    bpy.ops.import_scene.gltf(filepath=args['scanhead'])
+    scan = [o for o in sc.objects if o not in before and o.type == 'MESH'][0]
+    for o in [o for o in sc.objects if o not in before and o is not scan]: o.hide_render = True
+    bm = bmesh.new(); bm.from_mesh(scan.data); bmesh.ops.transform(bm, matrix=scan.matrix_world, verts=bm.verts)
+    top = max(v.co.z for v in bm.verts)
+    chin = min(v.co.z for v in bm.verts if abs(v.co.x) < 0.4 and v.co.y < -1.0)
+    nose_y = min(v.co.y for v in bm.verts)
+    H = args.get('scan_top', 1.712) - args.get('scan_chin', 1.488)
+    k = H / (top - chin)
+    for v in bm.verts:
+        c = v.co
+        v.co = mathutils.Vector((c.x * k, args.get('scan_nose_y', -0.118) + (c.y - nose_y) * k, args.get('scan_top', 1.712) - (top - c.z) * k))
+    band = [v.co for v in bm.verts if 1.49 < v.co.z < 1.51]
+    ncy = sum(c.y for c in band) / max(1, len(band))
+    rx, ry = args.get('neck_rx', 0.062), args.get('neck_ry', 0.07)
+    def outside_neck(c):
+        if c.z >= 1.535: return False
+        if c.y > ncy + args.get('neck_back_dy', 0.012) and c.z < args.get('neck_back_z', 1.525): return True   # let the traps show at the back
+        if c.z > args.get('jaw_keep_z', 1.478) and abs(c.x) < rx * 1.25: return False   # keep the jaw and under-chin
+        return ((c.x / rx) ** 2 + ((c.y - ncy) / ry) ** 2) > 1
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.co.z < args.get('scan_cut', 1.40) or outside_neck(v.co)], context='VERTS')
+    for f in bm.faces: f.smooth = True
+    head = bpy.data.objects.new('scan_head', bpy.data.meshes.new('scan_head')); sc.collection.objects.link(head)
+    bm.to_mesh(head.data); bm.free()
+    scan.hide_render = True
+    for o in SKIN_HEAD: o.hide_render = True
+    core.hide_render = True
+    keep = [o for o in keep if o not in SKIN_HEAD and o is not core]
+    # atlas pieces that sit up inside/behind the scanned head would poke through it
+    hz = args.get('scan_hide_z', 1.50)
+    for o in list(keep):
+        ws = [o.matrix_world @ mathutils.Vector(c) for c in o.bound_box]
+        cz = sum(w.z for w in ws) / 8; cx = sum(w.x for w in ws) / 8
+        ungrouped_neck = o.name in MUSCLE_NAMES and group_of(o.name) is None and cz > 1.40 and abs(cx) < 0.09
+        if cz > hz or ungrouped_neck: o.hide_render = True; keep.remove(o)
+    keep.append(head)
+    print('SCANHEAD scale', round(k, 4), 'chin', round(chin, 3), 'top', round(top, 3))
+if args.get('mannequin') and args.get('head_z'):
+    # blank mannequin head: smooth shell shrink-wrapped to the skull/jaw, features smoothed away
+    import bmesh
+    EAR = ['auric', 'helix', 'lobule', 'tragus', 'concha', 'scapha', 'fossa', 'incisure', 'eminentia', 'crus', 'hair', 'eyebrow']
+    src = [o for o in SKIN_HEAD if o.type == 'MESH' and not any(k in o.name.lower() for k in EAR) and not o.name.lower().startswith('sphere')]
+    bm = bmesh.new()
+    for o in src:
+        t = bmesh.new(); t.from_mesh(o.data); bmesh.ops.transform(t, matrix=o.matrix_world, verts=t.verts)
+        tmp = bpy.data.meshes.new('tmp'); t.to_mesh(tmp); t.free(); bm.from_mesh(tmp); bpy.data.meshes.remove(tmp)
+    tgt = bpy.data.objects.new('head_target', bpy.data.meshes.new('head_target')); sc.collection.objects.link(tgt)
+    bm.to_mesh(tgt.data); bm.free(); tgt.hide_render = True
+    ws = [v.co for v in tgt.data.vertices]
+    hlo = mathutils.Vector((min(w.x for w in ws), min(w.y for w in ws), min(w.z for w in ws)))
+    hhi = mathutils.Vector((max(w.x for w in ws), max(w.y for w in ws), max(w.z for w in ws)))
+    hc = (hlo + hhi) / 2
+    from mathutils.bvhtree import BVHTree
+    tree = BVHTree.FromObject(tgt, bpy.context.evaluated_depsgraph_get())
+    # radial projection of a dense sphere onto the outermost skin; rays that slip through eye
+    # openings are filled from their neighbours, then the face is smoothed blank
+    rings, segs = args.get('mq_rings', 140), args.get('mq_segs', 180)
+    bm = bmesh.new()
+    bmesh.ops.create_uvsphere(bm, u_segments=segs, v_segments=rings, radius=1.0)
+    hc2 = mathutils.Vector((0, hc.y + 0.008, hc.z + 0.01))
+    miss = set(); radii = []
+    for v in bm.verts:
+        d = v.co.normalized()
+        hit = tree.ray_cast(hc2 + d * 0.4, -d, 0.4)[0]
+        if hit is None or (hit - hc2).length < 0.05: miss.add(v); v.co = hc2 + d * 0.09
+        else: v.co = hit; radii.append((hit - hc2).length)
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.co.z < args.get('mq_cut', 1.49)], context='VERTS')
+    miss = {v for v in miss if v.is_valid}
+    cy0 = hc.y
+    def wface(co):
+        f = smoothstep_(co.y, cy0 - 0.03, cy0 - 0.08) * (1 - smoothstep_(co.z, 1.645, 1.675)) * smoothstep_(co.z, 1.485, 1.505)
+        return 0.05 + 0.8 * f
+    nbr = {v: [e.other_vert(v) for e in v.link_edges] for v in bm.verts}
+    wts = {v: (1.0 if v in miss else wface(v.co)) for v in bm.verts}
+    for it in range(args.get('mq_iter', 120)):
+        new = {}
+        for v, ns in nbr.items():
+            if not ns or v.is_boundary: continue
+            avg = sum((n.co for n in ns), mathutils.Vector()) / len(ns)
+            new[v] = v.co.lerp(avg, wts[v])
+        for v, c in new.items(): v.co = c
+    head = bpy.data.objects.new('mannequin_head', bpy.data.meshes.new('mannequin_head')); sc.collection.objects.link(head)
+    bm.to_mesh(head.data); bm.free()
+    for p in head.data.polygons: p.use_smooth = True
+    bpy.context.view_layer.objects.active = head; head.select_set(True)
+    for o in SKIN_HEAD: o.hide_render = True
+    core.hide_render = True
+    keep = [o for o in keep if o not in SKIN_HEAD and o is not core]
+    keep.append(head)
+    print('MANNEQUIN from', len(src), 'pieces')
+BUZZ = []
+if args.get('buzz') and args.get('head_z'):
+    scalp_keys = ['frontal region', 'parietal region', 'occipital region', 'temporal region', 'mastoid region', 'auricular region']
+    parts = [o for o in keep if any(o.name.lower().startswith(k) for k in scalp_keys)]
+    import bmesh
+    bm = bmesh.new()
+    for o in parts:   # merge scalp pieces in world space (FBX pieces are positioned via parents)
+        t = bmesh.new(); t.from_mesh(o.data); bmesh.ops.transform(t, matrix=o.matrix_world, verts=t.verts)
+        tmp = bpy.data.meshes.new('tmp'); t.to_mesh(tmp); t.free(); bm.from_mesh(tmp); bpy.data.meshes.remove(tmp)
+    cap = bpy.data.objects.new('buzz_cap', bpy.data.meshes.new('buzz_cap')); sc.collection.objects.link(cap)
+    bm.to_mesh(cap.data); bm.free()
+    # footprint of the original hair, so the buzz cut keeps a natural hairline
+    from mathutils.bvhtree import BVHTree
+    dg = bpy.context.evaluated_depsgraph_get()
+    verts, polys = [], []
+    for h in HAIR:
+        e = h.evaluated_get(dg); me = e.to_mesh(); off = len(verts)
+        verts += [h.matrix_world @ v.co for v in me.vertices]
+        polys += [[off + i for i in p.vertices] for p in me.polygons]
+        e.to_mesh_clear(); h.hide_render = True
+    tree = BVHTree.FromPolygons(verts, polys)
+    bm = bmesh.new(); bm.from_mesh(cap.data)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=args.get('buzz_merge', 0.0025))
+    bmesh.ops.subdivide_edges(bm, edges=bm.edges, cuts=args.get('buzz_cuts', 2), use_grid_fill=True, smooth=0.6)
+    bm.normal_update()
+    reach = args.get('buzz_reach', 0.06); front_z = args.get('hairline_z', 1.68)
+    cy = sum(v.co.y for v in bm.verts) / max(1, len(bm.verts))
+    hc = mathutils.Vector((0, cy, (lo.z + hi.z) / 2 + 0.03))   # rough head centre
+    def covered(v):
+        if v.co.y < cy - 0.02 and v.co.z < front_z: return False          # forehead stays clear
+        if abs(v.co.x) < 0.012 and v.co.z > front_z - 0.01: return True    # hair parting gaps on the midline
+        out = (v.co - hc).normalized()
+        hit = tree.ray_cast(v.co + out * 0.0005, out, reach)[0]
+        if hit is None: return False
+        return not (v.co.y < cy - 0.02 and v.co.z < front_z)   # keep the forehead clear
+    gone = [v for v in bm.verts if not covered(v)]
+    print('BUZZ verts', len(bm.verts), 'trimmed', len(gone))
+    bmesh.ops.delete(bm, geom=gone, context='VERTS')
+    bm.normal_update()
+    # soften the hairline: relax boundary vertices a few times
+    for _ in range(args.get('buzz_relax', 6)):
+        edge = [v for v in bm.verts if v.is_boundary]
+        new = {v: sum((e.other_vert(v).co for e in v.link_edges if e.is_boundary), mathutils.Vector()) / max(1, sum(1 for e in v.link_edges if e.is_boundary)) for v in edge}
+        for v, c in new.items(): v.co = v.co.lerp(c, 0.5)
+    lift = args.get('buzz_offset', 0.0025)
+    for v in bm.verts: v.co += (v.co - hc).normalized() * lift
+    bm.to_mesh(cap.data); bm.free()
+    for p in cap.data.polygons: p.use_smooth = True
+    keep = [o for o in keep if o not in HAIR]
+    keep.append(cap); BUZZ.append(cap)
+    # skin fully under the hair takes the stubble colour too, so seams in the cap never show skin
+    BUZZ += [o for o in parts if o.name.lower().startswith(('parietal region', 'occipital region'))]
+# masculine sculpt: thicker neck, wider square jaw, stronger chin and brow, lower dome
+def smooth(z, a, b):   # 0 at a, 1 at b (smoothstep); works for a > b too
+    t = max(0.0, min(1.0, (z - a) / (b - a))); return t * t * (3 - 2 * t)
+def bump(z, lo, peak, hi):
+    return smooth(z, lo, peak) if z <= peak else 1 - smooth(z, peak, hi)
+M = args.get('masc')
+def warp(w):
+    x, y, z = w.x, w.y, w.z
+    if z < 1.38: return w
+    neck = bump(z, 1.40, 1.48, 1.56) * M.get('neck', 0.22)
+    jaw = bump(z, 1.465, M.get('jaw_z', 1.515), 1.59) * M.get('jaw', 0.14)
+    sx = 1 + neck + jaw
+    sy = 1 + neck * 0.8
+    ny = y * sy
+    face = smooth(y, -0.02, -0.07)                      # how far toward the face (front is -y)
+    chin = bump(z, 1.47, 1.50, 1.55) * face * M.get('chin', 0.007)
+    brow = bump(z, 1.605, 1.625, 1.645) * face * M.get('brow', 0.005)
+    nose = bump(z, 1.545, 1.575, 1.61) * smooth(abs(x), 0.022, 0.0) * face * M.get('nose', 0.0)
+    cheek = bump(z, 1.54, 1.575, 1.61) * smooth(abs(x), 0.02, 0.05) * face * M.get('cheekbone', 0.0)
+    ny -= chin + brow + nose + cheek
+    nz = z
+    if z > 1.63: nz = 1.63 + (z - 1.63) * M.get('dome', 0.9)
+    if z > 1.60 and y > 0: ny = y * sy * (1 - smooth(z, 1.60, 1.70) * M.get('back', 0.0))   # less bulge at the back of the skull
+    sx *= 1 + smooth(z, 1.58, 1.66) * M.get('skull_w', 0.04)
+    return mathutils.Vector((x * sx, ny, nz))
+if M:
+    head_objs = [o for o in keep if o.type == 'MESH' and max((o.matrix_world @ mathutils.Vector(c)).z for c in o.bound_box) > 1.38]
+    for o in head_objs:
+        mw = o.matrix_world; inv = mw.inverted()
+        me = o.data
+        if me.users > 1: o.data = me = me.copy()
+        for v in me.vertices: v.co = inv @ warp(mw @ v.co)
+    print('MASC warped', len(head_objs))
 MODE = args.get('mode', 'beauty')
 def flat(name, v):
     m = bpy.data.materials.new(name); m.use_nodes = True; nt = m.node_tree
     for nd in list(nt.nodes): nt.nodes.remove(nd)
     e = nt.nodes.new('ShaderNodeEmission'); e.inputs['Color'].default_value = (v, v, v, 1); e.inputs['Strength'].default_value = 1
     out = nt.nodes.new('ShaderNodeOutputMaterial'); nt.links.new(e.outputs[0], out.inputs[0]); return m
+buzz = bpy.data.materials.new('buzz'); buzz.use_nodes = True
+bn = buzz.node_tree.nodes; bb = bn['Principled BSDF']
+bb.inputs['Base Color'].default_value = tuple(args.get('buzz_color', [0.022, 0.02, 0.019])) + (1,)
+bb.inputs['Roughness'].default_value = 0.92
+noise = bn.new('ShaderNodeTexNoise'); noise.inputs['Scale'].default_value = 900; noise.inputs['Detail'].default_value = 2
+bump = bn.new('ShaderNodeBump'); bump.inputs['Strength'].default_value = 0.35
+buzz.node_tree.links.new(noise.outputs['Fac'], bump.inputs['Height']); buzz.node_tree.links.new(bump.outputs['Normal'], bb.inputs['Normal'])
 idmats = {g: flat('id_' + g, (i + 1) * 16 / 255) for i, g in enumerate(GROUPS)}
 idnone = flat('id_none', 0.0)
 counts = {}
@@ -83,7 +274,7 @@ for o in keep:
         counts[g] = counts.get(g, 0) + 1
         o.data.materials.append(idmats[g] if g else idnone)
     else:
-        o.data.materials.append(mat)
+        o.data.materials.append(buzz if o in BUZZ else mat)
     for p in o.data.polygons: p.use_smooth = True
 if MODE == 'id': print('IDCOUNTS', counts)
 # world: black, transparent film

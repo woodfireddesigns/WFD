@@ -137,6 +137,19 @@ E('cable_pullthrough', 'Cable Pull Through', 'glutes', ['hamstrings'], ['cable']
 E('cable_kickback', 'Cable Glute Kickback', 'glutes', [], ['cable'], 'w', 0, .1);
 E('hip_abd', 'Hip Abduction Machine', 'glutes', [], ['machine'], 'w', 0, .4);
 E('glute_bridge', 'Glute Bridge', 'glutes', ['hamstrings'], [], 'bw', 0);
+E('db_hip_thrust', 'Dumbbell Hip Thrust', 'glutes', ['hamstrings'], ['dumbbell', 'bench'], 'w', 1, .3);
+E('smith_hip_thrust', 'Smith Machine Hip Thrust', 'glutes', ['hamstrings'], ['smith', 'bench'], 'w', 1, .6);
+E('mach_hip_thrust', 'Hip Thrust Machine', 'glutes', ['hamstrings'], ['machine'], 'w', 1, .6);
+E('bstance_thrust', 'B-Stance Hip Thrust', 'glutes', ['hamstrings'], ['barbell', 'bench'], 'w', 0, .4);
+E('kas_bridge', 'Barbell Glute Bridge', 'glutes', ['hamstrings'], ['barbell'], 'w', 1, .6);
+E('sl_bridge', 'Single-Leg Glute Bridge', 'glutes', ['hamstrings'], [], 'bw', 0);
+E('frog_pump', 'Frog Pump', 'glutes', [], [], 'bw', 0);
+E('cable_abd', 'Cable Hip Abduction', 'glutes', [], ['cable'], 'w', 0, .06);
+E('band_walk', 'Banded Lateral Walk', 'glutes', [], ['band'], 'bw', 0);
+E('reverse_lunge', 'Dumbbell Reverse Lunge', 'glutes', ['quads', 'hamstrings'], ['dumbbell'], 'w', 1, .12);
+E('curtsy_lunge', 'Curtsy Lunge', 'glutes', ['quads'], ['dumbbell'], 'w', 1, .08);
+E('sumo_goblet', 'Sumo Goblet Squat', 'glutes', ['quads'], ['dumbbell'], 'w', 1, .2);
+E('glute_back_ext', 'Glute-Focused Back Extension', 'glutes', ['hamstrings', 'lowerback'], [], 'bw', 0);
 
 // Calves
 E('standing_calf', 'Standing Calf Raise', 'calves', [], ['machine'], 'w', 0, .6);

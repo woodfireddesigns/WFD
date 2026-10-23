@@ -37,8 +37,9 @@ const SPLITS = {
   ppl: { label: 'Push / Pull / Legs', sub: 'Strict rotation', foci: ['push', 'pull', 'legs'], rotate: true },
   ul: { label: 'Upper / Lower', sub: 'Strict rotation', foci: ['upper', 'lower'], rotate: true },
   full: { label: 'Full Body', sub: 'Everything, every session', foci: ['full'] },
+  glutes: { label: 'Glute Focus', sub: 'Glutes & Hams / Upper / Glutes & Quads', foci: ['glutesHam', 'upper', 'glutesQuad'], rotate: true },
 };
-const FOCUS = { push: 'Push', pull: 'Pull', legs: 'Legs', upper: 'Upper Body', lower: 'Lower Body', full: 'Full Body', custom: 'Custom' };
+const FOCUS = { glutesHam: 'Glutes & Hams', glutesQuad: 'Glutes & Quads', push: 'Push', pull: 'Pull', legs: 'Legs', upper: 'Upper Body', lower: 'Lower Body', full: 'Full Body', custom: 'Custom' };
 // [muscle, preference] C = compound, I = isolation, A = any
 const TEMPLATES = {
   push: [['chest', 'C'], ['shoulders', 'C'], ['chest', 'A'], ['triceps', 'I'], ['shoulders', 'I'], ['triceps', 'A'], ['chest', 'I'], ['shoulders', 'I']],
@@ -47,6 +48,8 @@ const TEMPLATES = {
   upper: [['chest', 'C'], ['lats', 'C'], ['shoulders', 'C'], ['upperback', 'C'], ['triceps', 'I'], ['biceps', 'I'], ['shoulders', 'I'], ['chest', 'I']],
   lower: [['quads', 'C'], ['hamstrings', 'C'], ['glutes', 'A'], ['quads', 'A'], ['hamstrings', 'I'], ['calves', 'I'], ['lowerback', 'I'], ['quads', 'I']],
   full: [['quads', 'C'], ['chest', 'C'], ['lats', 'C'], ['hamstrings', 'C'], ['shoulders', 'A'], ['upperback', 'C'], ['biceps', 'I'], ['triceps', 'I']],
+  glutesHam: [['glutes', 'C'], ['hamstrings', 'C'], ['glutes', 'A'], ['hamstrings', 'I'], ['glutes', 'I'], ['abs', 'I'], ['calves', 'I'], ['lowerback', 'I']],
+  glutesQuad: [['quads', 'C'], ['glutes', 'C'], ['glutes', 'A'], ['quads', 'I'], ['glutes', 'I'], ['hamstrings', 'I'], ['calves', 'I'], ['abs', 'I']],
 };
 const DURATION_EXERCISES = { 30: 4, 45: 5, 60: 6, 75: 7, 90: 8 };
 
@@ -56,7 +59,7 @@ function defaultState() {
     v: 1,
     onboarded: false,
     settings: {
-      unit: 'lb', bodyweight: 185, experience: 'intermediate', goal: 'hypertrophy', split: 'auto',
+      unit: 'lb', bodyweight: 185, sex: 'male', bar: 45, experience: 'intermediate', goal: 'hypertrophy', split: 'auto',
       duration: 60, core: true, warmups: true, sound: true, wake: true,
       gym: 'gym', incBar: 5, incDb: 5, incMachine: 5,
       health: false, healthWeight: true, healthShortcut: 'Kiln to Health',
@@ -134,7 +137,8 @@ rebuildEx();
 const exName = id => EX[id]?.name || 'Unknown exercise';
 const activeGym = () => S.gyms.find(g => g.id === S.settings.gym) || S.gyms[0];
 const isBarbell = e => (e.equip || []).includes('barbell');
-const barLb = () => (U() === 'kg' ? 20 * KG : 45);
+const barDisp = () => (U() === 'kg' ? (+S.settings.bar === 35 ? 15 : 20) : (+S.settings.bar === 35 ? 35 : 45));
+const barLb = () => fromDisp(barDisp());
 
 /* ---------- history ---------- */
 let histVersion = -1, HIST = {};
@@ -242,7 +246,9 @@ function recommend(e, sc) {
   const last = H[H.length - 1], prev = H[H.length - 2];
   const mid = Math.round((sc.lo + sc.hi) / 2) || 8;
   const out = { w: null, r: mid, s: null, note: '', up: false };
-  const expMult = { beginner: 0.7, intermediate: 1, advanced: 1.3 }[S.settings.experience] || 1;
+  // starting-weight ratios are calibrated on male lifters; women are typically ~60% on upper body, ~80% on lower body
+  const lower = ['quads', 'hamstrings', 'glutes', 'calves'].includes(e.primary);
+  const expMult = ({ beginner: 0.7, intermediate: 1, advanced: 1.3 }[S.settings.experience] || 1) * (S.settings.sex === 'female' ? (lower ? 0.8 : 0.6) : 1);
   const eff = last?.effort || 2;
   const felt = last?.effort ? ` (${EFFORT[last.effort].toLowerCase()})` : '';
 
@@ -712,7 +718,7 @@ function setRow(e, s, i, j, label) {
 function plateText(lb) {
   const unit = U();
   const total = toDisp(lb);
-  const bar = unit === 'kg' ? 20 : 45;
+  const bar = barDisp();
   const plates = unit === 'kg' ? [25, 20, 15, 10, 5, 2.5, 1.25] : [45, 35, 25, 10, 5, 2.5];
   let side = (total - bar) / 2;
   if (side <= 0) return `Empty bar (${bar})`;
@@ -744,6 +750,7 @@ function viewWelcome() {
       <p class="fine">Fitbod: Settings → Export Workout Data → save the CSV, then import here.</p>`,
     () => `
       <h2 class="ob-h">About you</h2>
+      <div class="field"><label>Body</label>${seg('sex', [['male', 'Male'], ['female', 'Female']], st.sex)}</div>
       <div class="field"><label>Units</label>${seg('unit', [['lb', 'lb'], ['kg', 'kg']], st.unit)}</div>
       <div class="field"><label>Bodyweight (${U()})</label><input class="txt" inputmode="decimal" data-setting="bodyweight" value="${fmtW(st.bodyweight)}"></div>
       <div class="field"><label>Lifting experience</label>${seg('experience', [['beginner', 'New'], ['intermediate', 'Intermediate'], ['advanced', 'Advanced']], st.experience)}</div>
@@ -1061,8 +1068,10 @@ function viewSettings() {
 
   <h4 class="group-h">Body & units</h4>
   <section class="card pad form">
+    <div class="field"><label>Body</label>${seg('sex', [['male', 'Male'], ['female', 'Female']], st.sex)}</div>
     <div class="field"><label>Units</label>${seg('unit', [['lb', 'lb'], ['kg', 'kg']], st.unit)}</div>
     <div class="field"><label>Bodyweight (${U()})</label><input class="txt" inputmode="decimal" data-setting="bodyweight" value="${fmtW(st.bodyweight)}"></div>
+    <div class="field"><label>Barbell</label>${seg('bar', [[45, U() === 'kg' ? '20 kg bar' : '45 lb bar'], [35, U() === 'kg' ? '15 kg bar' : '35 lb bar']], st.bar)}</div>
     <div class="field three">
       <div><label>Barbell jump</label><input class="txt" inputmode="decimal" data-setting="incBar" value="${st.incBar}"></div>
       <div><label>Dumbbell jump</label><input class="txt" inputmode="decimal" data-setting="incDb" value="${st.incDb}"></div>
@@ -1490,9 +1499,13 @@ const A = {
   tab(b) { V.tab = b.dataset.v; render(); window.scrollTo(0, 0); },
   set(b) {
     const k = b.dataset.k; let v = b.dataset.v;
-    if (k === 'duration') v = +v;
+    if (k === 'duration' || k === 'bar') v = +v;
+    if (k === 'sex' && !S.onboarded) {
+      if (v === 'female') { if (S.settings.split === 'auto') S.settings.split = 'glutes'; S.settings.bar = 35; if (S.settings.bodyweight === 185) S.settings.bodyweight = 140; }
+      else { if (S.settings.split === 'glutes') S.settings.split = 'auto'; S.settings.bar = 45; if (S.settings.bodyweight === 140) S.settings.bodyweight = 185; }
+    }
     if (k === 'gym') { S.settings.gym = v; } else S.settings[k] = v;
-    if (['goal', 'split', 'duration', 'gym', 'experience'].includes(k) && S.onboarded && S.plan && !S.plan.start) generate();
+    if (['goal', 'split', 'duration', 'gym', 'experience', 'sex', 'bar'].includes(k) && S.onboarded && S.plan && !S.plan.start) generate();
     if (b.closest('#sheet')) closeSheet();
     save(); render();
   },

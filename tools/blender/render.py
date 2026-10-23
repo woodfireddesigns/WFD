@@ -79,6 +79,7 @@ if args.get('scanhead') and args.get('head_z'):
     bpy.ops.import_scene.gltf(filepath=args['scanhead'])
     scan = [o for o in sc.objects if o not in before and o.type == 'MESH'][0]
     for o in [o for o in sc.objects if o not in before and o is not scan]: o.hide_render = True
+    DROP = args.get('head_drop', 0.0)   # lower the head to shorten the neck
     bm = bmesh.new(); bm.from_mesh(scan.data); bmesh.ops.transform(bm, matrix=scan.matrix_world, verts=bm.verts)
     top = max(v.co.z for v in bm.verts)
     chin = min(v.co.z for v in bm.verts if abs(v.co.x) < 0.4 and v.co.y < -1.0)
@@ -87,7 +88,7 @@ if args.get('scanhead') and args.get('head_z'):
     k = H / (top - chin)
     for v in bm.verts:
         c = v.co
-        v.co = mathutils.Vector((c.x * k, args.get('scan_nose_y', -0.118) + (c.y - nose_y) * k, args.get('scan_top', 1.712) - (top - c.z) * k))
+        v.co = mathutils.Vector((c.x * k, args.get('scan_nose_y', -0.118) + (c.y - nose_y) * k, args.get('scan_top', 1.712) - (top - c.z) * k - DROP))
     # weld the scan's split seams first, then add resolution so the neck edge can be shaped smoothly
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=args.get('scan_weld', 0.0004))
     bmesh.ops.subdivide_edges(bm, edges=bm.edges, cuts=args.get('scan_cuts', 2), use_grid_fill=True, smooth=0.5)
@@ -109,7 +110,7 @@ if args.get('scanhead') and args.get('head_z'):
         return ((c.x / rx) ** 2 + ((c.y - ncy) / ry) ** 2) > 1
     if args.get('neck_squeeze', True):
         # squeeze (don't cut) the neck into the column so it stays a closed tube; only the bottom is cut
-        top = args.get('neck_top', 1.535)
+        top = args.get('neck_top', 1.535) - DROP
         for v in bm.verts:
             c = v.co
             if c.z >= top: continue
@@ -118,7 +119,7 @@ if args.get('scanhead') and args.get('head_z'):
             e = math.sqrt((c.x / rx) ** 2 + ((c.y - ncy) / ry) ** 2)
             if e <= 1: continue
             w = smoothstep_(c.z, top, top - 0.035)
-            if c.z > 1.478 and c.y < ncy - 0.01 and abs(c.x) < rx0: w *= 0.0          # leave the jaw alone
+            if c.z > 1.478 - DROP and c.y < ncy - 0.01 and abs(c.x) < rx0: w *= 0.0          # leave the jaw alone
             cen = mathutils.Vector((0, ncy, c.z))
             v.co = c.lerp(cen + (c - cen) / e, w)
         dead = [v for v in bm.verts if v.co.z < args.get('scan_cut', 1.40) or

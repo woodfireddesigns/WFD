@@ -13,7 +13,7 @@ Source of `img/body-*.webp` (sculpted render) and `img/body-*-id.png` (muscle gr
 COMMON='"fbx": ".../MuscularSystem100.fbx", "skel": ".../SkeletalSystem100.fbx", "skin": ".../Regions of human body100.fbx",
   "views": ["front", "back"], "res": [600, 1200], "head_z": 1.535, "core_dy": 0.015, "core_s": 0.84, "core_sy": 0.78, "eye_back": 2.6, "scanhead": ".../LeePerrySmith.glb",
   "neck_rx": 0.066, "neck_ry": 0.074, "scan_cut": 1.385, "back_cut": 1.44, "flush_band": 0.055,
-  "neck_flare": 0.18, "neck_top": 1.535, "jaw_keep_x": 1.0, "masc": {"neck": 0, "jaw": 0, "chin": 0, "brow": 0, "dome": 1, "skull_w": 0}'
+  "neck_flare": 0.18, "neck_top": 1.535, "jaw_keep_x": 1.0, "head_drop": 0.03, "masc": {"neck": 0, "jaw": 0, "chin": 0, "brow": 0, "dome": 1, "skull_w": 0}'
 python -I render.py "{\"mode\": \"id\", \"out\": \"out\", $COMMON}"            # rename to *-id.png
 python -I render.py "{\"mode\": \"beauty\", \"out\": \"out\", \"samples\": 128, \"light\": 0.28, \"clay\": [0.045,0.044,0.043], $COMMON}"
 ```

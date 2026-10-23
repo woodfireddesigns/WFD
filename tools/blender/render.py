@@ -321,6 +321,42 @@ if M:
         if me.users > 1: o.data = me = me.copy()
         for v in me.vertices: v.co = inv @ warp(mw @ v.co)
     print('MASC warped', len(head_objs))
+FEM = args.get('fem')
+BREASTS = []
+if FEM is not None:
+    def sm(x, a, b):
+        t = max(0.0, min(1.0, (x - a) / (b - a))); return t * t * (3 - 2 * t)
+    def bp(z, lo, pk, hi): return sm(z, lo, pk) if z <= pk else 1 - sm(z, pk, hi)
+    def fwarp(w):
+        x, y, z = w.x, w.y, w.z
+        ax = abs(x)
+        kx = 1.0; ky = 1.0; dy = 0.0
+        kx -= FEM.get('shoulders', 0.10) * bp(z, 1.10, 1.36, 1.50) * sm(ax, 0.04, 0.16)
+        kx -= FEM.get('waist', 0.10) * bp(z, 0.96, 1.10, 1.26) * (1 - sm(ax, 0.17, 0.24))
+        ky -= FEM.get('waist', 0.10) * 0.7 * bp(z, 0.96, 1.10, 1.26) * (1 - sm(ax, 0.17, 0.24))
+        kx += FEM.get('hips', 0.11) * bp(z, 0.66, 0.89, 1.06) * (1 - sm(ax, 0.22, 0.30))
+        kx += FEM.get('thighs', 0.05) * bp(z, 0.45, 0.78, 0.92) * (1 - sm(ax, 0.22, 0.30))
+        if y > 0: dy += FEM.get('glutes', 0.018) * bp(z, 0.76, 0.88, 0.98) * (1 - sm(ax, 0.16, 0.22))
+        ky -= FEM.get('arms', 0.10) * sm(ax, 0.20, 0.26) * bp(z, 0.70, 1.15, 1.42)
+        kx -= FEM.get('neck', 0.12) * bp(z, 1.40, 1.47, 1.55)
+        ky -= FEM.get('neck', 0.12) * bp(z, 1.40, 1.47, 1.55)
+        k = FEM.get('scale', 0.94)
+        return mathutils.Vector((x * kx * k, (y * ky + dy) * k, z * k))
+    for o in [o for o in keep if o.type == 'MESH']:
+        mw = o.matrix_world; inv = mw.inverted(); me = o.data
+        if me.users > 1: o.data = me = me.copy()
+        for v in me.vertices: v.co = inv @ fwarp(mw @ v.co)
+    # chest: two soft volumes over the pectorals, part of the chest group for the recovery glow
+    pecs = [o for o in keep if o.name in MUSCLE_NAMES and 'sternocostal head of pectoralis major' in o.name.lower()]
+    for o in pecs:
+        ws = [o.matrix_world @ v.co for v in o.data.vertices]
+        cx = sum(w.x for w in ws) / len(ws); cz = sum(w.z for w in ws) / len(ws); fy = min(w.y for w in ws)
+        r = FEM.get('bust', 0.052)
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=48, radius=r,
+            location=(cx * 0.9, fy + r * FEM.get('bust_in', 0.62), cz - r * 0.6))
+        bo = bpy.context.active_object; bo.scale = (1.05, FEM.get('bust_depth', 0.72), 0.9); bo.name = 'bust.' + o.name[-1]
+        bpy.ops.object.shade_smooth(); keep.append(bo); BREASTS.append(bo)
+    print('FEM warped', len(keep), 'bust', len(BREASTS))
 MODE = args.get('mode', 'beauty')
 def flat(name, v):
     m = bpy.data.materials.new(name); m.use_nodes = True; nt = m.node_tree
@@ -340,7 +376,7 @@ counts = {}
 for o in keep:
     o.data.materials.clear()
     if MODE == 'id':
-        g = group_of(o.name) if o.name in MUSCLE_NAMES else None
+        g = 'chest' if o in BREASTS else (group_of(o.name) if o.name in MUSCLE_NAMES else None)
         counts[g] = counts.get(g, 0) + 1
         o.data.materials.append(idmats[g] if g else idnone)
     else:

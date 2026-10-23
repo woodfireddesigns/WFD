@@ -3,10 +3,14 @@
 // plus an ID map whose grey value (group index + 1) * 16 says which muscle group a pixel is.
 // The canvas blends ember glow into each muscle by fatigue while keeping the sculpted shading.
 const BODY_GROUPS = ['chest', 'shoulders', 'triceps', 'lats', 'upperback', 'traps', 'biceps', 'forearms', 'quads', 'hamstrings', 'glutes', 'calves', 'abs', 'lowerback'];
+// The female figure is the same model reshaped in Blender (tools/blender/render.py, "fem").
 const BODY_SRC = {
-  front: { base: 'img/body-front.webp', id: 'img/body-front-id.png' },
-  back: { base: 'img/body-back.webp', id: 'img/body-back-id.png' },
+  front: { base: 'img/body-front.webp', id: 'img/body-front-id.png', ratio: '426 / 1045' },
+  back: { base: 'img/body-back.webp', id: 'img/body-back-id.png', ratio: '426 / 1045' },
+  'front-f': { base: 'img/body-front-f.webp', id: 'img/body-front-f-id.png', ratio: '400 / 983' },
+  'back-f': { base: 'img/body-back-f.webp', id: 'img/body-back-f-id.png', ratio: '400 / 983' },
 };
+const bodyKey = view => (typeof S !== 'undefined' && S.settings.sex === 'female' ? view + '-f' : view);
 const bodyData = {};
 
 function loadImage(src) {
@@ -33,7 +37,8 @@ function loadBody(view) {
 // Paint every .body-cv canvas on the page for the given recovery map.
 function paintBodies(rec, selected) {
   document.querySelectorAll('canvas.body-cv').forEach(cv => {
-    const view = cv.dataset.view;
+    const view = bodyKey(cv.dataset.view);
+    cv.style.aspectRatio = BODY_SRC[view].ratio;
     loadBody(view).then(d => {
       if (!cv.isConnected) return;
       cv.width = d.w; cv.height = d.h;
@@ -72,7 +77,7 @@ function paintBodies(rec, selected) {
 
 // Muscle group under a tap on a body canvas, or null.
 function bodyHit(cv, ev) {
-  const d = bodyData[cv.dataset.view]; if (!d || !d.ids) return null;
+  const d = bodyData[bodyKey(cv.dataset.view)]; if (!d || !d.ids) return null;
   const r = cv.getBoundingClientRect();
   const x = Math.floor((ev.clientX - r.left) / r.width * d.w), y = Math.floor((ev.clientY - r.top) / r.height * d.h);
   // search a small radius so near-misses on thin muscles still register

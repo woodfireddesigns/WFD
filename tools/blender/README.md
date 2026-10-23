@@ -19,3 +19,6 @@ python -I render.py "{\"mode\": \"beauty\", \"out\": \"out\", \"samples\": 128, 
 ```
 
 Then crop both views to the shared alpha bounding box (+6px), save beauty as WebP q84, and snap ID values to multiples of 16.
+
+Female figure (`img/body-*-f*`): same command plus `"fem": {}` (proportions and bust in render.py's FEM block) and
+`"masc": {"neck": 0, "jaw": -0.07, "jaw_z": 1.5, "chin": -0.003, "brow": -0.004, "dome": 1, "skull_w": -0.02}`.

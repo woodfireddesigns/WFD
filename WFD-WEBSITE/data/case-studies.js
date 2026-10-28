@@ -107,6 +107,28 @@ window.CASE_STUDIES = [
   },
 
   {
+    slug: "rae-construction",
+    title: "Rae Construction",
+    client: "Rae Construction Northwest",
+    year: "2023",
+    tags: ["Brand Identity", "Vehicle Wrap", "Trades"],
+    blurb: "A sign-painter identity for a Seattle and Tacoma remodel and restoration contractor. A winking mascot, a baseball script and ten marks that each have a job: the shield for jacket patches, the circle for hard hats, the stacked lockup for yard signs and paperwork, and the R for anywhere tiny. One blue, used everywhere, so the van and the crew read as the same company from across the street.",
+    cover: { type: "image", src: "assets/portfolio/rae-construction-extra/rae-van.jpg", poster: "assets/portfolio/rae-construction-thumb.jpg" },
+    gallery: [
+      { type: "image", wide: true, src: "assets/portfolio/rae-construction-extra/rae-system.jpg", alt: "Rae Construction logo system: shield, circle, mascot and rounded badges, R monogram and stacked lockup" },
+      { type: "image", src: "assets/portfolio/rae-construction-extra/rae-patch.jpg", alt: "Rae Construction shield badge embroidered on a canvas work jacket" },
+      { type: "image", src: "assets/portfolio/rae-construction-extra/rae-hardhat.jpg", alt: "Rae Construction circle badge decal on a white hard hat" },
+      { type: "image", wide: true, src: "assets/portfolio/rae-construction-extra/rae-rainier.jpg", alt: "Rae Construction script wordmark over Mount Rainier and the Port of Tacoma" },
+      { type: "image", src: "assets/portfolio/rae-construction-extra/rae-yardsign.jpg", alt: "Rae Construction yard sign in front of a Craftsman under restoration" },
+      { type: "image", src: "assets/portfolio/rae-construction-extra/rae-shingles.jpg", alt: "Rae Construction circle badge reversed over wet cedar shingles" },
+      { type: "image", wide: true, src: "assets/portfolio/rae-construction-extra/rae-wallsign.jpg", alt: "Rae Construction mascot badge hand painted on a shingle shop wall" },
+      { type: "image", src: "assets/portfolio/rae-construction-extra/rae-cards.jpg", alt: "Rae Construction letterpress business cards with a debossed R" },
+      { type: "image", src: "assets/portfolio/rae-construction-extra/rae-framing.jpg", alt: "Rae Construction shield badge over a freshly framed house" },
+      { type: "image", wide: true, src: "assets/portfolio/rae-construction-extra/rae-lumber.jpg", alt: "Rae Construction stacked lockup over a lumber warehouse" }
+    ]
+  },
+
+  {
     slug: "dope-rope-photography",
     title: "Dope Rope — Photography",
     client: "Dope Rope",

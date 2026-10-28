@@ -134,21 +134,23 @@ window.CASE_STUDIES = [
     client: "Pipers Drain Repair",
     year: "2025",
     tags: ["Brand Identity", "Vehicle Wrap", "Trades"],
-    blurb: "A family-owned drain and sewer company serving Seattle to Tacoma, built for homeowners who have been burned by overpriced plumbers before. The idea is a local landmark doing an honest day's work: the Space Needle redrawn as a drain pipe, set in Abyss Blue, Glacier Flow seafoam and Pipeline Red. It runs from the seafoam van and the shop sign to crew jackets, hi-vis vests, a repeat pattern and six badges that each have a job.",
+    blurb: "A family-owned drain and sewer company serving Seattle to Tacoma, built for homeowners who have been burned by overpriced plumbers before. The idea is a local landmark doing an honest day's work: the Space Needle redrawn as a drain pipe, with a mid-century service-company look in Abyss Blue, Glacier Flow seafoam and Pipeline Red. It runs from a van wrap built on the Sprinter template to embroidered chore jackets, the shop's roll-up door, a repeat pattern and six badges that each have a job.",
     cover: { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-van.jpg", poster: "assets/portfolio/pipers-drain-repair-thumb.jpg" },
     gallery: [
       { type: "image", wide: true, src: "assets/portfolio/pipers-drain-repair-extra/pipers-family.jpg", alt: "Pipers Drain Repair logo family: Cinerama lockup, circle, hex, PDR monogram, primary and tear-drop badges" },
-      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-cleanout.jpg", alt: "Pipers technician at a sewer cleanout in a Seattle front yard, circle badge on his jacket" },
-      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-vest.jpg", alt: "Pipers technician walking a wet Seattle street in a hi-vis vest with the lockup on the back" },
-      { type: "image", wide: true, src: "assets/portfolio/pipers-drain-repair-extra/pipers-skyline.jpg", alt: "Pipers Seattle Tacoma lockup over the Seattle skyline at blue hour" },
-      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-jetter.jpg", alt: "Pipers tear-drop badge sticker on a red hydro-jetter reel in the rain" },
-      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-mug.jpg", alt: "Navy Pipers enamel mug on a van dashboard with the Space Needle through the rain" },
-      { type: "image", wide: true, src: "assets/portfolio/pipers-drain-repair-extra/pipers-shop.jpg", alt: "Pipers hex badge painted over the navy roll-up door of a brick shop" },
-      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-voice.jpg", alt: "Done right, the first time. Pipers Drain Repair, Seattle to Tacoma, over a wet storm drain" },
+      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-embroidery.jpg", alt: "Pipers circle badge embroidered on the chest of a navy chore jacket" },
+      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-jetter.jpg", alt: "Pipers tear-drop badge sticker on a red hydro-jetter reel" },
+      { type: "image", wide: true, src: "assets/portfolio/pipers-drain-repair-extra/pipers-wrap-layout.jpg", alt: "Pipers Sprinter van wrap layout, driver side" },
+      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-walking.jpg", alt: "Pipers technician walking a sunny Seattle sidewalk, lockup embroidered on his jacket back" },
+      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-voice.jpg", alt: "Done right, the first time. Family owned, Seattle to Tacoma" },
+      { type: "image", wide: true, src: "assets/portfolio/pipers-drain-repair-extra/pipers-door.jpg", alt: "Pipers primary badge painted on a navy roll-up door of a light-industrial shop" },
+      { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-mug.jpg", alt: "Navy Pipers enamel mug on a van dashboard with the Space Needle outside" },
       { type: "image", src: "assets/portfolio/pipers-drain-repair-extra/pipers-pattern.jpg", alt: "Pipers repeat pattern of hex badges in navy and seafoam" },
+      { type: "image", wide: true, src: "assets/portfolio/pipers-drain-repair-extra/pipers-skyline.jpg", alt: "Pipers Seattle Tacoma lockup over the Seattle skyline and Mount Rainier" },
       { type: "image", wide: true, src: "assets/portfolio/pipers-drain-repair-extra/pipers-colortype.jpg", alt: "Pipers color palette and typefaces from the brand guidelines" }
     ]
   },
+
 
   {
     slug: "banner-projects",
@@ -156,21 +158,22 @@ window.CASE_STUDIES = [
     client: "Banner Projects",
     year: "2022",
     tags: ["Brand Identity", "Merch & Apparel", "Trades"],
-    blurb: "A Bonney Lake, Washington contractor that clears land, grades lots, builds fences and grinds stumps, and wanted to look like the crew you would trust with your property. The brand leans old school on purpose: a hand-drawn skid steer, an interlocking BP monogram and a 2022 badge in English red, alabaster and smoky black. It shows up on the machine, the truck door, rope hats, crew tees and every hard hat on the job.",
-    cover: { type: "image", src: "assets/portfolio/banner-projects-extra/banner-skidsteer.jpg", poster: "assets/portfolio/banner-projects-thumb.jpg" },
+    blurb: "A Bonney Lake, Washington contractor that clears land, grades lots, builds fences and grinds stumps, and wanted to look like the crew you would trust with your property. The brand leans old school on purpose: a hand-drawn skid steer, an interlocking BP monogram and a 2022 badge in English red, alabaster and smoky black. It shows up on the machine, the truck door, rope hats, crew tees, job-site signs and every hard hat on the crew.",
+    cover: { type: "image", src: "assets/portfolio/banner-projects-extra/banner-yardsign-hero.jpg", poster: "assets/portfolio/banner-projects-thumb.jpg" },
     gallery: [
       { type: "image", wide: true, src: "assets/portfolio/banner-projects-extra/banner-family.jpg", alt: "Banner Projects logo family: skid steer seal, 2022 badge, BP circle, Est. 2022 lockup, BP monogram and long lockup" },
       { type: "image", src: "assets/portfolio/banner-projects-extra/banner-hat.jpg", alt: "English red rope hat with the BP monogram embroidered in cream, on a fresh-cut stump" },
-      { type: "image", src: "assets/portfolio/banner-projects-extra/banner-hardhat.jpg", alt: "BP circle sticker on a black hard hat resting on a skid steer track" },
+      { type: "image", src: "assets/portfolio/banner-projects-extra/banner-skidsteer-close.jpg", alt: "BP circle badge decal on the cab of a black track loader at golden hour" },
       { type: "image", wide: true, src: "assets/portfolio/banner-projects-extra/banner-voice.jpg", alt: "Land clearing, grading, fences, stump grinding. Banner Projects, est. 2022, Bonney Lake WA" },
       { type: "image", src: "assets/portfolio/banner-projects-extra/banner-tee.jpg", alt: "Crew member beside a new cedar fence in a cream tee with the Est. 2022 skid steer print" },
       { type: "image", src: "assets/portfolio/banner-projects-extra/banner-fence.jpg", alt: "Banner Projects Est. 2022 lockup over a cedar fence line at golden hour" },
       { type: "image", wide: true, src: "assets/portfolio/banner-projects-extra/banner-pickup.jpg", alt: "Black pickup with the Banner 2022 badge on the door towing an equipment trailer" },
-      { type: "image", src: "assets/portfolio/banner-projects-extra/banner-cards.jpg", alt: "Cream letterpress business cards with the red Banner wordmark and a debossed BP" },
-      { type: "image", src: "assets/portfolio/banner-projects-extra/banner-tumbler.jpg", alt: "Black tumbler with the red BP monogram on a frosty skid steer step" },
+      { type: "image", src: "assets/portfolio/banner-projects-extra/banner-hardhat.jpg", alt: "BP circle sticker on a black hard hat on a pickup tailgate" },
+      { type: "image", src: "assets/portfolio/banner-projects-extra/banner-thermos.jpg", alt: "Red vinyl BP decal on a frosty black thermos" },
       { type: "image", wide: true, src: "assets/portfolio/banner-projects-extra/banner-colortype.jpg", alt: "Banner Projects colors and typefaces: English red, smoky black, alabaster, Sign Guy, Barthon, Roboto Slab" }
     ]
   },
+
 
   {
     slug: "dope-rope-photography",

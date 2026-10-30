@@ -9,3 +9,7 @@ Personal strength training PWA. Replaces Fitbod.
 - Imports Fitbod / Strong / Hevy CSV exports; JSON backup + restore
 
 No build step. Static files, deployed on Vercel. All data is stored on-device (localStorage).
+
+## Tests
+
+`npm test` runs the body-composition math tests (`tests/bodycomp.test.js`, Node's built-in test runner, no install needed).

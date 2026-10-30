@@ -401,3 +401,35 @@ select.txt { background-image: linear-gradient(45deg, transparent 50%, var(--mu)
 #ptr.ready { color: var(--accent); border-color: rgba(255, 91, 31, .5); }
 #ptr.spin svg { animation: ptr-spin .7s linear infinite; }
 @keyframes ptr-spin { to { transform: rotate(360deg); } }
+
+/* ---------- body module ---------- */
+.prog-seg { margin-top: 14px; }
+.dl { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--mu); }
+.dl.good { color: var(--good); }
+.dl.warn { color: var(--warn); }
+.dl.neutral { color: var(--mu); }
+.body-stats b { font-size: 24px; }
+.body-stats span { display: block; line-height: 1.35; }
+.est-note { margin-top: -6px; }
+.goal-bar { height: 10px; border-radius: 10px; background: var(--s3); overflow: hidden; }
+.goal-bar i { display: block; height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.goal-meta { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 8px; font-size: 13px; color: var(--mu); font-variant-numeric: tabular-nums; }
+.goal-meta b { color: var(--tx); }
+.zone-bar { position: relative; display: flex; height: 10px; border-radius: 10px; overflow: visible; margin: 6px 0 8px; }
+.zone-bar i { height: 100%; }
+.zone-bar .z1 { width: 33.33%; background: rgba(61, 220, 151, .35); border-radius: 10px 0 0 10px; }
+.zone-bar .z2 { width: 33.33%; background: rgba(255, 181, 71, .35); }
+.zone-bar .z3 { width: 33.34%; background: rgba(255, 90, 95, .35); border-radius: 0 10px 10px 0; }
+.zone-bar b { position: absolute; top: -4px; width: 4px; height: 18px; margin-left: -2px; border-radius: 3px; background: var(--tx); box-shadow: 0 0 0 2px var(--s1); }
+.zone-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--mu2); font-weight: 600; }
+.z-healthy { color: var(--good); }
+.z-elevated { color: var(--warn); }
+.z-high { color: var(--bad); }
+.site-row small .dl { font-size: 12.5px; }
+.mform { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 4px; }
+.mf { position: relative; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.mf.wide { grid-column: 1 / -1; }
+.mf > span { font-size: 12px; font-weight: 650; color: var(--mu); }
+.mf input { padding-right: 34px; font-variant-numeric: tabular-nums; }
+.mf em { position: absolute; right: 12px; bottom: 14px; font-style: normal; font-size: 12px; color: var(--mu2); font-weight: 600; pointer-events: none; }
+.mf input.bad { border-color: var(--bad); background: rgba(255, 90, 95, .08); }

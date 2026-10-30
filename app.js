@@ -64,6 +64,7 @@ function defaultState() {
       gym: 'gym', incBar: 5, incDb: 5, incMachine: 5,
       health: false, healthWeight: true, healthShortcut: 'Kiln to Health',
       stepGoal: 10000, stepsShortcut: 'Kiln Steps',
+      heightIn: 70, goalWeight: 195, stretchWeight: 185, measureDay: 0,
     },
     gyms: [
       { id: 'gym', name: 'Commercial Gym', equip: [...ALL_EQUIP] },
@@ -73,6 +74,7 @@ function defaultState() {
     workouts: [], plan: null, body: [], seed: 1,
     deload: null,
     steps: {}, stepsSynced: 0,
+    measurements: [],
   };
 }
 function mergeState(data) {
@@ -590,7 +592,7 @@ const I = {
 };
 
 /* ---------- view state ---------- */
-const V = { tab: 'workout', libQuery: '', libMuscle: 'all', sheet: null };
+const V = { tab: 'workout', libQuery: '', libMuscle: 'all', sheet: null, progressView: 'training' };
 
 function render() {
   renderTabs();
@@ -845,7 +847,12 @@ function showSummary(w) {
 }
 
 /* ---------- progress view ---------- */
+function progressSwitch() {
+  return `<div class="seg prog-seg">${[['training', 'Training'], ['body', 'Body']].map(([k, l]) =>
+    `<button data-a="prog-view" data-v="${k}" class="${V.progressView === k ? 'on' : ''}">${l}</button>`).join('')}</div>`;
+}
 function viewProgress() {
+  if (V.progressView === 'body') return viewBody();
   const now = Date.now();
   const rec = recovery();
   const weekStart = startOfWeek(now);
@@ -878,7 +885,7 @@ function viewProgress() {
     .sort((a, b) => b[1].length - a[1].length).slice(0, 6);
 
   return `
-  <header class="page-head"><h1>Progress</h1></header>
+  <header class="page-head"><h1>Progress</h1>${progressSwitch()}</header>
   <div class="stat-row big">
     <div><b>${thisWeek.length}</b><span>This week</span></div>
     <div><b>${streak}</b><span>Week streak</span></div>
@@ -900,12 +907,6 @@ function viewProgress() {
       ${Object.keys(MUSCLES).map(m => { const v = setsBy[m] || 0; return `<div class="vb"><label>${MUSCLES[m]}</label><div class="vb-track"><i class="zone" style="left:${(10 / maxSets) * 100}%;width:${(10 / maxSets) * 100}%"></i><div class="vb-fill" style="width:${(v / maxSets) * 100}%"></div></div><b>${fmtNum(v)}</b></div>`; }).join('')}
     </div>
     <p class="fine">Shaded zone is 10–20 weekly sets, the productive range for most lifters. Secondary muscles count as half a set.</p>
-  </section>
-
-  <section class="card pad">
-    <div class="card-h"><h3>Bodyweight</h3><span>${S.body.length ? `${fmtW(S.body[S.body.length - 1].w)} ${U()}` : ''}</span></div>
-    ${S.body.length > 1 ? lineChart(S.body.slice(-60).map(b => ({ x: b.t, y: toDisp(b.w) }))) : '<p class="fine">Log your weight a few times to see the trend.</p>'}
-    <div class="inline-form"><input class="txt" id="bw-input" inputmode="decimal" placeholder="Today's weight (${U()})"><button class="btn primary" data-a="log-bw">Log</button></div>
   </section>
 
   ${top.length ? `
@@ -946,8 +947,155 @@ function recoveryCard(rec) {
 function startOfWeek(t) { const d = new Date(t); d.setHours(0, 0, 0, 0); const day = (d.getDay() + 6) % 7; return d.getTime() - day * DAY; }
 function agoText(t) { const h = (Date.now() - t) / 36e5; if (h < 1) return 'just now'; if (h < 24) return `${Math.round(h)}h ago`; const d = Math.round(h / 24); return d > 60 ? '60d+' : `${d}d ago`; }
 
+/* ---------- body module (measurements; math in bodycomp.js) ---------- */
+const SITE_LABEL = { waist: 'Waist (navel)', neck: 'Neck', chest: 'Chest', hips: 'Hips', thigh: 'Right thigh', arm: 'Right arm (flexed)' };
+// body weights show one decimal (fmtW rounds to plate increments)
+const fmtBW = lb => fmtNum(toDisp(lb));
+const SITE_SHORT = { waist: 'Waist', neck: 'Neck', chest: 'Chest', hips: 'Hips', thigh: 'Thigh', arm: 'Arm' };
+const LOSS_GOOD = new Set(['weight', 'waist', 'neck', 'hips']);   // down is progress; elsewhere growth may be muscle
+const dayT = d => { const [y, m, dd] = d.split('-').map(Number); return new Date(y, m - 1, dd, 12).getTime(); };
+const sortedMeasurements = () => [...S.measurements].sort((a, b) => a.date.localeCompare(b.date));
+function weightSeries() { return [...S.body].sort((a, b) => a.t - b.t); }
+function weightDeltas() {
+  return siteDeltas(weightSeries().map(b => ({ date: isoDay(b.t), w: b.w })), 'w');
+}
+function fmtDelta(v, site, unit) {
+  if (v == null) return '<span class="dl">—</span>';
+  const cls = v === 0 || !LOSS_GOOD.has(site) ? 'neutral' : v < 0 ? 'good' : 'warn';
+  const shown = site === 'weight' ? fmtNum(toDisp(Math.abs(v))) : fmtNum(Math.abs(v));
+  return `<span class="dl ${cls}">${v > 0 ? '+' : v < 0 ? '−' : '±'}${shown}${unit ? ' ' + unit : ''}</span>`;
+}
+function measureDue() {
+  const M = sortedMeasurements(), today = isoDay(Date.now());
+  if (M.some(m => m.date === today)) return null;
+  const last = M[M.length - 1];
+  const days = last ? Math.floor((Date.now() - dayT(last.date)) / DAY) : null;
+  if (last == null) return 'Take your first measurements';
+  if (days >= 7) return `Last measured ${days} days ago`;
+  if (new Date().getDay() === +S.settings.measureDay) return "It's measure day";
+  return null;
+}
+function viewBody() {
+  const st = S.settings, M = sortedMeasurements();
+  const d = Object.fromEntries(BODY_SITES.map(k => [k, siteDeltas(M, k)]));
+  const wd = weightDeltas();
+  const bf = navyBodyFat({ sex: st.sex, waist: d.waist.latest, neck: d.neck.latest, hips: d.hips.latest, height: st.heightIn });
+  const first = M.find(m => navyBodyFat({ sex: st.sex, ...m, height: st.heightIn }) != null);
+  const bf0 = first ? navyBodyFat({ sex: st.sex, ...first, height: st.heightIn }) : null;
+  const whtr = waistToHeight(d.waist.latest, st.heightIn), zone = whtrZone(whtr);
+  const W = weightSeries();
+  const tw = trendWeight(W) ?? st.bodyweight;
+  const gp = goalProgress(tw, st.goalWeight, st.stretchWeight, W[0]?.w ?? tw);
+  const due = measureDue();
+  const zx = r => Math.max(0, Math.min(100, ((r - 0.4) / 0.3) * 100));   // bar spans 0.40 to 0.70
+  const waistPts = M.filter(m => m.waist != null).map(m => ({ x: dayT(m.date), y: m.waist }));
+  return `
+  <header class="page-head"><h1>Progress</h1>${progressSwitch()}</header>
+
+  ${due ? `<div class="banner"><div><b>${due}</b><span>Measure first thing in the morning, after the bathroom and before eating or drinking. Same day each week, same tape spot.</span></div><div class="banner-actions"><button class="btn sm primary" data-a="measure">Log measurements</button></div></div>` : ''}
+
+  <div class="stat-row big body-stats">
+    <div><b>${W.length ? fmtBW(W[W.length - 1].w) : '—'}</b><span>${U()} · ${fmtDelta(wd.sinceBaseline, 'weight')} total</span></div>
+    <div><b>${d.waist.latest ?? '—'}</b><span>in waist · ${fmtDelta(d.waist.sinceBaseline, 'waist')} total</span></div>
+    <div><b>${bf != null ? bf + '%' : '—'}</b><span>Est. body fat${bf != null && bf0 != null && first.date !== M[M.length - 1].date ? ' · ' + fmtDelta(Math.round((bf - bf0) * 10) / 10, 'waist') : ''}</span></div>
+  </div>
+  <p class="fine est-note">Body fat is a US Navy tape estimate, ±3–4%. Trends matter more than the number.</p>
+
+  <section class="card pad">
+    <div class="card-h"><h3>Goal weight</h3><span>Trend ${fmtBW(tw)} ${U()}</span></div>
+    ${gp ? `
+    <div class="goal-bar"><i style="width:${(gp.pctGoal * 100).toFixed(1)}%"></i></div>
+    <div class="goal-meta"><span><b>${gp.reachedGoal ? 'Reached' : fmtBW(gp.toGoal) + ' ' + U() + ' to go'}</b> · goal ${fmtBW(st.goalWeight)}</span><span>stretch ${fmtBW(st.stretchWeight)} · ${fmtBW(gp.toStretch)} to go</span></div>` : ''}
+    <p class="fine">Trend weight is the average of the last 7 days of weigh-ins, so one salty dinner doesn't move it.</p>
+  </section>
+
+  <section class="card pad">
+    <div class="card-h"><h3>Waist-to-height</h3><span>${whtr != null ? whtr.toFixed(2) : '—'}</span></div>
+    <div class="zone-bar"><i class="z1"></i><i class="z2"></i><i class="z3"></i>${whtr != null ? `<b style="left:${zx(whtr)}%"></b>` : ''}</div>
+    <div class="zone-labels"><span>Healthy &lt;0.5</span><span>Elevated 0.5–0.6</span><span>High &gt;0.6</span></div>
+    <p class="fine">${zone ? `You're in the <b class="z-${zone}">${zone}</b> zone. ` : ''}A screening ratio, not a diagnosis. Height ${st.heightIn} in (change in Settings).</p>
+  </section>
+
+  <section class="card pad">
+    <div class="card-h"><h3>Waist</h3><span>${fmtDelta(d.waist.sinceLast, 'waist', 'in')} since last</span></div>
+    ${waistPts.length > 1 ? lineChart(waistPts, 150, 'lg-waist') : '<p class="fine">Two weekly entries and your waist trend appears here.</p>'}
+  </section>
+
+  <section class="card pad">
+    <div class="card-h"><h3>Weight</h3><span>${fmtDelta(wd.sinceLast, 'weight', U())} since last</span></div>
+    ${W.length > 1 ? lineChart(W.slice(-90).map(b => ({ x: b.t, y: toDisp(b.w) })), 150, 'lg-weight') : '<p class="fine">Log your weight a few times to see the trend.</p>'}
+    <div class="inline-form"><input class="txt" id="bw-input" inputmode="decimal" placeholder="Today's weight (${U()})"><button class="btn primary" data-a="log-bw">Log</button></div>
+  </section>
+
+  <section class="card pad">
+    <div class="card-h"><h3>Measurements</h3><span>since last · since start</span></div>
+    ${['neck', 'chest', 'hips', 'thigh', 'arm'].map(k => {
+      const x = d[k];
+      const pts = M.filter(m => m[k] != null).slice(-12).map(m => ({ x: dayT(m.date), y: m[k] }));
+      return `<button class="lift-row site-row" data-a="site-detail" data-v="${k}"><div><b>${SITE_LABEL[k]}</b><small>${x.latest != null ? x.latest + ' in' : 'Not logged'} · ${fmtDelta(x.sinceLast, k)} · ${fmtDelta(x.sinceBaseline, k)}</small></div>${sparkline(pts)}</button>`;
+    }).join('')}
+    <p class="fine">Green is shrinking and amber is growing where smaller is the goal. Chest, thigh and arm show neutral because growth there is often muscle.</p>
+  </section>
+
+  <button class="btn primary big" data-a="measure">${I.plus} Log measurements</button>
+
+  ${M.length ? `
+  <h4 class="group-h">Entries</h4>
+  ${[...M].reverse().slice(0, 26).map(m => {
+    const w = S.body.find(b => isoDay(b.t) === m.date);
+    return `<button class="card row-card" data-a="measure" data-v="${m.id}">
+      <div class="date-badge"><b>${new Date(dayT(m.date)).getDate()}</b><span>${fmtDate(dayT(m.date), { month: 'short' })}</span></div>
+      <div class="rc-main"><h3>${m.waist != null ? m.waist + ' in waist' : 'Measurements'}</h3>
+        <p>${[w ? fmtBW(w.w) + ' ' + U() : null, ...['neck', 'chest', 'hips', 'thigh', 'arm'].filter(k => m[k] != null).map(k => `${SITE_SHORT[k]} ${m[k]}`)].filter(Boolean).join(' · ')}</p>
+        ${m.notes ? `<div class="rc-stats"><span>${esc(m.notes)}</span></div>` : ''}</div>${I.chev}
+    </button>`;
+  }).join('')}` : ''}
+  `;
+}
+function measureSheet(id) {
+  const M = sortedMeasurements();
+  const m = id ? S.measurements.find(x => x.id === id) : null;
+  const last = M[M.length - 1] || {};
+  const date = m ? m.date : isoDay(Date.now());
+  const w = S.body.find(b => isoDay(b.t) === date);
+  const lastW = weightSeries().slice(-1)[0];
+  const field = (k, label, unit, val, ph) => `<label class="mf"><span>${label}</span><input id="m-${k}" class="txt" inputmode="decimal" enterkeyhint="next" value="${val ?? ''}" placeholder="${ph ?? ''}"><em>${unit}</em></label>`;
+  V.sheet = { type: 'measure', id: m?.id || null };
+  openSheet(`
+    <div class="sheet-head"><div><div class="eyebrow">${m ? 'Edit entry' : 'Weekly check-in'}</div><h2>Measurements</h2></div></div>
+    <p class="fine">Morning, before eating. Tape snug, not compressing. Placeholders show last time.</p>
+    <div class="mform">
+      <label class="mf wide"><span>Date</span><input id="m-date" class="txt" type="date" value="${date}"></label>
+      ${field('weight', 'Weight', U(), w ? fmtBW(w.w) : '', lastW ? fmtBW(lastW.w) : '')}
+      ${field('waist', 'Waist at navel', 'in', m?.waist, last.waist)}
+      ${field('neck', 'Neck', 'in', m?.neck, last.neck)}
+      ${field('chest', 'Chest', 'in', m?.chest, last.chest)}
+      ${field('hips', 'Hips', 'in', m?.hips, last.hips)}
+      ${field('thigh', 'Right thigh (mid)', 'in', m?.thigh, last.thigh)}
+      ${field('arm', 'Right arm (flexed)', 'in', m?.arm, last.arm)}
+      <label class="mf wide"><span>Notes</span><input id="m-notes" class="txt" enterkeyhint="done" value="${esc(m?.notes || '')}" placeholder="Optional"></label>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn primary big" data-a="measure-save">Save</button>
+      ${m ? `<button class="btn ghost danger" data-a="measure-del" data-v="${m.id}">Delete entry</button>` : ''}
+    </div>`);
+}
+function siteDetail(k) {
+  const M = sortedMeasurements(), x = siteDeltas(M, k);
+  const pts = M.filter(m => m[k] != null).map(m => ({ x: dayT(m.date), y: m[k] }));
+  openSheet(`
+    <div class="sheet-head"><div><div class="eyebrow">Measurement</div><h2>${SITE_LABEL[k]}</h2></div></div>
+    <div class="stat-row">
+      <div><b>${x.latest ?? '—'}</b><span>Latest (in)</span></div>
+      <div><b>${fmtDelta(x.sinceLast, k)}</b><span>Since last</span></div>
+      <div><b>${fmtDelta(x.sinceBaseline, k)}</b><span>Since start</span></div>
+    </div>
+    ${pts.length > 1 ? lineChart(pts, 150, 'lg-site') : '<p class="fine">Needs two entries for a chart.</p>'}
+    <div class="sheet-actions"><button class="btn" data-a="measure">${I.plus} Log measurements</button></div>`);
+}
+
 /* ---------- charts ---------- */
-function lineChart(pts, h = 150) {
+function lineChart(pts, h = 150, gid = 'lg') {
   if (pts.length < 2) return '';
   const W = 340, H = h, pad = 22;
   const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
@@ -960,8 +1108,8 @@ function lineChart(pts, h = 150) {
   const d = pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`).join('');
   const last = pts[pts.length - 1];
   return `<svg class="chart" viewBox="0 0 ${W} ${H}">
-    <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
-    <path d="${d}L${X(last.x)},${H - pad}L${X(pts[0].x)},${H - pad}Z" fill="url(#lg)" stroke="none"/>
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+    <path d="${d}L${X(last.x)},${H - pad}L${X(pts[0].x)},${H - pad}Z" fill="url(#${gid})" stroke="none"/>
     <path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2.25" stroke-linejoin="round" stroke-linecap="round"/>
     <circle cx="${X(last.x)}" cy="${Y(last.y)}" r="4" fill="var(--accent)" stroke="none"/>
     <text x="4" y="12" class="ct">${fmtNum(Math.max(...ys))}</text>
@@ -1077,6 +1225,16 @@ function viewSettings() {
       <div><label>Dumbbell jump</label><input class="txt" inputmode="decimal" data-setting="incDb" value="${st.incDb}"></div>
       <div><label>Machine jump</label><input class="txt" inputmode="decimal" data-setting="incMachine" value="${st.incMachine}"></div>
     </div>
+  </section>
+
+  <h4 class="group-h">Body tracking</h4>
+  <section class="card pad form">
+    <div class="field three">
+      <div><label>Height (in)</label><input class="txt" inputmode="decimal" data-setting="heightIn" value="${st.heightIn}"></div>
+      <div><label>Goal (${U()})</label><input class="txt" inputmode="decimal" data-setting="goalWeight" value="${fmtBW(st.goalWeight)}"></div>
+      <div><label>Stretch (${U()})</label><input class="txt" inputmode="decimal" data-setting="stretchWeight" value="${fmtBW(st.stretchWeight)}"></div>
+    </div>
+    <div class="field"><label>Measure day</label>${seg('measureDay', ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((l, i) => [i, l]), st.measureDay)}</div>
   </section>
 
   <h4 class="group-h">During workouts</h4>
@@ -1499,7 +1657,7 @@ const A = {
   tab(b) { V.tab = b.dataset.v; render(); window.scrollTo(0, 0); },
   set(b) {
     const k = b.dataset.k; let v = b.dataset.v;
-    if (k === 'duration' || k === 'bar') v = +v;
+    if (k === 'duration' || k === 'bar' || k === 'measureDay') v = +v;
     if (k === 'sex' && !S.onboarded) {
       if (v === 'female') { if (S.settings.split === 'auto') S.settings.split = 'glutes'; S.settings.bar = 35; if (S.settings.bodyweight === 185) S.settings.bodyweight = 140; }
       else { if (S.settings.split === 'glutes') S.settings.split = 'auto'; S.settings.bar = 45; if (S.settings.bodyweight === 140) S.settings.bodyweight = 185; }
@@ -1697,6 +1855,42 @@ const A = {
   'health-test'() { runShortcut(S.settings.healthShortcut || 'Kiln to Health', 10); },
   muscle(b) { selectMuscle(b.dataset.v); },
   'body-tap'(b, ev) { const m = bodyHit(b, ev); if (m) selectMuscle(m); },
+  'prog-view'(b) { V.progressView = b.dataset.v; render(); },
+  measure(b) { measureSheet(b.dataset.v); },
+  'site-detail'(b) { siteDetail(b.dataset.v); },
+  'measure-save'() {
+    const date = $('#m-date').value || isoDay(Date.now());
+    const read = (k, lo, hi) => {
+      const el = $('#m-' + k), raw = el.value.replace(',', '.').trim();
+      el.classList.remove('bad');
+      if (!raw) return null;
+      const v = parseFloat(raw);
+      if (isNaN(v) || v < lo || v > hi) { el.classList.add('bad'); return undefined; }
+      return Math.round(v * 10) / 10;
+    };
+    const vals = Object.fromEntries(BODY_SITES.map(k => [k, read(k, 8, 80)]));
+    const wLo = U() === 'kg' ? 32 : 70, wHi = U() === 'kg' ? 230 : 500;
+    const weight = read('weight', wLo, wHi);
+    if ([...Object.values(vals), weight].includes(undefined)) { toast('Check the highlighted fields'); return; }
+    if (weight == null && Object.values(vals).every(v => v == null)) { toast('Enter at least one number'); return; }
+    const id = V.sheet?.id;
+    const entry = { id: id || uid(), date, ...vals, notes: $('#m-notes').value.trim() };
+    S.measurements = S.measurements.filter(m => m.id !== id && m.date !== date);
+    if (Object.values(vals).some(v => v != null) || entry.notes) S.measurements.push(entry);
+    S.measurements.sort((a, b) => a.date.localeCompare(b.date));
+    if (weight != null) {
+      const lb = fromDisp(weight);
+      S.body = S.body.filter(b => isoDay(b.t) !== date);
+      S.body.push({ t: date === isoDay(Date.now()) ? Date.now() : dayT(date) - 4 * 36e5, w: lb });
+      S.body.sort((a, b) => a.t - b.t);
+      if (isoDay(S.body[S.body.length - 1].t) === date) S.settings.bodyweight = lb;
+    }
+    save(); closeSheet(); render(); toast(id ? 'Entry updated' : 'Measurements saved');
+  },
+  'measure-del'(b) {
+    if (!confirm('Delete this entry? Its weigh-in stays in your weight history.')) return;
+    S.measurements = S.measurements.filter(m => m.id !== b.dataset.v); save(); closeSheet(); render(); toast('Entry deleted');
+  },
   't-add'(b) { timer.add(+b.dataset.v); },
   't-skip'() { timer.stop(); },
 };
@@ -1748,7 +1942,7 @@ document.addEventListener('change', async ev => {
   if (t.dataset.setting) {
     const k = t.dataset.setting; const v = parseFloat(t.value);
     if (isNaN(v) || v <= 0) return;
-    S.settings[k] = k === 'bodyweight' ? fromDisp(v) : v;
+    S.settings[k] = ['bodyweight', 'goalWeight', 'stretchWeight'].includes(k) ? fromDisp(v) : v;
     save();
   }
 });
@@ -1792,6 +1986,11 @@ document.addEventListener('click', ev => {
 });
 $('#scrim').addEventListener('click', closeSheet);
 document.addEventListener('keydown', ev => {
+  if (ev.key === 'Enter' && ev.target.matches('.mform input')) {
+    const inputs = [...document.querySelectorAll('.mform input')];
+    const k = inputs.indexOf(ev.target);
+    if (inputs[k + 1]) { ev.preventDefault(); inputs[k + 1].focus(); } else ev.target.blur();
+  }
   if (ev.key === 'Enter' && ev.target.matches('.set input')) {
     // jump to next input in the card for fast entry
     const inputs = [...document.querySelectorAll('.set input')];
@@ -1810,7 +2009,7 @@ document.addEventListener('keydown', ev => {
 
 /* ---------- pull to refresh ---------- */
 // Pull down from the top of the page: refresh the offline copy of the app, then reload.
-const APP_FILES = ['index.html', 'styles.css', 'exercises.js', 'body.js', 'app.js', 'manifest.webmanifest'];
+const APP_FILES = ['index.html', 'styles.css', 'exercises.js', 'body.js', 'bodycomp.js', 'app.js', 'manifest.webmanifest'];
 async function refreshApp() {
   saveNow();
   try {
